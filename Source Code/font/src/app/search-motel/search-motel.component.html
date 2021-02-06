@@ -1,0 +1,52 @@
+
+
+<div class="super_container" style="margin-top:95px;height: auto;" >
+  <!--Thanh tìm kiếm-->
+
+
+  <app-barsearchandbar onload="myFunction()" style="margin:0;" (newTypeSearch)="onNewType($event)" ></app-barsearchandbar>
+
+
+  <!--kết thúc thanh tìm kiếm -->
+
+
+  <!--khung chinhs-->
+  <div class="container-fluid" style="height: auto; padding-top: 20px;color: black;">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-7" >
+            <div class="font" style="margin-left: -15px;font-size: 20px;" >{{nametophead}}</div>
+            <!--hiển thị thong tin danh sách-->
+            <app-data-motel [newTypeseach] = "datasearch" ></app-data-motel>
+
+        </div>
+        <div class="col-md-3 font">
+          <div style="background-image: url(../../assets/images/image_4.jpg) ;height: 400px;width: 100%;"></div>
+          <div style="border: 1px solid gray;margin-top:20px ;border-radius: 5px;" >
+            <div class="font" style="margin-top:20px;margin-left: 20px;margin-right: 20px;"><b>Loại bất động sản </b></div>
+            <ul style="padding:20px;padding-top: 10px;" class="font" >
+              <li *ngFor='let type of counttypes; let i=index' [value]="type.id" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">{{type.typeofnews}}({{type.count}})</span></div></li>
+            </ul>
+
+
+          </div>
+          <!--<div style="border: 1px solid gray;margin-top:20px ;border-radius: 5px;" >
+            <div style="margin-top:20px;margin-left: 20px;margin-right: 20px;"><b>Nhà tại khu vực</b></div>
+            <ul style="padding:20px;padding-top: 10px;">
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Căn hộ(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Phòng trọ(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Văn phòng(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà xưởng(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">nhà(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span  class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Căn hộ(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Phòng trọ(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Văn phòng(54.392)</span></div></li>
+              <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà xưởng(54.392)</span></div></li>
+
+            </ul>
+          </div>-->
+        </div>
+      </div>
+  </div>
+</div>

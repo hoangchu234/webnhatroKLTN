@@ -1,0 +1,202 @@
+<div class="super_container">
+  <header class="header">
+
+    <!-- Main Navigation -->
+
+    <nav class="main_nav" style="width:auto">
+      <div class="container-fluid " >
+        <div class="row" style="background-color:white;">
+            <div class="logo_container col-md-1 col-sm-12 col-xs-2 " style="padding:15px;padding-top: 25px;">
+              <div class="logo"><a [routerLink]="['/home']" style="font-size: 25px;text-decoration: none;color: black;">Hours</a></div>
+            </div>
+            <div class=" col-md-11 col-sm-12 col-xs-10" style="letter-spacing:.0.5rem;text-align: center;padding:5px" >
+              <nav class="navbar navbar-expand-lg navbar-light" style="float: right;">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNewTypeOne()">Cho thuê nhà trọ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNewTypeTwo()"  >Nhà cho thuê <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNewTypeThree()">Cho thuê căn hộ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNewTypeFour()">Cho thuê mặt bằng <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNewTypeFive()" >Tìm người ở ghép cặp <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" [routerLink]="['/home/bang-gia-dich-vu']" >Bảng giá dịch vụ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active" style="padding-top: 8px;margin-left: 20px;">
+                      <div [hidden]="username">
+                        <a href="#" [routerLink]="['/login']" style=" text-decoration: none;color: black;"><b>Đăng nhập</b></a>
+                        </div>
+                        <div class="nav-item nav-profile dropdown" style="visibility: visible;" *ngIf="isUser">
+                          <a class="nav-link " id="profileDropdown"  data-toggle="dropdown" aria-expanded="false" style="margin-top: -12px;">
+                            <div style="margin-top:5px;" *ngIf="checkImage"><img class="img-profile rounded-circle"  src="{{currentAccount.user.userImage}}" style="height: 30px;width: 30px;"><span class="font" style="color:black;margin-left: 5px;">{{username}} </span></div>
+                            <div style="margin-top:5px;" *ngIf="!checkImage"><img class="img-profile rounded-circle" src="../../../assets/images/blog_3.jpg" style="height: 30px;width: 30px;"><span class="font" style="color:black;margin-left: 5px;">{{username}} </span></div>
+                            <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown" style="font-size: 20px;">
+                              <a [routerLink]="['/user/thong-tin-ca-nhan']" class="dropdown-item font">
+                                <i class="mdi mdi-account mr-2 text-success "></i>Thông tin cá nhân</a>
+                                <div class="dropdown-divider"></div>
+                              <a [routerLink]="['/user/quan-ly-dang-tin']" class="dropdown-item font" >
+                                <i class="mdi mdi-message-processing mr-2 text-warning font"></i>Tin đã đăng </a>
+                              <a [routerLink]="['/user/quan-ly-messeger']" class="dropdown-item font" >
+                                <i class="mdi mdi-file-find mr-2 text-warning font"></i>Quản lý tin nhắn</a>
+                              <div class="dropdown-divider"></div>
+                              <a [routerLink]="['/user/lich-su-giao-dich']" class="dropdown-item font" >
+                                <i class="mdi  mdi-history mr-2 text-success font"></i>Lịch sử giao dịch</a>
+                              <a [routerLink]="['/home/bang-gia-dich-vu']" class="dropdown-item font" >
+                                <i class="mdi mdi-newspaper mr-2 text-success font"></i>Bảng giá dịch vụ</a>
+                              <div class="dropdown-divider"></div>
+                              <a [routerLink]="['/home/tro-giup']" class="dropdown-item font" >
+                                <i class="mdi mdi-help-circle mr-2 text-primary font"></i> Trợ giúp</a>
+                              <a (click)='onLogout()' class="dropdown-item font">
+                                <i class="mdi mdi-logout mr-2 text-primary font"></i>Đăng xuất</a>
+                              <div class="dropdown-divider"></div>
+                            </div>
+                          </a>
+                        </div>
+                    </li>
+                    <li class="nav-item active" style="margin-left: 20px;">
+                      <a class="nav-link" href="#"><i style="font-size: 20px;margin-top: 5px;" class="fa  fa-heart-o"></i></a>
+                    </li>
+                    <li class="nav-item active" style="margin-left: 20px;" [hidden]="username">
+                      <a class="nav-link"><i class="fa  fa-bell-o " style="font-size: 20px;margin-top: 6px; "></i></a>
+                    </li>
+                    <li class="nav-item active" style="margin-left: 20px;"  *ngIf="isUser">
+                      <div class="nav-item nav-profile dropdown" style="visibility: visible;">
+                        <a class="nav-link " id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false" style="margin-top: -4px;" >
+                          <button mat-icon-button *ngIf="countReply > 0" style=" margin-top: 0px;">
+                            <i class="fa  fa-bell-o " style="font-size: 20px; "></i>
+                            <span class="badge" >{{countReply}}</span>
+                          </button>
+                          <button mat-icon-button *ngIf="countReply == 0" style=" margin-top: 0px;">
+                            <i class="fa  fa-bell-o " style="font-size: 20px;"></i>
+                          </button>
+                        </a>
+                     
+                      <div class="dropdown-menu navbar-dropdown scrollable-menu" aria-labelledby="profileDropdown" style="font-size: 20px;margin-left: -160px;width: 300px;">
+                        <b  class="dropdown-item" >Tin nhắn</b>
+                          <div class="dropdown-divider"></div>
+                          <div *ngIf="checkreply">
+                            <div *ngFor="let reply of reply">
+                            <a class="dropdown-item " *ngIf="!reply.isSee">
+                              <div class="container">
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
+                                  </div>
+                                  <div (click)="onClick(reply.id)" class="col-md-8">{{reply.name}}
+                                    <div>{{reply.phone}}</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </a>
+                            </div>
+                          </div>
+                          <div *ngIf="!checkreply">
+                            <b>Bạn không có tin nhắn nào</b>
+                          </div>
+                        <!--<a class="dropdown-item " >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
+                              </div>
+                              <div class="col-md-8">Chu Minh Hoàng
+                                <div>0899012249</div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <a class="dropdown-item " >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
+                              </div>
+                              <div class="col-md-8">Chu Minh Hoàng
+                                <div>0899012249</div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <a class="dropdown-item " >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
+                              </div>
+                              <div class="col-md-8">Chu Minh Hoàng
+                                <div>0899012249</div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <a class="dropdown-item " >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
+                              </div>
+                              <div class="col-md-8">Chu Minh Hoàng
+                                <div>0899012249</div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <a class="dropdown-item " >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
+                              </div>
+                              <div class="col-md-8">Chu Minh Hoàng
+                                <div>0899012249</div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <a class="dropdown-item " >
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
+                              </div>
+                              <div class="col-md-8">Chu Minh Hoàng
+                                <div>0899012249</div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>-->
+                        
+                        
+                        <div class="dropdown-divider"></div>
+                      </div>
+                    </div>
+                    </li>
+                    <li class="nav-item active" style="margin-top:0px ;">
+                      <button *ngIf="!checkLogin" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" [routerLink]="['/login']"><b>Đăng tin</b></button>
+                      <button *ngIf="checkLogin" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" [routerLink]="['/user/danh-muc']"><b>Đăng tin</b></button>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+
+
+            </div>
+          </div>
+    </nav>
+
+  </header>
+
+
+
+  </div>
+

@@ -1,0 +1,69 @@
+
+<div class="container-fluid" style="margin-bottom:50px">
+  <app-tophead [name]="nametophead"></app-tophead>
+    <h2 class="font" style="margin:  15px 0px 15px 0px ;">Quản lý Bill</h2>
+    <div class="row" >
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-md-6">
+        <div class="row" style="margin-left: 30px; margin-bottom: 5px;">
+          <div class="col-md-8">
+            <div class="search-field d-none d-md-block" style="margin-top:2px" >
+              <form class="d-flex align-items-center h-100" action="#">
+                <div class="input-group" style="color: black;background-color: white;border-radius: 2px;">
+                  <div class="input-group-prepend bg-transparent">
+                    <i class="input-group-text border-0 mdi mdi-magnify" style="color: black; background-color: white;"></i>
+                  </div>
+                  <input name="searchName" [(ngModel)]="searchName" class="form-control bg-transparent border-0" placeholder="Tìm kiếm theo tên" style="padding-right: 20px;">
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-4" style="text-align: center;margin-top: 7px; "><button class="bt btn-warning" style="width:100%;height: 35px;" (click)="onSearch()">Tìm kiếm </button></div>
+        </div>
+        <div class="row" style="margin-left: 40px;">
+          <table style="width:100%">
+            <tr>
+              <th>Tên</th>
+              <th>SĐT</th>
+              <th>Số tiền</th>
+              <th>Ngày nạp </th>
+            </tr>
+            <tr *ngFor="let data of bills | paginate: { itemsPerPage: 10, currentPage: page }">
+              <td>{{data.motel.user.hovaTen}}</td>
+              <td>{{data.motel.user.account.phone}}</td>
+              <td>{{data.payMoney}} VND</td>
+              <td>{{data.motel.dateUpdate | date}}</td>
+            </tr>
+
+
+          </table>
+
+          <br>
+          <pagination-controls (pageChange)="page = $event" style="margin-left:90px;margin-top: 20px;" ></pagination-controls>
+        </div>
+      </div>
+
+      <div class="col-md-6" style="text-align: center;padding-left: 80px">
+        <div>
+        <div class="row">
+          
+          <div class="col-md-12" style="margin-top: 15px;">
+            <div style="float: left;"><b>Tổng tiền : {{totalPrice}} USD</b></div>
+            <div style="float: right;margin-right: 20px;"></div>
+          </div>
+        </div>
+        <div  style="margin-top:20px;padding-right: 20px;">
+          <div  *ngFor="let bill of billJustPublish">
+            <div class="col-md-12" style="margin-top:10px">
+              <div class="row" style="text-align: center;background-color: rgb(235, 232, 191);height: 60px;padding: 20px;">
+                <div class="col-sm-5" style="height:auto">{{bill.motel.user.hovaTen}}</div>
+                <div class="col-sm-4">{{bill.motel.dateUpdate | date}} </div>
+                <div class="col-sm-3">{{bill.payMoney}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
