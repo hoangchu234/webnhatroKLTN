@@ -37,6 +37,7 @@ import { MagementProfileComponent } from './authority/loginuser/magement-profile
 import { MangementChartComponent } from './authority/loginadmin/mangement-chart/mangement-chart.component';
 import { AreaCityHomeComponent } from './area-city-home/area-city-home.component';
 import { MagementSendMessegerComponent } from './authority/loginuser/magement-send-messeger/magement-send-messeger.component';
+import { WebForumComponent } from './web-forum/web-forum.component'
 
 
 const routes: Routes = [
@@ -88,6 +89,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'forum', component:WebForumComponent },
 ];
 
 @NgModule({

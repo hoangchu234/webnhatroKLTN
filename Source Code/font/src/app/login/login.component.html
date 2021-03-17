@@ -8,33 +8,36 @@
   </nav>
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="border: 1px solid #ebedf2;border-top: none;">
-      <body>
+      
         <div class="card ">
           <div class="card-body" >
             <form class="form-signin"style="margin-top: -15px;" #form="ngForm" (ngSubmit)="login()">
               <a style="margin: 15px;font-size: 15px;">Số điện thoại</a>
               <div class="form-label-group" style="padding-left: 20px;">
-                <input type="email" id="inputEmail" name="phone"  [(ngModel)]="phone" class="form-control" required autofocus style="color: black;">
+                <input  type="email" id="inputEmail" name="phone"  [(ngModel)]="phone" class="form-control" required autofocus style="color: black;margin-top: 5px;">
               </div>
               <a style="margin: 15px;font-size: 15px;" >Mật khẩu</a>
               <div class="form-label-group" style="padding-left: 20px;">
-                <input type="password" id="inputPassword" name="password"  [(ngModel)]="password" class="form-control" required style="color: black;">
+                <input type="password" id="inputPassword" name="password"  [(ngModel)]="password" class="form-control" required style="color: black;margin-top: 5px;">
               </div>
 
               <div class="custom-control custom-checkbox mb-3" style="margin-left: 10px;" >
                 <input type="checkbox" class="custom-control-input" id="customCheck1">
                 <label class="custom-control-label" for="customCheck1"  style="color: black;margin-left: 10px;font-size: 15px;">Nhớ mật khẩu</label>
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"  style="background-color: #007bff;color: white;margin-top: 30px;margin-left: 5px;">Đăng nhập</button>
+              <div>
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"  style="background-color: #007bff;color: white;margin-top: 30px;margin-left: 5px;">Đăng nhập</button>
+              </div>
               <br>
-              <a style="text-align: center;margin-left: 5px;font-size: 15px;">Bạn chưa có tài khoản<a style="color: blue;font-size: 15px;">Tạo tài khoản</a></a>
+              <div style="margin-top: 80px;">
+                Bạn chưa có tài khoản<a style="color: blue;font-size: 15px;">Tạo tài khoản</a>
+              </div>
               <hr class="my-4">
 
               <app-sociallogin></app-sociallogin>
             </form>
           </div>
         </div>
-      </body>
     </div>
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="border: 1px solid #ebedf2;border-top: none;">
       <div >
@@ -86,7 +89,7 @@
             </div>
           </form>
         </div>
-          <p class="divider-text">
+          <p class="divider-text" >
                 <span class="bg-light">HOẶC</span>
             </p>
           <p class="text-center">Bắt đầu với tài khảon miễn phí</p>
