@@ -38,7 +38,7 @@ import { MangementChartComponent } from './authority/loginadmin/mangement-chart/
 import { AreaCityHomeComponent } from './area-city-home/area-city-home.component';
 import { MagementSendMessegerComponent } from './authority/loginuser/magement-send-messeger/magement-send-messeger.component';
 import { WebForumComponent } from './web-forum/web-forum.component'
-
+import { ChatsComponent} from './chats/chats.component'
 
 const routes: Routes = [
   {
@@ -87,9 +87,11 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'forum', component:WebForumComponent },
+  { path: 'chat', component:ChatsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'forum', component:WebForumComponent },
+
 ];
 
 @NgModule({

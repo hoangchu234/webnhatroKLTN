@@ -110,6 +110,7 @@ import { DialogEditMotelComponent } from '../app/authority/loginuser/magement-pu
 import { DialogExtendMotelsComponent } from './authority/loginuser/magement-publish-motel/dialog-extend-motels/dialog-extend-motels.component';
 import { ExtendPaypalComponent } from './authority/loginuser/magement-publish-motel/dialog-extend-motels/extend-paypal/extend-paypal.component';
 import { WebForumComponent } from './web-forum/web-forum.component';
+import { ChatsComponent } from './chats/chats.component';
 
 @NgModule({
   declarations: [
@@ -166,7 +167,8 @@ import { WebForumComponent } from './web-forum/web-forum.component';
     DialogEditMotelComponent,
     DialogExtendMotelsComponent,
     ExtendPaypalComponent,
-    WebForumComponent
+    WebForumComponent,
+    ChatsComponent
   ],
   imports: [
     BrowserModule,
