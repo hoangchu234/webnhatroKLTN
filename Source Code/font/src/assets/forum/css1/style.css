@@ -689,6 +689,7 @@ header.sticky {
 }
 
 .top-area > ul {
+    padding-top: 15px;
     display: inline-block;
     float: left;
     line-height: 64px;
@@ -4053,7 +4054,7 @@ a.add-butn.more-action {
     border-bottom: none;
     border-right: 1px solid #ddd;
     display: flex;
-    flex-flow: column nowrap;
+
 	padding-right: 15px;
 }
 
@@ -15715,7 +15716,7 @@ a.shopping-cart > i {
     border: medium none;
     display: inline-block;
     padding: 20px 15px;
-    width: 100%;
+    width: 96%;
 }
 .message-writing-box > form .text-area button1 {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
