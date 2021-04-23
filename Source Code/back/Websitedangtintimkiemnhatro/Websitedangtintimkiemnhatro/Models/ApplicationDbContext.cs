@@ -33,6 +33,8 @@ namespace Websitedangtintimkiemnhatro.Models
         public DbSet<LiveType> LiveTypes { get; set; }
         public DbSet<Reply> Replys { get; set; }
         public DbSet<Street> Streets { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -152,6 +154,20 @@ namespace Websitedangtintimkiemnhatro.Models
             {
                 entity.Property(e => e.Id).UseIdentityColumn();
                 entity.HasOne(e => e.ManageEmployee).WithMany(d => d.ChildManageEmployees).HasForeignKey(d => d.ManageEmployeeId).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Post>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.HasOne(e => e.User).WithMany(d => d.Posts).HasForeignKey(d => d.UserId).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.HasOne(e => e.User).WithMany(d => d.Comments).HasForeignKey(d => d.UserId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.Post).WithMany(d => d.Comments).HasForeignKey(d => d.PostId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.ParentComment).WithMany(d => d.ChildComments).HasForeignKey(d => d.ParentCommentId).OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

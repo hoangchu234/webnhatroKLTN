@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Websitedangtintimkiemnhatro.Models;
+using Websitedangtintimkiemnhatro.ViewModels;
 
 namespace Websitedangtintimkiemnhatro.Controllers
 {
@@ -25,6 +26,23 @@ namespace Websitedangtintimkiemnhatro.Controllers
         public async Task<ActionResult<IEnumerable<City>>> GetCitys()
         {
             return await _context.Citys.ToListAsync();
+        }
+
+        // GET: api/List
+        [HttpGet]
+        [Route("GetLists")]
+        public async Task<ActionResult<Object>> GetLists()
+        {
+            List<ListsViewModel> list = new List<ListsViewModel>();
+            var cities = _context.Citys.Skip(1).Select(a => new ListsViewModel() { Name = a.Name}).ToList();
+            list.AddRange(cities);
+            var provinces = _context.Provinces.Include(a => a.City).Skip(1).Select(a => new ListsViewModel() { Name = a.Name + ", " + a.City.Name }).ToList();
+            list.AddRange(provinces);
+            var districts = _context.Districts.Include(a => provinces).Skip(1).Select(a => new ListsViewModel() { Name = a.Name + ", " + a.Province.Name + ", " + a.Province.City.Name}).ToList();
+            list.AddRange(districts);
+            var streets = _context.Streets.Include(a => provinces).Skip(1).Select(a => new ListsViewModel() { Name = a.Name + ", " + a.Province.Name + ", " + a.Province.City.Name }).ToList(); 
+            list.AddRange(streets);
+            return list;
         }
 
         // GET: api/Cities/5

@@ -316,6 +316,64 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return _context.Motels.Any(e => e.Id == id);
         }
 
+        //:city/:province/:district/:street/:price/:type
+        // GET: api/Motels/GetMotelByOrder
+        [HttpGet]
+        [Route("GetMotelByOrder/{city}/{province}/{district}/{street}/{price}/{type}")]
+        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelByOrder(int city, int province, int district, int street, int price, int type)
+        {
+            var models = await _context.Motels
+                .Include(m => m.Detail)
+                .Include(m => m.Images)
+                .Where(a => a.Status == "Tin đang hiển thị" && a.Verify == true)
+                .ToListAsync();
+            if(city != 0)
+            {
+                models = models.Where(a => a.CityId == city).ToList();
+            }
+            if (province != 0)
+            {
+                models = models.Where(a => a.ProvinceId == province).ToList();
+            }
+            if (district != 0)
+            {
+                models = models.Where(a => a.DistrictId == province).ToList();
+            }
+            if (street != 0)
+            {
+                models = models.Where(a => a.StreetId == street).ToList();
+            }
+            if (type != 1)
+            {
+                models = models.Where(a => a.Detail.TypeofnewId == type).ToList();
+            }
+
+            if(price != 0)
+            {
+                var priceSearch = _context.PriceSearchs.Where(a => a.Id == price).FirstOrDefault();
+                if (priceSearch.NumberOne.Equals("Dưới"))
+                {
+                    models = models.Where(a => (a.PriceType.Equals("triệu/tháng") && float.Parse(a.Price) < 1.0000) || a.PriceType.Equals("đồng/tháng") && float.Parse(a.Price) < 999).ToList();
+                }
+                else if (priceSearch.NumberOne.Equals("Trên"))
+                {
+                    models = models.Where(a => a.PriceType.Equals("triệu/tháng") && float.Parse(a.Price) >= 15.0000).ToList();
+                }
+                else
+                {
+                    var numberone = float.Parse(priceSearch.NumberOne) * 1.0000;
+                    var numbertwo = float.Parse(priceSearch.NumberTwo) * 1.0000;
+                    models = models.Where(a => a.PriceType.Equals("triệu/tháng") && (float.Parse(a.Price) > numberone && float.Parse(a.Price) <= numbertwo)).ToList();
+                }
+            }
+
+            if (models == null)
+            {
+                return NotFound();
+            }
+
+            return models;
+        }
 
         // GET: api/Motels/GetMotelByType/name
         [HttpGet]

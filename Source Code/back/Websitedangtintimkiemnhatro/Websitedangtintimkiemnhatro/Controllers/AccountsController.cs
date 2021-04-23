@@ -122,14 +122,12 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 if (a.Phone == account.Phone && a.Password == account.Password)
                 {
                     string phone = a.Phone;
-                    var accountfind = _context.Accounts.Include(m => m.User).Include(m => m.Employee).Include(a => a.Role).Where(b => b.Phone == phone).FirstOrDefault();
+                    var accountfind = _context.Accounts.Include(m => m.User).Include(m => m.Employee).Where(b => b.Phone == phone).FirstOrDefault();
                     return accountfind;
                 }
 
             }
-
-
-            return Content("Failse");
+            return NotFound();
         }
 
         // POST: api/Accounts/Signinsocial
@@ -144,7 +142,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 var accountfind = _context.Accounts.Include(m => m.User).Include(m => m.Employee).Include(a => a.Role).Where(m => m.User.Email == user.Email).FirstOrDefault();
                 return accountfind;
             }
-            return Content("false");
+            return NotFound();
         }
 
         // PUT: api/Accounts/Lockaccount

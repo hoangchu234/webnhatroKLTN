@@ -10,6 +10,10 @@ namespace Websitedangtintimkiemnhatro.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Number { get; set; }
+        public string NumberOne { get; set; }
+        public string TypePriceOne { get; set; }
+        public string NumberTwo { get; set; }
+        public string TypePriceTwo { get; set; }
+
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Websitedangtintimkiemnhatro.Hubs;
 using Websitedangtintimkiemnhatro.Models;
 
 namespace Websitedangtintimkiemnhatro
@@ -30,6 +32,21 @@ namespace Websitedangtintimkiemnhatro
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .WithOrigins("https://localhost:4200", "http://localhost:49938")
+                    //.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    );
+            });
+
+            services.AddSignalR();
+
             services.AddControllersWithViews()
                     .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -53,10 +70,12 @@ namespace Websitedangtintimkiemnhatro
                 }
             });
 
-            app.UseCors(options => options.WithOrigins("http://localhost:4200")
+            app.UseCors(options => options.WithOrigins("http://localhost:4200", "http://localhost:49938")
             .AllowAnyMethod()
             .AllowAnyHeader());
 
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 
@@ -67,6 +86,7 @@ namespace Websitedangtintimkiemnhatro
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalrHub>("/signalr");
             });
         }
     }

@@ -156,6 +156,41 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.ToTable("Citys");
                 });
 
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CommentUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ParentCommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentCommentId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Detail", b =>
                 {
                     b.Property<int>("Id")
@@ -433,6 +468,31 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.ToTable("Motels");
                 });
 
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PostUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.PriceSearch", b =>
                 {
                     b.Property<int>("Id")
@@ -442,7 +502,16 @@ namespace Websitedangtintimkiemnhatro.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Number")
+                    b.Property<string>("NumberOne")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumberTwo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypePriceOne")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypePriceTwo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -662,6 +731,26 @@ namespace Websitedangtintimkiemnhatro.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Comment", b =>
+                {
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.Comment", "ParentComment")
+                        .WithMany("ChildComments")
+                        .HasForeignKey("ParentCommentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Detail", b =>
                 {
                     b.HasOne("Websitedangtintimkiemnhatro.Models.LiveType", "LiveType")
@@ -745,6 +834,15 @@ namespace Websitedangtintimkiemnhatro.Migrations
                         .WithMany("Motels")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Post", b =>
+                {
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.User", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
