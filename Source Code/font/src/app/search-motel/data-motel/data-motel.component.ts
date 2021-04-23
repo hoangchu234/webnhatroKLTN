@@ -463,16 +463,17 @@ export class DataMotelComponent implements OnInit {
         str = str.replace("-", "");
         indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.typePriceOne + a.numberTwo + a.typePriceTwo) === str);
       }
+      indexPrice = indexPrice + 1;
     }
    
-    const result =  await this.motelService.getmotelbyorder(indexCity,indexProvince,indexDistrict,indexStreet,indexPrice + 1,indexType) as any;
+    const result =  await this.motelService.getmotelbyorder(indexCity,indexProvince,indexDistrict,indexStreet,indexPrice,indexType) as any;
     this.loadDataHot(result);
     this.loadData1(result);
     this.loadData2(result);
     this.loadData3(result);    
     this.loadDataThuong(result);
     this.motels = this.motelsearch;
-    
+    this.totalRecord = this.motels.length;
     /*this.motelService.getmotelbytype(name).subscribe(motel => {
 
 

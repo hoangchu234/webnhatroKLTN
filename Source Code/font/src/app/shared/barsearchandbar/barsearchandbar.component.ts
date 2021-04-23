@@ -22,6 +22,7 @@ import { List } from 'src/app/model/viewmodel/ListViewModel';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
+import { DataMotelComponent } from '../../search-motel/data-motel/data-motel.component';
 
 @Component({
   selector: 'app-barsearchandbar',
@@ -57,6 +58,7 @@ export class BarsearchandbarComponent implements OnInit {
   options: List[] = [];
   filteredOptions: Observable<List[]>;
   
+  
   @Output() newTypeSearch: EventEmitter<string> = new EventEmitter<string>();
   constructor(public streetService:StreetService,public dictrictService:DictrictService,public location: Location,private priceSearchServer:PriceSearchService,private router:ActivatedRoute,private route: Router,public activerouter:ActivatedRoute,private motelService: MotelService,private cityService: CitiesService, private provinceService: ProvincesService, private typeservice:TypeofnewService) {
     this.getPrices();
@@ -66,9 +68,9 @@ export class BarsearchandbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-    this.firstTime();
     this.setData();
+    this.firstTime();
+    
     this.enterSearch();
 
     
@@ -160,7 +162,7 @@ export class BarsearchandbarComponent implements OnInit {
     this.district.id = "0";
     this.street.name = "Đường Phố";
     this.street.id = "0";
-    this.newType = "Phòng trọ, nhà cho thuê";
+    this.newType = "Phòng trọ, nhà trọ";
     this.priceSearch = "Tất cả";
     
     //this.priceSearch.number = "Giá thuê"
@@ -241,9 +243,11 @@ export class BarsearchandbarComponent implements OnInit {
     const districts = await this.dictrictService.getDistricts() as District[];
     const streets = await this.streetService.getStreets() as Street[];
 
-    indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type);
+    indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type)
+    indexType = indexType + 1;
+    const result = types.find(a => a.id == indexType.toString());
+    this.newType = result.name;
 
-    this.newType = types.find(a => a.id == indexType.toString()).name;
     if(city != null){
       indexCity = cities.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === city); 
       if(indexCity == -1){
@@ -251,6 +255,7 @@ export class BarsearchandbarComponent implements OnInit {
       }
       else{
         this.city = cities.find(a => a.id == indexCity.toString());
+        this.myControl.setValue(this.city.name);
       }
     }
     
@@ -495,6 +500,7 @@ export class BarsearchandbarComponent implements OnInit {
     this.priceSearchs.push(priceZero);
      
     for(let i =0;i<result.length;i++){
+      result[i].numberTwo = "- " + result[i].numberTwo;
       this.priceSearchs.push(result[i])
     }
 
@@ -591,5 +597,88 @@ export class BarsearchandbarComponent implements OnInit {
 
   displayFn(list: List): string {
     return list && list.name ? list.name : '';
+  }
+
+  async onSearch(){
+    const districts = await this.dictrictService.getDistricts() as District[];
+    const streets = await this.streetService.getStreets() as Street[]
+    var city = "", province = "", district = "", street = "", price = "";
+    if(this.city.name == "Tỉnh thành phố" || this.city.name == "Tất cả"){
+      city = "";
+    }
+    else{
+      city = RemoveVietnameseTones.removeVietnameseTones(this.city.name);
+    }
+    if(this.province.name == "Quận Huyện" || this.province.name == "Tất cả"){
+      province = "";
+    }
+    else{
+      province = '/' + RemoveVietnameseTones.removeVietnameseTones(this.province.name);
+    }
+    if(this.district.name == "Phường Xã" || this.district.name == "Tất cả"){
+      district = "";
+    }
+    else{
+      district = '/' + RemoveVietnameseTones.removeVietnameseTones(this.district.name);
+    }
+    if(this.street.name == "Đường Phố" || this.street.name == "Tất cả"){
+      street = "";
+    }
+    else{
+      street = '/' + RemoveVietnameseTones.removeVietnameseTones(this.street.name);
+    }
+
+    if(this.priceSearch == "Chọn mức giá" || this.priceSearch == "Tất cả"){
+      price = "";
+    }
+    else{
+      price = RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
+    }
+
+    if(this.myControl.value){
+      let str = this.myControl.value.name.toString().split(", ");
+      if(str.length == 1){
+        city = RemoveVietnameseTones.removeVietnameseTones(str[0]);
+      }
+      else if(str.length == 2){
+        city = RemoveVietnameseTones.removeVietnameseTones(str[1]);
+        province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
+      }
+      else {
+        city = RemoveVietnameseTones.removeVietnameseTones(str[2]);
+        province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
+        var indexDistrict: Number = 0;
+        var indexStreet: number = 0;
+        streets.forEach(a => {
+          if(RemoveVietnameseTones.removeVietnameseTones(a.name) === str[0]){
+            indexStreet = Number(a.id);
+          }
+        }); 
+        districts.forEach(a => {
+          if(RemoveVietnameseTones.removeVietnameseTones(a.name) == str[0]){
+            indexDistrict = Number(a.id);
+          }
+        }); 
+        if(indexDistrict != 0){
+          district = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
+        }
+        else{
+          street = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
+        }
+      }
+    }
+
+    if(this.newType == "Tất cả"){
+      const result = await this.typeservice.getTypes() as NewType[];
+      console.log(result)
+      this.newType = result[1].name;
+    }
+    var link = '/home' + '/' + city + province + district + street + '/' + price  + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
+    
+    //this.route.navigate( [link]);
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate([link]);
+      
+    }); 
   }
 }
