@@ -119,17 +119,14 @@ export class SocialloginComponent implements OnInit {
     
   }
 
-  public search(email) {
-    this.checkmail = this.userService.getsearchemail(email).subscribe(
-      (data) => {
-        if (data) {
-          this.createNewAccountSocial();
-        }
-        else {
-          this.login();
-        }
-      }
-    )
+  public async search(email) {
+    this.checkmail = await this.userService.getsearchemail(email) as Account[];
+    if (this.checkmail) {
+      this.createNewAccountSocial();
+    }
+    else {
+      this.login();
+    }
   }
 
   public createNewAccountSocial = async () => {

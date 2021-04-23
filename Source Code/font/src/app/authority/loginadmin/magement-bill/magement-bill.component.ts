@@ -34,18 +34,22 @@ export class MagementBillComponent implements OnInit {
     this.page = event;
   }
 
-  public getBills(){
-    this.billservice.getAdminBills().subscribe(data => {
+  public async getBills(){
+    this.bills = await this.billservice.getAdminBills() as Bill[];
+    this.billSearch = this.bills;
+    this.tongTien();
+    /*this.billservice.getAdminBills().subscribe(data => {
       this.bills = data;
       this.billSearch = data;
       this.tongTien();
-    })
+    })*/
   }
 
-  public getNowbills(){
-    this.billservice.getNowsBills().subscribe(data => {
+  public async getNowbills(){ 
+    this.billJustPublish = await this.billservice.getNowsBills() as Bill[];
+    /*this.billservice.getNowsBills().subscribe(data => {
       this.billJustPublish = data;
-    })
+    })*/
   }
 
   public onSearch(){

@@ -6,6 +6,7 @@ import { Motel } from '../../../../model/Motel';
 import { Detail } from '../../../../model/Detail';
 import { LiveType } from '../../../../model/LiveType';
 import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-thong-tin-co-ban-next-next',
@@ -23,7 +24,7 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
   btnDisabledLiving = true;
   motelprevous:Motel;
   constructor(private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,public motelService:MotelService) {
-    this.motelprevous = JSON.parse(localStorage.getItem('PublishMotel'));
+    this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     if(this.motelprevous.detail.numberBath){
       this.numberBath = this.motelprevous.detail.numberBath.toString();
       this.numberLiving = this.motelprevous.detail.numberLiving.toString();
@@ -37,8 +38,9 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
     this.numberLiving = "0";
   }
 
-  public getLiveType(){
-    this.motelService.getLiveTypes().subscribe(getlivetype => this.liveTypes = getlivetype)
+  public async getLiveType(){
+    this.liveTypes = await this.motelService.getLiveTypes() as LiveType[];
+    //this.motelService.getLiveTypes().subscribe(getlivetype => this.liveTypes = getlivetype)
   }
 
   public increaseNumberBath()
@@ -77,7 +79,7 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
 
   public next(){
     let motelnew = new Motel();
-    motelnew = JSON.parse(localStorage.getItem('PublishMotel'));
+    motelnew = JSON.parse(localStorage.getItem(StorageService.motelStorage));
 
     let detail = new Detail();
     
@@ -88,8 +90,8 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
     detail.director = motelnew.detail.director;
     motelnew.detail = detail;
 
-    localStorage.removeItem('PublishMotel')
-    localStorage.setItem('PublishMotel', JSON.stringify(motelnew));
+    localStorage.removeItem(StorageService.motelStorage)
+    localStorage.setItem(StorageService.motelStorage, JSON.stringify(motelnew));
     this.router.navigateByUrl('/user/thong-tin-hinh-anh');
   }
 

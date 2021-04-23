@@ -10,15 +10,15 @@ import { Account } from  '../../model/Account';
 })
 export class LoginuserComponent implements OnInit {
   public hoVaTen:string;
-  currentAccount: Account;
+  //currentAccount: Account;
   checkImage = false;
   constructor(private router: Router,
     private authenticationService: AuthenticationService) { 
-      this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+      //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
       
-      if(this.currentAccount){
-        this.hoVaTen = this.currentAccount.user.hovaTen;
-        if(this.currentAccount.user.userImage != null){
+      if(this.authenticationService.currentAccountValue){
+        this.hoVaTen = this.authenticationService.currentAccountValue.user.hovaTen;
+        if(this.authenticationService.currentAccountValue.user.userImage != null){
           this.checkImage = true;
         }
       }

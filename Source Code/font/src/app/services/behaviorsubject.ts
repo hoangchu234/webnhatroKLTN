@@ -20,8 +20,6 @@ export class BehaviorSubjectClass {
   private newTypes: BehaviorSubject<NewType> = new BehaviorSubject(null);
 
   private imagesFile: BehaviorSubject<File[]> = new BehaviorSubject(null);
-
-
   
   constructor() { }
 
@@ -42,6 +40,4 @@ export class BehaviorSubjectClass {
     this.imagesFile.next(image);
   }
 
-  
-  
 }

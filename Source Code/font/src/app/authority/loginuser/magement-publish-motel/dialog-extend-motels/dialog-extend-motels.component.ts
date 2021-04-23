@@ -42,7 +42,7 @@ export class DialogExtendMotelsComponent implements OnInit {
   newTypes: NewType [] = [];
   newType;
 
-  currentAccount:Account;
+  //currentAccount:Account;
   cities: City[] = [];
   city = new City();
 
@@ -204,7 +204,7 @@ export class DialogExtendMotelsComponent implements OnInit {
     this.numberBath = this.data.detail.numberBath.toString();
     this.numberLiving = this.data.detail.numberLiving.toString();
 
-    this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
+    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.phoneMotel = this.data.phone;
 
 
@@ -285,8 +285,8 @@ export class DialogExtendMotelsComponent implements OnInit {
     }
   }
 
-  public getLiveType(){
-    this.motelService.getLiveTypes().subscribe(getlivetype => {
+  public async getLiveType(){
+    /*this.motelService.getLiveTypes().subscribe(getlivetype => {
       this.liveTypes = getlivetype
       for(let i=0;i<getlivetype.length;i++){
         if(this.data.detail.liveTypeId == getlivetype[i].id)
@@ -297,30 +297,57 @@ export class DialogExtendMotelsComponent implements OnInit {
           this.arrayTrue.push(false);
         }
       }
-    })
+    })*/
+    const result = await this.motelService.getLiveTypes() as LiveType[];
+    this.liveTypes = result
+    for(let i=0;i<result.length;i++){
+      if(this.data.detail.liveTypeId == result[i].id)
+      {
+        this.arrayTrue.push(true);
+      }
+      else{
+        this.arrayTrue.push(false);
+      }
+    }
   }
 
-  public getCities(){
-    this.cityService.getCitys().subscribe(getcity => {
-      for(let i=1; i< getcity.length; i++){
-        if(getcity[i].id == this.data.cityId){
-          this.cities.push(getcity[i]);
-          this.city = getcity[i];
-          this.getProvinceById(getcity[i].id)
-          break;
-        }
+  public async getCities(){
+    const result = await this.cityService.getCitys() as City[];
+    for(let i=1; i< result.length; i++){
+      if(result[i].id == this.data.cityId){
+        this.cities.push(result[i]);
+        this.city = result[i];
+        this.getProvinceById(result[i].id)
+        break;
       }
+    }
 
-      for(let i=1; i< getcity.length; i++){
-        if(getcity[i].id != this.data.cityId){
-          this.cities.push(getcity[i]);
-        }
+    for(let i=1; i< result.length; i++){
+      if(result[i].id != this.data.cityId){
+        this.cities.push(result[i]);
       }
-    })
+    }
   }
 
-  public getProvinceById(ID){
-    const list = this.provinceService.getProvincesByCity(Number(ID)).subscribe((data) => {
+  public async getProvinceById(ID){
+    const result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
+    for (let i = 0; i < result.length; i++) {
+      if(result[i].id == this.data.provinceId){
+        this.provinces.push(result[i]);
+        this.procince = result[i];
+        this.getStreetById(result[i].id)
+        this.getDistricteById(result[i].id)
+        break;
+      }
+    }
+    for (let i = 1; i < result.length; i++) {
+      if(result[i].id != this.data.provinceId){
+        this.provinces.push(result[i]);
+      }
+    }
+
+
+    /*const list = this.provinceService.getProvincesByCity(Number(ID)).subscribe((data) => {
       for (let i = 0; i < data.length; i++) {
         if(data[i].id == this.data.provinceId){
           this.provinces.push(data[i]);
@@ -337,11 +364,27 @@ export class DialogExtendMotelsComponent implements OnInit {
         }
       }
 
-    })
+    })*/
   }
 
-  public getStreetById(ID){
-      const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
+  public async getStreetById(ID){
+    const result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
+    for (let i = 0; i < result.length; i++) {
+      if(result[i].id == this.data.streetId){
+        this.streets.push(result[i]);
+        this.street = result[i];
+        break;
+      }
+    }
+    for (let i = 1; i < result.length; i++) {
+      if(result[i].id != this.data.streetId){
+        this.streets.push(result[i]);
+      }
+    }
+    if(result.length == 0){
+      this.motelUpdate.streetId = "0"
+    }
+      /*const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
         for (let i = 0; i < data.length; i++) {
           if(data[i].id == this.data.streetId){
             this.streets.push(data[i]);
@@ -357,10 +400,10 @@ export class DialogExtendMotelsComponent implements OnInit {
         if(data.length == 0){
           this.motelUpdate.streetId = "0"
         }
-      })
+      })*/
   }
 
-  public getDistricteById(ID){
+  /*public getDistricteById(ID){
         const list = this.dictrictService.getDistrictByProvince(Number(ID)).subscribe((data) => {
           for (let i = 0; i < data.length; i++) {
             if(data[i].id == this.data.districtId){
@@ -376,23 +419,37 @@ export class DialogExtendMotelsComponent implements OnInit {
           }
         
       })
+  }*/
+  public async getDistricteById(ID){
+    const result = await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
+    for (let i = 0; i < result.length; i++) {
+      if(result[i].id == this.data.districtId){
+        this.districts.push(result[i]);
+        this.district = result[i];
+        break;
+      }
+    }
+    for (let i = 1; i < result.length; i++) {
+      if(result[i].id != this.data.districtId){
+        this.districts.push(result[i]);
+      }
+    }
   }
 
   public getNewTypes = async () => {
-    this.typeservice.getTypeExcepts().subscribe(gettypes => {
-      for (let i = 0; i < gettypes.length; i++) {
-        if(this.data.detail.typeofnewId.toString() == gettypes[i].id){
-          this.newTypes.push(gettypes[i]);
+    const result = await this.typeservice.getTypeExcepts() as NewType[];
+    for (let i = 0; i < result.length; i++) {
+      if(this.data.detail.typeofnewId.toString() == result[i].id){
+        this.newTypes.push(result[i]);
 
-          break;
-        }
+        break;
       }
-      for (let i = 0; i < gettypes.length; i++) {
-        if(this.data.detail.typeofnewId.toString() != gettypes[i].id){
-          this.newTypes.push(gettypes[i]);
-        }
+    }
+    for (let i = 0; i < result.length; i++) {
+      if(this.data.detail.typeofnewId.toString() != result[i].id){
+        this.newTypes.push(result[i]);
       }
-    });
+    }
   }
 
 
@@ -464,13 +521,12 @@ export class DialogExtendMotelsComponent implements OnInit {
     this.motelUpdate.detail.director = value;
   }
 
-  public onChangeLiveType(event, liveTypes: LiveType)
+  public async onChangeLiveType(event, liveTypes: LiveType)
   {
     this.liveType = liveTypes.nameType;
-    this.motelService.getLiveTypes().subscribe(getlivetype => {
-      var id = getlivetype.find(a => a.nameType == this.liveType)
-      this.motelUpdate.detail.liveTypeId = id.id;
-    })
+    const result = await this.motelService.getLiveTypes() as LiveType[];
+    var id = result.find(a => a.nameType == this.liveType)
+    this.motelUpdate.detail.liveTypeId = id.id;
    
   }
 
@@ -509,8 +565,8 @@ export class DialogExtendMotelsComponent implements OnInit {
 
 
   // Bill
-  public getServicePrices(){
-    this.priceService.getServiceprices().subscribe(getserviceprice => this.servicePrice = getserviceprice)
+  public async getServicePrices(){
+    this.servicePrice = await this.priceService.getServiceprices() as Serviceprice[];
   }
 
 
@@ -830,7 +886,7 @@ export class DialogExtendMotelsComponent implements OnInit {
     });
   }
 
-  public addBill(){
+  public async addBill(){
     var bill = new Bill();
     bill.motelId = this.motelUpdate.id;
 
@@ -841,7 +897,7 @@ export class DialogExtendMotelsComponent implements OnInit {
     bill.numberDatePublish = Number(t[0]);
     bill.timeChoice = this.time;
     console.log(bill)
-    this.billService.addbill(bill).subscribe()
+    await this.billService.addbill(bill);
     localStorage.removeItem("money");
   }
 }

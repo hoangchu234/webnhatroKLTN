@@ -20,7 +20,7 @@ import { BehaviorSubjectClass } from 'src/app/services/behaviorsubject';
 export class MagementProfileComponent implements OnInit {
 
  // Lấy data account từ localstogare
- currentAccount: Account;
+ //currentAccount: Account;
   
  dialogUser: User;
 
@@ -39,8 +39,10 @@ export class MagementProfileComponent implements OnInit {
  checkGmail = false;
 
  checkImage = false;
+ account = this.authenticationService.currentAccountValue;
+
  constructor(private motelService: MotelService,public dialog: MatDialog,private router: Router,private behaviorSubjectClass:BehaviorSubjectClass,private authenticationService: AuthenticationService,private userService: UserService) {
-   this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+   //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
    this.getUserById();
    this.getMotels();
   }
@@ -57,20 +59,24 @@ export class MagementProfileComponent implements OnInit {
  }
 
 
- public getMotels(){
-   this.motelService.getmotelbyuser(this.currentAccount.user.id).subscribe(getmotel => {
+ public async getMotels(){
+   /*this.motelService.getmotelbyuser(this.authenticationService.currentAccountValue.user.id).subscribe(getmotel => {
      this.motels = getmotel
      if(this.motels.length){
        this.checkDataMotel = "Has data";
      }
      this.totalRecord = this.motels.length;
-   })
+   })*/
+    this.motels = await this.motelService.getmotelbyuser(this.authenticationService.currentAccountValue.user.id) as Motel[];
+    if(this.motels.length){
+      this.checkDataMotel = "Has data";
+    }
+    this.totalRecord = this.motels.length;
  }
 
- public getUserById(){
-   console.log(this.currentAccount.user.id)
-   var id = Number(this.currentAccount.user.id);
-   this.userService.getUserFromId(id).subscribe(getuser => {
+ public async getUserById(){
+   var id = Number(this.authenticationService.currentAccountValue.user.id);
+   /*this.userService.getUserFromId(id).subscribe(getuser => {
      this.dialogUser = getuser
      if(this.dialogUser.facebook){
       this.checkFacebook = true;
@@ -82,12 +88,23 @@ export class MagementProfileComponent implements OnInit {
      {
        this.checkImage = true;
      }
-   });
+   });*/
+    this.dialogUser = await this.userService.getUserFromId(id) as any;
+      if(this.dialogUser.facebook){
+        this.checkFacebook = true;
+      }
+      if(this.dialogUser.email){
+        this.checkGmail = true;
+      }
+      if(this.dialogUser.userImage != null)
+      {
+        this.checkImage = true;
+      }
  }
 
  get isUser() {
    try{
-     var role = Number(this.currentAccount.roleId);
+     var role = Number(this.authenticationService.currentAccountValue.roleId);
      if(role == 1){
          return true;
      }

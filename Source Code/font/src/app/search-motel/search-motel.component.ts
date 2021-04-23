@@ -33,35 +33,26 @@ export class SearchMotelComponent implements OnInit {
   nametophead;
 
   //user
-  currentAccount: Account;
+  //currentAccount: Account;
   users:User[];
 
   @Output() seach:string = "Mặc định";
 
   xetvalue = false;
 
-
-
   datasearch;
-  constructor(private behaviorSubjectClass:BehaviorSubjectClass,private userService:UserService,private authenticationService: AuthenticationService,public dialog: MatDialog,private typeservice:TypeofnewService,private route: Router,private router: ActivatedRoute,private motelService:MotelService) {
-    this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-    localStorage.removeItem('areaName');
-    localStorage.removeItem('directName');
-    localStorage.removeItem('tickArea');
-    localStorage.removeItem('tickDirect');
+  constructor(private behaviorSubjectClass:BehaviorSubjectClass,
+    private userService:UserService,
+    private authenticationService: AuthenticationService,
+    public dialog: MatDialog,
+    private typeservice:TypeofnewService,
+    private route: Router,
+    private router: ActivatedRoute,
+    private motelService:MotelService) {
+    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+   
     this.getCountTypes();
-    (function ($) {
-      $(document).ready(function myFunction(){
-        var myVar;
-        myVar = setTimeout(showPage, 2000);
-      });
-
-      function showPage() {
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("myDiv").style.display = "block";
-      }
-      
-    })(jQuery);
+    
    }
 
 
@@ -94,12 +85,16 @@ export class SearchMotelComponent implements OnInit {
     this.seach = "Diện tích giảm dần"
   }*/
 
- public getCountTypes(){
-    this.typeservice.getCountTypes().subscribe(gettypes => {
+ public async getCountTypes(){
+    /*this.typeservice.getCountTypes().subscribe(gettypes => {
       for(let i = 1;i< gettypes.length; i++){
         this.counttypes.push(gettypes[i])
       }
-    })
+    })*/
+    const result = await this.typeservice.getCountTypes() as any;
+    for(let i = 1;i< result.length; i++){
+      this.counttypes.push(result[i])
+    }
   }
 
 /*

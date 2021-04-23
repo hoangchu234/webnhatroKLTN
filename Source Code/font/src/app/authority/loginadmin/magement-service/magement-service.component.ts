@@ -30,8 +30,9 @@ export class MagementServiceComponent implements OnInit {
     this.getServiceprices();
   }
 
-  public getServiceprices(){
-    this.priceSearchService.getServiceprices().subscribe(getserviceprice => this.servicePrice = getserviceprice)
+  public async getServiceprices(){
+    //this.priceSearchService.getServiceprices().subscribe(getserviceprice => this.servicePrice = getserviceprice)
+    this.servicePrice = await this.priceSearchService.getServiceprices() as Serviceprice[];
   }
 
   public edit(value){

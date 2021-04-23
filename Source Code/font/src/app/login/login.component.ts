@@ -14,8 +14,8 @@ import { EmployeesService } from '../services/employees.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public phone;
-  public password;
+  public phone:string;
+  public password:string;
 
   //Normal register
   public name:string;
@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
   public comfirm :firebase.auth.ConfirmationResult;
 
   resultaccount:Account[];
+  remember: boolean = false;
+
   constructor(private employeeService:EmployeesService,
     private authenticationService: AuthenticationService,
     private router: Router,
@@ -51,10 +53,35 @@ export class LoginComponent implements OnInit {
     this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
-  
-
   public login = () => {  
-    this.authenticationService.login(this.password, this.phone).subscribe(
+    try 
+    {
+      var account = new Account();
+      account.phone = this.phone;
+      account.password = this.password;
+      this.authenticationService.loginPhone(account).subscribe(account => {
+
+        if(!account.isActive){
+          alert('Đăng nhập thất bại');
+        }
+        else{
+          this.authenticationService.saveAccount(account, this.remember);
+          if(Number(account.roleId) == 1){
+            this.router.navigateByUrl('home');
+          }
+          else{
+            this.router.navigateByUrl('admin');
+          }
+    
+        }
+      })
+    } 
+    catch(e) 
+    {
+      console.log(e)
+      alert('Tài khoản không tồn tại!');
+    }
+    /*this.authenticationService.login(this.password, this.phone).subscribe(
       (data) => {
         console.log(data);
         console.log(data.isActive);
@@ -87,21 +114,18 @@ export class LoginComponent implements OnInit {
 
       },
       (error) => alert("Sai mật khẩu")//console.error(error)
-    )
+    )*/
   }
 
   public createNewAccount = async () => {
     if(this.confirmPassword == this.password){
       try {
         const verification = this.phone_number;
-        console.log(this.phone_number);
         if (verification != null) {
           this.comfirm.confirm(verification).then(async () =>{
             // this.name,this.phone,this.password.
             let account = new Account();
             let user = new User();
-
-            console.log(account.user);
             account.password = this.password;
             account.phone = this.phone;
             user.hovaTen = this.name;

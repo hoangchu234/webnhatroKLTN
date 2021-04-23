@@ -16,9 +16,11 @@ import { EmployeesService } from '../../../services/employees.service'
 export class SlidebarAdminComponent implements OnInit {
   public username:string;
   admin:string;
-  currentAccount: Account;
+  //currentAccount: Account;
   employee:Employee;
   job:string;
+
+  account: Account;
 
   checkImage = false;
   constructor(private employeeService:EmployeesService,
@@ -26,11 +28,13 @@ export class SlidebarAdminComponent implements OnInit {
     private router: Router,
     private motelService: MotelService,
     private authenticationService: AuthenticationService) { 
-      this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-      if(this.currentAccount.employee.employeeImage != null){
+      
+      //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+      if(this.authenticationService.currentAccountValue.employee.employeeImage != null){
         this.checkImage = true;
       }
-      this.job = this.currentAccount.roleId;
+      this.account = this.authenticationService.currentAccountValue;
+      this.job = this.authenticationService.currentAccountValue.roleId;
     }
 
   ngOnInit(): void {
@@ -40,18 +44,18 @@ export class SlidebarAdminComponent implements OnInit {
 
   get isAdmin() {
     if(this.username == ''){
-      this.username = this.currentAccount.username;
+      this.username = this.authenticationService.currentAccountValue.username;
     }
     
-    return this.currentAccount && Number(this.currentAccount.roleId) === 4;
+    return this.authenticationService.currentAccountValue && Number(this.authenticationService.currentAccountValue.roleId) === 4;
   }
 
   get isNotAdmin() {
     if(this.username == ''){
-      this.username = this.currentAccount.username;
+      this.username = this.authenticationService.currentAccountValue.username;
     }
     
-    return this.currentAccount && Number(this.currentAccount.roleId) === 2;
+    return this.authenticationService.currentAccountValue && Number(this.authenticationService.currentAccountValue.roleId) === 2;
   }
   
 }

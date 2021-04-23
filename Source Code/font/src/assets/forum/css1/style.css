@@ -6714,7 +6714,7 @@ a.addnewforum {
 }
 
 .postbox{
-	z-index: 99;
+	/*z-index: 99;*/
 	position: relative;
 }
 /*--- suggested friend carousel ---*/

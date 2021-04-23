@@ -134,32 +134,30 @@ export class MangementChartComponent implements OnInit {
 
   public async getlineChartData()
   {
-    this.motelService.getmoteluserpublish().subscribe(getdata => {
-      console.log(getdata)
-
-      let dataone = getdata[0].hovaTen;
-      let datatow = getdata[1].hovaTen;
-      let datathree = getdata[2].hovaTen;
-      let datafour = getdata[3].hovaTen;
-      let datafive = getdata[4].hovaTen;
-
-      let dataonetotal = getdata[0].total;
-      let datatowtotal = getdata[1].total;
-      let datathreetotal = getdata[2].total;
-      let datafourtotal = getdata[3].total;
-      let datafivetotal = getdata[4].total;
-
-      if(dataone && datatow && datathree && datafour && datafive){
-        this.LinechartReady = true;
-
-        this.lineChartLabels = [dataone,datatow,datathree,datafour,datafive];
-        this.lineChartData = [
-          { data: [Number(dataonetotal), Number(datatowtotal), Number(datathreetotal), Number(datafourtotal), Number(datafivetotal)], label: 'Theo số tin đã đăng' },
-        ];
-        console.log("aaa")
-      }  
-    })
+    /*this.motelService.getmoteluserpublish().subscribe(getdata => {
      
+    })*/
+    const result = await this.motelService.getmoteluserpublish() as any;
+    let dataone = result[0].hovaTen;
+    let datatow = result[1].hovaTen;
+    let datathree = result[2].hovaTen;
+    let datafour = result[3].hovaTen;
+    let datafive = result[4].hovaTen;
+
+    let dataonetotal = result[0].total;
+    let datatowtotal = result[1].total;
+    let datathreetotal = result[2].total;
+    let datafourtotal = result[3].total;
+    let datafivetotal = result[4].total;
+
+    if(dataone && datatow && datathree && datafour && datafive){
+      this.LinechartReady = true;
+
+      this.lineChartLabels = [dataone,datatow,datathree,datafour,datafive];
+      this.lineChartData = [
+        { data: [Number(dataonetotal), Number(datatowtotal), Number(datathreetotal), Number(datafourtotal), Number(datafivetotal)], label: 'Theo số tin đã đăng' },
+      ];
+    }  
   }
 
 

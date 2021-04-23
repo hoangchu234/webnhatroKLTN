@@ -32,9 +32,23 @@ export class DetailMotelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public getMotelById(){
+  public async getMotelById(){
     const id = this.router.snapshot.paramMap.get("id");
-    this.motelService.getMotelFromId(Number(id)).subscribe(getdetailmotel => {
+    
+    this.motel = await this.motelService.getMotelFromId(Number(id)) as any;
+    for(let i=0;i<this.motel.images.length;i++)
+    {
+      var imageone = new Image();
+      if(i !=0){
+        imageone.imageMotel = this.motel.images[i].imageMotel;
+        this.motelImage.push(imageone);
+      }
+      
+    }      
+    this.countimage = this.motel.images.length;
+    this.getProvinces();  
+
+    /*this.motelService.getMotelFromId(Number(id)).subscribe(getdetailmotel => {
       this.motel = getdetailmotel
       console.log(getdetailmotel)
       for(let i=0;i<getdetailmotel.images.length;i++)
@@ -50,7 +64,7 @@ export class DetailMotelComponent implements OnInit {
       
       this.countimage = this.motel.images.length;
       this.getProvinces();  
-    })
+    })*/
   }
 
   public linkRouter(name, id) {
@@ -58,15 +72,19 @@ export class DetailMotelComponent implements OnInit {
     this.route.navigate( ['/home/chi-tiet',name,id]);
   }
 
-  public getProvinces(){
-    this.provinceService.getProvinces().subscribe(getprovince =>{
+  public async getProvinces(){
+    /*this.provinceService.getProvinces().subscribe(getprovince =>{
       this.provinces = getprovince;
       var a = this.provinces.find(a => a.id == this.motel.provinceId);
       this.provincename = a.name;
       this.motelService.getmotelprovinces(this.provincename).subscribe(getmotellist =>{
       this.motelrecommendation = getmotellist;
     })
-    })
+    })*/
+    this.provinces = await this.provinceService.getProvinces() as Province[];
+    var a = this.provinces.find(a => a.id == this.motel.provinceId);
+    this.provincename = a.name;
+    this.motelrecommendation = await this.motelService.getmotelprovinces(this.provincename) as Motel[];
   }
 
   public openDialog(): void {

@@ -25,10 +25,18 @@ export class ServicePriceService {
     );
   }
 
-  public getServiceprices(): Observable<Serviceprice[]> {
+  /*public getServiceprices(): Observable<Serviceprice[]> {
     return this.http.get<Serviceprice[]>(this.urlAPI + "/api/Serviceprices").pipe(
       tap(receivedServiceprices => receivedServiceprices),
       catchError(error => of([]))
     );
+  }*/
+  public getServiceprices = async () => {
+    try {
+      return await this.http.get(this.urlAPI + "/api/Serviceprices").toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 }

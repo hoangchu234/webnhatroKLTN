@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   countReply = 0;
 
   public username:string;
-  currentAccount: Account;
+  //currentAccount: Account;
 
   Name1 = "cho-thue-nha-tro";
   Name2 = "nha-cho-thue";
@@ -37,19 +37,16 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private motelService: MotelService,
     private authenticationService: AuthenticationService) { 
-      this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-      if(this.currentAccount){
-        if(this.currentAccount.user){
+      //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+      if(this.authenticationService.currentAccountValue){
+        if(this.authenticationService.currentAccountValue.user){
           this.getReply();
-          if(this.currentAccount.user.userImage != null){
+          if(this.authenticationService.currentAccountValue.user.userImage != null){
             this.checkImage = true;
           }
           this.checkLogin = true;
         }
-      }
-     
-      
-      console.log(this.currentAccount)
+      }      
     }
 
   ngOnInit(): void { 
@@ -86,9 +83,9 @@ export class HeaderComponent implements OnInit {
 
   get isUser() {
     try{
-      var role = Number(this.currentAccount.roleId);
+      var role = Number(this.authenticationService.currentAccountValue.roleId);
       if(role == 1){
-          this.username =this.currentAccount.user.hovaTen;
+          this.username = this.authenticationService.currentAccountValue.user.hovaTen;
           return true;
       }
       return false;
@@ -100,8 +97,8 @@ export class HeaderComponent implements OnInit {
    
   }
 
-  public getReply(){
-    this.replyService.getReplyFromUserId(this.currentAccount.user.id).subscribe(data => {
+  public async getReply(){
+    /*this.replyService.getReplyFromUserId(this.authenticationService.currentAccountValue.user.id).subscribe(data => {
       for(let i=0;i<data.length;i++){
         if(data[i].isSee == false){
           this.reply.push(data[i])
@@ -111,7 +108,17 @@ export class HeaderComponent implements OnInit {
       if(data.length){
         this.checkreply = true;
       }
-    })
+    })*/
+    const result = await this.replyService.getReplyFromUserId(this.authenticationService.currentAccountValue.user.id) as Reply[];
+    for(let i=0;i<result.length;i++){
+      if(result[i].isSee == false){
+        this.reply.push(result[i])
+        this.countReply = this.countReply + 1
+      }
+    }
+    if(result.length){
+      this.checkreply = true;
+    }
   }
 
   public onLogout = () => {
@@ -125,7 +132,7 @@ export class HeaderComponent implements OnInit {
       
     }
     catch(error){
-      var role = Number(this.currentAccount.roleId);
+      var role = Number(this.authenticationService.currentAccountValue.roleId);
       if(role == 1){
         this.router.navigate(['/user/danh-muc']);
       }

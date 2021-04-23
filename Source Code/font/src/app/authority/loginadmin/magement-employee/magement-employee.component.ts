@@ -20,8 +20,8 @@ export class MagementEmployeeComponent implements OnInit {
    
   }
 
-  public getEmployees(){
-    this.employeesService.getEmployees().subscribe(getemployees => {
+  public async getEmployees(){
+    /*this.employeesService.getEmployees().subscribe(getemployees => {
       this.employees = getemployees
       for(let i=0; i<this.employees.length;i++){
         if(this.employees[i].employeeImage != null)
@@ -33,6 +33,17 @@ export class MagementEmployeeComponent implements OnInit {
         }
       }
     })
+    */
+   this.employees = await this.employeesService.getEmployees() as Employee[];
+   for(let i=0; i<this.employees.length;i++){
+      if(this.employees[i].employeeImage != null)
+      {
+        this.checkImage[i] = true;
+      }
+      else{
+        this.checkImage[i] = false;
+      }
+    }
   }
 
   onselecte(employee:Employee): void{

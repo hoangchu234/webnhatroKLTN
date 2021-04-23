@@ -23,13 +23,23 @@ export class ReplyService {
     );
   }
 
-  public getReplyFromUserId(id: number): Observable<Reply[]>{
+  /*public getReplyFromUserId(id: number): Observable<Reply[]>{
     const url = `${this.urlAPI + "/api/Replies/GetRepliesByUserId"}/${id}`;
     return this.http.get<Reply[]>(url).pipe(
       tap(selectReply => selectReply),
       catchError(error => of([]))
     );
+  }*/
+  public getReplyFromUserId = async (id: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Replies/GetRepliesByUserId"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
+
 
   public updateReply(reply: Reply): Observable<any>{
     return this.http.put(`${this.urlAPI + "/api/Replies"}/${reply.id}`, reply, httpOptions).pipe(

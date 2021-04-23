@@ -20,12 +20,20 @@ export class PriceSearchService {
 
  
 
-  public getprices(): Observable<PriceSearch[]> {
+  /*public getprices(): Observable<PriceSearch[]> {
     return this.http.get<PriceSearch[]>(this.urlAPI + "/api/PriceSearches").pipe(
       tap(receivedPrices => receivedPrices),
       catchError(error => of([]))
     );
-  }
+  }*/
 
+  public getprices = async () => {
+    try {
+      return await this.http.get(this.urlAPI + "/api/PriceSearches").toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 
 }

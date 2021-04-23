@@ -19,12 +19,21 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public getsearchemail(email: string): Observable<User>{
+  /*public getsearchemail(email: string): Observable<User>{
     const url = `${this.urlAPI + "/api/Users/GetUser"}/${email}`;
     return this.http.get<User>(url).pipe(
       tap(selectUserByEmail => console.log(`selectUserByEmail = ${JSON.stringify(selectUserByEmail)}`)),
       catchError(error => of(new User))
     );
+  }*/
+  public getsearchemail = async (email: string) => {
+    try {
+      const url = `${this.urlAPI + "/api/Users/GetUser"}/${email}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
 
@@ -61,14 +70,22 @@ export class UserService {
   }*/
 
 
-  public getUserFromId(id: number): Observable<User>{
+  /*public getUserFromId(id: number): Observable<User>{
     const url = `${this.urlAPI + "/api/Users"}/${id}`;
     return this.http.get<User>(url).pipe(
       tap(selectUser => selectUser),
       catchError(error => of(new User()))
     );
+  }*/
+  public getUserFromId = async (id: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Users"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
-
 
   public updateAccount(account: Account): Observable<any>{
     return this.http.put(`${this.urlAPI + "/api/Accounts"}/${account.id}`, account, httpOptions).pipe(

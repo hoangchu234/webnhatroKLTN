@@ -41,9 +41,9 @@ export class EmployeePublishComponent implements OnInit {
   totalRecord: Number;
   page:Number = 1;
 
-  currentAccount: Account;
+  //currentAccount: Account;
   constructor(public dialog: MatDialog,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
-    this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     this.getMotels();
   }
 
@@ -80,10 +80,11 @@ export class EmployeePublishComponent implements OnInit {
     }
   }
 
-  public getTypes(){
-    this.typeservice.getTypes().subscribe(gettypes => {
+  public async getTypes(){
+    /*this.typeservice.getTypes().subscribe(gettypes => {
       this.newTypes = gettypes;
-    })
+    })*/
+    this.newTypes = await this.typeservice.getTypes() as NewType [];
 
   }
 
@@ -132,8 +133,8 @@ export class EmployeePublishComponent implements OnInit {
     }
   }
 
-  public getMotels(){
-    this.motelService.getmotelNV().subscribe(getmotel => {
+  public async getMotels(){
+    /*this.motelService.getmotelNV().subscribe(getmotel => {
       this.loadDataHot(getmotel);
       this.loadData1(getmotel);
       this.loadData2(getmotel);
@@ -142,7 +143,16 @@ export class EmployeePublishComponent implements OnInit {
 
       this.motels = this.searchmotels
       this.totalRecord = this.motels.length;
-    })
+    })*/
+    const result = await this.motelService.getmotelNV() as Motel[];
+    this.loadDataHot(result);
+    this.loadData1(result);
+    this.loadData2(result);
+    this.loadData3(result);    
+    this.loadDataThuong(result);
+
+    this.motels = this.searchmotels
+    this.totalRecord = this.motels.length;
   }
 
   public onChangeStatus(event: any)

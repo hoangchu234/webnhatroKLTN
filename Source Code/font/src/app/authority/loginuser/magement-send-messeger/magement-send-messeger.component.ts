@@ -23,13 +23,13 @@ export class MagementSendMessegerComponent implements OnInit {
   countReply = 0;
 
   public username:string;
-  currentAccount: Account;
+  //currentAccount: Account;
 
   constructor(private replyService:ReplyService,
     private router: Router,
     private motelService: MotelService,
     private authenticationService: AuthenticationService) { 
-      this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+      //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
       this.getReply();
     }
 
@@ -40,12 +40,14 @@ export class MagementSendMessegerComponent implements OnInit {
     this.page = event;
   }
 
-  public getReply(){
-    this.replyService.getReplyFromUserId(this.currentAccount.user.id).subscribe(data => {
+  public async getReply(){
+    /*this.replyService.getReplyFromUserId(this.authenticationService.currentAccountValue.user.id).subscribe(data => {
       this.reply = data;
       console.log(this.reply)
       this.countReply = this.reply.length;
-    })
+    })*/
+    this.reply = await this.replyService.getReplyFromUserId(this.authenticationService.currentAccountValue.user.id) as Reply[];
+    this.countReply = this.reply.length;
   }
 }
 

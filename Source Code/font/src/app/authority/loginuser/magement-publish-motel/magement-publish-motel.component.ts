@@ -45,12 +45,12 @@ export class MagementPublishMotelComponent implements OnInit {
   page:Number = 1;
 
   // Lấy data account từ localstogare
-  currentAccount: Account;
+  //currentAccount: Account;
 
   checkStatus : Array<boolean> = [];
   checkStatusExtend : Array<boolean> = [];
   constructor(public dialog: MatDialog,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
-    this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     this.getMotels();
     this.getNewTypes();
   }
@@ -84,16 +84,29 @@ export class MagementPublishMotelComponent implements OnInit {
     }
   }
 
-  public getNewTypes(){
-    this.typeservice.getTypes().subscribe(gettypes => {
+  public async getNewTypes(){
+    /*this.typeservice.getTypes().subscribe(gettypes => {
       this.newTypes = gettypes;
-      console.log(this.newTypes);
-    })
+    })*/
+    this.newTypes = await this.typeservice.getTypes() as NewType [];
+
 
   }
 
-  public getMotels(){
-    this.motelService.getmotelbyuser(this.currentAccount.user.id).subscribe(getmotel => {
+  public async getMotels(){
+    this.motels = await this.motelService.getmotelbyuser(this.authenticationService.currentAccountValue.user.id) as any;
+      for(let i=0;i<this.motels.length;i++){
+        if(this.motels[i].status == "Tin đã hết hạn"){
+          this.checkStatus.push(false);
+
+        }
+        else{
+          this.checkStatus.push(true);
+        }
+      }
+      this.searchmotels = this.motels
+      this.totalRecord = this.motels.length;
+    /*this.motelService.getmotelbyuser(this.authenticationService.currentAccountValue.user.id).subscribe(getmotel => {
       this.motels = getmotel
       for(let i=0;i<getmotel.length;i++){
         if(getmotel[i].status == "Tin đã hết hạn"){
@@ -106,7 +119,7 @@ export class MagementPublishMotelComponent implements OnInit {
       }
       this.searchmotels = getmotel
       this.totalRecord = this.motels.length;
-    })
+    })*/
   }
 
   public onChangeStatus(event: any)

@@ -16,6 +16,7 @@ import { BehaviorSubjectClass } from 'src/app/services/behaviorsubject';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { NewType } from 'src/app/model/NewType';
+import { StorageService } from 'src/app/storage.service';
 
 export interface Type{
   id:number;
@@ -37,7 +38,7 @@ export class PaypalComponent implements OnInit {
   saveNewMotel: Motel;
   imagesURLFirebare:Array<string> = [];
   newTypeMotel;
-  currentAccount:Account;
+  //currentAccount:Account;
   resultSaveMotel:Motel;
 
   //Xét tính tiền
@@ -48,9 +49,9 @@ export class PaypalComponent implements OnInit {
   loadDataToSee: Motel;
 
   constructor(private authenticationService: AuthenticationService,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: Motel,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
-    this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
-    this.money = Number(localStorage.getItem('totalMoney')); 
-    this.loadDataToSee = JSON.parse(localStorage.getItem('PublishMotel'));
+    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
+    this.money = Number(localStorage.getItem(StorageService.totalMoneyStorage)); 
+    this.loadDataToSee = JSON.parse(localStorage.getItem(StorageService.motelStorage));
   }
 
   ngOnInit(): void {
@@ -159,7 +160,7 @@ export class PaypalComponent implements OnInit {
     {
       if(this.imagesURLFirebare.length){
         this.saveNewMotel.detail.typeofnewId = this.newTypeMotel.id;  
-        this.saveNewMotel.userId = this.currentAccount.user.id;
+        this.saveNewMotel.userId = this.authenticationService.currentAccountValue.user.id;
         this.saveNewMotel.status = "Tin đang ẩn";
         //this.motelnew.typeservice = this.new;
         //this.motelnew.time = this.datatime;
@@ -173,12 +174,14 @@ export class PaypalComponent implements OnInit {
         }
         this.saveNewMotel.images = Finall;
         console.log(Finall);
-        this.motelService.postMotel(this.saveNewMotel).subscribe(newMotel => {
+        this.motelService.postMotel(this.saveNewMotel).subscribe(async newMotel => {
           this.resultSaveMotel = newMotel;
           var bill = new Bill();
           bill = this.saveNewMotel.bill;
           bill.motelId = newMotel.id;
-          this.billService.addbill(bill).subscribe(data => console.log(data))
+          await this.billService.addbill(bill);
+
+          //this.billService.addbill(bill).subscribe(data => console.log(data))
         });
 
         alert('Đăng tin thành công');
@@ -198,7 +201,7 @@ export class PaypalComponent implements OnInit {
 
     this.behaviorSubjectClass.getDataImages().subscribe(getimagemotel => this.imageMotels = getimagemotel);
     this.behaviorSubjectClass.getNewTypes().subscribe(getnewtypemotel => this.newTypeMotel = getnewtypemotel);
-    this.saveNewMotel = JSON.parse(localStorage.getItem('PublishMotel'));
+    this.saveNewMotel = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     this.loadImage();
   };
 

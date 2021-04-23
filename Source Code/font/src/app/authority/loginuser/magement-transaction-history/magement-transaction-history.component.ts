@@ -19,10 +19,10 @@ export class MagementTransactionHistoryComponent implements OnInit {
 
   nametophead = "Quản lý thanh toán"
 
-  currentAccount: Account;
+  //currentAccount: Account;
   
   bills: Bill[];
-  billSearch: Bill[];
+  billSearch: Bill[] = [];
   //pagination
   totalRecord: Number;
   page:Number = 1;
@@ -36,7 +36,7 @@ export class MagementTransactionHistoryComponent implements OnInit {
   time: string;
 
   constructor(private authenticationService: AuthenticationService,private chRef : ChangeDetectorRef,private billsrvice : BillService) {
-    this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
    }
 
   ngOnDestroy(): void {
@@ -62,15 +62,17 @@ export class MagementTransactionHistoryComponent implements OnInit {
   }
 
  
-  public getBills(){
-    var id = this.currentAccount.user.id
-    console.log(this.currentAccount)
-    this.billsrvice.getBills(id.toString()).subscribe(data => {
+  public async getBills(){
+    var id = this.authenticationService.currentAccountValue.user.id
+    /*this.billsrvice.getBills(id.toString()).subscribe(data => {
       this.billSearch = data;
       this.bills = this.billSearch;
       this.totalRecord = this.bills.length;
       console.log(this.bills)
-    })
+    })*/
+    this.billSearch = await this.billsrvice.getBills(id.toString()) as Bill[];
+    this.bills = this.billSearch;
+    this.totalRecord = this.bills.length;
   }
 
 

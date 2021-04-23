@@ -17,6 +17,11 @@ import { StreetService } from 'src/app/services/street.service';
 import { DictrictService } from 'src/app/services/dictrict.service';
 import { District } from 'src/app/model/District';
 import { Street } from 'src/app/model/Street';
+import { FormControl } from '@angular/forms';
+import { List } from 'src/app/model/viewmodel/ListViewModel';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
 
 @Component({
   selector: 'app-barsearchandbar',
@@ -41,16 +46,19 @@ export class BarsearchandbarComponent implements OnInit {
   newTypes = new Array<NewType>();
   newType = "";
   // Danh sách pricesearch và tên pricesearch
-  priceSearchs = new Array<PriceSearch>();
-  priceSearch = new PriceSearch;
+  priceSearchs: PriceSearch[] = [];
+  priceSearch;
   
-  searchname = "";
   //load tên trên thanh tophead
   nametophead;
   name;
   
+  myControl = new FormControl();
+  options: List[] = [];
+  filteredOptions: Observable<List[]>;
+  
   @Output() newTypeSearch: EventEmitter<string> = new EventEmitter<string>();
-  constructor(public streetService:StreetService,public dictrictService:DictrictService,public location: Location,private priceSearchServer:PriceSearchService,private behaviorSubjectClass:BehaviorSubjectClass,private router: Router,public activerouter:ActivatedRoute,private motelService: MotelService,private cityService: CitiesService, private provinceService: ProvincesService, private typeservice:TypeofnewService) {
+  constructor(public streetService:StreetService,public dictrictService:DictrictService,public location: Location,private priceSearchServer:PriceSearchService,private router:ActivatedRoute,private route: Router,public activerouter:ActivatedRoute,private motelService: MotelService,private cityService: CitiesService, private provinceService: ProvincesService, private typeservice:TypeofnewService) {
     this.getPrices();
     this.getCities();
     this.getNewTypes();
@@ -60,7 +68,11 @@ export class BarsearchandbarComponent implements OnInit {
   ngOnInit(): void {
     
     this.firstTime();
+    this.setData();
+    this.enterSearch();
 
+    
+/*
     if(Number(localStorage.getItem('priceid')) == 0){
       this.priceSearch.number = "Tất cả";
     }
@@ -88,9 +100,9 @@ export class BarsearchandbarComponent implements OnInit {
     }
     if(Number(localStorage.getItem('priceid')) == 8){
       this.priceSearch.number = "10 triệu - 15 triệu";
-    }
+    }*/
     
-    this.activerouter.data.subscribe(data => {
+    /*this.activerouter.data.subscribe(data => {
       this.name = data.kind;
     })
     if(this.name == "cho-thue-nha-tro"){
@@ -115,7 +127,7 @@ export class BarsearchandbarComponent implements OnInit {
     if(this.name == "tim-nguoi-o-ghep-cap"){
       this.nametophead = "Tìm Người Ở Ghép, Tìm Nam Ở Ghép, Tìm Nữ Ở Ghép";
       this.newType = "Tìm người ở ghép"
-    }
+    }*/
   }
 
  
@@ -140,9 +152,22 @@ export class BarsearchandbarComponent implements OnInit {
     streets.name = "Tất cả"
     this.streets.push(streets)
 
-    console.log(localStorage.getItem('city'))
-    if(localStorage.getItem('city') != null && localStorage.getItem('city') != "Tất cả"){
-      this.cityService.getCityFromId(Number(localStorage.getItem('city'))).subscribe(data => {
+    this.city.name = "Tỉnh thành phố";
+    this.city.id = "0";
+    this.province.name = "Quận Huyện";
+    this.province.id = "0";
+    this.district.name = "Phường Xã";
+    this.district.id = "0";
+    this.street.name = "Đường Phố";
+    this.street.id = "0";
+    this.newType = "Phòng trọ, nhà cho thuê";
+    this.priceSearch = "Tất cả";
+    
+    //this.priceSearch.number = "Giá thuê"
+    
+    /*if(localStorage.getItem('city') != null && localStorage.getItem('city') != "Tất cả"){
+      
+      /*this.cityService.getCityFromId(Number(localStorage.getItem('city'))).subscribe(data => {
         this.city = data;
         if(data.name == ""){
           this.city.name = "Tất cả"
@@ -152,7 +177,7 @@ export class BarsearchandbarComponent implements OnInit {
       
     }
     if( localStorage.getItem('province') != null && localStorage.getItem('province') != "Tất cả"){
-      this.provinceService.getProvinceById(Number(localStorage.getItem('province'))).subscribe(data => {
+      /*this.provinceService.getProvinceById(Number(localStorage.getItem('province'))).subscribe(data => {
         this.province = data;
         if(data.name == ""){
           this.province.name = "Tất cả"
@@ -161,7 +186,7 @@ export class BarsearchandbarComponent implements OnInit {
       })
     }
     if(localStorage.getItem('street') != null && localStorage.getItem('street') != "Tất cả"){
-      this.streetService.getStreetFromId(Number(localStorage.getItem('street'))).subscribe(data => {
+      /*this.streetService.getStreetFromId(Number(localStorage.getItem('street'))).subscribe(data => {
         this.street = data;
         if(data.name == ""){
           this.street.name = "Tất cả"
@@ -170,7 +195,7 @@ export class BarsearchandbarComponent implements OnInit {
       })
     }
     if(localStorage.getItem('district') != null && localStorage.getItem('district') != "Tất cả"){
-      this.dictrictService.getDistrictFromId(Number(localStorage.getItem('district'))).subscribe(data => {
+      /*this.dictrictService.getDistrictFromId(Number(localStorage.getItem('district'))).subscribe(data => {
         this.district = data;
         if(data.name == ""){
           this.district.name = "Tất cả"
@@ -189,12 +214,90 @@ export class BarsearchandbarComponent implements OnInit {
       this.street.name = "Đường Phố";
       this.street.id = "0";
       this.newType = "Phòng trọ, nhà cho thuê"
-      this.priceSearch.number = "Giá thuê"
+      //this.priceSearch.number = "Giá thuê"
       this.priceSearch.id = 0;
-    }
+    }*/
 
   }
 
+  async setData(){
+    var city = this.router.snapshot.paramMap.get("city");
+    var type = this.router.snapshot.paramMap.get("type");
+    var province = this.router.snapshot.paramMap.get("province");
+    var street = this.router.snapshot.paramMap.get("street");
+    var price = this.router.snapshot.paramMap.get("price");
+    var district = this.router.snapshot.paramMap.get("district");
+    
+    var indexType: number = 0;
+    var indexCity: Number = 0;
+    var indexProvince: number = 0;
+    var indexDistrict: Number = 0;
+    var indexStreet: number = 0;
+    var indexPrice: number = 0;
+
+    const types = await this.typeservice.getTypes() as NewType[];
+    const cities = await this.cityService.getCitys() as City[];
+    const provinces = await this.provinceService.getProvinces() as Province[];
+    const districts = await this.dictrictService.getDistricts() as District[];
+    const streets = await this.streetService.getStreets() as Street[];
+
+    indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type);
+
+    this.newType = types.find(a => a.id == indexType.toString()).name;
+    if(city != null){
+      indexCity = cities.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === city); 
+      if(indexCity == -1){
+        price = city;
+      }
+      else{
+        this.city = cities.find(a => a.id == indexCity.toString());
+      }
+    }
+    
+    if(province != null){
+      this.getProvinceByID(this.cities[Number(indexCity)].id);
+      indexProvince = provinces.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
+      if(indexProvince == -1){
+        price = province;
+      }
+      else{
+        this.province = provinces.find(a => a.id == indexProvince.toString());
+      }
+    }
+    if(district != null){
+      this.getDistricteById(this.provinces[Number(indexProvince)].id);
+      indexDistrict = districts.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district);  
+      if(indexDistrict == -1){
+        price = district;
+      }  
+      else{
+        this.district = districts.find(a => a.id == indexDistrict.toString());
+      }
+    }
+    if(street != null){
+      this.getStreetById(this.cities[Number(indexDistrict)].id);
+      indexStreet = streets.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === street);   
+      if(indexStreet == -1){
+        price = street;
+      }     
+      else{
+        this.street = streets.find(a => a.id == indexStreet.toString());
+      }
+    }
+    if(price != null){//2-Trieu-3-Trieu
+      const priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
+      var str = price.replace("-","");
+      str = str.replace("-", "");
+      indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.numberTwo + a.typePriceTwo) === str);
+
+      if(indexPrice == -1){
+        str = str.replace("-", "");
+        indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.typePriceOne + a.numberTwo + a.typePriceTwo) === str);
+      }
+     
+      this.priceSearch = this.returnDataPriceSearch(priceSearch.find(a => a.id == indexPrice+1));
+    }
+  }
   public onChoiceCity(city:City) {
     this.city = city;
     if(city.name == "Tất cả"){
@@ -238,13 +341,30 @@ export class BarsearchandbarComponent implements OnInit {
     this.newType = name;
   }
 
-  public onChoicePriceSearch(price) {
-    this.priceSearch.number = price.number;
+  public onChoicePriceSearch(priceSearch) {
+    //this.priceSearch.number = price.number;
+    if(priceSearch.typePriceOne == null){
+      this.priceSearch = priceSearch.numberOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
+    }
+    else{
+      this.priceSearch = priceSearch.numberOne + " " + priceSearch.typePriceOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
+    }
   }
   
-  public getStreetById(ID){
-        this.streets = new Array<Street>();
-        const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
+  returnDataPriceSearch(priceSearch){
+    var returnData;
+    if(priceSearch.typePriceOne == null){
+      returnData = priceSearch.numberOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
+    }
+    else{
+      returnData = priceSearch.numberOne + " " + priceSearch.typePriceOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
+    }
+    return returnData;
+  }
+
+  public async getStreetById(ID){
+    this.streets = new Array<Street>();
+        /*const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
           let street = new Street();
           var number = 0;
           street.id = number.toString();
@@ -257,12 +377,38 @@ export class BarsearchandbarComponent implements OnInit {
             street.name = data[i].name;
             this.streets.push(street);
           }
-      })
+      })*/
+      const list = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
+        let street = new Street();
+        var number = 0;
+        street.id = number.toString();
+        street.name = "Tất cả";
+        this.streets.push(street);
+        
+        for (let i = 0; i < list.length; i++) {
+          let street = new Street();
+          street.id = list[i].id;
+          street.name = list[i].name;
+          this.streets.push(street);
+        }
   }
 
-  public getDistricteById(ID){
+  public async getDistricteById(ID){
+    const list = await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
+      var districtNew : District [] = [];
+      this.districts = districtNew;
+      
+      var districtZero = new District();
+      var number = 0;
+      districtZero.id = number.toString();
+      districtZero.name = "Tất cả";
+      districtZero.provinceid = number.toString();
+      this.districts.push(districtZero);
 
-        const list = this.dictrictService.getDistrictByProvince(Number(ID)).subscribe((data) => {
+      for (let i = 0; i < list.length; i++) {        
+        this.districts.push(list[i]);
+      }
+        /*const list = this.dictrictService.getDistrictByProvince(Number(ID)).subscribe((data) => {
           var districtNew : District [] = [];
           this.districts = districtNew;
           
@@ -277,11 +423,27 @@ export class BarsearchandbarComponent implements OnInit {
             this.districts.push(data[i]);
           }
 
-      })
+      })*/
   }
 
-  public getProvinceByID(ID){
-    this.provinceService.getProvincesByCity(Number(ID)).subscribe( data => {
+  public async getProvinceByID(ID){
+      const result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
+
+      var provinceNew : Province[] = [];
+      this.provinces = provinceNew;
+
+      var provinceZero = new Province();
+      var number = 0;
+      provinceZero.id = number.toString();
+      provinceZero.name = "Tất cả";
+      provinceZero.cityid = number.toString();
+      this.provinces.push(provinceZero);
+
+      for(let i=0;i<result.length;i++){
+        this.provinces.push(result[i])
+      }
+
+    /*this.provinceService.getProvincesByCity(Number(ID)).subscribe( data => {
       //this.provinces = data
 
       var provinceNew : Province[] = [];
@@ -297,33 +459,46 @@ export class BarsearchandbarComponent implements OnInit {
       for(let i=0;i<data.length;i++){
         this.provinces.push(data[i])
       }
-    })
+    })*/
   }
 
-  public getCities(){
-    this.cityService.getCitys().subscribe(getcity => {
-      //this.cities = getcity
-      var cityZero = new City();
-      var number = 0;
-      cityZero.id = number.toString();
-      cityZero.name = "Tất cả";
+  public async getCities(){
+    const result = await this.cityService.getCitys() as City[];
+    var cityZero = new City();
+    var number = 0;
+    cityZero.id = number.toString();
+    cityZero.name = "Tất cả";
 
-      var cityNew : City[] = [];
-      this.cities = cityNew;
-      this.cities.push(cityZero)
-      for(let i=1;i<getcity.length;i++){
-        this.cities.push(getcity[i])
-      }
-    })
+    var cityNew : City[] = [];
+    this.cities = cityNew;
+    this.cities.push(cityZero)
+    for(let i=1;i<result.length;i++){
+      this.cities.push(result[i])
+    }
   }
 
 
-  public getNewTypes(){
-    this.typeservice.getTypeExcepts().subscribe(gettypes => this.newTypes = gettypes)
+  public async getNewTypes(){
+    this.newTypes = await this.typeservice.getTypeExcepts() as NewType[];
+    //this.typeservice.getTypeExcepts().subscribe(gettypes => this.newTypes = gettypes)
   }
 
-  public getPrices(){
-    this.priceSearchServer.getprices().subscribe(getprice =>{
+  public async getPrices(){
+    const result = await this.priceSearchServer.getprices() as PriceSearch[];
+    //this.priceSearchs = getprice
+    var priceZero = new PriceSearch();
+    priceZero.id = 0;
+    priceZero.numberOne = "Tất cả";
+    priceZero.numberTwo = "";
+    priceZero.typePriceOne = "";
+    priceZero.typePriceTwo = "";
+    this.priceSearchs.push(priceZero);
+     
+    for(let i =0;i<result.length;i++){
+      this.priceSearchs.push(result[i])
+    }
+
+    /*this.priceSearchServer.getprices().subscribe(getprice =>{
       //this.priceSearchs = getprice
       var priceZero = new PriceSearch();
       var number = 0;
@@ -334,24 +509,13 @@ export class BarsearchandbarComponent implements OnInit {
       for(let i =0;i<getprice.length;i++){
         this.priceSearchs.push(getprice[i])
       }
-    })
+    })*/
     
   }
 
-  public onClick() {
-    localStorage.removeItem('searchtext');
-    if(this.searchname === ""){
-      localStorage.setItem('searchtext', "NULL");
-    }
-    else{
-      localStorage.setItem('searchtext', this.searchname);
-    }
+  /*public onClick() {
 
-    localStorage.setItem('city', this.city.id);
-    localStorage.setItem('province', this.province.id);
-    localStorage.setItem('street', this.street.id);
-    localStorage.setItem('district', this.district.id);
-    if(this.priceSearch.number == "Tất cả"){
+    /*if(this.priceSearch.number == "Tất cả"){
       this.priceSearch.id = 0;
     }
     localStorage.setItem('priceid', this.priceSearch.id.toString());
@@ -407,6 +571,25 @@ export class BarsearchandbarComponent implements OnInit {
       //window.location.reload();
       this.router.navigateByUrl('/home/cho-thue-nha-tro');
     }
+  }*/
+
+
+  public async enterSearch(){
+    this.options = await this.cityService.getSearchs() as List[];
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter(name) : this.options.slice(0,7))
+      );
   }
 
+  private _filter(name: string): List[] {
+    const filterValue = name.toLowerCase();
+    return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).slice(0,7);
+  }
+
+  displayFn(list: List): string {
+    return list && list.name ? list.name : '';
+  }
 }

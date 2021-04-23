@@ -20,8 +20,9 @@ export class TableServicePriceComponent implements OnInit {
     this.getServicePrices();
   }
 
-  public getServicePrices(){
-    this.priceSearchService.getServiceprices().subscribe(getserviceprice => this.servicePrices = getserviceprice)
+  public async getServicePrices(){
+    this.servicePrices = await this.priceSearchService.getServiceprices() as Serviceprice[];
+    //this.priceSearchService.getServiceprices().subscribe(getserviceprice => this.servicePrices = getserviceprice)
   }
 
 }

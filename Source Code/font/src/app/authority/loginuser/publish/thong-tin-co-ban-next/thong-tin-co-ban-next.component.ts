@@ -7,6 +7,7 @@ import { Detail } from '../../../../model/Detail';
 import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
 import { MatDialog } from '@angular/material/dialog';
 import { DialogThongBaoComponent } from '../dialog-thong-bao/dialog-thong-bao.component';
+import { StorageService } from 'src/app/storage.service';
 
 export interface Data{
   id:number;
@@ -48,7 +49,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
   typePriceMotel: string;
   
   constructor(public dialog: MatDialog,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,public motelService:MotelService) {
-    this.motelprevous = JSON.parse(localStorage.getItem('PublishMotel'));
+    this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     if(this.motelprevous){
       this.priceMotel = this.motelprevous.price;
       this.areaMotel = this.motelprevous.areaZone;
@@ -79,7 +80,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
   public next(){
     if(this.priceMotel && this.areaMotel && this.typePriceMotel && this.title && this.description){
       let motelnew = new Motel();
-      motelnew = JSON.parse(localStorage.getItem('PublishMotel'));
+      motelnew = JSON.parse(localStorage.getItem(StorageService.motelStorage));
       motelnew.price = this.priceMotel;
       motelnew.areaZone = this.areaMotel;
       motelnew.priceType = this.typePriceMotel;
@@ -89,8 +90,8 @@ export class ThongTinCoBanNextComponent implements OnInit {
       motelnew.detail = detail;
       motelnew.title = this.title;
       motelnew.description = this.description;
-      localStorage.removeItem('PublishMotel')
-      localStorage.setItem('PublishMotel', JSON.stringify(motelnew));
+      localStorage.removeItem(StorageService.motelStorage)
+      localStorage.setItem(StorageService.motelStorage, JSON.stringify(motelnew));
       this.router.navigateByUrl('/user/thong-tin-chi-tiet-nha-tro');
     }
     else{

@@ -22,6 +22,7 @@ import { City } from 'src/app/model/City';
 import { Province } from 'src/app/model/Province';
 import { PaypalComponent } from '../../publish/paypal/paypal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-thanh-toan-dong',
@@ -30,7 +31,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ThanhToanDongComponent implements OnInit {
 
-  currentAccount:Account;
+  //currentAccount:Account;
   money:string;
   checkImage = false;
   loadDataToSee: Motel;
@@ -39,10 +40,10 @@ export class ThanhToanDongComponent implements OnInit {
   loadDataProvince:string = "";
   constructor(public dialog: MatDialog,private cityService: CitiesService, private provinceService: ProvincesService,private typeservice:TypeofnewService,private behaviorSubjectClass: BehaviorSubjectClass,private priceService: ServicePriceService,private router: Router,private authenticationService: AuthenticationService,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
   
-    this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     this.loadData();
-    this.money = localStorage.getItem('totalMoney'); 
-    if(this.currentAccount.user.userImage != null)
+    this.money = localStorage.getItem(StorageService.totalMoneyStorage); 
+    if(this.authenticationService.currentAccountValue.user.userImage != null)
     {
       this.checkImage = true;
     }
@@ -54,20 +55,22 @@ export class ThanhToanDongComponent implements OnInit {
     
   }
 
-  public loadData(){
-    this.loadDataToSee = JSON.parse(localStorage.getItem('PublishMotel'));
+  public async loadData(){
+    this.loadDataToSee = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     console.log(this.loadDataToSee)
     this.behaviorSubjectClass.getNewTypes().subscribe(getnewtypemotel => {
       this.loadDataType = getnewtypemotel.name
     });
-    this.cityService.getCityFromId(Number(this.loadDataToSee.cityId)).subscribe(getcity => {
+    /*this.cityService.getCityFromId(Number(this.loadDataToSee.cityId)).subscribe(getcity => {
       this.loadDataCity = getcity.name;
 
-    })
-    this.provinceService.getProvinceById(Number(this.loadDataToSee.provinceId)).subscribe(getprovince => {
+    })*/
+    const result = await this.cityService.getCityFromId(Number(this.loadDataToSee.cityId)) as City;
+    this.loadDataCity = result.name;
+    /*this.provinceService.getProvinceById(Number(this.loadDataToSee.provinceId)).subscribe(getprovince => {
       this.loadDataProvince = getprovince.name;
-
-    })
+    })*/
+    this.loadDataProvince = await this.provinceService.getProvinceById(Number(this.loadDataToSee.provinceId)) as any;
   }
 
   public prevous(){
@@ -86,7 +89,7 @@ export class ThanhToanDongComponent implements OnInit {
       var file: File[];
       var newType: NewType;
       this.behaviorSubjectClass.setDataImages(file);
-      localStorage.removeItem('PublishMotel')
+      localStorage.removeItem(StorageService.motelStorage)
       this.behaviorSubjectClass.setNewTypes(newType);
       this.router.navigateByUrl('/user/danh-muc');
     });

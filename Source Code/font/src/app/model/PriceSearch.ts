@@ -1,4 +1,7 @@
 export class PriceSearch {
     id: number;
-    number: string;
+    numberOne: string;
+    typePriceOne: string;
+    numberTwo: string;
+    typePriceTwo: string;
 }

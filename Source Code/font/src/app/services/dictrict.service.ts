@@ -17,26 +17,54 @@ export class DictrictService {
 
   constructor( private http: HttpClient) { }
 
-  public getDistricts(): Observable<District[]> {
+  /*public getDistricts(): Observable<District[]> {
     return this.http.get<District[]>(this.urlAPI + "/api/Districts").pipe(
       tap(receivedDistricts => receivedDistricts),
       catchError(error => of([]))
     );
+  }*/
+
+  public getDistricts = async () => {
+    try {
+        const Districts = await fetch(`${this.urlAPI}/api/Districts`);
+        return await Districts.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
   }
 
-  public getDistrictFromId(id: number): Observable<District>{
+  /*public getDistrictFromId(id: number): Observable<District>{
     const url = `${this.urlAPI + "/api/Districts/GetDistrictByID"}/${id}`;
     return this.http.get<District>(url).pipe(
       tap(selectDistrict => selectDistrict),
       catchError(error => of(new District()))
     );
+  }*/
+  public getDistrictFromId = async (id: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Districts/GetDistrictByID"}/${id}`;      
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
-  public getDistrictByProvince(id: number): Observable<District[]>{
+  /*public getDistrictByProvince(id: number): Observable<District[]>{
     const url = `${this.urlAPI + "/api/Districts/GetDistrictByProvince"}/${id}`;
     return this.http.get<District[]>(url).pipe(
       tap(selectDistrictByCity => selectDistrictByCity),
       catchError(error => of([]))
     );
+  }*/
+  public getDistrictByProvince = async (id: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Districts/GetDistrictByProvince"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 }

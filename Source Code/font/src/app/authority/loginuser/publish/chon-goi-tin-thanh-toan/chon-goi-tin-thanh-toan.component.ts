@@ -113,8 +113,9 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
     localStorage.removeItem('currentImagesFile');
   }
 
-  public getServicePrices(){
-    this.priceService.getServiceprices().subscribe(getserviceprice => this.servicePrice = getserviceprice)
+  public async getServicePrices(){
+    this.servicePrice = await this.priceService.getServiceprices() as Serviceprice[];
+    //this.priceService.getServiceprices().subscribe(getserviceprice => this.servicePrice = getserviceprice)
   }
 
 

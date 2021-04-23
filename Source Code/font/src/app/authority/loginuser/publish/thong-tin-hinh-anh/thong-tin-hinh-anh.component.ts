@@ -85,7 +85,6 @@ export class ThongTinHinhAnhComponent implements OnInit {
       }
     });
 
-    console.log(this.image)
     
     this.loadImageFromPC = new Array<string>()
     for(let i=0; i< this.image.length; i++)

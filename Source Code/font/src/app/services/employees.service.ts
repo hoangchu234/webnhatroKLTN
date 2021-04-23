@@ -27,20 +27,38 @@ export class EmployeesService {
     }  
   }*/
 
-  public getEmployees(): Observable<Employee[]> {
+  /*public getEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.urlAPI + "/api/Employees").pipe(
       tap(receivedEmployees => receivedEmployees),
       catchError(error => of([]))
     );
+  }*/
+  public getEmployees = async () => {
+    try {
+        const Employees = await fetch(`${this.urlAPI}/api/Employees`);
+        return await Employees.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
   }
 
-  public getEmployeeFromId(id: number): Observable<Employee>{
+  /*public getEmployeeFromId(id: number): Observable<Employee>{
     const url = `${this.urlAPI + "/api/Employees"}/${id}`;
     return this.http.get<Employee>(url).pipe(
       tap(selectEmployee => selectEmployee),
       catchError(error => of(new Employee()))
     );
-  }
+  }*/
+  /*public getEmployeeFromId = async (id: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Employees"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }*/
 
   public updateEmployee(employee: Employee): Observable<any>{
     return this.http.put(`${this.urlAPI + "/api/Employees"}/${employee.id}`, employee, httpOptions).pipe(
@@ -56,11 +74,20 @@ export class EmployeesService {
     );
   }
 
-  public getEmployeeFromAccountId(id: Int32Array): Observable<Employee>{
+  /*public getEmployeeFromAccountId(id: Int32Array): Observable<Employee>{
     const url = `${this.urlAPI + "/api/Employees/GetEmployeeAccount"}/${id}`;
     return this.http.get<Employee>(url).pipe(
       tap(selectUser => selectUser),
       catchError(error => of(new Employee()))
     );
-  }
+  }*/
+  /*public getEmployeeFromAccountId = async (id: Int32Array) => {
+    try {
+      const url = `${this.urlAPI + "/api/Employees/GetEmployeeAccount"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }*/
 }

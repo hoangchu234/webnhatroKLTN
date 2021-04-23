@@ -18,14 +18,19 @@ import { AuthenticationService } from '../../../services/authentication.service'
 })
 export class DialogDetailMotelPublishComponent implements OnInit {
 
-  currentAccount: Account;
+  //currentAccount: Account;
   motel: Motel;
   motelImage: Image[] = [];
 
   constructor(public dialogRef: MatDialogRef<DialogDetailMotelPublishComponent>,@Inject(MAT_DIALOG_DATA) public data: Motel,public provinceService:ProvincesService,private userService:UserService,private sanitizer: DomSanitizer,private router: Router,public dangtinService:MotelService ,private authenticationService: AuthenticationService) { 
-    this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+    
+
+  }
+
+  async ngOnInit(): Promise<void> {
     const id = this.data.id;
-    this.dangtinService.getMotelFromId(Number(id)).subscribe(getdetailmotel => {
+    /*this.dangtinService.getMotelFromId(Number(id)).subscribe(getdetailmotel => {
       this.motel = getdetailmotel
       for(let i=0;i<this.motel.images.length;i++)
       {
@@ -36,12 +41,17 @@ export class DialogDetailMotelPublishComponent implements OnInit {
         }
         
       }
-    })
-
-  }
-
-  ngOnInit(): void {
-    
+    })*/
+    this.motel = await this.dangtinService.getMotelFromId(Number(id)) as Motel;
+    for(let i=0;i<this.motel.images.length;i++)
+    {
+      var imageone = new Image();
+      if(i !=0){
+        imageone.imageMotel = this.motel.images[i].imageMotel
+        this.motelImage.push(imageone);
+      }
+      
+    }
   }
 
   public getHTML(html: string): SafeHtml
@@ -51,12 +61,12 @@ export class DialogDetailMotelPublishComponent implements OnInit {
 
   public onNoClick(): void {
     this.dialogRef.close();
-    if(Number(this.currentAccount.roleId) == 4){
+    if(Number(this.authenticationService.currentAccountValue.roleId) == 4){
       window.location.reload()
       this.router.navigate(['/admin/quan-ly-duyet-tin']);
      
     }
-    if(Number(this.currentAccount.roleId) == 2 || Number(this.currentAccount.roleId) == 3){
+    if(Number(this.authenticationService.currentAccountValue.roleId) == 2 || Number(this.authenticationService.currentAccountValue.roleId) == 3){
       window.location.reload()
       this.router.navigate(['/admin/nhan-vien-quan-ly-duyet-tin']); 
      
@@ -64,7 +74,7 @@ export class DialogDetailMotelPublishComponent implements OnInit {
   }
 
   public onDuyetTin(motel: Motel){
-    if((this.motel.verify == true && Number(this.currentAccount.roleId) == 2) || Number(this.currentAccount.roleId) == 4){
+    if((this.motel.verify == true && Number(this.authenticationService.currentAccountValue.roleId) == 2) || Number(this.authenticationService.currentAccountValue.roleId) == 4){
       alert("Đã xác thực nhà trọ này");
     }
     else{
@@ -83,7 +93,7 @@ export class DialogDetailMotelPublishComponent implements OnInit {
 
   get isAdmin() {
     try{
-      var role = Number(this.currentAccount.roleId);
+      var role = Number(this.authenticationService.currentAccountValue.roleId);
       if(role == 4){
           return true;
       }

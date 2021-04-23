@@ -82,11 +82,12 @@ export class AreaCityHomeComponent implements OnInit {
     }
   }
 
-  public getProvinces(name){
+  public async getProvinces(name){
     console.log(name)
-    this.provinceService.getProvincesByCityName(name).subscribe(data => {
+    /*this.provinceService.getProvincesByCityName(name).subscribe(data => {
       this.provinces = data
-    })
+    })*/
+    this.provinces = await this.provinceService.getProvincesByCityName(name) as Province[];
   }
 
   public onClickProvince (name)  {

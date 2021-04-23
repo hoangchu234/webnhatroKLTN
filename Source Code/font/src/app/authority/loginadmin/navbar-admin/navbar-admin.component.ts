@@ -11,13 +11,13 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 export class NavbarAdminComponent implements OnInit {
 
   username:string;
-  currentAccount: Account;
+  //currentAccount: Account;
 
   checkImage = false;
   constructor(private router: Router,
     private authenticationService: AuthenticationService) { 
-      this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-      if(this.currentAccount.employee.employeeImage != null){
+      //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+      if(this.authenticationService.currentAccountValue.employee.employeeImage != null){
         this.checkImage = true;
       }
     }
@@ -27,9 +27,9 @@ export class NavbarAdminComponent implements OnInit {
   
   get isAdmin() {
     try{
-      var role = Number(this.currentAccount.roleId);
+      var role = Number(this.authenticationService.currentAccountValue.roleId);
       if(role == 4){
-          this.username = this.currentAccount.username + this.currentAccount.username;
+          this.username = this.authenticationService.currentAccountValue.username + this.authenticationService.currentAccountValue.username;
           return true;
       }
       return false;

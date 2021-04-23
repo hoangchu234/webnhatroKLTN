@@ -117,13 +117,15 @@ export class DialogSearchMotelComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  public onChoiceArea(){
+  public async onChoiceArea(){
     this.wasArea = "Xac Thuc";
     this.openDetailSearch = "Diện tích";
-    this.areaSearchService.getAreaSearch().subscribe(getareasaerch => {
+    this.area = await this.areaSearchService.getAreaSearch() as AreaSearch[];
+    this.areaSearch = await this.areaSearchService.getAreaSearch() as AreaSearch[];
+    /*this.areaSearchService.getAreaSearch().subscribe(getareasaerch => {
       this.areaSearch = getareasaerch
       this.area = getareasaerch;
-    });
+    });*/
   }
 
   public onChoiceDirect(){

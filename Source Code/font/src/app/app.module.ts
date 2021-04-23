@@ -97,6 +97,7 @@ import { DialogSearchMotelAreaComponent } from './search-motel/dialog-search-mot
 import { DialogSearchMotelDirectComponent } from './search-motel/dialog-search-motel/dialog-search-motel-direct/dialog-search-motel-direct.component';
 import { AreaCityHomeComponent } from './area-city-home/area-city-home.component';
 
+
 import {
   MatIconModule
 } from '@angular/material/icon';
@@ -104,6 +105,8 @@ import {
 import {
   MatToolbarModule
 } from '@angular/material/toolbar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 import { MagementSendMessegerComponent } from './authority/loginuser/magement-send-messeger/magement-send-messeger.component';
 import { DialogThongBaoComponent } from './authority/loginuser/publish/dialog-thong-bao/dialog-thong-bao.component';
 import { DialogEditMotelComponent } from '../app/authority/loginuser/magement-publish-motel/dialog-edit-motel/dialog-edit-motel.component';
@@ -111,6 +114,7 @@ import { DialogExtendMotelsComponent } from './authority/loginuser/magement-publ
 import { ExtendPaypalComponent } from './authority/loginuser/magement-publish-motel/dialog-extend-motels/extend-paypal/extend-paypal.component';
 import { WebForumComponent } from './web-forum/web-forum.component';
 import { ChatsComponent } from './chats/chats.component';
+import { DialogPostComponent } from './web-forum/dialog-post/dialog-post.component';
 
 @NgModule({
   declarations: [
@@ -168,7 +172,8 @@ import { ChatsComponent } from './chats/chats.component';
     DialogExtendMotelsComponent,
     ExtendPaypalComponent,
     WebForumComponent,
-    ChatsComponent
+    ChatsComponent,
+    DialogPostComponent
   ],
   imports: [
     BrowserModule,
@@ -191,6 +196,7 @@ import { ChatsComponent } from './chats/chats.component';
     MatDatepickerModule,
     MatToolbarModule,
     MatIconModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
     HttpClientModule,
     CKEditorModule,
