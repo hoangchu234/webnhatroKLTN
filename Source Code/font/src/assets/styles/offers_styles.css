@@ -1256,7 +1256,6 @@ section
 .offers
 {
 	width: 100%;
-	padding-top: 115px;
 	padding-bottom: 115px;
 }
 
@@ -1361,12 +1360,11 @@ section
 .offers_grid
 {
 	width: 100%;
-	margin-top: 66px;
+	margin-top: 20px;
 }
 .offers_item
 {
 	width: 100%;
-	margin-bottom: 46px;
 }
 .offers_item:last-child
 {
