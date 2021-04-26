@@ -1,0 +1,8 @@
+<div class="container-fluid">
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12" style="width:100%;text-align: center;background-color: rgb(160, 160, 160);height: 40px;padding: 10px;"><i (click)="onClick()" class="fa fa-chevron-left" style="float: left;"></i> {{areaTypeSearch}}</div>
+      <button  class="btn btn-light col-md-12" (click)="onClickChoice(choice)" style="width:100%;text-align: left;" >Tất cả </button>
+  
+      <button *ngFor="let data of areaData" class="btn btn-light col-md-12" (click)="onClickChoice(data.name)" style="width:100%;text-align: left;" >{{data.name}} <i *ngIf="choiceArea == data.name" class="fa fa-check-circle-o" style="float: right;color: green;"></i></button>
+    </div>
+  </div>
