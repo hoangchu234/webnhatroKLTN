@@ -107,7 +107,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes)],
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled'
+    }),],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

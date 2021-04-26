@@ -1256,6 +1256,7 @@ section
 .offers
 {
 	width: 100%;
+	padding-top: 115px;
 	padding-bottom: 115px;
 }
 
@@ -1360,11 +1361,12 @@ section
 .offers_grid
 {
 	width: 100%;
-	margin-top: 20px;
+	margin-top: 66px;
 }
 .offers_item
 {
 	width: 100%;
+	margin-bottom: 46px;
 }
 .offers_item:last-child
 {
@@ -1395,7 +1397,7 @@ section
 	position: absolute;
 	left: 0;
 	bottom: 27px;
-	width: 130px;
+	width: 180px;
 	height: 33px;
 	background: #fa9e1b;
 	overflow: hidden;
@@ -2135,7 +2137,7 @@ h2::after {
 	margin-left: 5px;
 }
 .carousel .thumb-wrapper {
-	
+	text-align: center;
 }
 .carousel .thumb-content {
 	padding: 15px;

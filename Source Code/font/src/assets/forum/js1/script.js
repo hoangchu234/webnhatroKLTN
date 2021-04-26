@@ -467,7 +467,7 @@ $('#nightmode').on('change', function() {
 	
 if ($.isFunction($.fn.loadMoreResults)) {	
 	$('.loadMore').loadMoreResults({
-		displayedItems: 3,
+		displayedItems: 1,
 		showItems: 1,
 		button: {
 		  'class': 'btn-load-more',

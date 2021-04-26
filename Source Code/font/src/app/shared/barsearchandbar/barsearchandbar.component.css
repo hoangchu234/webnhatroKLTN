@@ -1,91 +1,13 @@
 .example::-webkit-scrollbar {
   display: none;
 }
-body * {
-  box-sizing: border-box;
-}
-.search-bar-tab {
-  width: 176px;
-  float: left;
-}
-.search-bar .search-bar-suggestion {
-  float: left;
-  position: relative;
-}
-.search-bar .select-cate {
-  border-left: 1px solid #ebedf0;
-}
-.search-bar .search-bar-tab {
-  width: 176px;
-  float: left;
-}
-.search-bar .select-control {
-  float: left;
-  position: relative;
-  width: 160px;
-  border-right: 1px solid #ebedf0;
-  cursor: pointer;
-}
-.search-bar .custom-value {
-  line-height: 20px;
-  color: #2c2f36;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.dropbox-label1 {
-  
-  margin-bottom: 5px;
-  font-size: 11px;
-  line-height: 16px;
-  height: 16px;
-  letter-spacing: .16px;
-  color: #2c2f36;
-  /* padding-right: 20px; */
-  padding-bottom: 4px;
-  cursor: pointer;
-  display: inline-block;
-}
-.search-bar-ngang {
-  background: #fff;
-  position: relative;
-}
-.search-bar .search-bar-tab li {
-  display: inline-block;
-  text-align: center;
-  width: 50%;
-  height: 40px;
-  padding: 10px;
-  color: #2c2f36;
-  float: left;
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
-}
-.mar-right-16 {
-  margin-right: 16px;
-}
-.pad-top-8 {
-  padding-top: 8px;
-}
-.mar-left-16 {
-  margin-left: 16px;
-}
+
 /* Hide scrollbar for IE, Edge and Firefox */
 .example {
 -ms-overflow-style: none;  /* IE and Edge */
 scrollbar-width: none;  /* Firefox */
 }
-.search-bar {
-  border: 1px solid #ccd3d9;
-  box-sizing: border-box;
-  border-radius: 4px;
-  padding: 10px 35px 10px 48px;
-  width: 280px;
-  height: 40px;
-  background: #fff no-repeat url(../../../assets/images/search.png) 16px center;
-  font-weight: normal;
-}
+
 
 .card-dimensions {
   height: 162px;
@@ -112,20 +34,10 @@ scrollbar-width: none;  /* Firefox */
 
 .search-bar {
   min-width: 348px;
-  text-indent: 10px !important;
+  text-indent: 30px !important;
   box-sizing: border-box;
 }
- .custom-value.hasvalue {
-  color: #004e7f;
-  font-weight: bold;
-}
-.search-bar .custom-value {
-  line-height: 20px;
-  color: #2c2f36;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
 .search-drop-down {
   position: absolute;
   width: 50%;

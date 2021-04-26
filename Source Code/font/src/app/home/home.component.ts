@@ -21,6 +21,7 @@ import { StreetService } from '../services/street.service';
 import { DictrictService } from '../services/dictrict.service';
 import { District } from '../model/District';
 import { Street } from '../model/Street';
+import { ViewportScroller } from '@angular/common';
 
 
 @Component({
@@ -54,7 +55,8 @@ export class HomeComponent implements OnInit {
   constructor(private priceSearchServer:PriceSearchService,
     private http: HttpClient,private router: Router,private motelService: MotelService,
     private cityService: CitiesService, private provinceService: ProvincesService, 
-    private typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService) { 
+    private typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,
+    viewportScroller: ViewportScroller) { 
 
   }
 
