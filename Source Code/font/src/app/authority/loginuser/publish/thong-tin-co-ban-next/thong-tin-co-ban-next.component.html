@@ -1,0 +1,73 @@
+
+
+<div class="super_container" style="color: black;">
+  <div class="container-fluid" style="height: 50px;background-color: #C0C0C0;">
+    <div style="padding-top:15px;"><span style="margin-left: 10px;">Motel <div class="fa  fa-chevron-right" style="margin-right: 15px;"></div> <b style="margin-right: 10px;">Trang đang tin</b> <div class="fa  fa-chevron-right"style="margin-right: 15px;"></div> <b>Thông tin cơ bản next</b></span></div>
+  </div>
+  <div class="container-fluid"  style=" margin-top: 40px;color: black;padding:5px ;">
+    <i class="fa fa-angle-left" (click)="prevous()" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;"></i>Quay trở lại
+    <div class="col-md-4" style="height: 4px; background-color: green;"></div>
+    <br>
+    <div style="text-align: center;"><h2><b>Thông tin cơ bản</b></h2></div>
+    <div class="col-md-6"></div>
+    <div style="margin-top: 30px;" >
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-2" style="margin-top: 5px;">Giá tiền </label>
+                <div class="col-sm-6" style="margin-top: -10px ;">
+                <input type="number" [(ngModel)]="priceMotel" name="priceMotel" class="form-control">
+                </div>
+                <div class="col-sm-4">
+                  <select (change)="onChangeTypePriceMote($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
+                    <option *ngFor='let typePriceMotel of typePriceMotels' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+                  </select>
+                </div>
+                <div class="form-check" style="margin-left: 120px;margin-top: 50px;">
+
+                </div>
+              </div>
+              <div class="form-group row" style="margin-top: -20px;">
+                <label class="col-sm-2" style="margin-top: 5px;">Diện tích </label>
+                <div class="col-sm-6" style="margin-top: -10px ;">
+                <input type="number"  [(ngModel)]="areaMotel" name="AreaMotel" class="form-control" placeholder="min" >
+                </div>
+                <div class="col-sm-4">
+                  m²
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-4" for="exampleFormControlSelect1">Hướng nhà</label>
+              <div class="col-sm-8">
+              <select (change)="onChangeDirect($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
+                <option *ngFor='let direct of directs' [value]="direct.id">{{direct.text}}</option>
+              </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12" style="padding-top: 20px;">
+            <div class="form-group row">
+              <label class="col-sm-1" for="exampleFormControlSelect1" >Tiêu đề</label>
+              <div class="col-sm-11" style="margin-top: -10px; margin-left: -15px;;">
+                <input name="Title"  [(ngModel)]="title" class="form-control" style="float: right;" placeholder="" >
+              </div>
+            </div>
+
+            <div class="form-group row" style="padding-top: 20px;margin-left: -10px;">
+              <label class="col-sm-1" for="exampleFormControlSelect1" >Mô tả</label>
+              <div class="col-sm-11" style="margin-top: -10px;margin-left: -20px;">
+                <ck-editor name="editor1"  [(ngModel)]="description" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-warning"  href=# aria-hidden="true" style="padding: 10px;width: 100%;height: 50px;font-size: 20px;" (click)='next()'>Tiếp tục<i style="margin-left: 20px;font-size: 20px;" class="fa fa-angle-right"></i></button>
+  </div>
+
+
