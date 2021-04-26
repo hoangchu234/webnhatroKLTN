@@ -307,19 +307,19 @@
                 <div class="offers_grid">
                   <!-- Offers Item -->
                   <ng-container *ngFor= 'let motel of motelhighlights; let i=index' >
-                    <div class="offers_item rating_4" style="box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 5px;">
+                    <div class="offers_item rating_4" style="box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
                     <div class="row" >
                       <div class="col-lg-4">
-                        <div class="offers_image_container" style="height: 280px;margin-left: 15px;margin-top: 2px;">
+                        <div class="offers_image_container" style="height: 270px;margin-left: 15px;margin-top: 10px;">
                           <!-- Image by https://unsplash.com/@kensuarez -->
-                          <div class="offers_image_background" [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                          <div class="offers_image_background" style="border-radius: 10px;" [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
                           <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div>
                         </div>
                       </div>
     
                       <div class="col-lg-8">
                         <div class="col-md-12"> 
-                          <p class="test2">{{motel.title}}</p>
+                          <p class="test2" (click)="linkRouter(motel.title, motel.id)">{{motel.title}}</p>
                           <p class="test1">{{motel.address}}</p>
                           <hr>
                           <div class="container" style="margin-left: -15px;margin-top: 25px;">
@@ -369,7 +369,7 @@
     <!-- Footer -->
   </div>
 <!--trending-->
-<div class="container-fluid body" style="padding-top: 60px;">
+<div class="container-fluid body" style="padding-top: 50px;">
   <div class="row">
     <div class="col-md-12">
       <h2><b>Tìm kiếm nhà trọ mới nhất </b></h2>
@@ -382,60 +382,84 @@
       </ol>
 
       <!-- Wrapper for carousel items -->
-      <div class="carousel-inner" >
-        <div class="carousel-item active">
+      <div class=" carousel-inner" style="margin-top: 10px;">
+        <div class="carousel-item active" > 
           <div class="row">
-          <ng-container  *ngFor= 'let motelnew of motelnews; let i=index' >
-            <div class="col-md-3">
-              <div  *ngIf="i < 4 && i >=0">
-                  <div class="thumb-wrapper" >
-                <div class="img-box1">
-                  <img [src]="motelnew.images[0].imageMotel" (click)="linkRouter(motelnew.title, motelnew.id)" class="img-fluid" alt="" style="height: 200px;width: 220px;">
-                </div>
-                <br>
-                <P style="font-size: 20px;color: darkblue;font-weight: bold;">{{motelnew.price}} {{motelnew.priceType}}</P>
-                <p (click)="linkrouter(motelnew.title, motelnew.id)" >{{motelnew.title}}</p>
+            <div class="col-md-1"></div>
+            <ng-container  *ngFor= 'let motelnew of motelnews; let i=index' >
+              <div class="col-md-2" *ngIf="i < 5 && i >=0" style="margin-bottom: 15px;">
+                <div style="box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 5px;;border-radius: 10px;"  >
+                    <div class="thumb-wrapper" style="text-align:start;" >
+                      <div class="img-box1">
+                        <img  [src]="motelnew.images[0].imageMotel" (click)="linkRouter(motelnew.title, motelnew.id)" class="img-fluid" alt="" style="height: 180px;width: 100%;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+                      </div>
+                      <br>
+                      <p class="chu" style="margin-left: 5px;" (click)="linkrouter(motelnew.title, motelnew.id)">{{motelnew.title}}</p>
+                      <div class="property-attr " style="color: black;font-size: 14px;">
+                        <span style="font-weight: bold;margin-left: 5px;" class="land">{{motelnew.areaZone}} {{motelnew.areaZoneType}}</span>
+                        <span style="margin-left:15px">{{motelnew.detail.numberLiving}} PN {{motelnew.detail.numberBath}} WC</span>
+                      </div>
+                      <p class="price" style="margin-left: 5px;">{{motelnew.price}} {{motelnew.priceType}}</p>
+                      <div style="height: 20px;"></div>
+                    </div>
                   </div>
+                  
                 </div>
-              </div>
-          </ng-container>
+            </ng-container>
+            <div class="col-md-1"></div>
         </div>
         </div>
         <div class="carousel-item" >
           <div class="row">
+            <div class="col-md-1"></div>
             <ng-container  *ngFor= 'let motelnew of motelnews; let i=index' >
-              <div class="col-md-3">
-                <div  *ngIf="i < 8 && i >=4">
-                    <div class="thumb-wrapper" >
-                  <div class="img-box1">
-                    <img [src]="motelnew.images[0].imageMotel" (click)="linkRouter(motelnew.title, motelnew.id)" class="img-fluid" alt="" style="height: 200px;width: 220px;">
-                  </div>
-                  <br>
-                  <P style="font-size: 20px;color: darkblue;font-weight: bold;">{{motelnew.price}} {{motelnew.priceType}}</P>
-                  <p (click)="linkrouter(motelnew.title, motelnew.id)" >{{motelnew.title}}</p>
+              <div class="col-md-2" *ngIf="i < 5 && i >=0" style="margin-bottom: 15px;">
+                <div style="box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 5px;;border-radius: 10px;"  >
+                    <div class="thumb-wrapper" style="text-align:start;" >
+                      <div class="img-box1">
+                        <img  [src]="motelnew.images[0].imageMotel" (click)="linkRouter(motelnew.title, motelnew.id)" class="img-fluid" alt="" style="height: 180px;width: 100%;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+                      </div>
+                      <br>
+                      <p class="chu" style="margin-left: 5px;" (click)="linkrouter(motelnew.title, motelnew.id)">{{motelnew.title}}</p>
+                      <div class="property-attr " style="color: black;font-size: 14px;">
+                        <span style="font-weight: bold;margin-left: 5px;" class="land">{{motelnew.areaZone}} {{motelnew.areaZoneType}}</span>
+                        <span style="margin-left:15px">{{motelnew.detail.numberLiving}} PN {{motelnew.detail.numberBath}} WC</span>
+                      </div>
+                      <p class="price" style="margin-left: 5px;">{{motelnew.price}} {{motelnew.priceType}}</p>
+                      <div style="height: 20px;"></div>
                     </div>
                   </div>
+                  
                 </div>
             </ng-container>
-          </div>
+            <div class="col-md-1"></div>
+        </div>
         </div>
         <div class="carousel-item" >
           <div class="row">
+            <div class="col-md-1"></div>
             <ng-container  *ngFor= 'let motelnew of motelnews; let i=index' >
-              <div class="col-md-3">
-                <div  *ngIf="i < 12 && i >=8">
-                    <div class="thumb-wrapper" >
-                  <div class="img-box1">
-                    <img [src]="motelnew.images[0].imageMotel" (click)="linkRouter(motelnew.title, motelnew.id)" class="img-fluid" alt="" style="height: 200px;width: 220px;">
-                  </div>
-                  <br>
-                  <P style="font-size: 20px;color: darkblue;font-weight: bold;">{{motelnew.price}} {{motelnew.priceType}}</P>
-                  <p (click)="linkrouter(motelnew.title, motelnew.id)" >{{motelnew.title}}</p>
+              <div class="col-md-2" *ngIf="i < 5 && i >=0" style="margin-bottom: 15px;">
+                <div style="box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 5px;;border-radius: 10px;"  >
+                    <div class="thumb-wrapper" style="text-align:start;" >
+                      <div class="img-box1">
+                        <img  [src]="motelnew.images[0].imageMotel" (click)="linkRouter(motelnew.title, motelnew.id)" class="img-fluid" alt="" style="height: 180px;width: 100%;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+                      </div>
+                      <br>
+                      <p class="chu" style="margin-left: 5px;" (click)="linkrouter(motelnew.title, motelnew.id)">{{motelnew.title}}</p>
+                      <div class="property-attr " style="color: black;font-size: 14px;">
+                        <span style="font-weight: bold;margin-left: 5px;" class="land">{{motelnew.areaZone}} {{motelnew.areaZoneType}}</span>
+                        <span style="margin-left:15px">{{motelnew.detail.numberLiving}} PN {{motelnew.detail.numberBath}} WC</span>
+                      </div>
+                      <p class="price" style="margin-left: 5px;">{{motelnew.price}} {{motelnew.priceType}}</p>
+                      <div style="height: 20px;"></div>
                     </div>
                   </div>
+                  
                 </div>
             </ng-container>
-          </div>
+            <div class="col-md-1"></div>
+        </div>
         </div>
 
       </div>

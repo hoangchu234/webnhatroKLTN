@@ -1395,7 +1395,7 @@ section
 	position: absolute;
 	left: 0;
 	bottom: 27px;
-	width: 180px;
+	width: 130px;
 	height: 33px;
 	background: #fa9e1b;
 	overflow: hidden;
@@ -2135,7 +2135,7 @@ h2::after {
 	margin-left: 5px;
 }
 .carousel .thumb-wrapper {
-	text-align: center;
+	
 }
 .carousel .thumb-content {
 	padding: 15px;
