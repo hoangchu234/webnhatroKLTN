@@ -1,6 +1,12 @@
 .example::-webkit-scrollbar {
   display: none;
 }
+p.test3 {
+  white-space: nowrap; 
+  width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} 
 body * {
   box-sizing: border-box;
 }
@@ -34,15 +40,12 @@ body * {
   text-overflow: ellipsis;
 }
 .dropbox-label1 {
-  
-  margin-bottom: 5px;
   font-size: 11px;
   line-height: 16px;
   height: 16px;
   letter-spacing: .16px;
   color: #2c2f36;
   /* padding-right: 20px; */
-  padding-bottom: 4px;
   cursor: pointer;
   display: inline-block;
 }

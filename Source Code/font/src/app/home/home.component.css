@@ -23,12 +23,12 @@ p.test1 {
 } 
 
 p.chu {
-  width: 280px;
+  width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 20px;
   -webkit-line-clamp:2;
-  height: 45px;
+  height: 40px;
    display: -webkit-box;
   -webkit-box-orient: vertical;
   line-height: 21px;

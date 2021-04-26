@@ -90,7 +90,7 @@ Left Navigation Sidebar
 
 .nav-left-sidebar .submenu .nav .nav-item .nav-link {
     font-size: 14px;
-    padding: 6px 12px;
+    padding: 3px 12px;
     transition: 0.3s;
 }
 
@@ -908,7 +908,7 @@ clip-path: polygon(10% 25%, 10% 0, 35% 0%, 65% 0%, 90% 0, 90% 25%, 90% 50%, 91% 
 
 .btn {
     font-size: 14px;
-    padding: 9px 16px;
+    padding:3px 16px;
     border-radius: 2px;
 }
 

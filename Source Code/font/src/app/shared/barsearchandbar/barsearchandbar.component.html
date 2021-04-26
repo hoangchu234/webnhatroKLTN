@@ -1,6 +1,6 @@
 <div class="container-fluid " >
-  <div class="row" style="box-shadow: 0 2px 8px rgb(3 44 71 / 12%);margin-top: 5px;height: 70px;">
-    <div class="nav-scroller" style="margin-left: 180px;" >
+  <div class="row" style="box-shadow: 0 2px 8px rgb(3 44 71 / 12%);margin-top: 5px;height: 75px;">
+    <div class="nav-scroller" style="margin-left:40px;" >
       <nav class="nav"  >
         <div class="search-field d-none d-md-block p-2 link-secondary" style="margin-top:-10px;margin-left: -15px;" >
           <form class="d-flex align-items-center h-100" action="#">
@@ -21,7 +21,7 @@
           </form>
         </div>
         <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;">
-          <div  style="width:170px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;">Tỉnh thành phố <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div> <div class="custom-value hasvalue" >{{city.name}}</div> </div>
+          <div  style="width:150px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;margin-top:10px">Tỉnh thành phố <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div> <div class="custom-value hasvalue" >{{city.name}}</div> </div>
           
           <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
             <div *ngFor="let citie of cities" >
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px"  >
-          <div style="width:170px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Quận, huyện <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{province.name}} </div></div>
+          <div style="width:150px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Quận, huyện <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{province.name}} </div></div>
           <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
               <div *ngFor='let province of provinces'>
                   <a class="dropdown-item" (click)="onChoiceProvince(province)" [value]="province.name">{{province.name}}</a>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
-          <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Phường xã <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{district.name}}</div> </div>
+          <div type="button" style="width:150px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Phường xã <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{district.name}}</div> </div>
           <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
               <div *ngFor='let district of districts'>
                   <a class="dropdown-item" (click)="onChoiceDistrict(district)" [value]="district.name">{{district.name}}</a>
@@ -46,16 +46,16 @@
           </div>
         </div>
         <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
-          <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Đường <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{street.name}}</div> </div>
+          <div type="button" style="width:150px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Đường <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><p class="custom-value hasvalue test3" style="margin-top: -5px;">{{street.name}}</p> </div>
 
           <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
               <div *ngFor='let street of streets'>
-                  <a class="dropdown-item" (click)="onChoiceStreet(street)" [value]="street.name">{{street.name}}</a>
+                  <p class="dropdown-item " (click)="onChoiceStreet(street)" [value]="street.name">{{street.name}}</p>
               </div>
           </div>
         </div>
         <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px" >
-          <div type="button" style="width:170px" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Loại phòng trọ<span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{newType}}</div></div>
+          <div type="button" style="width:170px" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Loại phòng trọ<span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{newType}}</div></div>
 
           <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
               <div *ngFor='let newType of newTypes'>
@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
-          <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Giá <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{priceSearch}}</div> </div>
+          <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Giá <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{priceSearch}}</div> </div>
 
           <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
               <div *ngFor='let priceSearch of priceSearchs'>
@@ -72,8 +72,8 @@
               </div>
           </div>
         </div>
-        <div class="btn-group p-2 link-secondary " >
-          <div style="height: 40px;border-radius:5px;margin-top:7px" type="submit" (click)="onSearch()" class="btn btn-warning" id="dropdownMenu2" ><div style="padding: 5px;">Tìm kiếm</div></div>
+        <div class="btn-group p-2 link-secondary select-control select-cate " >
+          <button style="height: 45px;border-radius:5px;margin-top:10px" type="submit" (click)="onSearch()" class="btn btn-warning" id="dropdownMenu2" ><div style="padding: 5px;">Tìm kiếm</div></button>
         </div>
         
       </nav>
