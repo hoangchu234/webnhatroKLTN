@@ -28,6 +28,6 @@ namespace Websitedangtintimkiemnhatro.Models
         public ICollection<Motel> Motels { get; set; }
         public ICollection<Post> Posts { get; set; }
         public ICollection<Comment> Comments { get; set; }
-
+        public ICollection<LikeCommentPost> LikeCommentPosts { get; set; }
     }
 }

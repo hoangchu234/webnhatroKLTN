@@ -23,18 +23,39 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
         // GET: api/Posts
         [HttpGet]
-        [ActionName("GetPosts/{number}")]
+        [Route("GetPosts/{number}/{skipNumber}")]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts(int number, int skipNumber)
         {
-            var posts = await _context.Posts.Include(e => e.User.HovaTen).Skip(skipNumber).Take(number).ToListAsync();
+            var comments = await _context.Comments.Include(a => a.User).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User }).Take(2).ToListAsync();
+            var posts = await _context.Posts.Include(e => e.User).Select(c => new Post
+            {
+                Id = c.Id,
+                PostUser = c.PostUser,
+                CreateDate = c.CreateDate,
+                User = c.User,
+                Comments = _context.Comments.Include(a => a.User).Where(a => a.PostId == c.Id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User }).Take(2).ToList()
+            }).OrderByDescending(a => a.CreateDate).Skip(skipNumber).Take(number).ToListAsync();
+            return posts;
+        }
+
+        // GET: api/Posts
+        [HttpGet]
+        [Route("GetSomePosts")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetSomePosts()
+        {
+            var comments = await _context.Comments.Include(a => a.User).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser , CreateDate = c.CreateDate, User = c.User }).Take(2).ToListAsync();
+            var posts = await _context.Posts.Include(e => e.User).Select(c => new Post { Id = c.Id, PostUser = c.PostUser, CreateDate = c.CreateDate, User = c.User, 
+                        Comments = _context.Comments.Include(a => a.User).Where(a => a.PostId == c.Id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User }).Take(2).ToList()
+                        }).OrderByDescending(a => a.CreateDate).Take(10).ToListAsync();
             return posts;
         }
 
         // GET: api/Posts/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetPost/{id}")]
         public async Task<ActionResult<Post>> GetPost(int id)
         {
-            var post = await _context.Posts.Include(a => a.User.HovaTen).Where(a => a.Id == id).FirstOrDefaultAsync();
+            var post = await _context.Posts.Include(a => a.User).Where(a => a.Id == id).FirstOrDefaultAsync();
 
             if (post == null)
             {
@@ -42,6 +63,23 @@ namespace Websitedangtintimkiemnhatro.Controllers
             }
 
             return post;
+        }
+
+        // GET: api/Posts/GetCountLikePost
+        [HttpGet]
+        [Route("GetCountLikePost")]
+        public async Task<ActionResult<Object>> GetCountLikePost()
+        {
+            var like =  _context.LikeCommentPosts.ToList();
+
+            var result = like.GroupBy(id => id.IdPost).OrderByDescending(id => id.Count()).Select(g => new { Id = g.Key, Count = g.Count() });
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result as Object;
         }
 
         // POST: api/Posts
@@ -54,6 +92,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+
             }
             catch (DbUpdateException)
             {
@@ -66,8 +105,9 @@ namespace Websitedangtintimkiemnhatro.Controllers
                     throw;
                 }
             }
-
-            return CreatedAtAction("GetPost", new { id = post.Id }, post);
+            var postNew = await _context.Posts.Include(a => a.User).Where(a => a.Id == post.Id).FirstOrDefaultAsync();
+            return postNew; //Quỳnh sửa
+            //return CreatedAtAction("GetPost", new { id = post.Id }, post);
         }
 
         private bool PostExists(int id)

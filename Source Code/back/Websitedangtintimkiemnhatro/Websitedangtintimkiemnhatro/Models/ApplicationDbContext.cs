@@ -35,9 +35,15 @@ namespace Websitedangtintimkiemnhatro.Models
         public DbSet<Street> Streets { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<LikeCommentPost> LikeCommentPosts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<LikeCommentPost>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+            });
+
             modelBuilder.Entity<PriceSearch>(entity =>
             {
                 entity.Property(e => e.Id).UseIdentityColumn();

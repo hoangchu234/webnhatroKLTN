@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Websitedangtintimkiemnhatro.Models;
 
 namespace Websitedangtintimkiemnhatro.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210425160147_LikePostCommentTable")]
+    partial class LikePostCommentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,27 +371,31 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("IdCommnent")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdPost")
+                    b.Property<int?>("CommentId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("Like")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("PostId")
+                        .IsRequired()
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("PostId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("LikeCommentPosts");
+                    b.ToTable("LikeCommentPost");
                 });
 
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.LiveType", b =>
@@ -834,6 +840,18 @@ namespace Websitedangtintimkiemnhatro.Migrations
 
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.LikeCommentPost", b =>
                 {
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.Comment", "Comment")
+                        .WithMany("LikeCommentPosts")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.Post", "Post")
+                        .WithMany("LikeCommentPosts")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Websitedangtintimkiemnhatro.Models.User", "User")
                         .WithMany("LikeCommentPosts")
                         .HasForeignKey("UserId")
