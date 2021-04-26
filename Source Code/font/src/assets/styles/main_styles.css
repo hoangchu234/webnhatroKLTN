@@ -1407,7 +1407,6 @@ section
 .offers
 {
 	width: 100%;
-	padding-top: 105px;
 	padding-bottom: 43px;
 	background: #f3f6f9;
 }
@@ -1444,7 +1443,7 @@ section
 	position: absolute;
 	left: 0;
 	bottom: 27px;
-	width: 180px;
+	width: 120px;
 	height: 33px;
 	background: #fa9e1b;
 	overflow: hidden;

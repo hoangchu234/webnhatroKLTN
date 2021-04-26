@@ -143,6 +143,7 @@ export class MotelService {
   public getmotelbyorder = async (city: Number, province: Number, district: Number, street: Number, price: Number, type: Number) => {
     try {
       const url = `${this.urlAPI + "/api/Motels/GetMotelByOrder"}/${city}/${province}/${district}/${street}/${price}/${type}`;
+      console.log(url)
       return await this.http.get(url).toPromise();
     }
     catch (error) {

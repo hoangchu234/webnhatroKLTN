@@ -4,7 +4,6 @@ import { Post } from '../model/Post';
 import { Comment } from '../model/Comment';
 import { Observable,of, from } from 'rxjs';
 import { map ,tap, catchError} from 'rxjs/operators';
-import { LikeCommentPost } from '../model/LikeCommentPost';
 
 const httpOptions ={
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -21,22 +20,15 @@ export class PostService {
 
   public postPost(newPost: Post): Observable<Post>{
     return this.http.post<Post>(this.urlAPI + "/api/Posts", newPost, httpOptions).pipe(
-      tap((post: Post) => post),
+      tap((post: Post) => console.log(`inserted Post = ${JSON.stringify(post)}`)),
       catchError(error => of(new Post()))
     );
   }
 
   public postComment(newComment: Comment): Observable<Comment>{
     return this.http.post<Comment>(this.urlAPI + "/api/Comments", newComment, httpOptions).pipe(
-      tap((comment: Comment) => comment),
+      tap((comment: Comment) => console.log(`inserted Comment = ${JSON.stringify(comment)}`)),
       catchError(error => of(new Comment()))
-    );
-  }
-
-  public postLikeCommentPost(newLike: LikeCommentPost): Observable<LikeCommentPost>{
-    return this.http.post<LikeCommentPost>(this.urlAPI + "/api/LikeCommentPosts", newLike, httpOptions).pipe(
-      tap((like: LikeCommentPost) => like),
-      catchError(error => of(new LikeCommentPost()))
     );
   }
 
@@ -47,9 +39,9 @@ export class PostService {
       catchError(error => of([]))
     );
   }*/
-  public getMorePost = async (number: number, skipNumber: number) => {
+  public getPostById = async (id: number, skipNumber: number) => {
     try {
-      const url = `${this.urlAPI + "/api/Posts/GetPosts"}/${number}/${skipNumber}`;
+      const url = `${this.urlAPI + "/api/Posts/GetPosts"}/${id}/${skipNumber}`;
       return await this.http.get(url).toPromise();
     }
     catch (error) {
@@ -57,14 +49,6 @@ export class PostService {
     }
   }
 
-  public getSomePost = async () => {
-    try {
-      return await this.http.get(this.urlAPI + "/api/Posts/GetSomePosts").toPromise();
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
 
   /*public getChildCommentById(id: string): Observable<Comment[]>{
     const url = `${this.urlAPI + "/api/Comments/GetChildComments"}/${id}`;
@@ -80,15 +64,6 @@ export class PostService {
     }
     catch (error) {
       console.log(error);
-    }
-  }
-
-  public getLikePost = async () => {
-    try {
-      return await this.http.get(this.urlAPI + "/api/Posts/GetCountLikePost").toPromise();
-    }
-    catch (e) {
-      console.log(e);
     }
   }
 
@@ -110,58 +85,10 @@ export class PostService {
     }
   }
 
-  public getCommentFirstsById = async (id: number) => {
-    try {
-      const url = `${this.urlAPI + "/api/Comments/GetCommentFirsts"}/${id}`;
-      return await this.http.get(url).toPromise();
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
 
   public getCountComment = async (id: string, idParent: string) => {
     try {
       const url = `${this.urlAPI + "/api/Comments/CountComment"}/${id}/${idParent}`;
-      return await this.http.get(url).toPromise();
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  public getCountCommentPost = async (id: string) => {
-    try {
-      const url = `${this.urlAPI + "/api/Comments/CountCommentPost"}/${id}`;
-      return await this.http.get(url).toPromise();
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  public getCountChildCommentPost = async (id: string) => {
-    try {
-      const url = `${this.urlAPI + "/api/Comments/CountChildCommentPost"}/${id}`;
-      return await this.http.get(url).toPromise();
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  public getLikeComment = async () => {
-    try {
-      return await this.http.get(this.urlAPI + "/api/Posts/GetCountLikeComment").toPromise();
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  public getCommentPosts = async (id: string, number: string, skip: string) => {
-    try {
-      const url = `${this.urlAPI + "/api/Comments/GetCommentPosts"}/${id}/${number}/${skip}`;
       return await this.http.get(url).toPromise();
     }
     catch (e) {

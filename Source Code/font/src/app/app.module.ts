@@ -116,8 +116,6 @@ import { WebForumComponent } from './web-forum/web-forum.component';
 import { ChatsComponent } from './chats/chats.component';
 import { DialogPostComponent } from './web-forum/dialog-post/dialog-post.component';
 
-import { ConverterPipe } from './converter-pipe.pipe';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -175,8 +173,7 @@ import { ConverterPipe } from './converter-pipe.pipe';
     ExtendPaypalComponent,
     WebForumComponent,
     ChatsComponent,
-    DialogPostComponent,
-    ConverterPipe
+    DialogPostComponent
   ],
   imports: [
     BrowserModule,

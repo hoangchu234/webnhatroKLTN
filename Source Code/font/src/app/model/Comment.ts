@@ -10,5 +10,4 @@ export class Comment {
     post:Post;
     postId:string;
     parentCommentId:string;
-    childComments:Comment[];
 }

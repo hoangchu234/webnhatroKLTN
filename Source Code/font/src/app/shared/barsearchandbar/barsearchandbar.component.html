@@ -1,91 +1,88 @@
-<div class="container-fluid " style="background-color: black; ">
-  <div class="row" style="padding:5px;">
-    <div class="col-md-12">
-      <div class="row" style="padding-left: 35px;padding-right:35px;">
-
-          <div class="col-md-10">
-            <div class="search-field d-none d-md-block" style="margin-top:2px;margin-left: -15px;" >
-              <form class="d-flex align-items-center h-100" action="#">
-                <div class="input-group" style="color: black;background-color: white;border-radius: 2px;">
-                  <div class="input-group-prepend bg-transparent">
-                    <i class="input-group-text border-0 mdi mdi-magnify" style="color: black; background-color: white;"></i>
-                  </div>
-                  <input type="text" matInput  [formControl]="myControl" [matAutocomplete]="auto"   class="form-control bg-transparent border-0" placeholder="Tìm kiếm theo tiêu đề" style="padding-right: 20px;">
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      {{option.name}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="btn-group " style="width:100%" >
-              <button type="submit" (click)="onSearch()"  style="width:100%" class="btn btn-warning" id="dropdownMenu2" >Tìm kiếm</button>
-            </div>
-          </div>
+<div class="container-fluid " >
+  <div class="row" style="box-shadow: 0 2px 8px rgb(3 44 71 / 12%);margin-top: 5px;height: 70px;">
+    <div class="nav-scroller" style="margin-left: 180px;" >
+      <nav class="nav"  >
+        <div class="search-field d-none d-md-block p-2 link-secondary" style="margin-top:-10px;margin-left: -15px;" >
+          <form class="d-flex align-items-center h-100" action="#">
+            <input type="text" placeholder="Tìm kiếm địa điểm, khu vực" matInput [formControl]="myControl"  [matAutocomplete]="auto" value="" class="search-bar" id="search-suggestion" autocomplete="off">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <!-- <div class=" search-bar" style="color: black;background-color: white;border-radius: 2px;">
+              <input type="text" matInput [formControl]="myControl" [ngValue]="myControl" [matAutocomplete]="auto" class="form-control bg-transparent border-0" placeholder="Tìm kiếm theo tiêu đề">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </div> -->
+          </form>
+        </div>
+        <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;">
+          <div  style="width:170px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;">Tỉnh thành phố <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div> <div class="custom-value hasvalue" >{{city.name}}</div> </div>
           
-          <div class="btn-group col-md-2" style=" margin: 10px 0px 10px 0px" >
-            <button  style="width:auto" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{city.name}} <span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;"></span></button>
-
-            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
-              <div *ngFor="let citie of cities" >
-                <a class="dropdown-item" (click)="onChoiceCity(citie)" [value]="citie.name">{{citie.name}}</a>
+          <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+            <div *ngFor="let citie of cities" >
+              <a class="dropdown-item" (click)="onChoiceCity(citie)" [value]="citie.name">{{citie.name}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px"  >
+          <div style="width:170px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Quận, huyện <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{province.name}} </div></div>
+          <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div *ngFor='let province of provinces'>
+                  <a class="dropdown-item" (click)="onChoiceProvince(province)" [value]="province.name">{{province.name}}</a>
               </div>
-            </div>
           </div>
-          <div class="btn-group col-md-2"  style=" margin: 10px 0px 10px 0px"  >
-            <button style="width:auto"   type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{province.name}} <span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;"></span></button>
-            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
-                <div *ngFor='let province of provinces'>
-                    <a class="dropdown-item" (click)="onChoiceProvince(province)" [value]="province.name">{{province.name}}</a>
-                </div>
-            </div>
+        </div>
+        <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
+          <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Phường xã <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{district.name}}</div> </div>
+          <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div *ngFor='let district of districts'>
+                  <a class="dropdown-item" (click)="onChoiceDistrict(district)" [value]="district.name">{{district.name}}</a>
+              </div>
           </div>
-          <div class="btn-group col-md-2"  style=" margin: 10px 0px 10px 0px" >
-            <button type="button" style="width:auto"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{district.name}} <span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;"></span></button>
-            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
-                <div *ngFor='let district of districts'>
-                    <a class="dropdown-item" (click)="onChoiceDistrict(district)" [value]="district.name">{{district.name}}</a>
-                </div>
-            </div>
-          </div>
-          <div class="btn-group col-md-2"  style=" margin: 10px 0px 10px 0px" >
-            <button type="button" style="width:auto"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{street.name}} <span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;"></span></button>
+        </div>
+        <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
+          <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Đường <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{street.name}}</div> </div>
 
-            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
-                <div *ngFor='let street of streets'>
-                    <a class="dropdown-item" (click)="onChoiceStreet(street)" [value]="street.name">{{street.name}}</a>
-                </div>
-            </div>
+          <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div *ngFor='let street of streets'>
+                  <a class="dropdown-item" (click)="onChoiceStreet(street)" [value]="street.name">{{street.name}}</a>
+              </div>
           </div>
-          <div class="btn-group col-md-2" style=" margin: 10px 0px 10px 0px" >
-            <button type="button" style="width:auto" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{newType}} <span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;"></span></button>
+        </div>
+        <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px" >
+          <div type="button" style="width:170px" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Loại phòng trọ<span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{newType}}</div></div>
 
-            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
-                <div *ngFor='let newType of newTypes'>
-                    <a class="dropdown-item" (click)="onChoiceNewtype(newType.name)" [value]="newType.id">{{newType.name}}</a>
-                </div>
-            </div>
+          <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div *ngFor='let newType of newTypes'>
+                  <a class="dropdown-item" (click)="onChoiceNewtype(newType.name)" [value]="newType.id">{{newType.name}}</a>
+              </div>
           </div>
-          <div class="btn-group col-md-2"  style=" margin: 10px 0px 10px 0px" >
-            <button type="button" style="width:auto"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{priceSearch}} <span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;"></span></button>
+        </div>
+        <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
+          <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;">Giá <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" >{{priceSearch}}</div> </div>
 
-            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
-                <div *ngFor='let priceSearch of priceSearchs'>
-                    <a class="dropdown-item" (click)="onChoicePriceSearch(priceSearch)" [value]="priceSearch.id">{{priceSearch.numberOne}} {{priceSearch.typePriceOne}} {{priceSearch.numberTwo}} {{priceSearch.typePriceTwo}}</a>
-                </div>
-            </div>
+          <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div *ngFor='let priceSearch of priceSearchs'>
+                  <a class="dropdown-item" (click)="onChoicePriceSearch(priceSearch)" [value]="priceSearch.id">{{priceSearch.numberOne}} {{priceSearch.typePriceOne}} {{priceSearch.numberTwo}} {{priceSearch.typePriceTwo}}</a>
+              </div>
           </div>
-       
-
-      </div>
+        </div>
+        <div class="btn-group p-2 link-secondary " >
+          <div style="height: 40px;border-radius:5px;margin-top:7px" type="submit" (click)="onSearch()" class="btn btn-warning" id="dropdownMenu2" ><div style="padding: 5px;">Tìm kiếm</div></div>
+        </div>
+        
+      </nav>
     </div>
+
   </div>
 </div>
-<div class="container-fluid font" style="height: 50px;background-color:lightgrey;color: black;font-size: 13px;">
+<!-- <div class="container-fluid font" style="margin-top: 5px;height: 50px;background-color:lightgrey;color: black;font-size: 13px;">
   <div style="padding-top:15px;padding-left: 35px;"><span style="margin-left: 40px;">Motel  <b style="margin-right: 15px;"> {{nametophead}}</b> <div class="fa  fa-chevron-right"style="margin-right: 15px;"></div></span></div>
-</div>
+</div> -->
 
 

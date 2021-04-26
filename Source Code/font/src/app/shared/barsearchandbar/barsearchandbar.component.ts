@@ -57,8 +57,8 @@ export class BarsearchandbarComponent implements OnInit {
   myControl = new FormControl();
   options: List[] = [];
   filteredOptions: Observable<List[]>;
-  search:string = "";
-
+  
+  
   @Output() newTypeSearch: EventEmitter<string> = new EventEmitter<string>();
   constructor(public streetService:StreetService,public dictrictService:DictrictService,public location: Location,private priceSearchServer:PriceSearchService,private router:ActivatedRoute,private route: Router,public activerouter:ActivatedRoute,private motelService: MotelService,private cityService: CitiesService, private provinceService: ProvincesService, private typeservice:TypeofnewService) {
     this.getPrices();
@@ -255,7 +255,7 @@ export class BarsearchandbarComponent implements OnInit {
       }
       else{
         this.city = cities.find(a => a.id == indexCity.toString());
-        this.search = this.search + this.city.name;
+        this.myControl.setValue(this.city.name);
       }
     }
     
@@ -267,7 +267,6 @@ export class BarsearchandbarComponent implements OnInit {
       }
       else{
         this.province = provinces.find(a => a.id == indexProvince.toString());
-        this.search = this.search + this.province.name;
       }
     }
     if(district != null){
@@ -278,7 +277,6 @@ export class BarsearchandbarComponent implements OnInit {
       }  
       else{
         this.district = districts.find(a => a.id == indexDistrict.toString());
-        this.search = this.search + this.district.name;
       }
     }
     if(street != null){
@@ -289,7 +287,6 @@ export class BarsearchandbarComponent implements OnInit {
       }     
       else{
         this.street = streets.find(a => a.id == indexStreet.toString());
-        this.search = this.search + this.street.name;
       }
     }
     if(price != null){//2-Trieu-3-Trieu
