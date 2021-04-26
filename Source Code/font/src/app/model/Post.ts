@@ -8,4 +8,5 @@ export class Post {
     user:User;
     userId:string;
     comment:Comment;
+    comments:Comment[];
 }

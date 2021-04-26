@@ -6,23 +6,29 @@
 
       <!-- Search -->
 
+
       <div id="carouselId" style="margin-bottom: 0px;" class="carousel slide" data-ride="carousel">
 
         <div class="carousel-inner" role="listbox">
           <div class="carousel-item active">
             <img style="width: 100%;height:500px" src="../../assets/images/bg_2.jpg">
+
             <div class="carousel-caption d-none d-md-block">
 
             </div>
           </div>
          <div class="carousel-item ">
+
             <img style="width: 100%;;height:500px" src="../../assets/images/bg_1.jpg">
+
             <div class="carousel-caption d-none d-md-block">
 
             </div>
           </div>
           <div class="carousel-item">
+
             <img style="width: 100%;;height:500px" src="../../assets/images/bg_1.jpg">
+
             <div class="carousel-caption d-none d-md-block">
 
             </div>
@@ -33,6 +39,7 @@
        <div class="container" >
             <div class="row">
               <div class="col-md-12">
+
                 <p style="text-align: center;width:1000px;margin-top: 250px;margin-bottom:50px;color:white;margin-left: 80px;font-size: 40px;">TÌM KIẾM NGÔI NHÀ TRONG MƠ CỦA BẠN</p>
               </div>
               <div class="col-md-1"></div>
@@ -43,6 +50,7 @@
                       <div class="row">
                         <div class="col-md-12" style="margin-left:15px;">
                           <div class="search-field d-none d-md-block" >
+
                             <form class="d-flex align-items-center h-100" style="margin-top: 30px;width: 800px;margin-left: 50px;" action="#">
                               <div class="input-group" style="color: black;background-color: white;border-radius: 2px;">
                                 <div class="input-group-prepend bg-transparent">
@@ -56,6 +64,7 @@
                                   </mat-option>
                                 </mat-autocomplete>
                               </div>
+
                               <div>
                                 <button type="button" (click)="getMotelSearch()" class="btn btn-primary" style="background-color: rgb(51, 175, 99); color: white;height: 48px;">Tìm kiếm</button>
                               </div>
@@ -96,6 +105,7 @@
                                       </div>
                                     </div>
                                   </li>
+
                                   <li class="nav-item active" style="margin: 10px;">
                                     <a *ngIf="priceSearch else elseDefferentPriceSearch" class="font" style="color:white;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">{{priceSearch}}<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a>
                                     <ng-template #elseDefferentPriceSearch><a href="#" class="font" style="color:white;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">Tìm kiếm theo giá<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a></ng-template>
