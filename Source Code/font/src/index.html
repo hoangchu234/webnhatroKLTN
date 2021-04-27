@@ -114,6 +114,21 @@
     <script src="assets/forum/js1/map-init.js"></script>
     <script src="assets/forum/js1/script.js"></script>
     <script>
+      jQuery(document).ready(function(){
+      $(".content").slice(0, 4).show();
+      $("#loadMore").on("click", function(e)
+      {
+        e.preventDefault();
+        $(".content:hidden").slice(0, 4).slideDown();
+        if($(".content:hidden").length == 0) 
+        {
+          $("#loadMore").text("No Content").addClass("noContent");
+        }
+      });
+
+      })
+    </script>
+    <script>
         jQuery(document).ready(function($) {
             
             $('#us3').locationpicker({
