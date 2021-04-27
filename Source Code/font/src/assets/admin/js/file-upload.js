@@ -9,4 +9,8 @@
       $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
     });
   });
+ 
 })(jQuery);
+
+
+
