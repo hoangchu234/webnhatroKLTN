@@ -1,18 +1,18 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { MotelService } from '../../services/motel.service';
-import { Motel } from '../../model/Motel';
-import { User } from '../../model/User';
+import { MotelService } from '../services/motel.service';
+import { Motel } from '../model/Motel';
+import { User } from '../model/User';
 import { Router, ActivatedRoute } from '@angular/router'
-import { NewType } from '../../model/NewType';
-import { TypeofnewService } from '../../services/newstype.service'
+import { NewType } from '../model/NewType';
+import { TypeofnewService } from '../services/newstype.service'
 import { MatDialog } from '@angular/material/dialog';
-import { CountNewTypeViewModel } from '../../model/CountNewTypeViewModel';
-import { AuthenticationService } from '../../services/authentication.service';
-import { Account } from  '../../model/Account';
-import { UserService } from '../../services/user.service'
-import { BehaviorSubjectClass } from '../../services/behaviorsubject'
+import { CountNewTypeViewModel } from '../model/CountNewTypeViewModel';
+import { AuthenticationService } from '../services/authentication.service';
+import { Account } from  '../model/Account';
+import { UserService } from '../services/user.service'
+import { BehaviorSubjectClass } from '../services/behaviorsubject'
 import { data } from 'jquery';
-import { City } from '../../model/City';
+import { City } from '../model/City';
 
 declare var jQuery: any;
 

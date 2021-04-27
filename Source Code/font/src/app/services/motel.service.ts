@@ -271,7 +271,7 @@ export class MotelService {
   }*/
   public getmotelprovinces = async (id: number) => {
     try {
-      const url = `${this.urlAPI + "/api/Motels/GetMotelByProvince"}/${name}`;
+      const url = `${this.urlAPI + "/api/Motels/GetMotelByProvince"}/${id}`;
       return await this.http.get(url).toPromise();
     }
     catch (error) {

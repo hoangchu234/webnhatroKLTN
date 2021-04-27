@@ -1,26 +1,26 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CitiesService } from '../../services/cities.service'
-import { City } from '../../model/City';
-import { NewType } from '../../model/NewType';
-import { Province } from '../../model/Province';
-import { Motel } from '../../model/Motel';
-import { ProvincesService } from '../../services/provinces.service'
-import { TypeofnewService } from '../../services/newstype.service'
-import { MotelService } from '../../services/motel.service'
-import { BehaviorSubjectClass } from '../../services/behaviorsubject'
-import { PriceSearchService } from '../../services/price-search.service'
+import { CitiesService } from '../services/cities.service'
+import { City } from '../model/City';
+import { NewType } from '../model/NewType';
+import { Province } from '../model/Province';
+import { Motel } from '../model/Motel';
+import { ProvincesService } from '../services/provinces.service'
+import { TypeofnewService } from '../services/newstype.service'
+import { MotelService } from '../services/motel.service'
+import { BehaviorSubjectClass } from '../services/behaviorsubject'
+import { PriceSearchService } from '../services/price-search.service'
 import { Router } from '@angular/router';
-import { List } from '../../model/viewmodel/ListViewModel';
-import { RemoveVietnameseTones } from '../../removeVietnameseTones.service';
-import { PriceSearch } from '../../model/PriceSearch';
+import { List } from '../model/viewmodel/ListViewModel';
+import { RemoveVietnameseTones } from '../removeVietnameseTones.service';
+import { PriceSearch } from '../model/PriceSearch';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
-import { StreetService } from '../../services/street.service';
-import { DictrictService } from '../../services/dictrict.service';
-import { District } from '../../model/District';
-import { Street } from '../../model/Street';
+import { StreetService } from '../services/street.service';
+import { DictrictService } from '../services/dictrict.service';
+import { District } from '../model/District';
+import { Street } from '../model/Street';
 import { ViewportScroller } from '@angular/common';
 
 
@@ -137,12 +137,12 @@ export class HomeComponent implements OnInit {
 
   public onClickSeeMoreHCM(){
     var name = "TP HCM"
-    this.router.navigate( ['/home/area',name]);
+    this.router.navigate( ['/area',name]);
   }
 
   public onClickSeeMoreHN(){
     var name = "Hà Nội"
-    this.router.navigate( ['/home/area',name]);
+    this.router.navigate( ['/area',name]);
   }
 
   public async getCitys(){

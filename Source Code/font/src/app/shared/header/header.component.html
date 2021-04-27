@@ -30,7 +30,7 @@
                       <a class="nav-link font" [routerLink]="['/forum']" >Hỏi đáp <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                      <a class="nav-link font" [routerLink]="['/home/bang-gia-dich-vu']" >Bảng giá dịch vụ <span class="sr-only">(current)</span></a>
+                      <a class="nav-link font" [routerLink]="['/bang-gia-dich-vu']" >Bảng giá dịch vụ <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active" style="padding-top: 8px;margin-left: 20px;">
                       <div [hidden]="username">
@@ -51,10 +51,10 @@
                               <div class="dropdown-divider"></div>
                               <a [routerLink]="['/user/lich-su-giao-dich']" class="dropdown-item font" >
                                 <i class="mdi  mdi-history mr-2 text-success font"></i>Lịch sử giao dịch</a>
-                              <a [routerLink]="['/home/bang-gia-dich-vu']" class="dropdown-item font" >
+                              <a [routerLink]="['/bang-gia-dich-vu']" class="dropdown-item font" >
                                 <i class="mdi mdi-newspaper mr-2 text-success font"></i>Bảng giá dịch vụ</a>
                               <div class="dropdown-divider"></div>
-                              <a [routerLink]="['/home/tro-giup']" class="dropdown-item font" >
+                              <a [routerLink]="['/tro-giup']" class="dropdown-item font" >
                                 <i class="mdi mdi-help-circle mr-2 text-primary font"></i> Trợ giúp</a>
                               <a (click)='onLogout()' class="dropdown-item font">
                                 <i class="mdi mdi-logout mr-2 text-primary font"></i>Đăng xuất</a>

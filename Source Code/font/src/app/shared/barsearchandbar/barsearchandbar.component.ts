@@ -22,7 +22,6 @@ import { List } from 'src/app/model/viewmodel/ListViewModel';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
-import { DataMotelComponent } from '../../notlogin/search-motel/data-motel/data-motel.component';
 
 @Component({
   selector: 'app-barsearchandbar',

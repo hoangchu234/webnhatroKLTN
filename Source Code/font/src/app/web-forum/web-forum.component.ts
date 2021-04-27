@@ -6,11 +6,7 @@ import { Comment } from '../model/Comment';
 import { PostService } from '../services/post.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { LikeCommentPost } from '../model/LikeCommentPost';
-
-export interface CommentPost{
-  idPost:number;
-  check:boolean[];
-}
+import { ICheckChildComment } from '../model/interface/ICheckChildComment';
 
 @Component({
   selector: 'app-web-forum',
@@ -22,9 +18,10 @@ export class WebForumComponent implements OnInit {
   post = new Post();
   posts: Post[];
 
+
   comment = new Comment();
   showComments:boolean[] = [];
-  showChildComments:CommentPost[] = [];
+  showChildCommentArray:ICheckChildComment[] = [];
 
   countComment: number[] = [];
   countChildComment: number[] = [];
@@ -74,6 +71,23 @@ export class WebForumComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  showChildComments(idPost, idComment, idParent){
+
+  }
+
+  openChildComment(idPost, idComment, idParent){
+
+  }
+
+  myCondition(id){
+    if(id < 4){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   async getCountChildComment(id) {
@@ -182,7 +196,7 @@ export class WebForumComponent implements OnInit {
     }
   }
 
-  morePosts(id){
+  morePosts(){
     var number = 5;
     var skip = this.posts.length;
     this.getMorePosts(number, skip);

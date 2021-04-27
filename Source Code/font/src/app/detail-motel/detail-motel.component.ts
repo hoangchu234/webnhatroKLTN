@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MotelService } from '../../services/motel.service';
-import { Motel } from '../../model/Motel';
-import { Province } from '../../model/Province';
+import { MotelService } from '../services/motel.service';
+import { Motel } from '../model/Motel';
+import { Province } from '../model/Province';
 import { Router, ActivatedRoute } from '@angular/router'
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
-import { UserService } from '../../services/user.service'
+import { UserService } from '../services/user.service'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogDetailMotelSendComponent } from './dialog-detail-motel-send/dialog-detail-motel-send.component';
-import { ProvincesService } from '../../services/provinces.service';
-import { Image } from '../../model/Image';
-import { User } from '../../model/User';
+import { ProvincesService } from '../services/provinces.service';
+import { Image } from '../model/Image';
+import { User } from '../model/User';
 
 @Component({
   selector: 'app-detail-motel',

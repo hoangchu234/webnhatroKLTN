@@ -1,20 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NewType } from '../../../model/NewType';
-import { TypeofnewService } from '../../../services/newstype.service'
+import { NewType } from '../../model/NewType';
+import { TypeofnewService } from '../../services/newstype.service'
 import { MatDialog } from '@angular/material/dialog';
-import { AuthenticationService } from '../../../services/authentication.service';
-import { Account } from  '../../../model/Account';
-import { UserService } from '../../../services/user.service'
-import { BehaviorSubjectClass } from '../../../services/behaviorsubject'
+import { AuthenticationService } from '../../services/authentication.service';
+import { Account } from  '../../model/Account';
+import { UserService } from '../../services/user.service'
+import { BehaviorSubjectClass } from '../../services/behaviorsubject'
 import { data } from 'jquery';
-import { Motel } from '../../../model/Motel';
-import { User } from '../../../model/User';
+import { Motel } from '../../model/Motel';
+import { User } from '../../model/User';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MotelService } from 'src/app/services/motel.service';
 import { DialogSearchMotelComponent } from '../dialog-search-motel/dialog-search-motel.component';
 import { AreaSearchService } from 'src/app/services/area-search.service';
 import { AreaSearch } from 'src/app/model/AreaSearch';
-import { RemoveVietnameseTones } from '../../../removeVietnameseTones.service';
+import { RemoveVietnameseTones } from '../../removeVietnameseTones.service';
 import { CitiesService } from 'src/app/services/cities.service';
 import { City } from 'src/app/model/City';
 import { StreetService } from 'src/app/services/street.service';

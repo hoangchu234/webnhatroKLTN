@@ -88,13 +88,13 @@ const routes: Routes = [
       //{ path: 'nha-cho-thue',          component: SearchMotelComponent , data:{kind: 'nha-cho-thue'}},
       //{ path: 'cho-thue-can-ho',          component: SearchMotelComponent , data:{kind: 'cho-thue-can-ho'}},
       //{ path: 'cho-thue-mat-bang',          component: SearchMotelComponent , data:{kind: 'cho-thue-mat-bang'}},
-      //{ path: 'tim-nguoi-o-ghep-cap',          component: SearchMotelComponent , data:{kind: 'tim-nguoi-o-ghep-cap'}},
-
-      { path: 'bang-gia-dich-vu',          component: TableServicePriceComponent },
-      { path: 'tro-giup',          component: HelpComponent } ,
-      { path: 'area/:name',          component: AreaCityHomeComponent }      
+      //{ path: 'tim-nguoi-o-ghep-cap',          component: SearchMotelComponent , data:{kind: 'tim-nguoi-o-ghep-cap'}},    
     ]
   },
+  
+  { path: 'bang-gia-dich-vu',          component: TableServicePriceComponent },
+  { path: 'tro-giup',          component: HelpComponent } ,
+  { path: 'area/:name',          component: AreaCityHomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forum', component:WebForumComponent },
   { path: 'chat', component:ChatsComponent },
