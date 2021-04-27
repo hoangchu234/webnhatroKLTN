@@ -1,20 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NewType } from '../../model/NewType';
-import { TypeofnewService } from '../../services/newstype.service'
+import { NewType } from '../../../model/NewType';
+import { TypeofnewService } from '../../../services/newstype.service'
 import { MatDialog } from '@angular/material/dialog';
-import { AuthenticationService } from '../../services/authentication.service';
-import { Account } from  '../../model/Account';
-import { UserService } from '../../services/user.service'
-import { BehaviorSubjectClass } from '../../services/behaviorsubject'
+import { AuthenticationService } from '../../../services/authentication.service';
+import { Account } from  '../../../model/Account';
+import { UserService } from '../../../services/user.service'
+import { BehaviorSubjectClass } from '../../../services/behaviorsubject'
 import { data } from 'jquery';
-import { Motel } from '../../model/Motel';
-import { User } from '../../model/User';
+import { Motel } from '../../../model/Motel';
+import { User } from '../../../model/User';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MotelService } from 'src/app/services/motel.service';
 import { DialogSearchMotelComponent } from '../dialog-search-motel/dialog-search-motel.component';
 import { AreaSearchService } from 'src/app/services/area-search.service';
 import { AreaSearch } from 'src/app/model/AreaSearch';
-import { RemoveVietnameseTones } from '../../removeVietnameseTones.service';
+import { RemoveVietnameseTones } from '../../../removeVietnameseTones.service';
 import { CitiesService } from 'src/app/services/cities.service';
 import { City } from 'src/app/model/City';
 import { StreetService } from 'src/app/services/street.service';
@@ -50,17 +50,17 @@ export class DataMotelComponent implements OnInit {
   ];
 
   motelsearch: Motel[] = [];
-  motels:Motel[];
+  motels:Motel[] = [];
 
-  types: NewType[] = [];
-  // Danh sách city và tên city
-  cities: City[] = [];
-  // Danh sách province và tên province
-  provinces: Province[] = [];
-  // Danh sách district và tên district
-  districts: District[] = [];
-  // Danh sách street và tên street
-  streets: Street[] = [];
+  // types: NewType[] = [];
+  // // Danh sách city và tên city
+  // cities: City[] = [];
+  // // Danh sách province và tên province
+  // provinces: Province[] = [];
+  // // Danh sách district và tên district
+  // districts: District[] = [];
+  // // Danh sách street và tên street
+  // streets: Street[] = [];
 
   counttypes: NewType[]; // mảng các loại nhà trọ
   arraycounttype: number[] =[]; // đếm số loại nhà trọ
@@ -94,8 +94,7 @@ export class DataMotelComponent implements OnInit {
   constructor(private priceSearchServer:PriceSearchService,private provinceService: ProvincesService,public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService,private areaSearchService:AreaSearchService,private behaviorSubjectClass:BehaviorSubjectClass,private userService:UserService,private authenticationService: AuthenticationService,public dialog: MatDialog,private typeservice:TypeofnewService,private route: Router,private router: ActivatedRoute,private motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     this.getDataAreaZone();
-    this.getTypes();
-    this.getMotelByType();
+    this.getMotelByURL();
     /*
     (function ($) {
       $(document).ready(function myFunction(){
@@ -165,7 +164,7 @@ export class DataMotelComponent implements OnInit {
     /*this.typeservice.getTypes().subscribe(gettypes => {
       this.newTypes = gettypes;
     })*/
-    this.types = await this.typeservice.getTypes() as NewType [];
+    return await this.typeservice.getTypes() as NewType [];
 
   }
 
@@ -199,7 +198,6 @@ export class DataMotelComponent implements OnInit {
   }
 
   public linkRouter(name, id) {
-    console.log(name + id);
     //this.router.navigate( [{name: name, id: id}]);
     this.route.navigate( ['/home/chi-tiet',name,id]);
   }
@@ -353,24 +351,23 @@ export class DataMotelComponent implements OnInit {
   }*/
 
   public async getCities(){
-    this.cities = await this.cityService.getCitys() as City[];
+    return await this.cityService.getCitys() as City[];
     /*this.cityService.getCitys().subscribe(getcity => {
       this.cities = getcity;
     })*/
   }
 
   public async getStreetById(ID){
-    this.streets = new Array<Street>();
-    this.streets = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
+    return await this.streetService.getStreetByProvince(Number(ID)) as Street[];
   }
 
   public async getDistricteById(ID){
-    this.districts = await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
+    return await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
 
   }
 
   public async getProvinceByID(ID){
-    this.provinces = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
+    return await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
   }
 
 
@@ -380,7 +377,7 @@ export class DataMotelComponent implements OnInit {
   //:city/:province/:type
   //:city/:type
   //:type
-  public async getMotelByType() {
+  public async getMotelByURL() {
 
     var city = this.router.snapshot.paramMap.get("city");
     var type = this.router.snapshot.paramMap.get("type");
@@ -388,53 +385,68 @@ export class DataMotelComponent implements OnInit {
     var street = this.router.snapshot.paramMap.get("street");
     var price = this.router.snapshot.paramMap.get("price");
     var district = this.router.snapshot.paramMap.get("district");
-    
-    var indexType: number = 0;
-    var indexCity: Number = 0;
-    var indexProvince: number = 0;
-    var indexDistrict: Number = 0;
-    var indexStreet: number = 0;
-    var indexPrice: number = 0;
 
-    const types = await this.typeservice.getTypes() as NewType[];
-    const cities = await this.cityService.getCitys() as City[];
-    const provinces = await this.provinceService.getProvinces() as Province[];
-    const districts = await this.dictrictService.getDistricts() as District[];
-    const streets = await this.streetService.getStreets() as Street[];
+    var idType: number = 0;
+    var idCity: number = 0;
+    var idProvince: number = 0;
+    var idDistrict: number = 0;
+    var idStreet: number = 0;
+    var idPrice: number = 0;
 
-    indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type);
+    const types = await this.getTypes();
+    const cities = await this.getCities();
+    // const provinces = await this.provinceService.getProvinces() as Province[];
+    // const districts = await this.dictrictService.getDistricts() as District[];
+    // const streets = await this.streetService.getStreets() as Street[];
+
+    var indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type);
+    idType = indexType + 1;
 
     if(city != null){
-      indexCity = cities.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === city); 
+      var indexCity = cities.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === city);
       if(indexCity == -1){
         price = city;
         indexCity = 0;
       }
+      idCity = indexCity;
     }
     
     if(province != null){
-      this.getProvinceByID(this.cities[Number(indexCity)].id);
-      indexProvince = provinces.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
+      var provinceByCityId = await this.getProvinceByID(idCity);
+      var indexProvince = provinceByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
       if(indexProvince == -1){
         price = province;
         indexProvince = 0;
+        idProvince = indexProvince;
+      }
+      else{
+        idProvince = Number(provinceByCityId[indexProvince].id);
       }
     }
+
     if(district != null){
-      this.getDistricteById(this.provinces[Number(indexProvince)].id);
-      indexDistrict = districts.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district);  
+      var districtByCityId = await this.getDistricteById(idProvince);
+      var indexDistrict = districtByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district); 
       if(indexDistrict == -1){
         price = district;
         indexDistrict = 0;
+        idDistrict = indexDistrict
       }  
+      else{
+        idDistrict = Number(districtByCityId[indexDistrict].id);
+      }
     }
     if(street != null){
-      this.getStreetById(this.cities[Number(indexDistrict)].id);
-      indexStreet = streets.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === street);   
+      var streetByCityId = await this.getStreetById(idProvince);
+      var indexStreet = streetByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === street);   
       if(indexStreet == -1){
         price = street;
         indexStreet = 0;
+        idStreet = indexStreet
       }     
+      else{
+        idStreet = Number(streetByCityId[indexStreet].id);
+      }
     }
     if(price != null){
       const priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
@@ -457,182 +469,29 @@ export class DataMotelComponent implements OnInit {
       //Duoi-1-Trieu
       var str = price.replace("-","");
       str = str.replace("-", "");
-      indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.numberTwo + a.typePriceTwo) === str);
+      var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.numberTwo + a.typePriceTwo) === str);
 
       if(indexPrice == -1){
         str = str.replace("-", "");
         indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.typePriceOne + a.numberTwo + a.typePriceTwo) === str);
       }
       indexPrice = indexPrice + 1;
+      idPrice = indexPrice;
     }
+
+    const result =  await this.motelService.getmotelbyorder(idCity,idProvince,idDistrict,idStreet,idPrice,idType) as any;
+    // this.loadDataHot(result);
+    // this.loadData1(result);
+    // this.loadData2(result);
+    // this.loadData3(result);    
+    // this.loadDataThuong(result);
+    if(this.motels.length){
+      console.log("have")
+      this.motels.splice(0, this.motels.length);
+    }
+    this.motels = result.slice();
+    this.totalRecord = result.length;
    
-    const result =  await this.motelService.getmotelbyorder(indexCity,indexProvince,indexDistrict,indexStreet,indexPrice,indexType) as any;
-    this.loadDataHot(result);
-    this.loadData1(result);
-    this.loadData2(result);
-    this.loadData3(result);    
-    this.loadDataThuong(result);
-    this.motels = this.motelsearch;
-    this.totalRecord = this.motels.length;
-    /*this.motelService.getmotelbytype(name).subscribe(motel => {
-
-
-
-      this.getMotelByCity(this.motelsearch);
-
-      this.getMotelByProvince(this.motels);
-
-      this.getMotelByDistrict(this.motels)
-      this.getMotelByStreet(this.motels)
-      this.getMotelBySearch(this.motels);
-
-      this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motels)
-      this.motelLoc = this.motels;       
-      this.totalRecord =this.motels.length;  
-      */
-
-      /*
-      //4
-      if((localStorage.getItem('priceid') && localStorage.getItem('priceid') != "Tất cả") && (localStorage.getItem('city') && localStorage.getItem('city') != "Tất cả") &&  localStorage.getItem('searchtext') != "NULL" && (localStorage.getItem('province') && localStorage.getItem('province') != "Tất cả") ){
-        this.getMotelByCity(this.motelsearch);
-        this.getMotelByProvince(this.motels);
-        this.motels = this.motels.filter(a => a.title.toLowerCase().includes(localStorage.getItem('searchtext').toLowerCase()))
-        this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motels)
-        this.motelLoc = this.motels;       
-        this.totalRecord =this.motels.length;       
-        console.log("province,city,searchtext,priceid")
-      }
-
-      //1
-      if((localStorage.getItem('city') && localStorage.getItem('city') != "Tất cả") && (localStorage.getItem('province') == null || localStorage.getItem('province') == "Tất cả") && localStorage.getItem('searchtext') === "NULL"  && (localStorage.getItem('priceid') == null || localStorage.getItem('priceid') == "Tất cả")){
-        this.getMotelByCity(this.motelsearch);
-        this.motelLoc = this.motels;
-        this.totalRecord =this.motels.length;
-        console.log("city")
-
-      }
-
-      if((localStorage.getItem('province') && localStorage.getItem('province') != "Tất cả") && (localStorage.getItem('city') == null || localStorage.getItem('city') == "Tất cả") && localStorage.getItem('searchtext') == "NULL" && (localStorage.getItem('priceid') == null || localStorage.getItem('priceid') == "Tất cả")){
-        this.motels = this.motelsearch.filter(a => a.province.name == localStorage.getItem('province'))
-        this.motelLoc = this.motels;
-        this.totalRecord =this.motels.length;
-        console.log("province")
-      }
-
-      if((localStorage.getItem('province') == null || localStorage.getItem('province') == "Tất cả") && (localStorage.getItem('city') == null || localStorage.getItem('city') == "Tất cả") && localStorage.getItem('searchtext') == "NULL" && (localStorage.getItem('priceid') && localStorage.getItem('priceid') != "Tất cả")){
-        this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motelsearch)
-        this.motelLoc = this.motels;
-        console.log("priceid")
-        this.totalRecord =this.motels.length;
-      }
-
-      console.log(localStorage.getItem('province'))
-      if((localStorage.getItem('searchtext') != "NULL" && localStorage.getItem('searchtext') != null) && (localStorage.getItem('city') == null || localStorage.getItem('city') == "Tất cả") && (localStorage.getItem('province') == null || localStorage.getItem('province') == "Tất cả")  && (localStorage.getItem('priceid') == null || localStorage.getItem('priceid') == "Tất cả")){
-        this.motels = this.motelsearch.filter(a => a.title.toLowerCase().includes(localStorage.getItem('searchtext').toLowerCase()));
-        this.motelLoc = this.motels;
-        this.totalRecord =this.motels.length;
-        console.log("searchtext")
-      }
-      //
-
-      //2
-      if((localStorage.getItem('city') && localStorage.getItem('city') != "Tất cả") && (localStorage.getItem('province') == null || localStorage.getItem('province') == "Tất cả") && localStorage.getItem('searchtext') != "NULL" && (localStorage.getItem('priceid') == null || localStorage.getItem('priceid') == "Tất cả")){
-        this.getMotelByCity(this.motelsearch);
-        this.motels = this.motels.filter(a => a.title.toLowerCase().includes(localStorage.getItem('searchtext').toLowerCase()));
-        this.motelLoc = this.motels;
-        this.totalRecord =this.motels.length;
-        console.log("city,searchtext")
-      }
-
-      if((localStorage.getItem('city') && localStorage.getItem('city') != "Tất cả") && (localStorage.getItem('province') && localStorage.getItem('province') != "Tất cả") && localStorage.getItem('searchtext') == "NULL" && (localStorage.getItem('priceid') == null || localStorage.getItem('priceid') == "Tất cả")){
-        this.getMotelByCity(this.motelsearch);
-        this.getMotelByProvince(this.motels);
-        this.motelLoc = this.motels;
-        this.totalRecord =this.motels.length;
-        console.log("province,city")
-      }
-
-      if((localStorage.getItem('city') && localStorage.getItem('city') != "Tất cả") && (localStorage.getItem('province') == null || localStorage.getItem('province') == "Tất cả") && localStorage.getItem('searchtext') == "NULL" && (localStorage.getItem('priceid') && localStorage.getItem('priceid') != "Tất cả")){
-        
-        this.getMotelByCity(this.motelsearch);
-        this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motels)
-        this.motelLoc = this.motels;    
-        this.totalRecord =this.motels.length;   
-        console.log("priceid,city")
-      }
-
-      if((localStorage.getItem('city') == null || localStorage.getItem('city') == "Tất cả") && (localStorage.getItem('province') && localStorage.getItem('province') !="Tất cả") && localStorage.getItem('searchtext') != "NULL" && (localStorage.getItem('priceid') == null || localStorage.getItem('priceid') == "Tất cả")){
-        this.getMotelByProvince(this.motelsearch);
-        this.motels = this.motels.filter(a => a.title.toLowerCase().includes(localStorage.getItem('searchtext').toLowerCase()));
-        this.motelLoc = this.motels;
-        this.totalRecord =this.motels.length;
-        console.log("province,searchtext")
-      }
-
-      if((localStorage.getItem('city') == null || localStorage.getItem('city') == "Tất cả") && (localStorage.getItem('province') && localStorage.getItem('province') !="Tất cả") && localStorage.getItem('searchtext') == "NULL" && (localStorage.getItem('priceid') && localStorage.getItem('priceid') != "Tất cả")){
-        this.getMotelByProvince(this.motelsearch);
-        this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motels)
-        this.motelLoc = this.motels;
-        this.totalRecord =this.motels.length;
-        console.log("province,priceid")
-      }
-      
-
-      if((localStorage.getItem('city') == null || localStorage.getItem('city') == "Tất cả") && (localStorage.getItem('province') == null || localStorage.getItem('province') == "Tất cả") && localStorage.getItem('searchtext') != "NULL" && (localStorage.getItem('priceid') && localStorage.getItem('priceid') != "Tất cả")){
-        this.motels = this.motelsearch.filter(a => a.title.toLowerCase().includes(localStorage.getItem('searchtext').toLowerCase()));
-        this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motels)
-        this.motelLoc = this.motels;
-        this.totalRecord = this.motels.length;
-        console.log("searchtext,priceid")
-      }
-      //
-
-      //3
-      if((localStorage.getItem('city') && localStorage.getItem('city') != "Tất cả") && (localStorage.getItem('province') && localStorage.getItem('province') != "Tất cả") && localStorage.getItem('searchtext') != "NULL" && (localStorage.getItem('priceid') == null && localStorage.getItem('priceid') == "Tất cả")){
-        this.getMotelByCity(this.motelsearch);
-        this.getMotelByProvince(this.motels);
-        this.motels = this.motels.filter(a => a.title.toLowerCase().includes(localStorage.getItem('searchtext').toLowerCase()));
-        this.motelLoc = this.motels;
-        this.totalRecord = this.motels.length;
-        console.log("city,province,searchtext")
-      }
-      if((localStorage.getItem('city') && localStorage.getItem('city') != "Tất cả") && (localStorage.getItem('province') && localStorage.getItem('province') != "Tất cả") && localStorage.getItem('searchtext') == "NULL" && (localStorage.getItem('priceid') && localStorage.getItem('priceid') != "Tất cả") ){
-        this.getMotelByCity(this.motelsearch);
-        this.getMotelByProvince(this.motels);
-        this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motels)
-        this.motelLoc = this.motels;
-        this.totalRecord =this.motels.length;
-        console.log("city,province,priceid")
-      }
-      if((localStorage.getItem('city') == null && localStorage.getItem('city') == "Tất cả") && (localStorage.getItem('province') && localStorage.getItem('province') != "Tất cả") && localStorage.getItem('searchtext') != "NULL" && (localStorage.getItem('priceid') && localStorage.getItem('priceid') != "Tất cả") ){
-        this.getMotelByProvince(this.motels);
-        this.motels = this.motels.filter(a => a.title.toLowerCase().includes(localStorage.getItem('searchtext').toLowerCase()));       
-        this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motels)
-        this.motelLoc = this.motels;
-        this.totalRecord = this.motels.length;
-        console.log("searchtext,province,priceid")
-      }
-      if((localStorage.getItem('city') && localStorage.getItem('city') != "Tất cả")  && (localStorage.getItem('province') == null || localStorage.getItem('province') == "Tất cả") && localStorage.getItem('searchtext') != "NULL" && (localStorage.getItem('priceid') && localStorage.getItem('priceid') != "Tất cả") ){
-        this.getMotelByCity(this.motelsearch);
-        this.motels = this.motels.filter(a => a.title.toLowerCase().includes(localStorage.getItem('searchtext').toLowerCase()));       
-        this.getMotelByPriceSearch(localStorage.getItem('priceid'),this.motels)
-        this.motelLoc = this.motels;
-        this.totalRecord = this.motels.length;
-        console.log("searchtext,city,priceid")
-      }
-
-      //0
-      if((localStorage.getItem('priceid') == null && localStorage.getItem('city') == null && localStorage.getItem('province') == null && (localStorage.getItem('searchtext') == "NULL" ||localStorage.getItem('searchtext') == null) ) || (localStorage.getItem('priceid') == "Tất cả"  && localStorage.getItem('city') == "Tất cả"  && localStorage.getItem('province') == "Tất cả" && (localStorage.getItem('searchtext') == "NULL" ||localStorage.getItem('searchtext') == null) )){
-        this.motels = this.motelsearch;
-        this.motelLoc = this.motels;
-        this.totalRecord = this.motels.length;
-      }
-
-      else{
-
-      }*/
-     
-
   }
 
   /*

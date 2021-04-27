@@ -22,7 +22,7 @@ import { List } from 'src/app/model/viewmodel/ListViewModel';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
-import { DataMotelComponent } from '../../search-motel/data-motel/data-motel.component';
+import { DataMotelComponent } from '../../notlogin/search-motel/data-motel/data-motel.component';
 
 @Component({
   selector: 'app-barsearchandbar',
@@ -70,10 +70,9 @@ export class BarsearchandbarComponent implements OnInit {
   ngOnInit(): void {
     this.setData();
     this.firstTime();
-    
     this.enterSearch();
-
     
+
 /*
     if(Number(localStorage.getItem('priceid')) == 0){
       this.priceSearch.number = "Tất cả";
@@ -222,6 +221,12 @@ export class BarsearchandbarComponent implements OnInit {
 
   }
 
+  //:city/:province/:district/:street/:price/:type
+  //:city/:province/:district/:street/:type
+  //:city/:province/:district/:type
+  //:city/:province/:type
+  //:city/:type
+  //:type
   async setData(){
     var city = this.router.snapshot.paramMap.get("city");
     var type = this.router.snapshot.paramMap.get("type");
@@ -229,66 +234,58 @@ export class BarsearchandbarComponent implements OnInit {
     var street = this.router.snapshot.paramMap.get("street");
     var price = this.router.snapshot.paramMap.get("price");
     var district = this.router.snapshot.paramMap.get("district");
-    
-    var indexType: number = 0;
-    var indexCity: Number = 0;
-    var indexProvince: number = 0;
-    var indexDistrict: Number = 0;
-    var indexStreet: number = 0;
-    var indexPrice: number = 0;
 
     const types = await this.typeservice.getTypes() as NewType[];
     const cities = await this.cityService.getCitys() as City[];
-    const provinces = await this.provinceService.getProvinces() as Province[];
-    const districts = await this.dictrictService.getDistricts() as District[];
-    const streets = await this.streetService.getStreets() as Street[];
 
-    indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type)
-    indexType = indexType + 1;
-    const result = types.find(a => a.id == indexType.toString());
+    var indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type)
+    const result = types[indexType];
     this.newType = result.name;
 
     if(city != null){
-      indexCity = cities.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === city); 
+      var indexCity = cities.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === city); 
       if(indexCity == -1){
         price = city;
       }
       else{
-        this.city = cities.find(a => a.id == indexCity.toString());
+        this.city = cities[indexCity];
         this.search = this.search + this.city.name;
       }
     }
     
     if(province != null){
-      this.getProvinceByID(this.cities[Number(indexCity)].id);
-      indexProvince = provinces.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
+      const idCity = cities[Number(indexCity)].id;
+      var provinceByCityId = await this.provinceService.getProvincesByCity(Number(idCity)) as Province[];
+      var indexProvince = provinceByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
       if(indexProvince == -1){
         price = province;
       }
       else{
-        this.province = provinces.find(a => a.id == indexProvince.toString());
+        this.province = provinceByCityId[indexProvince];
         this.search = this.search + this.province.name;
       }
     }
     if(district != null){
-      this.getDistricteById(this.provinces[Number(indexProvince)].id);
-      indexDistrict = districts.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district);  
+      const idProvince = provinceByCityId[Number(indexProvince)].id;
+      var districtByCityId = await this.dictrictService.getDistrictByProvince(Number(idProvince)) as District[];
+      var indexDistrict = districtByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district);
       if(indexDistrict == -1){
         price = district;
       }  
       else{
-        this.district = districts.find(a => a.id == indexDistrict.toString());
+        this.district = districtByCityId[indexDistrict];
         this.search = this.search + this.district.name;
       }
     }
     if(street != null){
-      this.getStreetById(this.cities[Number(indexDistrict)].id);
-      indexStreet = streets.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === street);   
+      const idProvince = provinceByCityId[Number(indexProvince)].id;
+      var streetByCityId = await this.streetService.getStreetByProvince(Number(idProvince)) as Street[];
+      var indexStreet = streetByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === street);   
       if(indexStreet == -1){
         price = street;
       }     
       else{
-        this.street = streets.find(a => a.id == indexStreet.toString());
+        this.street = streetByCityId[indexStreet];
         this.search = this.search + this.street.name;
       }
     }
@@ -296,7 +293,7 @@ export class BarsearchandbarComponent implements OnInit {
       const priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
       var str = price.replace("-","");
       str = str.replace("-", "");
-      indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.numberTwo + a.typePriceTwo) === str);
+      var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.numberTwo + a.typePriceTwo) === str);
 
       if(indexPrice == -1){
         str = str.replace("-", "");
@@ -305,7 +302,13 @@ export class BarsearchandbarComponent implements OnInit {
      
       this.priceSearch = this.returnDataPriceSearch(priceSearch.find(a => a.id == indexPrice+1));
     }
+
+    this.getProvinceByID(this.city.id);
+    this.getDistricteById(this.province .id)
+    this.getStreetById(this.province.id);
   }
+
+
   public onChoiceCity(city:City) {
     this.city = city;
     if(city.name == "Tất cả"){

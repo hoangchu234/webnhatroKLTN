@@ -7,6 +7,9 @@ import { Output } from '@angular/core';
 import { MotelService } from '../../services/motel.service'
 import { ReplyService } from '../../services/reply.service'
 import { Location } from '@angular/common'
+import { TypeofnewService } from 'src/app/services/newstype.service';
+import { NewType } from 'src/app/model/NewType';
+import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
 
 @Component({
   selector: 'app-header',
@@ -21,20 +24,21 @@ export class HeaderComponent implements OnInit {
   public username:string;
   //currentAccount: Account;
 
-  Name1 = "cho-thue-nha-tro";
-  Name2 = "nha-cho-thue";
-  Name3 = "cho-thue-can-ho";
-  Name4 = "cho-thue-mat-bang";
-  Name5 = "tim-nguoi-o-ghep";
+  // Name1 = "cho-thue-nha-tro";
+  // Name2 = "nha-cho-thue";
+  // Name3 = "cho-thue-can-ho";
+  // Name4 = "cho-thue-mat-bang";
+  // Name5 = "tim-nguoi-o-ghep";
 
-  name: string;
   checkImage = false;
   checkLogin = false;
 
   checkreply = false;
+  types: NewType[] = [];
   constructor(private activeRoute: ActivatedRoute,
     private replyService:ReplyService,
     private router: Router,
+    private typeservice:TypeofnewService,
     private motelService: MotelService,
     private authenticationService: AuthenticationService) { 
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
@@ -49,37 +53,54 @@ export class HeaderComponent implements OnInit {
       }      
     }
 
-  ngOnInit(): void { 
+  async ngOnInit(): Promise<void> { 
+    this.types = await this.getTypes();
+  }
+  
+  onClickNarbarURL(id){
+    var type = this.types.find(a => a.id == id) as NewType;
+    var linkURL = '/home' + '/' + RemoveVietnameseTones.removeVietnameseTones(type.name)
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([linkURL]);
+      
+    }); 
+  }
+
+  public async getTypes(){
+    /*this.typeservice.getTypes().subscribe(gettypes => {
+      this.newTypes = gettypes;
+    })*/
+    return await this.typeservice.getTypes() as NewType [];
 
   }
   
-  public callSetLocalStorage(){
-    if(localStorage.getItem('searchtext') != null){
-      localStorage.setItem('searchtext', "NULL")
-    }
-  }
+  // public callSetLocalStorage(){
+  //   if(localStorage.getItem('searchtext') != null){
+  //     localStorage.setItem('searchtext', "NULL")
+  //   }
+  // }
 
-  public onClickNewTypeOne(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/cho-thue-nha-tro']);
-  }
+  // public onClickNewTypeOne(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/cho-thue-nha-tro']);
+  // }
 
-  public onClickNewTypeTwo(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/nha-cho-thue']);
-  }
-  public onClickNewTypeThree(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/cho-thue-can-ho']);
-  }
-  public onClickNewTypeFour(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/cho-thue-mat-bang']);
-  }
-  public onClickNewTypeFive(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/tim-nguoi-o-ghep-cap']);
-  }
+  // public onClickNewTypeTwo(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/nha-cho-thue']);
+  // }
+  // public onClickNewTypeThree(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/cho-thue-can-ho']);
+  // }
+  // public onClickNewTypeFour(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/cho-thue-mat-bang']);
+  // }
+  // public onClickNewTypeFive(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/tim-nguoi-o-ghep-cap']);
+  // }
 
   get isUser() {
     try{

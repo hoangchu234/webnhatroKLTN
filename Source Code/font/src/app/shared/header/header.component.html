@@ -12,19 +12,22 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav">
                     <li class="nav-item active">
-                      <a class="nav-link font" (click)="onClickNewTypeOne()">Cho thuê nhà trọ <span class="sr-only">(current)</span></a>
+                      <a class="nav-link font" (click)="onClickNarbarURL(2)" >Cho thuê nhà trọ <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                      <a class="nav-link font" (click)="onClickNewTypeTwo()"  >Nhà cho thuê <span class="sr-only">(current)</span></a>
+                      <a class="nav-link font" (click)="onClickNarbarURL(3)" >Nhà cho thuê <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                      <a class="nav-link font" (click)="onClickNewTypeThree()">Cho thuê căn hộ <span class="sr-only">(current)</span></a>
+                      <a class="nav-link font" (click)="onClickNarbarURL(4)">Cho thuê căn hộ <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                      <a class="nav-link font" (click)="onClickNewTypeFour()">Cho thuê mặt bằng <span class="sr-only">(current)</span></a>
+                      <a class="nav-link font" (click)="onClickNarbarURL(6)">Cho thuê mặt bằng <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                      <a class="nav-link font" (click)="onClickNewTypeFive()" >Tìm người ở ghép cặp <span class="sr-only">(current)</span></a>
+                      <a class="nav-link font" (click)="onClickNarbarURL(5)" >Tìm người ở ghép cặp <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" [routerLink]="['/forum']" >Hỏi đáp <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
                       <a class="nav-link font" [routerLink]="['/home/bang-gia-dich-vu']" >Bảng giá dịch vụ <span class="sr-only">(current)</span></a>
