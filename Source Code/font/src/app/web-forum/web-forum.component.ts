@@ -21,7 +21,7 @@ export class WebForumComponent implements OnInit {
 
   comment = new Comment();
   showComments:boolean[] = [];
-  showChildCommentArray:ICheckChildComment[] = [];
+  showChildCommentArray:Array<ICheckChildComment> = [];
 
   countComment: number[] = [];
   countChildComment: number[] = [];
@@ -30,55 +30,44 @@ export class WebForumComponent implements OnInit {
 
   constructor(public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     this.getPosts();
-    //this.countLikePost();
-    /*this.comments = [
-      {
-        "id": "30",
-        "content": "Comment 1",
-        "parent": "0",
-      },
-      {
-        "id": "31",
-        "content": "Comment 2",
-        "parent": "0",
-      },
-      {
-        "id": "32",
-        "content": "comment 3",
-        "parent": "0",
-      },
-      {
-        "id": "33",
-        "content": "sub comment 1-1",
-        "parent": "30",
-      },
-      {
-        "id": "34",
-        "content": "sub comment 2-1",
-        "parent": "31",
-      },
-      {
-        "id": "35",
-        "content": "sub sub comment 1-1-1",
-        "parent": "33",
-      },
-      {
-        "id": "36",
-        "content": "sub comment 1-2",
-        "parent": "30",
-      }
-    ];*/
   }
 
   ngOnInit(): void {
   }
 
   showChildComments(idPost, idComment, idParent){
+    try{
+      let result = this.showChildCommentArray.find(a => a.idPost == idPost && a.idComment == idComment && a.idParent == idParent);
+      if(result.check == false){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+    catch(err){
 
+    }
+    
   }
 
   openChildComment(idPost, idComment, idParent){
+    let index = this.showChildCommentArray.findIndex(a => a.idPost == idPost && a.idComment == idComment && a.idParent == idParent);
+    this.showChildCommentArray[index].check = !this.showChildCommentArray[index].check;
+    this.getChildComment(idPost, idComment);
+  }
 
+  async getChildComment(idPost,idComment){
+    var result = await this.postService.getChildCommentById(idComment) as Comment[];
+    const resultPost = await this.postService.getSomePost() as Post[]; 
+    var index = resultPost.findIndex(a => a.id == idPost);
+    var indexComment = resultPost[index].comments.findIndex(a => a.id == idComment);
+    for(let i=0;i<result.length;i++){
+      this.posts[index].comments[indexComment].childComments.unshift(result[i]);
+      this.pushArrayShowCommentChild(this.posts[index].id,result[i].id,this.posts[index].comments[indexComment].id);
+    }
+    // console.log(this.posts[index].comments[indexComment])
+    // console.log(this.showChildCommentArray);
   }
 
   myCondition(id){
@@ -90,8 +79,45 @@ export class WebForumComponent implements OnInit {
     }
   }
 
+  async getPostForUse(){
+    return await this.postService.getSomePost() as Post[]; 
+  }
+
+  conditionShowAddCommentChild(idPost,idComment,idParent,lenght){
+    var indexPost = this.posts.findIndex(a => a.id == idPost)
+    if(idParent == null){
+      var length = this.posts[indexPost].comments.length;
+      if(lenght  == length){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      var indexComment = this.posts[indexPost].comments.findIndex(a => a.id == idComment);
+      var length = this.posts[indexPost].comments[indexComment].childComments.length;
+      if(lenght  == length){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+  }
+
   async getCountChildComment(id) {
     this.countChildComment.push(await this.postService.getCountChildCommentPost(id) as number);
+  }
+
+  pushArrayShowCommentChild(idPost, idComment, idParent){
+    var array:ICheckChildComment = {
+      idPost:idPost,
+      idComment:idComment,
+      idParent:idParent,
+      check: true
+    };
+    this.showChildCommentArray.push(array);
   }
 
   async getPosts() {
@@ -100,6 +126,10 @@ export class WebForumComponent implements OnInit {
       this.showComments.push(true);
       this.countComment.push(await this.postService.getCountCommentPost(this.posts[i].id) as number);
       this.getCountChildComment(this.posts[i].id);
+      for(let j=0; j<this.posts[i].comments.length; j++){
+        this.posts[i].comments[j].childComments.length = 0;
+        this.pushArrayShowCommentChild(this.posts[i].id,this.posts[i].comments[j].id,this.posts[i].comments[j].parentCommentId);
+      }
       /*var commentPost: CommentPost;
       commentPost.idPost = Number(this.posts[i].id);
       for(let j=0; j<this.posts[i].comments.length; j++){   
@@ -130,6 +160,7 @@ export class WebForumComponent implements OnInit {
     this.getChildComments(id,j);
   }*/
 
+  
   saveComment(postId){
     if(this.comment.commentUser){
       this.comment.postId = postId;
@@ -152,6 +183,26 @@ export class WebForumComponent implements OnInit {
         this.countComment[index] = count;
         this.comment.commentUser = "";
       })
+    }
+  }
+
+  saveChildComment(postId,idComment){
+    if(this.comment.commentUser){
+      this.comment.postId = postId;
+      this.comment.userId = "26";
+      //this.comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
+      this.comment.parentCommentId = idComment;
+      this.postService.postComment(this.comment).subscribe(async data => {
+        var indexPost = this.posts.findIndex(a => a.id == postId)
+        var indexComment = this.posts[indexPost].comments.findIndex(a => a.id == idComment);
+        data.childComments.length = 0;
+        this.posts[indexPost].comments[indexComment].childComments.unshift(data);
+        const count = await this.postService.getCountCommentPost(postId) as number;
+        this.getCountChildComment(postId);
+        this.countComment[this.posts.findIndex(a => a.id == postId)] = count;
+        this.comment.commentUser = "";
+      })
+      alert("Thành công");
     }
   }
 
@@ -192,6 +243,7 @@ export class WebForumComponent implements OnInit {
     const result = await this.postService.getCommentPosts(id,number,skip) as Comment[]
     var index = this.posts.findIndex(a => a.id == id);
     for(let i=0; i< result.length; i++){
+      result[i].childComments.length = 0;
       this.posts[index].comments.push(result[i]);
     }
   }

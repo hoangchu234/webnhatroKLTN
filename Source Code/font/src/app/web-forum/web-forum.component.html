@@ -1914,8 +1914,11 @@
                                                 
                                                     <div class="coment-area" style="display: block;">
                                                         <ul class="we-comet">
+                                                            <li>
+                                                                <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: postData.comments }"></ng-container>
+                                                            </li>
                                                             <ng-template #recursiveListTmpl let-list="list">
-                                                                <li [hidden] = "showComments[i]" *ngFor="let item of list">
+                                                                <li [hidden] = "showComments[i]" *ngFor="let item of list;let j=indec">
                                                                     <div class="comet-avatar">
                                                                             <img *ngIf="item.user.userImage != 'null'" class="img1" src="{{item.user.userImage}}" alt="">
                                                                             <img *ngIf="item.user.userImage == 'null'" class="img1" src="assets/forum/images1/resources/nearly3.jpg" alt="">
@@ -1935,51 +1938,54 @@
                                                                           *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.childComments }"
                                                                         ></ng-container>
                                                                     </ul>
-                                                                </li>
-                                                                <li [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)">
-                                                                    <a title="" class="showmore underline">more comments+</a>
-                                                                </li>
-                                                                <li class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)">
-                                                                    <div class="comet-avatar">
-                                                                        <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
-                                                                    </div>
-                                                                    <div class="post-comt-box">
-                                                                        <form method="post">
-                                                                            <div id="postData.id">
-                                                                                <textarea placeholder="Trả lời bài post"  name="childcomment"  [(ngModel)]="childcomment"></textarea>
-                                                                            </div>
-                                                                            <div class="add-smiles">
-                                                                                <div class="uploadimage">
-                                                                                    <i class="fa fa-image"></i>
-                                                                                    <label class="fileContainer">
-                                                                                        <input type="file" >
-                                                                                    </label>
+                                                                    <!-- *ngIf="j == postData.comments.length" -->
+                                                                    <ul [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" *ngIf="j ==  list.length">
+                                                                        <a class="showmore underline">more comments+</a>
+                                                                    </ul>
+                                                                    <!-- *ngIf="j == postData.comments.length" -->
+                                                                    <ul class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" *ngIf="conditionShowAddCommentChild(postData.id,item.id,item.parentCommentId,list.length)">
+                                                                        <div class="comet-avatar">
+                                                                            <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
+                                                                        </div>
+                                                                        <div class="post-comt-box">
+                                                                            <form method="post">
+                                                                                <div id="postData.id">
+                                                                                    <textarea placeholder="Trả lời bài post" name="postData.postUser"  [(ngModel)]="comment.commentUser"></textarea>
                                                                                 </div>
-                                                                                <span class="em em-expressionless" title="add icon"></span>
-                                                                                <div class="smiles-bunch">
-                                                                                    <i class="em em---1"></i>
-                                                                                    <i class="em em-smiley"></i>
-                                                                                    <i class="em em-anguished"></i>
-                                                                                    <i class="em em-laughing"></i>
-                                                                                    <i class="em em-angry"></i>
-                                                                                    <i class="em em-astonished"></i>
-                                                                                    <i class="em em-blush"></i>
-                                                                                    <i class="em em-disappointed"></i>
-                                                                                    <i class="em em-worried"></i>
-                                                                                    <i class="em em-kissing_heart"></i>
-                                                                                    <i class="em em-rage"></i>
-                                                                                    <i class="em em-stuck_out_tongue"></i>
+                                                                                <div class="add-smiles">
+                                                                                    <div class="uploadimage">
+                                                                                        <i class="fa fa-image"></i>
+                                                                                        <label class="fileContainer">
+                                                                                            <input type="file" >
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <span class="em em-expressionless" title="add icon"></span>
+                                                                                    <div class="smiles-bunch">
+                                                                                        <i class="em em---1"></i>
+                                                                                        <i class="em em-smiley"></i>
+                                                                                        <i class="em em-anguished"></i>
+                                                                                        <i class="em em-laughing"></i>
+                                                                                        <i class="em em-angry"></i>
+                                                                                        <i class="em em-astonished"></i>
+                                                                                        <i class="em em-blush"></i>
+                                                                                        <i class="em em-disappointed"></i>
+                                                                                        <i class="em em-worried"></i>
+                                                                                        <i class="em em-kissing_heart"></i>
+                                                                                        <i class="em em-rage"></i>
+                                                                                        <i class="em em-stuck_out_tongue"></i>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-            
-                                                                            <button type="submit" (click)="saveChildComment(item.id)"> Post</button>
-                                                                        </form>	
-                                                                    </div>
+                
+                                                                                <button type="submit" (click)="saveChildComment(postData.id,item.id)"> Post</button>
+                                                                            </form>	
+                                                                        </div>
+                                                                    </ul>
                                                                 </li>
                                                             </ng-template>
-
+                                                            
+                                                            <!--Post-->
                                                             <li [hidden] = "showComments[i]">
-                                                                <a *ngIf="countChildComment[i] > postData.comments.length" (click) = "moreComment(postData.id)" title="" class="showmore underline">more comments+</a>
+                                                                <a *ngIf="countComment[i] > postData.comments.length" (click) = "moreComment(postData.id)" title="" class="showmore underline">more comments+</a>
                                                             </li>
                                                             <!-- Add Comment-->
                                                             <li class="post-comment" [hidden] = "showComments[i]">
@@ -2021,15 +2027,14 @@
                                                             </li>
                                                         </ul>
 
-                                                        <ul>
-                                                            <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: postData.comments }"></ng-container>
-                                                        </ul>
+                                                       
 
                                                     </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="flex">
                                     <div *ngFor="let postData of posts; let i=index">
                                         <div class="central-meta item content" *ngIf="!myCondition(i)">
@@ -2196,7 +2201,7 @@
                                                                 
                                                                 </li>
                                                                 <li [hidden] = "showComments[i]">
-                                                                    <a *ngIf="countChildComment[i] > postData.comments.length" (click) = "moreComment(postData.id)" title="" class="showmore underline">more comments+</a>
+                                                                    <a *ngIf="countComment[i] > postData.comments.length" (click) = "moreComment(postData.id)" title="" class="showmore underline">more comments+</a>
                                                                 </li>
                                                                 <!-- Add Comment-->
                                                                 <li class="post-comment" [hidden] = "showComments[i]">
