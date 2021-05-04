@@ -1,6 +1,10 @@
 export interface ICheckChildComment{
-    idPost:number;
-    idComment: number;
-    idParent: number;
-    check:boolean;
-  }
+  idComment: number;
+  idParent: number;
+  checkChildComment:boolean;
+}
+export interface IListCheckParentComment{
+  idPost:number;
+  checkParentComment:boolean;
+  childCommentCheck:ICheckChildComment[];
+}

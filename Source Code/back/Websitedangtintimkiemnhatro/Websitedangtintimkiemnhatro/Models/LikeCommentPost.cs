@@ -11,9 +11,10 @@ namespace Websitedangtintimkiemnhatro.Models
     {
         [Key]
         public int Id { get; set; }
-        public Boolean Like { get; set; }
         public int? IdPost { get; set; }
+        public Boolean? LikePost { get; set; }
         public int? IdCommnent { get; set; }
+        public Boolean? LikeComment { get; set; }
         public User User { get; set; }
         [ForeignKey("UserId")]
         [Required]

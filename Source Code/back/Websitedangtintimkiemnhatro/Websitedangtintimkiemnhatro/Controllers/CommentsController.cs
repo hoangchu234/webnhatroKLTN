@@ -29,14 +29,14 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return await _context.Comments.Include(e => e.User).ToListAsync();
         }
 
-        // GET: api/Comments/GetCountLikeComment
+        // GET: api/Comments
         [HttpGet]
         [Route("GetCountLikeComment")]
         public async Task<ActionResult<Object>> GetCountLikeComment()
         {
             var like = _context.LikeCommentPosts.ToList();
 
-            var result = like.GroupBy(id => id.IdCommnent).OrderByDescending(id => id.Count()).Select(g => new { Id = g.Key, Count = g.Count() });
+            var result = like.Where(a => a.LikeComment == true).GroupBy(id => id.IdCommnent).OrderByDescending(id => id.Count()).Select(g => new { Id = g.Key, Count = g.Count() });
 
             if (result == null)
             {
@@ -46,12 +46,48 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return result as Object;
         }
 
+        // GET: api/Comments
+        [HttpGet]
+        [Route("GetCountParentComment")]
+        public async Task<ActionResult<Object>> GetCountParentComment()
+        {
+            var comments = _context.Comments.ToList();
+
+            var result = comments.Where(a => a.ParentCommentId == null).GroupBy(id => id.PostId).OrderByDescending(id => id.Key).Select(g => new { Id = g.Key, Count = g.Count() });
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result as Object;
+        }
+
+        // GET: api/Comments
+        [HttpGet]
+        [Route("TotalComment")]
+        public async Task<ActionResult> TotalComment()
+        {
+            var comment = _context.Comments.ToList();
+
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            return Content(comment.Count.ToString());
+        }
+
         // GET: api/Comments/GetChildComments/5
         [HttpGet]
         [Route("GetChildComments/{id}")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetChildCommentById(int id)
         {
-            var comments = await _context.Comments.Include(a => a.User).Where(a => a.ParentCommentId == id).Take(2).ToListAsync() ;
+            List<Comment> listcomments = new List<Comment>();
+            var comments = await _context.Comments.Include(a => a.User).Where(a => a.ParentCommentId == id)
+                .Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User ,PostId = c.PostId , ParentCommentId = c.ParentCommentId, ChildComments = listcomments })
+                .Take(2)
+                .ToListAsync() ;
 
             if (comments == null)
             {
@@ -104,7 +140,18 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("GetCommentPosts/{id}/{number}/{skipNumber}")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetCommentPosts(int id, int number, int skipNumber)
         {
-            var comments = await _context.Comments.Include(e => e.User).Where(a => a.PostId == id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User }).Skip(skipNumber).Take(number).ToListAsync();
+            List<Comment> listcomments = new List<Comment>();
+            var comments = await _context.Comments.Include(e => e.User).Where(a => a.PostId == id && a.ParentCommentId == null).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, PostId = c.PostId, User = c.User, ParentCommentId = c.ParentCommentId, ChildComments = listcomments }).Skip(skipNumber).Take(number).ToListAsync();
+            return comments;
+        }
+
+        // GET: api/Comments
+        [HttpGet]
+        [Route("GetCommentComments/{id}/{idParentComment}/{number}/{skipNumber}")]
+        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentComments(int id, int idParentComment, int number, int skipNumber)
+        {
+            List<Comment> listcomments = new List<Comment>();
+            var comments = await _context.Comments.Include(e => e.User).Where(a => a.PostId == id && a.ParentCommentId != null && a.ParentCommentId == idParentComment).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, PostId = c.PostId, User = c.User, ParentCommentId = c.ParentCommentId, ChildComments = listcomments }).Skip(skipNumber).Take(number).ToListAsync();
             return comments;
         }
 
@@ -117,10 +164,10 @@ namespace Websitedangtintimkiemnhatro.Controllers
         }
 
         [HttpGet]
-        [Route("CountChildCommentPost/{id}")]
-        public async Task<ActionResult> CountChildCommentPost(int id)
+        [Route("CountChildCommentPost/{id}/{idParentComment}")]
+        public async Task<ActionResult> CountChildCommentPost(int id, int idParentComment)
         {
-            var list = await _context.Comments.Where(a => a.PostId == id && a.ParentCommentId != null).ToListAsync();
+            var list = await _context.Comments.Where(a => a.PostId == id && a.ParentCommentId != null && a.ParentCommentId == idParentComment).ToListAsync();
             return Content(list.Count.ToString());
         }
 

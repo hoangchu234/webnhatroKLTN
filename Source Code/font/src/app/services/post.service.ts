@@ -83,6 +83,16 @@ export class PostService {
     }
   }
 
+  public getCountParentComment = async () => {
+    try {
+      return await this.http.get(this.urlAPI + "/api/Comments/GetCountParentComment").toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+
   public getLikePost = async () => {
     try {
       return await this.http.get(this.urlAPI + "/api/Posts/GetCountLikePost").toPromise();
@@ -92,7 +102,40 @@ export class PostService {
     }
   }
 
+  public getLikeComment = async () => {
+    try {
+      return await this.http.get(this.urlAPI + "/api/Comments/GetCountLikeComment").toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 
+  public totalPost = async () => {
+    try {
+      return await this.http.get(this.urlAPI + "/api/Posts/TotalPost").toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+  public totalComment = async () => {
+    try {
+      return await this.http.get(this.urlAPI + "/api/Comments/TotalComment").toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  public getRecentlyPost = async () => {
+    try {
+      return await this.http.get(this.urlAPI + "/api/Posts/GetRecentlyPost").toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
   /*public getParentCommentById(id: string): Observable<Comment[]>{
     const url = `${this.urlAPI + "/api/Comments/GetParentComments"}/${id}`;
     return this.http.get<Comment[]>(url).pipe(
@@ -140,19 +183,10 @@ export class PostService {
     }
   }
 
-  public getCountChildCommentPost = async (id: string) => {
+  public getCountChildCommentPost = async (id: string, idParentComment: string) => {
     try {
-      const url = `${this.urlAPI + "/api/Comments/CountChildCommentPost"}/${id}`;
+      const url = `${this.urlAPI + "/api/Comments/CountChildCommentPost"}/${id}/${idParentComment}`;
       return await this.http.get(url).toPromise();
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  public getLikeComment = async () => {
-    try {
-      return await this.http.get(this.urlAPI + "/api/Posts/GetCountLikeComment").toPromise();
     }
     catch (e) {
       console.log(e);
@@ -162,6 +196,16 @@ export class PostService {
   public getCommentPosts = async (id: string, number: string, skip: string) => {
     try {
       const url = `${this.urlAPI + "/api/Comments/GetCommentPosts"}/${id}/${number}/${skip}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  public getCommentComments = async (id: string, idParentComment: string, number: string, skip: string) => {
+    try {
+      const url = `${this.urlAPI + "/api/Comments/GetCommentComments"}/${id}/${idParentComment}/${number}/${skip}`;
       return await this.http.get(url).toPromise();
     }
     catch (e) {

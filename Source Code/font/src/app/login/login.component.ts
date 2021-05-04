@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
         else{
           this.authenticationService.saveAccount(account, this.remember);
           if(Number(account.roleId) == 1){
+            // window.location.replace(link);
             this.router.navigateByUrl('home');
           }
           else{

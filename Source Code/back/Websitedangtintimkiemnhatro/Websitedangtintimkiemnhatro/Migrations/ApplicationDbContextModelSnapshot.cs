@@ -379,7 +379,10 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.Property<int?>("IdPost")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Like")
+                    b.Property<bool?>("LikeComment")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("LikePost")
                         .HasColumnType("bit");
 
                     b.Property<int>("UserId")

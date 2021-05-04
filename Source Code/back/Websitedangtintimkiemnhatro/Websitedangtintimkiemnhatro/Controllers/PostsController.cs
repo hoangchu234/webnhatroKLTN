@@ -26,14 +26,15 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("GetPosts/{number}/{skipNumber}")]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts(int number, int skipNumber)
         {
-            var comments = await _context.Comments.Include(a => a.User).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User }).Take(2).ToListAsync();
+            List<Comment> listcomments = new List<Comment>();
+            //var comments = await _context.Comments.Include(a => a.User).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, PostId = c.PostId, ParentCommentId = c.ParentCommentId, User = c.User }).Take(2).ToListAsync();
             var posts = await _context.Posts.Include(e => e.User).Select(c => new Post
             {
                 Id = c.Id,
                 PostUser = c.PostUser,
                 CreateDate = c.CreateDate,
                 User = c.User,
-                Comments = _context.Comments.Include(a => a.User).Where(a => a.PostId == c.Id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User }).Take(2).ToList()
+                Comments = _context.Comments.Include(a => a.User).Where(a => a.PostId == c.Id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, PostId = c.PostId,  User = c.User, ParentCommentId = c.ParentCommentId, ChildComments = listcomments }).Take(2).ToList()
             }).OrderByDescending(a => a.CreateDate).Skip(skipNumber).Take(number).ToListAsync();
             return posts;
         }
@@ -43,9 +44,10 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("GetSomePosts")]
         public async Task<ActionResult<IEnumerable<Post>>> GetSomePosts()
         {
-            var comments = await _context.Comments.Include(a => a.User).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser , CreateDate = c.CreateDate, User = c.User }).Take(2).ToListAsync();
+            List<Comment> listcomments = new List<Comment>();
+            //var comments = await _context.Comments.Include(a => a.User).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser , CreateDate = c.CreateDate, User = c.User }).Take(2).ToListAsync();
             var posts = await _context.Posts.Include(e => e.User).Select(c => new Post { Id = c.Id, PostUser = c.PostUser, CreateDate = c.CreateDate, User = c.User, 
-                        Comments = _context.Comments.Include(a => a.User).Where(a => a.PostId == c.Id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User }).Take(2).ToList()
+                        Comments = _context.Comments.Include(a => a.User).Where(a => a.PostId == c.Id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, PostId = c.PostId, User = c.User, ParentCommentId = c.ParentCommentId, ChildComments = listcomments }).Take(2).ToList()
                         }).OrderByDescending(a => a.CreateDate).Take(10).ToListAsync();
             return posts;
         }
@@ -72,7 +74,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         {
             var like =  _context.LikeCommentPosts.ToList();
 
-            var result = like.GroupBy(id => id.IdPost).OrderByDescending(id => id.Count()).Select(g => new { Id = g.Key, Count = g.Count() });
+            var result = like.Where(a => a.LikePost == true).GroupBy(id => id.IdPost).OrderByDescending(id => id.Count()).Select(g => new { Id = g.Key, Count = g.Count() });
 
             if (result == null)
             {
@@ -80,6 +82,40 @@ namespace Websitedangtintimkiemnhatro.Controllers
             }
 
             return result as Object;
+        }
+
+        // GET: api/Posts
+        [HttpGet]
+        [Route("GetRecentlyPost")]
+        public async Task<ActionResult<Object>> GetRecentlyPost()
+        {
+            //, Username = g.User.HovaTen, Time = aDateTime.Subtract(g.CreateDate)
+            var posts = _context.Posts.Include(a => a.User).OrderByDescending(a => a.CreateDate).ToList();
+            DateTime aDateTime = DateTime.Now;
+            //TimeSpan interval;
+            var result = posts.Select(g => new { Id = g.Id, PostUser = g.PostUser, Username = g.User.HovaTen, Day = aDateTime.Subtract(g.CreateDate).Days, Hour = aDateTime.Subtract(g.CreateDate).Hours }).Take(5);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result as Object;
+        }
+
+        // GET: api/Posts
+        [HttpGet]
+        [Route("TotalPost")]
+        public async Task<ActionResult> TotalPost()
+        {
+            var post = _context.Posts.ToList();
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return Content(post.Count.ToString());
         }
 
         // POST: api/Posts

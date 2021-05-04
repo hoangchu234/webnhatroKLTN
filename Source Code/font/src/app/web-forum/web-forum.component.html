@@ -743,8 +743,8 @@
                 </li>
             </ul>
             <div class="user-img1">
-                <h5>Jack Carter</h5>
-                <img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
+                <h5>{{dataUser.hovaTen}}</h5>
+                <img class="img1" src="{{dataUser.userImage}}" alt="">
                 <span class="status f-online"></span>
                 <div class="user-setting">
                     <span class="seting-title">Chat setting <a href="#" title="">see all</a></span>
@@ -763,7 +763,7 @@
                     </ul>
                 </div>
             </div>
-            <span class="ti-settings main-menu" data-ripple=""></span>
+            <!-- <span class="ti-settings main-menu" data-ripple=""></span> -->
         </div>
         <nav>
             <ul class="nav-list">
@@ -1343,12 +1343,12 @@
                                     </div>-->
                                     <!-- twitter feed-->
                                     <div class="advertisment-box">
-                                        <h4 class="">advertisment</h4>
+                                        <h4 class="widget-title">Quảng cáo</h4>
                                         <figure>
                                             <a href="#" title="Advertisment"><img class="img1" src="assets/forum/images1/resources/ad-widget.gif" alt=""></a>
                                         </figure>
                                     </div><!-- advertisment box -->
-                                    <div class="widget">
+                                    <!-- <div class="widget">
                                         <h4 class="widget-title">Shortcuts</h4>
                                         <ul class="naves">
                                             <li>
@@ -1396,18 +1396,20 @@
                                                 <a href="landing.html" title="">Logout</a>
                                             </li>
                                         </ul>
-                                    </div><!-- Shortcuts -->
+                                    </div> -->
+                                    <!-- Shortcuts -->
                                     <div class="widget">
-                                        <h4 class="widget-title">Recent Activity</h4>
+                                        <h4 class="widget-title">Bài viết gần nhất</h4>
                                         <ul class="activitiez">
-                                            <li>
+                                            <li *ngFor="let data of dataRecently">
                                                 <div class="activity-meta">
-                                                    <i>10 hours Ago</i>
-                                                    <span><a href="#" title="">Commented on Video posted </a></span>
-                                                    <h6>by <a href="time-line.html">black demon.</a></h6>
+                                                    <i *ngIf="data.day == 0">{{data.hour}} tiếng trước</i>
+                                                    <i *ngIf="data.day != 0">{{data.day}} ngày trước</i>
+                                                    <span><a href="#" title="">{{data.postUser}}</a></span>
+                                                    <h6>bởi <a href="time-line.html">{{data.username}}</a></h6>
                                                 </div>
                                             </li>
-                                            <li>
+                                            <!-- <li>
                                                 <div class="activity-meta">
                                                     <i>30 Days Ago</i>
                                                     <span><a href="#" title="">Posted your status. “Hello guys, how are you?”</a></span>
@@ -1419,7 +1421,7 @@
                                                     <span><a href="#" title="">Share a video on her timeline.</a></span>
                                                     <h6>"<a href="#">you are so funny mr.been.</a>"</h6>
                                                 </div>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div><!-- recent activites -->
                                     <!--<div class="widget stick-widget">
@@ -1468,17 +1470,17 @@
 
                             <div class="col-lg-6">
                                 <div class="central-meta postbox">
-                                    <span class="create-post">Create post</span>
+                                    <span class="create-post">Câu hỏi của bạn</span>
                                     <div class="new-postbox">
                                         <figure>
                                             <img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
                                         </figure>
                                         <div class="newpst-input">
                                             <form method="post">
-                                                <textarea rows="2" placeholder="Bạn đang muốn cung cấp thông tin gì?" (click)="openDialog()"></textarea>
+                                                <textarea rows="2" placeholder="Bạn đang muốn cung cấp thông tin gì?" (click)="createPost()"></textarea>
                                             </form>
                                         </div>
-                                        <div class="attachments">
+                                        <!-- <div class="attachments">
                                             <ul>
                                                 <li>
                                                     <span class="add-loc">
@@ -1526,9 +1528,9 @@
                                                       <input type="text" class="" id="us3-lon" />
                                                 </div>
                                             </div>
-                                              <!-- map -->
+                                              
                                               <div id="us3"></div>
-                                        </div>
+                                        </div> -->
                                     </div>	
                                 </div>
                                 <!--<div class="central-meta item">
@@ -1862,7 +1864,7 @@
                                                 </figure>
                                                 <div class="friend-name">
                                                         <div class="more">
-                                                            <div class="more-post-optns"><i class="ti-more-alt"></i>
+                                                            <!-- <div class="more-post-optns"><i class="ti-more-alt"></i>
                                                                 <ul>
                                                                     <li><i class="fa fa-pencil-square-o"></i>Edit Post</li>
                                                                     <li><i class="fa fa-trash-o"></i>Delete Post</li>
@@ -1872,7 +1874,7 @@
                                                                     <li><i class="fa fa-wpexplorer"></i>Select as featured</li>
                                                                     <li><i class="fa fa-bell-slash-o"></i>Turn off Notifications</li>
                                                                 </ul>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
                                                         <ins><a href="time-line.html" title="">{{postData.user.hovaTen}}</a></ins>
                                                         <span><i class="fa fa-globe"></i> Ngày đăng: {{postData.createDate | date}} </span>
@@ -1883,28 +1885,28 @@
                                                         </p>
                                                         <div class="we-video-info">
                                                             <ul>
-                                                                <li>
+                                                                <!-- <li>
                                                                     <span class="views" title="views">
                                                                         <i class="fa fa-eye"></i>
                                                                         <ins>1.2k</ins>
                                                                     </span>
-                                                                </li>
+                                                                </li> -->
                                                                 <li>
-                                                                    <div class="likes heart" (click)="livePost()" title="Like/Dislike">❤ <span>{{likePost[i]}}</span></div>
+                                                                    <div title="Like/Dislike"><i class="fa fa-heart" (click)="livePost(postData.id)"></i> <span>{{likePostData[i]}}</span></div>
                                                                 </li>
                                                                 <li>
                                                                     <span class="comment" title="Comments">
                                                                         <i class="fa fa-commenting" (click)="onselecte(postData.id)" ></i>
-                                                                        <ins>{{countComment[i]}}</ins>
+                                                                        <ins>{{countCommentPost[i]}}</ins>
                                                                     </span>
                                                                 </li>
         
                                                                 <li>
                                                                     <span>
-                                                                        <a class="share-pst" href="#" title="Share">
+                                                                        <a class="share-pst"(click)="copyContent()" title="Share">
                                                                             <i class="fa fa-share-alt"></i>
                                                                         </a>
-                                                                        <ins>20</ins>
+                                                                        <!-- <ins>20</ins> -->
                                                                     </span>	
                                                                 </li>
                                                             </ul>
@@ -1913,12 +1915,12 @@
                                                     <!--Comment-->
                                                 
                                                     <div class="coment-area" style="display: block;">
-                                                        <ul class="we-comet">
+                                                        <ul class="we-comet" [hidden] = "showParentComments(postData.id)">
                                                             <li>
                                                                 <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: postData.comments }"></ng-container>
                                                             </li>
                                                             <ng-template #recursiveListTmpl let-list="list">
-                                                                <li [hidden] = "showComments[i]" *ngFor="let item of list;let j=indec">
+                                                                <li *ngFor="let item of list;let j=index">
                                                                     <div class="comet-avatar">
                                                                             <img *ngIf="item.user.userImage != 'null'" class="img1" src="{{item.user.userImage}}" alt="">
                                                                             <img *ngIf="item.user.userImage == 'null'" class="img1" src="assets/forum/images1/resources/nearly3.jpg" alt="">
@@ -1928,7 +1930,7 @@
                                                                             <p>{{item.commentUser}}</p>
                                                                             <div class="inline-itms">
                                                                                 <span>{{item.createDate  | date}}</span>
-                                                                                <a class="we-reply" (click)="openChildComment(postData.id,item.id,item.parentCommentId)" title="Reply"><i class="fa fa-reply"></i></a>
+                                                                                <a class="we-reply" (click)="openComment(postData.id,item.id,item.parentCommentId)" title="Reply"><i class="fa fa-reply"></i></a>
                                                                                 <a title=""><i class="fa fa-heart"></i><span>20</span></a>
                                                                             </div>
                                                                     </div>
@@ -1937,13 +1939,14 @@
                                                                         <ng-container
                                                                           *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.childComments }"
                                                                         ></ng-container>
+                                                                        
                                                                     </ul>
                                                                     <!-- *ngIf="j == postData.comments.length" -->
-                                                                    <ul [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" *ngIf="j ==  list.length">
-                                                                        <a class="showmore underline">more comments+</a>
+                                                                    <ul [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" >
+                                                                        <a *ngIf="countCommentComment(postData.id,item.id)" (click)="moreCommentComment(postData.id,item.id)" class="showmore underline">{{countComment[j].count}} phản hồi</a>
                                                                     </ul>
                                                                     <!-- *ngIf="j == postData.comments.length" -->
-                                                                    <ul class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" *ngIf="conditionShowAddCommentChild(postData.id,item.id,item.parentCommentId,list.length)">
+                                                                    <ul *ngIf="checkLogin()" class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" >
                                                                         <div class="comet-avatar">
                                                                             <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
                                                                         </div>
@@ -1980,15 +1983,16 @@
                                                                             </form>	
                                                                         </div>
                                                                     </ul>
+
                                                                 </li>
                                                             </ng-template>
                                                             
                                                             <!--Post-->
-                                                            <li [hidden] = "showComments[i]">
-                                                                <a *ngIf="countComment[i] > postData.comments.length" (click) = "moreComment(postData.id)" title="" class="showmore underline">more comments+</a>
+                                                            <li [hidden] = "showParentComments(postData.id)">
+                                                                <a *ngIf="checkShowMoreCommentParent(postData.id,postData.comments.length)" (click) = "moreComment(postData.id)" title="" class="showmore underline">Xem thêm bình luận</a>
                                                             </li>
                                                             <!-- Add Comment-->
-                                                            <li class="post-comment" [hidden] = "showComments[i]">
+                                                            <li *ngIf="checkLogin()" class="post-comment" [hidden] = "showParentComments(postData.id)">
                                                                 <div class="comet-avatar">
                                                                     <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
                                                                 </div>
@@ -2046,7 +2050,7 @@
                                                     </figure>
                                                     <div class="friend-name">
                                                             <div class="more">
-                                                                <div class="more-post-optns"><i class="ti-more-alt"></i>
+                                                                <!-- <div class="more-post-optns"><i class="ti-more-alt"></i>
                                                                     <ul>
                                                                         <li><i class="fa fa-pencil-square-o"></i>Edit Post</li>
                                                                         <li><i class="fa fa-trash-o"></i>Delete Post</li>
@@ -2056,7 +2060,7 @@
                                                                         <li><i class="fa fa-wpexplorer"></i>Select as featured</li>
                                                                         <li><i class="fa fa-bell-slash-o"></i>Turn off Notifications</li>
                                                                     </ul>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                             <ins><a href="time-line.html" title="">{{postData.user.hovaTen}}</a></ins>
                                                             <span><i class="fa fa-globe"></i> Ngày đăng: {{postData.createDate | date}} </span>
@@ -2064,147 +2068,118 @@
                                                     <div class="post-meta">
                                                             <p>
                                                                 {{postData.postUser}}
-                                                            </p>
-                                                            <!--<figure>
-                                                                <div class="img1-bunch" >
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                            <figure>
-                                                                                <a class="strip" href="assets/forum/images1/resources/album1.jpg" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-                                                                                <img class="img1" src="assets/forum/images1/resources/album1.jpg" alt="">
-                                                                                </a>
-                                                                            </figure>
-                                                                            <figure>
-                                                                                <a class="strip" href="assets/forum/images1/resources/album2.jpg" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-                                                                                <img class="img1" src="assets/forum/images1/resources/album2.jpg" alt="">
-                                                                                </a>
-                                                                            </figure>
-                                                                        </div>
-                                                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                            <figure>
-                                                                                <a class="strip" href="assets/forum/images1/resources/album6.jpg" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-                                                                                <img class="img1" src="assets/forum/images1/resources/album6.jpg" alt="">
-                                                                                </a>
-                                                                            </figure>
-                                                                            <figure>
-                                                                                <a class="strip" href="assets/forum/images1/resources/album5.jpg" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-                                                                                <img class="img1" src="assets/forum/images1/resources/album5.jpg" alt="">
-                                                                                </a>
-                                                                            </figure>
-                                                                            <figure>
-                                                                                <a class="strip" href="assets/forum/images1/resources/album4.jpg" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-                                                                                <img class="img1" src="assets/forum/images1/resources/album4.jpg" alt="">
-                                                                                </a>
-                                                                                <div class="more-photos">
-                                                                                    <span>+15</span>
-                                                                                </div>
-                                                                            </figure>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>	
-                                                                <ul class="like-dislike">
-                                                                    <li><a class="bg-purple" href="#" title="Save to Pin Post"><i class="fa fa-thumb-tack"></i></a></li>
-                                                                    <li><a class="bg-blue" href="#" title="Like Post"><i class="ti-thumb-up"></i></a></li>
-                                                                    <li><a class="bg-red" href="#" title="dislike Post"><i class="ti-thumb-down"></i></a></li>
-                                                                </ul>
-                                                            </figure>-->	
+                                                            </p>	
                                                             <div class="we-video-info">
                                                                 <ul>
-                                                                    <li>
+                                                                    <!-- <li>
                                                                         <span class="views" title="views">
                                                                             <i class="fa fa-eye"></i>
                                                                             <ins>1.2k</ins>
                                                                         </span>
-                                                                    </li>
+                                                                    </li> -->
                                                                     <li>
-                                                                        <div class="likes heart" (click)="livePost()" title="Like/Dislike">❤ <span>{{likePost[i]}}</span></div>
+                                                                        <div title="Like/Dislike"> <i class="fa fa-heart" (click)="livePost(postData.id)"></i> <span>{{likePostData[i]}}</span></div>
                                                                     </li>
                                                                     <li>
                                                                         <span class="comment" title="Comments">
                                                                             <i class="fa fa-commenting" (click)="onselecte(postData.id)" ></i>
-                                                                            <ins>{{countComment[i]}}</ins>
+                                                                            <ins>{{countCommentPost[i]}}</ins>
                                                                         </span>
                                                                     </li>
             
                                                                     <li>
                                                                         <span>
-                                                                            <a class="share-pst" href="#" title="Share">
+                                                                            <a class="share-pst" (click)="copyContent()" title="Share">
                                                                                 <i class="fa fa-share-alt"></i>
                                                                             </a>
-                                                                            <ins>20</ins>
+                                                                            <!-- <ins>20</ins> -->
                                                                         </span>	
                                                                     </li>
                                                                 </ul>
-                                                                <!--<div class="users-thumb-list">
-                                                                    <a data-toggle="tooltip" title="Anderw" href="#">
-                                                                        <img class="img1" alt="" src="assets/forum/images1/resources/userlist-1.jpg">  
-                                                                    </a>
-                                                                    <a data-toggle="tooltip" title="frank" href="#">
-                                                                        <img class="img1" alt="" src="assets/forum/images1/resources/userlist-2.jpg">  
-                                                                    </a>
-                                                                    <a data-toggle="tooltip" title="Sara" href="#">
-                                                                        <img class="img1" alt="" src="assets/forum/images1/resources/userlist-3.jpg">  
-                                                                    </a>
-                                                                    <a data-toggle="tooltip" title="Amy" href="#">
-                                                                        <img class="img1" alt="" src="assets/forum/images1/resources/userlist-4.jpg">  
-                                                                    </a>
-                                                                    <a data-toggle="tooltip" title="Ema" href="#">
-                                                                        <img class="img1" alt="" src="assets/forum/images1/resources/userlist-5.jpg">  
-                                                                    </a>
-                                                                    <span><strong>You</strong>, <b>Sarah</b> and <a href="#" title="">24+ more</a> liked</span>
-                                                                </div>-->
+                                                              
                                                             </div>
                                                         </div>
                                                         <!--Comment-->
                                                     
                                                         <div class="coment-area" style="display: block;">
-                                                            <ul class="we-comet">
-                                                                <!--<li [hidden] = "showComments[i]" > 
-                                                                    <ng-template #List let-items>
-                                                                        <div *ngFor="let item of items">
-                                                                            <div class="comet-avatar" >
+                                                            <ul class="we-comet" [hidden] = "showParentComments(postData.id)">
+                                                                <li>
+                                                                    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: postData.comments }"></ng-container>
+                                                                </li>
+                                                                <ng-template #recursiveListTmpl let-list="list">
+                                                                    <li *ngFor="let item of list;let j=index">
+                                                                        <div class="comet-avatar">
                                                                                 <img *ngIf="item.user.userImage != 'null'" class="img1" src="{{item.user.userImage}}" alt="">
                                                                                 <img *ngIf="item.user.userImage == 'null'" class="img1" src="assets/forum/images1/resources/nearly3.jpg" alt="">
-                                                                            </div>
-                                                                            <div class="we-comment" >
+                                                                        </div>
+                                                                        <div class="we-comment" >
                                                                                 <h5><a href="time-line.html" title="">{{item.user.hovaTen}}</a></h5>
                                                                                 <p>{{item.commentUser}}</p>
                                                                                 <div class="inline-itms">
                                                                                     <span>{{item.createDate  | date}}</span>
-                                                                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+                                                                                    <a class="we-reply" (click)="openComment(postData.id,item.id,item.parentCommentId)" title="Reply"><i class="fa fa-reply"></i></a>
                                                                                     <a title=""><i class="fa fa-heart"></i><span>20</span></a>
                                                                                 </div>
-                                                                            </div>
-                                                                            
-                                                                            <ng-container *ngTemplateOutlet="List; context:{ $implicit: item.items }"></ng-container>
                                                                         </div>
-                                                                    </ng-template>
-                                                                    <ng-container *ngTemplateOutlet="List; context:{ $implicit: postData.comments | converter }"></ng-container>
                                                                     
-                                                                </li>-->
-                                                        
-                                                                <li [hidden] = "showComments[i]" *ngFor="let item of postData.comments">
-                                                                
-                                                                    <div class="comet-avatar">
-                                                                            <img *ngIf="item.user.userImage != 'null'" class="img1" src="{{item.user.userImage}}" alt="">
-                                                                            <img *ngIf="item.user.userImage == 'null'" class="img1" src="assets/forum/images1/resources/nearly3.jpg" alt="">
-                                                                    </div>
-                                                                    <div class="we-comment" >
-                                                                            <h5><a href="time-line.html" title="">{{item.user.hovaTen}}</a></h5>
-                                                                            <p>{{item.commentUser}}</p>
-                                                                            <div class="inline-itms">
-                                                                                <span>{{item.createDate  | date}}</span>
-                                                                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                                                                <a title=""><i class="fa fa-heart"></i><span>20</span></a>
+                                                                        <ul [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" *ngIf="item.childComments.length > 0">
+                                                                            <ng-container
+                                                                              *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.childComments }"
+                                                                            ></ng-container>
+                                                                            
+                                                                        </ul>
+                                                                        <!-- *ngIf="j == postData.comments.length" -->
+                                                                        <ul [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" >
+                                                                            <a *ngIf="countCommentComment(postData.id,item.id)" (click)="moreCommentComment(postData.id,item.id)" class="showmore underline">{{countComment[j].count}} phản hồi</a>
+                                                                        </ul>
+                                                                        <!-- *ngIf="j == postData.comments.length" -->
+                                                                        <ul *ngIf="checkLogin()" class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" >
+                                                                            <div class="comet-avatar">
+                                                                                <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
                                                                             </div>
-                                                                    </div>
+                                                                            <div class="post-comt-box">
+                                                                                <form method="post">
+                                                                                    <div id="postData.id">
+                                                                                        <textarea placeholder="Trả lời bài post" name="postData.postUser"  [(ngModel)]="comment.commentUser"></textarea>
+                                                                                    </div>
+                                                                                    <div class="add-smiles">
+                                                                                        <div class="uploadimage">
+                                                                                            <i class="fa fa-image"></i>
+                                                                                            <label class="fileContainer">
+                                                                                                <input type="file" >
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <span class="em em-expressionless" title="add icon"></span>
+                                                                                        <div class="smiles-bunch">
+                                                                                            <i class="em em---1"></i>
+                                                                                            <i class="em em-smiley"></i>
+                                                                                            <i class="em em-anguished"></i>
+                                                                                            <i class="em em-laughing"></i>
+                                                                                            <i class="em em-angry"></i>
+                                                                                            <i class="em em-astonished"></i>
+                                                                                            <i class="em em-blush"></i>
+                                                                                            <i class="em em-disappointed"></i>
+                                                                                            <i class="em em-worried"></i>
+                                                                                            <i class="em em-kissing_heart"></i>
+                                                                                            <i class="em em-rage"></i>
+                                                                                            <i class="em em-stuck_out_tongue"></i>
+                                                                                        </div>
+                                                                                    </div>
+                    
+                                                                                    <button type="submit" (click)="saveChildComment(postData.id,item.id)"> Post</button>
+                                                                                </form>	
+                                                                            </div>
+                                                                        </ul>
+    
+                                                                    </li>
+                                                                </ng-template>
                                                                 
-                                                                </li>
-                                                                <li [hidden] = "showComments[i]">
-                                                                    <a *ngIf="countComment[i] > postData.comments.length" (click) = "moreComment(postData.id)" title="" class="showmore underline">more comments+</a>
+                                                                <!--Post-->
+                                                                <li [hidden] = "showParentComments(postData.id)">
+                                                                    <a *ngIf="checkShowMoreCommentParent(postData.id,postData.comments.length)" (click) = "moreComment(postData.id)" title="" class="showmore underline">Xem thêm bình luận</a>
                                                                 </li>
                                                                 <!-- Add Comment-->
-                                                                <li class="post-comment" [hidden] = "showComments[i]">
+                                                                <li *ngIf="checkLogin()" class="post-comment" [hidden] = "showParentComments(postData.id)">
                                                                     <div class="comet-avatar">
                                                                         <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
                                                                     </div>
@@ -2240,28 +2215,37 @@
                                                                             <button type="submit" (click)="saveComment(postData.id)"> Post</button>
                                                                         </form>	
                                                                     </div>
-                                                                </li>
+                                                                </li>        
                                                             </ul>
                                                         </div>
-                                                    
-                                                        <!--Test-->
-                                                        
-
-
                                                 </div>
-            
                                             </div>
                                         </div>
                                     </div>
-                                    <a id="loadMore" (click)="morePosts()">Load More</a>
+                                    <a id="loadMore" (click)="morePosts()">Xem thêm</a>
                                 </div>
 
                             </div>
 
                             <!-- centerl meta -->
                             <div class="col-lg-3">
-                                <aside class="sidebar static right">
-                                    <div class="widget">
+                                <div class="widget">
+                                    <h4 class="widget-title" style="text-align: center">Thống kê</h4>
+                                    <div class="rec-events bg-purple">
+                                        <i class="fa fa-bar-chart"></i>
+                                        <h3>{{totalPost}}</h3>
+                                        <h6>Câu hỏi</h6>
+                                        <img class="img1" src="../../assets/forum/images1/clock.png" alt="">
+                                    </div>
+                                    <div class="rec-events bg-blue">
+                                        <i class="fa fa-share"></i>
+                                        <h3>{{totalComment}}</h3>
+                                        <h6>Trả lời</h6>
+                                        <img class="img1" src="../../assets/forum/images1/clock.png" alt="">
+                                    </div>
+                                </div>
+                                <!-- <aside class="sidebar static right"> -->
+                                    <!-- <div class="widget">
                                         <h4 class="widget-title">Your page</h4>	
                                         <div class="your-page">
                                             <figure>
@@ -2291,7 +2275,7 @@
                                                     <li class="nav-item"><a class="active" href="#link1" data-toggle="tab" data-ripple="">likes</a></li>
                                                      <li class="nav-item"><a class="" href="#link2" data-toggle="tab" data-ripple="">views</a></li>
                                                 </ul>
-                                                <!-- Tab panes -->
+                                                
                                                 <div class="tab-content">
                                                   <div class="tab-pane active fade show " id="link1" >
                                                     <span><i class="ti-heart"></i>884</span>
@@ -2350,21 +2334,24 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!-- page like widget -->
-                                    <div class="widget">
-                                        <h4 class="widget-title">Explor Events <a title="" href="#" class="see-all">See All</a></h4>
+                                    </div> -->
+                                    <!-- page like widget -->
+                                    <!-- <div class="widget">
+                                        <h4 class="widget-title">Thống kê</h4>
                                         <div class="rec-events bg-purple">
-                                            <i class="ti-gift"></i>
-                                            <h6><a href="#" title="">Ocean Motel good night event in columbia</a></h6>
-                                            <img class="img1" src="assets/forum/images1/clock.png" alt="">
+                                            <i class="fa fa-bar-chart"></i>
+                                            <h2>{{totalPost}}</h2>
+                                            <h6>Câu hỏi</h6>
+                                            <img class="img1" src="../../assets/forum/images1/clock.png" alt="">
                                         </div>
                                         <div class="rec-events bg-blue">
                                             <i class="ti-microphone"></i>
                                             <h6><a href="#" title="">2016 The 3rd International Conference</a></h6>
-                                            <img class="img1" src="assets/forum/images1/clock.png" alt="">
+                                            <img class="img1" src="../../assets/forum/images1/clock.png" alt="">
                                         </div>
-                                    </div><!-- explore events -->
-                                    <div class="widget">
+                                    </div> -->
+                                    <!-- explore events -->
+                                    <!-- <div class="widget">
                                         <h4 class="widget-title">Profile intro</h4>
                                         <ul class="short-profile">
                                             <li>
@@ -2380,7 +2367,7 @@
                                                 <p>Justin Biber, Shakira, Nati Natasah</p>
                                             </li>
                                         </ul>
-                                    </div><!-- profile intro widget -->
+                                    </div>
                                     <div class="widget stick-widget">
                                         <h4 class="widget-title">Recent Links <a title="" href="#" class="see-all">See All</a></h4>
                                         <ul class="recent-links">
@@ -2406,8 +2393,9 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </div><!-- recent links -->
-                                </aside>
+                                    </div> -->
+                                    <!-- recent links -->
+                                <!-- </aside> -->
                             </div><!-- sidebar -->
                         </div>	
                     </div>

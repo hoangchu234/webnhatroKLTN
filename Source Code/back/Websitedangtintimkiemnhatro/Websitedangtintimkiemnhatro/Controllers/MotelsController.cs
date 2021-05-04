@@ -326,8 +326,13 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 .Include(m => m.Detail)
                 .Include(m => m.Images)
                 .Where(a => a.Status == "Tin đang hiển thị" && a.Verify == true)
+                .OrderByDescending(a => a.Detail.TypeofnewId)
                 .ToListAsync();
-            if(city != 0)
+            if (type != 1)
+            {
+                models = models.Where(a => a.Detail.TypeofnewId == type).ToList();
+            }
+            if (city != 0)
             {
                 models = models.Where(a => a.CityId == city).ToList();
             }
@@ -337,15 +342,11 @@ namespace Websitedangtintimkiemnhatro.Controllers
             }
             if (district != 0)
             {
-                models = models.Where(a => a.DistrictId == province).ToList();
+                models = models.Where(a => a.DistrictId == district).ToList();
             }
             if (street != 0)
             {
                 models = models.Where(a => a.StreetId == street).ToList();
-            }
-            if (type != 1)
-            {
-                models = models.Where(a => a.Detail.TypeofnewId == type).ToList();
             }
 
             if(price != 0)
@@ -707,14 +708,13 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
         // GET: api/Motels/GetMotelByProvince/name
         [HttpGet]
-        [Route("GetMotelByProvince/{name}")]
-        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelByProvince(string name)
+        [Route("GetMotelByProvince/{id}")]
+        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelByProvince(int id)
         {
             var models = await _context.Motels
                 .Include(m => m.Detail)
-                .ThenInclude(m => m.Typeofnew)
                 .Include(m => m.Images)
-                .Where(a => a.Province.Name == name && a.Status == "Tin đang hiển thị" && a.Verify == true).ToListAsync();
+                .Where(a => a.ProvinceId == id && a.Status == "Tin đang hiển thị" && a.Verify == true).ToListAsync();
 
             if (models == null)
             {

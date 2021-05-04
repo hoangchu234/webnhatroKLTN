@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   countReply = 0;
 
   public username:string;
-  //currentAccount: Account;
+  userImage;
 
   // Name1 = "cho-thue-nha-tro";
   // Name2 = "nha-cho-thue";
@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
 
   checkreply = false;
   types: NewType[] = [];
+
   constructor(private activeRoute: ActivatedRoute,
     private replyService:ReplyService,
     private router: Router,
@@ -55,6 +56,12 @@ export class HeaderComponent implements OnInit {
 
   async ngOnInit(): Promise<void> { 
     this.types = await this.getTypes();
+    if(this.authenticationService.currentAccountValue){
+      this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+    }
+    else{
+      this.userImage = "../../../assets/images/blog_3.jpg"
+    }
   }
   
   onClickNarbarURL(id){
@@ -64,6 +71,12 @@ export class HeaderComponent implements OnInit {
       this.router.navigate([linkURL]);
       
     }); 
+  }
+
+  onClickURL(link){
+    window.location.replace(link);
+    //this.router.navigate([link]);
+
   }
 
   public async getTypes(){

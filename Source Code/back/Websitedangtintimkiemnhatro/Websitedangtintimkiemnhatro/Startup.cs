@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Websitedangtintimkiemnhatro.Hubs;
 using Websitedangtintimkiemnhatro.Models;
+using Websitedangtintimkiemnhatro.Services;
 
 namespace Websitedangtintimkiemnhatro
 {
@@ -46,6 +47,11 @@ namespace Websitedangtintimkiemnhatro
             });
 
             services.AddSignalR();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.Configure<SMSoptions>(Configuration);
 
             services.AddControllersWithViews()
                     .AddNewtonsoftJson(options =>

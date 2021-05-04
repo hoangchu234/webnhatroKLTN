@@ -55,6 +55,13 @@ export class AuthenticationService {
         return this.currentAccountSubject.value;
     }
 
+    public checkLogin() {
+        if(this.currentAccountSubject.value){
+            return true;
+        }
+        return false;
+    }
+
     public saveAccount(account: Account, remember: boolean)
     {
        this.remember = remember;

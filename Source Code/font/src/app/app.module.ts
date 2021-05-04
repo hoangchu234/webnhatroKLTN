@@ -117,6 +117,9 @@ import { ChatsComponent } from './chats/chats.component';
 import { DialogPostComponent } from './web-forum/dialog-post/dialog-post.component';
 
 import { ConverterPipe } from './converter-pipe.pipe';
+import { ClipboardModule } from 'ngx-clipboard';
+import { DialogInformComponent } from './dialog-inform/dialog-inform.component';
+import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-post-forum.component';
 
 @NgModule({
   declarations: [
@@ -176,7 +179,9 @@ import { ConverterPipe } from './converter-pipe.pipe';
     WebForumComponent,
     ChatsComponent,
     DialogPostComponent,
-    ConverterPipe
+    ConverterPipe,
+    DialogInformComponent,
+    DetailPostForumComponent
   ],
   imports: [
     BrowserModule,
@@ -204,6 +209,7 @@ import { ConverterPipe } from './converter-pipe.pipe';
     HttpClientModule,
     CKEditorModule,
     ChartsModule,
+    ClipboardModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features

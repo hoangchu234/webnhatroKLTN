@@ -39,6 +39,7 @@ import { AreaCityHomeComponent } from './area-city-home/area-city-home.component
 import { MagementSendMessegerComponent } from './authority/loginuser/magement-send-messeger/magement-send-messeger.component';
 import { WebForumComponent } from './web-forum/web-forum.component'
 import { ChatsComponent} from './chats/chats.component'
+import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-post-forum.component';
 
 const routes: Routes = [
   {
@@ -96,7 +97,12 @@ const routes: Routes = [
   { path: 'tro-giup',          component: HelpComponent } ,
   { path: 'area/:name',          component: AreaCityHomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'forum', component:WebForumComponent },
+  { 
+    path: 'forum', component:WebForumComponent,
+    children:[
+      { path: ':name/:id',          component: DetailPostForumComponent },  
+    ]
+  },
   { path: 'chat', component:ChatsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
