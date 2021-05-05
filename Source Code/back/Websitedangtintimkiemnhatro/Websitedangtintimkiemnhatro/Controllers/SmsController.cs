@@ -48,38 +48,38 @@ namespace Websitedangtintimkiemnhatro.Controllers
         //    return View("Index");
         //}
 
-        [HttpPost]
-        public async Task<ActionResult<SMSUser>> PostSMSUser(SMSUser sendSmsModel)
-        {
-            var VONAGE_API_KEY = Configuration["AccountSid"];
-            var VONAGE_API_SECRET = Configuration["AuthToken"];
-            var credentials = Credentials.FromApiKeyAndSecret(VONAGE_API_KEY, VONAGE_API_SECRET);
-            var request = new SendSmsRequest { To = sendSmsModel.To, From = sendSmsModel.From, Text = sendSmsModel.Text };
-            var response = client.SendAnSms(request);
+        //[HttpPost]
+        //public async Task<ActionResult<SMSUser>> PostSMSUser(SMSUser sendSmsModel)
+        //{
+        //    var VONAGE_API_KEY = Configuration["AccountSid"];
+        //    var VONAGE_API_SECRET = Configuration["AuthToken"];
+        //    var credentials = Credentials.FromApiKeyAndSecret(VONAGE_API_KEY, VONAGE_API_SECRET);
+        //    var request = new SendSmsRequest { To = sendSmsModel.To, From = sendSmsModel.From, Text = sendSmsModel.Text };
+        //    var response = client.SendAnSms(request);
 
-            _context.SMSUsers.Add(sendSmsModel);
+        //    _context.SMSUsers.Add(sendSmsModel);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (SMSUserExists(sendSmsModel.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        if (SMSUserExists(sendSmsModel.Id))
+        //        {
+        //            return Conflict();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return sendSmsModel;
-        }
-        private bool SMSUserExists(int id)
-        {
-            return _context.SMSUsers.Any(e => e.Id == id);
-        }
+        //    return sendSmsModel;
+        //}
+        //private bool SMSUserExists(int id)
+        //{
+        //    return _context.SMSUsers.Any(e => e.Id == id);
+        //}
     }
 }

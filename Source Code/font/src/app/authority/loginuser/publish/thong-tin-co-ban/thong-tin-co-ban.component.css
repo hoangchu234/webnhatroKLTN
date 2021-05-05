@@ -7,3 +7,6 @@ input::-webkit-inner-spin-button {
 .yellow-background{
   background-color: blueviolet;
 }
+b{
+  font-size: 18px;
+}

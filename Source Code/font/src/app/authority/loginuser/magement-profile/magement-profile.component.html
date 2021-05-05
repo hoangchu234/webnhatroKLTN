@@ -4,40 +4,40 @@
       <!--Thanh tìm kiếm-->
   
       <app-tophead [name]="nametophead"></app-tophead>
+      <div style="text-align: center;"><h2 style="margin-top: 10px;" ><b style="font-size: 22px; color: black;margin-top: -25px;">TRANG QUẢN LÝ THÔNG TIN CÁ NHÂN</b></h2></div>
       <!--kết thúc thanh tìm kiếm -->
-      <div class="container" style="border-bottom:1px solid #808080;border:1px solid black;margin-bottom: 20px;margin-top: 20px;">
+      <div class="container" style="margin-bottom: 20px;margin-top: 20px;">
         <div class="row" style="padding:15px;color: black;padding-bottom: 30px;" >
-          <div class="col-md-6" style="border-right:1px solid grey">
+          <div class="col-md-9" style="box-shadow:0 1px 5px rgba(0, 0, 0, 0.3) ;padding: 20px;">
             <div class="row">
-              <a class="col-md-4" >
-              
-                <img *ngIf="checkImage" class="img-profile rounded-circle" src="{{dialogUser.userImage}}" style="height: 90px;width: 90px;float:right">
-                <img *ngIf="!checkImage" class="img-profile rounded-circle" src="../../../assets/images/blog_3.jpg" style="height: 90px;width: 90px;float:right">
+              <a class="col-md-5" >
+                <div><img *ngIf="checkImage" class="img-profile rounded-circle" src="{{dialogUser.userImage}}" style="height: 120px;width: 120px;margin-left: 50px;"></div>
+                <div><img *ngIf="!checkImage" class="img-profile rounded-circle" src="../../../assets/images/blog_3.jpg" style="height:120px;width: 120px;margin-left: 50px;"></div>
+                
               </a>
-              <div class="col-md-8 " style="font-size:15px"  >
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size: 20px;"><b>{{account.user.hovaTen}}</b> </span>
-                <div style="margin-top:5px;" *ngIf="isUser"><span style="color:black;">Username: {{account.username}}</span></div>
-                <div>Đã tham gia 1 năm</div>
-                <div><button class="btn btn-danger" mat-button (click)="openDialog()" style=" border-radius:20px;margin-top: 20px;color: black;background-color: burlywood;">Chỉnh sửa trang cá nhân</button></div>
-                <div><button class="btn btn-danger" mat-button (click)="openDialogEditPassword()" style=" border-radius:20px;margin-top: 20px;color: black;background-color: burlywood;">Đổi mật khẩu</button></div>
-                <div><button class="btn btn-danger" mat-button (click)="openDialogEditPhone()" style=" border-radius:20px;margin-top: 20px;color: black;background-color: burlywood;">Đổi số điện thoại</button></div>
+              <div class="col-md-7 " style="font-size:15px"  >
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size: 16px;">Tên: {{account.user.hovaTen}} </span>
+                <div style="margin-top:15px;" *ngIf="isUser"><span style="color:black;">Tên đăng nhập: {{account.username}}</span></div>
+                <div style="margin-top:15px;" >Ngày tham gia: {{account.user.createdDate}}</div>
+                <div style="margin-top:15px;" >Email: {{account.user.email}}</div>
+                <div style="margin-top:15px;" >Facebook: {{account.user.facebook}}</div>
+                
               </div>
+              <div class="col-md-5"><div style="text-align: center;margin-top: 25px;margin-left: -90px;letter-spacing: 1px;margin-top: -15px;"><b>{{account.user.hovaTen}}</b></div></div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div style="margin-bottom:5px"><i class="fa fa-clipboard" style="margin-right: 10px;"></i><span>Đánh giá:</span>Chưa có đánh giá</div>
-            <div style="margin-bottom:5px"><i class="fa  fa-hourglass-3" style="margin-right: 10px;"></i><span>Ngày tham gia:</span>{{account.user.createdDate | date}}</div>
-            <div style="margin-bottom:5px"><i class="fa fa-address-book" style="margin-right: 10px;"></i><span>Địa chỉ:</span>Chưa cung cấp</div>
-            <div style="margin-bottom:5px"><i class="fa fa-align-left" style="margin-right: 10px;"></i><span>Phản hồi chat:</span>Chưa có thông tin</div>
-            <div style="margin-bottom:5px"><i class="fa fa-square" style="margin-right: 10px;"></i><span>Đã cũng cấp</span><i *ngIf="!checkFacebook" class="fa   fa-facebook-square" style="margin-right: 10px;margin-left: 10px;"></i> <i *ngIf="checkFacebook" class="fa   fa-facebook-square" style="margin-right: 10px;margin-left: 10px;color: blue;"></i> <i *ngIf="!checkGmail" class="fa  fa-google-plus-square"></i> <i *ngIf="checkGmail" class="fa  fa-google-plus-square" style="color: blue;"></i></div>
+          <div class="col-md-3">
+            <div><button class="btn btn-danger" mat-button (click)="openDialog()" style=" border-radius:5px;margin-top: 20px;width:100%;color: black;background-color: rgb(248, 195, 125);">Chỉnh sửa trang cá nhân</button></div>
+            <div><button class="btn btn-danger" mat-button (click)="openDialogEditPassword()" style=" border-radius:5px;margin-top: 20px;width:100%;color: black;background-color: rgb(248, 195, 125);">Đổi mật khẩu</button></div>
+            <div><button class="btn btn-danger" mat-button (click)="openDialogEditPhone()" style=" border-radius:5px;margin-top: 20px;width:100%;color: black;background-color: rgb(248, 195, 125);">Đổi số điện thoại</button></div>
           </div>
         </div>
       </div>
   
-      <div class="container" style="height: auto;border:1px solid black" >
+      <div class="container" style="height: auto;" >
         <div class="row" style="margin-top: 15px;">
-          <div class="col-md-12" style="border-bottom:1px solid black;padding-bottom:20px;font-size: 16px;">
-             <b>Tin đã đăng</b>
+          <div class="col-md-12" style="border-bottom:1px solid black;padding-bottom:20px;font-size: 16px;text-align: center;">
+             <b>DANH SÁCH TIN ĐÃ ĐĂNG</b>
           </div>
             <!-- Offers Grid -->
             <div style="vertical-align: middle;" *ngIf="!checkDataMotel; else elseshow">
@@ -46,16 +46,14 @@
             </div>
             <ng-template #elseshow>
               <div class="container-fluid" style="padding-top: 20px;">
-                <div class="row">
+                <div class="row" style="margin-bottom: 15px;">
                       <div *ngFor="let motel of motels | paginate: { itemsPerPage: 4, currentPage: page }">
-                         <div class="col-md-12" style="width: 280px;">
+                         <div class="col-md-12" style="width: 270px;border-radius: 5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);margin:5PX;margin-bottom: 25px;">
                             <div class="img-box1">
-                              <img [src]="motel.images[0].imageMotel"  class="img-fluid" alt="" style="height: 200px;width: 100%;">
+                              <img [src]="motel.images[0].imageMotel"  class="img-fluid" alt="" style="height: 200px;width: 100%;border-radius: 5px;margin-top: 10px;">
                             </div>
-                            <br>
-                            <P style="font-size: 20px;color: darkblue;font-weight: bold;">{{motel.price}} {{motel.priceType}}</P>
-                            <p >{{motel.title}}</p>
-  
+                            <p class="chu">{{motel.title}}</p>
+                            <div style="height: 25px;"></div>
                           </div>
                   </div>
   
