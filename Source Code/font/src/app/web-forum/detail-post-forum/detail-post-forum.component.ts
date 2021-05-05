@@ -1,4 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ClipboardService } from 'ngx-clipboard';
+import { IRecentlyPost } from 'src/app/model/interface/IRecentlyPost';
+import { Post } from 'src/app/model/Post';
+import { Comment } from 'src/app/model/Comment';
+import { User } from 'src/app/model/User';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { PostService } from 'src/app/services/post.service';
+import { ICheckChildComment, IListCheckParentComment } from 'src/app/model/interface/ICheckChildComment';
+import { ICommentParent } from 'src/app/model/interface/ICommentParent';
+import { ICountComment } from 'src/app/model/interface/ICountComment';
+import { LikeCommentPost } from 'src/app/model/LikeCommentPost';
+import { ILike } from 'src/app/model/interface/ILike';
 
 @Component({
   selector: 'app-detail-post-forum',
@@ -7,9 +21,557 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailPostForumComponent implements OnInit {
 
-  constructor() { }
+  dataRecently: Array<IRecentlyPost> = [];
+  totalPost: number = 0;
+  totalComment: number = 0;
+  dataUser:User;
 
-  ngOnInit(): void {
+  showChildCommentArray:Array<IListCheckParentComment> = [];
+
+  latestNodesPerLevel;
+  comment: Comment;
+  comments: Array<Comment> = [];
+  countCommentPost = 0;
+  countComment: Array<ICountComment> = [];
+  dataComment:Comment[] = [];
+  user: User = {id: 0, hovaTen:"", gender:"", doB:null, email:"",facebook: "", userImage:"", createdDate:null, lastLogOnDate:null,account:null, accountid:""}
+  dataPost: Post= {id: "", postUser: '', createDate: null, user: this.user, userId: "", comment: null, comments: null};
+
+  countParentComment = 0;
+  likePostData: number = 0;
+  likeCommentData: Array<ILike> = [];
+  constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
+    
+    if(this.authenticationService.currentAccountValue){
+      this.dataUser = this.authenticationService.currentAccountValue.user;
+    }
+    else{
+      var user: User ={
+        id: null,
+        hovaTen: "",
+        gender: "",
+        doB: null,
+        email: "",
+        facebook: "",
+        userImage: "../../assets/forum/images1/resources/admin.jpg",
+        createdDate:null,
+        lastLogOnDate:null,
+        account:null,
+        accountid:""
+      }
+      this.dataUser = user;
+    }
   }
 
+  async ngOnInit(): Promise<void> {
+    const id = this.router.snapshot.paramMap.get("id");
+    //get data post 
+    this.getDataPost(id);
+    // this.countLikePost(id)
+    //get data comment
+    this.getDataComment(id);
+    //count comment
+    this.getCountCommentPost(id);
+    this.countParentComment = await this.postService.getCountCommentParent(id) as number;
+    this.dataRecently = await this.postService.getRecentlyPost() as IRecentlyPost[];
+    this.totalPost = await this.postService.totalPost() as number;
+    this.totalComment = await this.postService.totalComment() as number;
+    this.likePostData = await this.postService.getLikePost(Number(id)) as number;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  async getDataPost(id){
+    try{
+      var result = await this.postService.getPostById(id) as Post;
+      this.user = result.user;
+      this.dataPost = result;
+      if(this.dataPost.user.userImage == null){
+        this.dataPost.user.userImage = "../../assets/forum/images1/resources/friend-avatar2.jpg";
+      }
+    }
+    catch(err){
+
+    }
+  }
+
+  async getDataComment(id){
+    var result = await this.postService.getParentCommentById(id) as Comment[];
+    for(let i=0;i<result.length;i++){
+      if(result[i].user.userImage == null){
+        result[i].user.userImage = "../../assets/forum/images1/resources/friend-avatar2.jpg";
+      }
+      this.countComment.push(await this.pushCountComment(id, result[i].id))
+    }
+    this.comments = result.slice();
+    this.dataComment = result.slice();
+
+    var arrayChildCommentCheck = Array<ICheckChildComment>();
+    for(let j=0; j<result.length; j++){
+      result[j].childComments.length = 0;
+      arrayChildCommentCheck.push(this.pushArrayShowCommentChild(result[j].id,result[j].parentCommentId));
+    }
+    this.showChildCommentArray.push(this.pushArrayShowCommentParent(this.dataPost.id,arrayChildCommentCheck));  
+
+    this.countLikeComment(this.comments);
+  }
+
+  async getCountCommentPost(id) {
+    this.countCommentPost = await this.postService.getCountCommentPost(id) as number;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Lưu comment parent
+  saveComment(postId){
+    if(this.comment.commentUser){
+      this.comment.postId = postId;
+      // this.comment.userId = "26";
+      this.comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
+      this.postService.postComment(this.comment).subscribe(async data => {
+       
+        data.childComments.length = 0;
+        this.comments.unshift(data);
+        this.dataComment.unshift(data);
+        this.getCountCommentPost(postId);
+        //
+        var indexParent = this.showChildCommentArray.findIndex(a => a.idPost === postId)
+        this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(data.id,data.parentCommentId))
+        this.comment.commentUser = "";
+      })
+    }
+    this.countLikeComment(this.comments);
+  }
+ 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // more comment parent
+  moreComment(id){
+    var number = 3;
+    var skip = this.comments.length;
+    this.getMoreComments(id, number, skip);
+  }
+
+  async getMoreComments(id, number, skip){
+    const result = await this.postService.getCommentPosts(id,number,skip) as Comment[]
+    for(let i=0; i< result.length; i++){
+      result[i].childComments.length = 0;
+      this.comments.push(result[i]);
+      this.dataComment.push(result[i]);
+      // this.countComment.push(await this.pushCountComment(id, result[i].id));
+      var indexshowChildCommentArray = this.showChildCommentArray.findIndex(a => a.idPost === id);
+      this.showChildCommentArray[indexshowChildCommentArray].childCommentCheck.push(this.pushArrayShowCommentChild(result[i].id,result[i].parentCommentId));
+    }
+    this.countLikeComment(this.comments);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Share link
+  copyContent() {
+    var link = window.location.href;
+    this.clipboardService.copyFromContent(link);
+    alert("Đã sao chép link chia sẽ")
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // show more comment parent
+  checkShowMoreCommentParent(length){
+    try{
+      
+      if(this.countParentComment > length){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    catch(err){
+
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // lưu comment child
+  saveChildComment(postId,idComment){
+    if(this.comment.commentUser){
+      this.comment.postId = postId;
+      // this.comment.userId = "26";
+      this.comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
+      this.comment.parentCommentId = idComment;
+      this.postService.postComment(this.comment).subscribe(async data => {
+        var indexComment = this.comments.findIndex(a => a.id === idComment);
+        data.childComments.length = 0;
+        this.comments[indexComment].childComments.unshift(data);
+        this.dataComment.push(data)
+        this.getCountCommentPost(postId);
+
+        var indexParent = this.showChildCommentArray.findIndex(a => a.idPost === postId)
+        this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(data.id,data.parentCommentId));
+        this.countLikeComment(this.comments);
+
+        this.comment.commentUser = "";
+      })
+      alert("Thành công");
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // kiểm tra show tree lặp lại vòng for
+  showChildComments(idPost, idComment, idParent){
+    try{
+      let indexParent = this.showChildCommentArray.findIndex(a => a.idPost === idPost);
+      let indexChild = this.showChildCommentArray[indexParent].childCommentCheck.findIndex(a => a.idComment === idComment && a.idParent === idParent);
+      var result = this.showChildCommentArray[indexParent].childCommentCheck[indexChild];
+      if(result.checkChildComment == false){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+    catch(err){
+
+    } 
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  // more comment child
+  addAItem(a,n,vitrithem,phantuthem){
+    for(let i=n; i> vitrithem; i--){
+      a[i] = a[i-1];
+    }
+    a[vitrithem] = phantuthem;
+    n++;
+  }
+
+  moreCommentComment(id, idParentComment){
+    var number = 2;
+    var skip = 0;
+    this.dataComment.forEach(element => {
+      if(element.parentCommentId == idParentComment){
+        skip++;
+      }
+    })
+    this.getMoreCommentComments(id, idParentComment, number, skip);
+  }
+
+  async getMoreCommentComments(id, idParentComment, number, skip){
+    const result = await this.postService.getCommentComments(id,idParentComment,number,skip) as Comment[]
+
+    var data: Comment[] = [];
+    for(let i=0;i<this.dataComment.length;i++){
+      if(this.dataComment[i].postId === id){
+        data.push(this.dataComment[i]);
+      }
+    }
+    this.comments.splice(0, this.comments.length);
+    var vitrithemdata = data.findIndex(a => a.id === idParentComment);
+    var vitrithemdatacomment = this.dataComment.findIndex(a => a.id === idParentComment);
+
+    for(let i=0; i< result.length; i++){
+      result[i].childComments.length = 0;
+      var indexFind = data.findIndex(a => a.id === result[i].id);
+      vitrithemdata++;
+      vitrithemdatacomment++;
+      if(indexFind == -1){
+      // data.push(result[i]);
+          // this.dataComment.push(result[i]);
+          this.addAItem(data,data.length,vitrithemdata,result[i]);
+          this.addAItem(this.dataComment,this.dataComment.length,vitrithemdatacomment,result[i]);
+          // this.countLikeComment(element);  
+          /// get count comment child for mỗi comment parent    
+          this.countComment.push(await this.pushCountComment(id, result[i].id))
+          //////////////////////////////////////////////////
+          var indexParent = this.showChildCommentArray.findIndex(a => a.idPost === id);
+          this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(result[i].id,idParentComment));
+      }  
+    }
+
+    if(result){
+      // var sortedData = data.sort((a, b) => Number(a.parentCommentId) - Number(b.parentCommentId));
+      this.latestNodesPerLevel = [{id: "root",commentUser: "",user: "",data: "",parentCommentId:"", childComments:[]}]
+  
+      var sortedData = data;
+      for(let i=0; i< sortedData.length; i++){
+        var level = 1; 
+        if (sortedData[i].parentCommentId == null) { 
+          level = 1;
+        }   
+        else{
+          var parentId = sortedData[i].parentCommentId;
+          while (parentId != null) {
+            level++;
+            var indexSort = sortedData.findIndex(a => a.id == parentId);
+            parentId = sortedData[indexSort].parentCommentId;
+          }
+        }
+  
+        var node = {
+          id: sortedData[i].id,
+          commentUser: `${sortedData[i].commentUser}`,
+          user: sortedData[i].user,
+          data: sortedData[i].createDate,
+          parentCommentId: sortedData[i].parentCommentId,
+          childComments: [],
+  
+        }
+  
+        if(this.latestNodesPerLevel[level - 1] === undefined){
+
+        }
+        else {  
+          this.latestNodesPerLevel[level - 1].childComments.push(node);
+          this.latestNodesPerLevel[level] = node;
+        }
+  
+      }
+      this.latestNodesPerLevel[0].childComments.forEach(element => {
+        this.comments.push(element)
+      });
+      this.countLikeComment(this.dataComment);
+    }
+
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////
+  // open comment child
+  openComment(idPost, idComment, idParent){
+    let indexParent = this.showChildCommentArray.findIndex(a => a.idPost === idPost);
+    let indexChild = this.showChildCommentArray[indexParent].childCommentCheck.findIndex(a => a.idComment === idComment);
+    this.showChildCommentArray[indexParent].childCommentCheck[indexChild].checkChildComment = !this.showChildCommentArray[indexParent].childCommentCheck[indexChild].checkChildComment;
+
+    this.getComment(idPost, idComment,idParent);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // get data comment open child
+  async getComment(idPost,idComment,idParent){
+    var result = await this.postService.getChildCommentById(idComment) as Comment[];
+    var data: Comment[] = [];
+    for(let i=0;i<this.dataComment.length;i++){
+      if(this.dataComment[i].postId == idPost){
+        data.push(this.dataComment[i]);
+      }
+    }
+    this.comments.splice(0, this.comments.length);
+    var vitrithemdata = data.findIndex(a => a.id === idComment);
+    var vitrithemdatacomment = this.dataComment.findIndex(a => a.id === idComment);
+    if(result){
+      for(let i=0; i< result.length; i++){
+        result[i].childComments.length = 0;
+        var indexFind = data.findIndex(a => a.id === result[i].id);
+        vitrithemdata++;
+        vitrithemdatacomment++;
+        if(indexFind == -1){
+          //data.push(result[i]);
+          this.addAItem(data,data.length,vitrithemdata,result[i]);
+          this.addAItem(this.dataComment,this.dataComment.length,vitrithemdatacomment,result[i]);
+          
+          // this.dataComment.push(result[i]);
+          //this.addAItem(this.dataComment,this.dataComment.length,)
+          this.countComment.push(await this.pushCountComment(idPost, result[i].id))
+          var indexParent = this.showChildCommentArray.findIndex(a => a.idPost === idPost);
+          this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(result[i].id,idComment));
+        }
+        // this.pushArrayShowCommentChild(this.posts[index].id,result[i].id,this.posts[index].comments[indexComment].id);
+      } 
+
+      //var sortedData = data.sort((a, b) => Number(a.parentCommentId) - Number(b.parentCommentId));
+      this.latestNodesPerLevel = [{id: "root",commentUser: "",user: "",data: "",parentCommentId:"", childComments:[]}]
+      var sortedData = data;
+      //console.log(data)
+      for(let i=0; i< sortedData.length; i++){
+        var level = 1; 
+        if (sortedData[i].parentCommentId == null) { 
+          level = 1;
+        }   
+        else{
+          var parentId = sortedData[i].parentCommentId;
+          while (parentId != null) {
+            level++;
+            var indexSort = sortedData.findIndex(a => a.id == parentId);
+            parentId = sortedData[indexSort].parentCommentId;
+          }
+        }
+  
+        var node = {
+          id: sortedData[i].id,
+          commentUser: `${sortedData[i].commentUser}`,
+          user: sortedData[i].user,
+          data: sortedData[i].createDate,
+          parentCommentId: sortedData[i].parentCommentId,
+          childComments: [],
+  
+        }
+  
+        // if(sortedData[i].parentCommentId == null){
+        //   // this.latestNodesPerLevel.push(node);
+        // } 
+        if(this.latestNodesPerLevel[level - 1] === undefined){
+
+        }
+        else {  
+          this.latestNodesPerLevel[level - 1].childComments.push(node);
+          this.latestNodesPerLevel[level] = node;
+        }
+        
+  
+      }
+
+      // this.latestNodesPerLevel.shift();
+      // this.latestNodesPerLevel.forEach(element => {
+      //   this.posts[index].comments.push(element)
+      // });
+      this.latestNodesPerLevel[0].childComments.forEach(element => {
+        this.comments.push(element)
+      });
+      this.countLikeComment(this.comments);
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////
+  // kiểm tra show comment child chữ more comment child
+  countCommentComment(idComment){
+    try{
+      
+      var length = 0;
+      this.dataComment.forEach(element => {
+        if(element.parentCommentId == idComment){
+          length++;
+        }
+      })
+      let result = this.countComment.find(a => a.idComment == idComment);
+      if(result.count > length){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    catch(err){
+
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  pushArrayShowCommentChild(idComment, idParent){
+    var arrayChildCommentCheck: ICheckChildComment={
+      idComment:idComment,
+      idParent:idParent,
+      checkChildComment: true
+    }
+    return arrayChildCommentCheck;
+    // this.showChildCommentArray.push(array);
+  }
+  
+  pushArrayShowCommentParent(idPost,arrayChildCommentCheck){
+    var arrayParentCommentCheck:IListCheckParentComment = {
+      idPost:idPost,
+      checkParentComment: true,
+      childCommentCheck: arrayChildCommentCheck
+    };
+    return arrayParentCommentCheck;
+  }
+
+  ///////////////////////////////////
+  /// get count comment child for mỗi comment parent
+  async getCountChildComment(id,idComment) {
+    return await this.postService.getCountChildCommentPost(id,idComment) as number;
+  }
+
+  async pushCountComment(idPost, idComment){
+    var countComment: ICountComment={
+      idPost:idPost,
+      idComment:idComment,
+      count: await this.getCountChildComment(idPost, idComment)
+    }
+    return countComment;
+  }
+
+  ///////////////////////////////////////
+  checkLogin(){
+    if(this.authenticationService.checkLogin()){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // like post
+  livePost(idPost){
+    var like: LikeCommentPost = {
+      idPost : idPost,
+      likePost : true,
+      idCommnent: null,
+      likeComment: null,
+      userId : this.authenticationService.currentAccountValue.user.id
+    }
+    // like.userId = 26;
+    this.postLikeCommentPost(like);
+  }
+
+  // async countLikePost(post){
+  //   var index = this.likePost.findIndex(a => a.id === Number(post.id));
+  //   if(index == -1){
+  //     var ilike : ILike = {
+  //       id: Number(post.id),
+  //       count:0
+  //     }
+  //     this.likePostData = ilike.count;
+  //   }
+  //   else{
+  //     this.likePostData = this.likePost[index].count;
+  //   }
+  // }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // lưu like
+  postLikeCommentPost(like){
+    this.postService.postLikeCommentPost(like).subscribe(data => {
+      this.likePostData++;
+    })
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // like comment
+  liveComment(idComment){
+    var like: LikeCommentPost = {
+      idPost : null,
+      likePost : null,
+      idCommnent: idComment,
+      likeComment: true,
+      userId : this.authenticationService.currentAccountValue.user.id
+    }
+    // like.userId = 26;
+    this.postLikeCommentPost(like);
+  }
+  async countLikeComment(comments){
+    // const result = await this.postService.getLikeComment() as any[];
+    // this.likeComment = result.slice();
+    this.likeCommentData.splice(0, this.likeCommentData.length);
+    var ilike = {id: 0 ,count: 0};
+    for(let i=0;i<comments.length;i++){
+      var count = await this.postService.getLikeComment(comments[i].id) as number;
+      ilike = {
+        id: Number(comments[i].id),
+        count:count
+      }
+      this.likeCommentData.push(ilike);
+    }
+  }
+
+  ////Display value like comment
+  displayLikePost(){
+    return this.likePostData;
+  }
+
+  displayLikeComment(idComment){
+    const index = this.likeCommentData.findIndex(a => a.id === idComment);
+    if(index == -1){
+      return 0;
+    }
+    else{
+      return this.likeCommentData[index].count;
+    }
+   
+  }
 }

@@ -11,7 +11,8 @@ import { Account } from  '../../model/Account';
 export class LoginuserComponent implements OnInit {
   public hoVaTen:string;
   //currentAccount: Account;
-  checkImage = false;
+  image = "";
+  // checkImage = false;
   constructor(private router: Router,
     private authenticationService: AuthenticationService) { 
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
@@ -19,8 +20,13 @@ export class LoginuserComponent implements OnInit {
       if(this.authenticationService.currentAccountValue){
         this.hoVaTen = this.authenticationService.currentAccountValue.user.hovaTen;
         if(this.authenticationService.currentAccountValue.user.userImage != null){
-          this.checkImage = true;
+          this.image = this.authenticationService.currentAccountValue.user.userImage;
         }
+        else{
+          this.image = "../../../assets/images/blog_3.jpg";
+        }
+       
+        
       }
     }
 

@@ -1405,7 +1405,7 @@
                                                 <div class="activity-meta">
                                                     <i *ngIf="data.day == 0">{{data.hour}} tiếng trước</i>
                                                     <i *ngIf="data.day != 0">{{data.day}} ngày trước</i>
-                                                    <span><a href="#" title="">{{data.postUser}}</a></span>
+                                                    <span><a (click)="onClickDetailPost(data.postUser,data.id)" title="">{{data.postUser}}</a></span>
                                                     <h6>bởi <a href="time-line.html">{{data.username}}</a></h6>
                                                 </div>
                                             </li>
@@ -1880,7 +1880,7 @@
                                                         <span><i class="fa fa-globe"></i> Ngày đăng: {{postData.createDate | date}} </span>
                                                 </div>
                                                 <div class="post-meta">
-                                                        <p>
+                                                        <p (click)="onClickDetailPost(postData.postUser,postData.id)">
                                                             {{postData.postUser}}
                                                         </p>
                                                         <div class="we-video-info">
@@ -1892,7 +1892,7 @@
                                                                     </span>
                                                                 </li> -->
                                                                 <li>
-                                                                    <div title="Like/Dislike"><i class="fa fa-heart" (click)="livePost(postData.id)"></i> <span>{{likePostData[i]}}</span></div>
+                                                                    <div title="Like/Dislike"><i class="fa fa-heart" (click)="livePost(postData.id)"></i> <span>{{displayLikePost(postData.id)}}</span></div>
                                                                 </li>
                                                                 <li>
                                                                     <span class="comment" title="Comments">
@@ -1931,7 +1931,7 @@
                                                                             <div class="inline-itms">
                                                                                 <span>{{item.createDate  | date}}</span>
                                                                                 <a class="we-reply" (click)="openComment(postData.id,item.id,item.parentCommentId)" title="Reply"><i class="fa fa-reply"></i></a>
-                                                                                <a title=""><i class="fa fa-heart"></i><span>20</span></a>
+                                                                                <a title=""><i class="fa fa-heart"></i><span>{{displayLikeComment(item.id)}}</span></a>
                                                                             </div>
                                                                     </div>
                                                                 
@@ -2066,7 +2066,7 @@
                                                             <span><i class="fa fa-globe"></i> Ngày đăng: {{postData.createDate | date}} </span>
                                                     </div>
                                                     <div class="post-meta">
-                                                            <p>
+                                                            <p (click)="onClickDetailPost(postData.postUser,postData.id)">
                                                                 {{postData.postUser}}
                                                             </p>	
                                                             <div class="we-video-info">
@@ -2078,7 +2078,7 @@
                                                                         </span>
                                                                     </li> -->
                                                                     <li>
-                                                                        <div title="Like/Dislike"> <i class="fa fa-heart" (click)="livePost(postData.id)"></i> <span>{{likePostData[i]}}</span></div>
+                                                                        <div title="Like/Dislike"> <i class="fa fa-heart" (click)="livePost(postData.id)"></i> <span>{{displayLikePost(postData.id)}}</span></div>
                                                                     </li>
                                                                     <li>
                                                                         <span class="comment" title="Comments">
@@ -2118,7 +2118,7 @@
                                                                                 <div class="inline-itms">
                                                                                     <span>{{item.createDate  | date}}</span>
                                                                                     <a class="we-reply" (click)="openComment(postData.id,item.id,item.parentCommentId)" title="Reply"><i class="fa fa-reply"></i></a>
-                                                                                    <a title=""><i class="fa fa-heart"></i><span>20</span></a>
+                                                                                    <a title=""><i class="fa fa-heart"></i><span>{{displayLikeComment(item.id)}}</span></a>
                                                                                 </div>
                                                                         </div>
                                                                     

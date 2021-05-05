@@ -795,7 +795,6 @@ D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhat
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csprojAssemblyReference.cache
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.AssemblyInfoInputs.cache
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.AssemblyInfo.cs
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csproj.CoreCompileInputs.cache
@@ -814,3 +813,4 @@ D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhat
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.SignalR.Protocols.MessagePack.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Twilio.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Core.dll
+D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csprojAssemblyReference.cache
