@@ -99,10 +99,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { 
     path: 'forum', component:WebForumComponent,
-    children:[
-      { path: ':name/:id',          component: DetailPostForumComponent },  
-    ]
   },
+  { path: 'forum/:name/:id',          component: DetailPostForumComponent }, 
   { path: 'chat', component:ChatsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },

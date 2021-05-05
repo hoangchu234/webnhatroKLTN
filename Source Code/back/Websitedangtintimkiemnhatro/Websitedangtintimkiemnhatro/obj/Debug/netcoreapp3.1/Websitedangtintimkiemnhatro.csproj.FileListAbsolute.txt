@@ -795,7 +795,6 @@ D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhat
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csprojAssemblyReference.cache
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.AssemblyInfoInputs.cache
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.AssemblyInfo.cs
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csproj.CoreCompileInputs.cache
@@ -814,19 +813,4 @@ D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhat
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.SignalR.Protocols.MessagePack.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Twilio.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Core.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\MessagePack.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Core.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNet.SignalR.Client.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.NodeServices.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.SignalR.Protocols.MessagePack.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.SpaServices.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.SpaServices.Extensions.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Physical.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileSystemGlobbing.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Configuration.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Console.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.ConfigurationExtensions.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\System.Net.WebSockets.WebSocketProtocol.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Twilio.dll
-C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Source Code\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.MvcApplicationPartsAssemblyInfo.cs
+D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csprojAssemblyReference.cache

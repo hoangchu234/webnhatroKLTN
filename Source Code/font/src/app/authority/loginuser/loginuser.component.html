@@ -20,11 +20,8 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav flex-column">
                         <li class="nav-divider" style="text-align: center;">
-                            <div style="margin-top:5px;" *ngIf="checkImage"><img class="img-profile rounded-circle"  src="{{currentAccount.user.userImage}}" style="height: 30px;width: 30px;"></div>
-                            <div style="margin-top:5px;" *ngIf="!checkImage"><img class="img-profile rounded-circle"  src="../../../assets/images/blog_3.jpg" style="height: 30px;width: 30px;"></div>
+                            <div style="margin-top:5px;"><img class="img-profile rounded-circle"  src="{{image}}" style="height: 30px;width: 30px;"></div>
                             <span style="color:black;margin-left: 5px;">{{hoVaTen}} </span>
-            
-                           
                         </li>
                         <li class="nav-item font" >
                             <a class="nav-link active" [routerLink]="['/user/thong-tin-ca-nhan']" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i >Thông tin cá nhân <span class="badge badge-success">6</span></a>

@@ -67,21 +67,36 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return post;
         }
 
-        // GET: api/Posts/GetCountLikePost
+        //// GET: api/Posts/GetCountLikePost
+        //[HttpGet]
+        //[Route("GetCountLikePost")]
+        //public async Task<ActionResult<Object>> GetCountLikePost()
+        //{
+        //    var like =  _context.LikeCommentPosts.ToList();
+
+        //    var result = like.Where(a => a.LikePost == true).GroupBy(id => id.IdPost).OrderByDescending(id => id.Count()).Select(g => new { Id = g.Key, Count = g.Count() });
+
+        //    if (result == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return result as Object;
+        //}
+
+        // GET: api/Posts
         [HttpGet]
-        [Route("GetCountLikePost")]
-        public async Task<ActionResult<Object>> GetCountLikePost()
+        [Route("GetCountLikePost/{id}")]
+        public async Task<ActionResult> GetCountLikePost(int id)
         {
-            var like =  _context.LikeCommentPosts.ToList();
+            var likePosts = _context.LikeCommentPosts.Where(a => a.IdPost == id).ToList();
 
-            var result = like.Where(a => a.LikePost == true).GroupBy(id => id.IdPost).OrderByDescending(id => id.Count()).Select(g => new { Id = g.Key, Count = g.Count() });
-
-            if (result == null)
+            if (likePosts == null)
             {
                 return NotFound();
             }
 
-            return result as Object;
+            return Content(likePosts.Count().ToString());
         }
 
         // GET: api/Posts
@@ -141,9 +156,18 @@ namespace Websitedangtintimkiemnhatro.Controllers
                     throw;
                 }
             }
-            var postNew = await _context.Posts.Include(a => a.User).Where(a => a.Id == post.Id).FirstOrDefaultAsync();
-            return postNew; //Quỳnh sửa
-            //return CreatedAtAction("GetPost", new { id = post.Id }, post);
+            List<Comment> listcomments = new List<Comment>();
+            var postNew = await _context.Posts.Include(a => a.User).Where(a => a.Id == post.Id).Select(c => new Post
+            {
+                Id = c.Id,
+                PostUser = c.PostUser,
+                CreateDate = c.CreateDate,
+                User = _context.Users.Select(c => new User { Id = c.Id, HovaTen = c.HovaTen, CreatedDate = c.CreatedDate, LastLogOnDate = c.LastLogOnDate , Email = c.Email, Facebook = c.Facebook, UserImage = c.UserImage}).FirstOrDefault(),
+                Comments = _context.Comments.Include(a => a.User).Where(a => a.PostId == c.Id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, PostId = c.PostId, User = c.User, ParentCommentId = c.ParentCommentId, ChildComments = listcomments }).Take(2).ToList()
+            }).Where(a => a.Id == post.Id).FirstOrDefaultAsync();
+            //var postNew = await _context.Posts.Include(a => a.User).Where(a => a.Id == post.Id).FirstOrDefaultAsync();
+            return postNew; 
+
         }
 
         private bool PostExists(int id)

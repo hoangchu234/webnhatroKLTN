@@ -47,6 +47,17 @@ export class PostService {
       catchError(error => of([]))
     );
   }*/
+
+  public getPostById = async (id: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Posts/GetPost"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   public getMorePost = async (number: number, skipNumber: number) => {
     try {
       const url = `${this.urlAPI + "/api/Posts/GetPosts"}/${number}/${skipNumber}`;
@@ -93,18 +104,20 @@ export class PostService {
   }
 
 
-  public getLikePost = async () => {
+  public getLikePost = async (id: number) => {
     try {
-      return await this.http.get(this.urlAPI + "/api/Posts/GetCountLikePost").toPromise();
+      const url = `${this.urlAPI + "/api/Posts/GetCountLikePost"}/${id}`;
+      return await this.http.get(url).toPromise();
     }
     catch (e) {
       console.log(e);
     }
   }
 
-  public getLikeComment = async () => {
+  public getLikeComment = async (id: number) => {
     try {
-      return await this.http.get(this.urlAPI + "/api/Comments/GetCountLikeComment").toPromise();
+      const url = `${this.urlAPI + "/api/Comments/GetCountLikeComment"}/${id}`;
+      return await this.http.get(url).toPromise();
     }
     catch (e) {
       console.log(e);
@@ -176,6 +189,16 @@ export class PostService {
   public getCountCommentPost = async (id: string) => {
     try {
       const url = `${this.urlAPI + "/api/Comments/CountCommentPost"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  public getCountCommentParent = async (id: string) => {
+    try {
+      const url = `${this.urlAPI + "/api/Comments/CountCommentParent"}/${id}`;
       return await this.http.get(url).toPromise();
     }
     catch (e) {

@@ -17,12 +17,11 @@ export class SlidebarAdminComponent implements OnInit {
   public username:string;
   admin:string;
   //currentAccount: Account;
+  image = "";
   employee:Employee;
   job:string;
 
   account: Account;
-
-  checkImage = false;
   constructor(private employeeService:EmployeesService,
     private location:Location,
     private router: Router,
@@ -31,7 +30,10 @@ export class SlidebarAdminComponent implements OnInit {
       
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
       if(this.authenticationService.currentAccountValue.employee.employeeImage != null){
-        this.checkImage = true;
+        this.image = this.authenticationService.currentAccountValue.employee.employeeImage
+      }
+      else{
+        this.image = "./../../assets/images/blog_3.jpg";
       }
       this.account = this.authenticationService.currentAccountValue;
       this.job = this.authenticationService.currentAccountValue.roleId;
