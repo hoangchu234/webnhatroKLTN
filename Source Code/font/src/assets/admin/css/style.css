@@ -2201,7 +2201,7 @@ pre {
   .container, .container-sm {
     max-width: 540px; } }
 
-@media (min-width: 768px) {
+@media (min-width: 668px) {
   .container, .container-sm, .container-md {
     max-width: 720px; } }
 
@@ -5279,9 +5279,9 @@ input[type="button"].btn-block {
       border-color: transparent; }
   .nav-tabs .nav-link.active,
   .nav-tabs .nav-item.show .nav-link {
-    color: #343a40;
-    background-color: #ffffff;
-    border-color: #ebedf2 #ebedf2 #ffffff; }
+    color: #000000;
+    border-top:3px solid rgb(0, 0, 0);
+    border-color: #000000 #e6e6e6 #ffffff; }
   .nav-tabs .dropdown-menu {
     margin-top: -1px;
     border-top-left-radius: 0;

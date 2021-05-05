@@ -2,18 +2,18 @@
 <div class="form" style="margin-top: 130px;">
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist" style="text-align: center;">
-      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" style="height: 60px;width:260px;border-bottom: 0px;font-size: 15px;font-weight: bold;padding: 15px;">Đăng nhập</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" style="height: 60px;width:260px;border-bottom: 0px;font-size: 15px;font-weight: bold;padding: 15px;">Đăng ký</a>
+      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" style="height: 60px;width:240px;border-bottom: 0px;font-size: 15px;font-weight: bold;padding: 20px;">Đăng nhập</a>
+      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" style="height: 60px;width:230px;border-bottom: 0px;font-size: 15px;font-weight: bold;padding: 20px;">Đăng ký</a>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="border: 1px solid #ebedf2;border-top: none;">
       
-        <div class="card ">
+        <div style="margin-top: 1px;border: 1px solid rgb(240, 240, 240);" >
           <div class="card-body" >
-            <form class="form-signin"style="margin-top: -15px;" #form="ngForm" (ngSubmit)="login()">
+            <form class="form-signin"style="margin-top: -5px;" #form="ngForm" (ngSubmit)="login()">
               <a style="margin: 15px;font-size: 15px;">Số điện thoại</a>
-              <div class="form-label-group" style="padding-left: 20px;">
+              <div class="form-label-group" style="padding-left: 20px">
                 <input  type="email" id="inputEmail" name="phone"  [(ngModel)]="phone" class="form-control" required autofocus style="color: black;margin-top: 5px;">
               </div>
               <a style="margin: 15px;font-size: 15px;" >Mật khẩu</a>
@@ -22,49 +22,51 @@
               </div>
 
               <div class="custom-control custom-checkbox mb-3" style="margin-left: 10px;" >
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <input type="checkbox" class="custom-control-input" id="customCheck1" style="margin-top: 5px;">
                 <label class="custom-control-label" for="customCheck1"  style="color: black;margin-left: 10px;font-size: 15px;">Nhớ mật khẩu</label>
               </div>
+              
               <div>
-                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"  style="background-color: #007bff;color: white;margin-top: 30px;margin-left: 5px;">Đăng nhập</button>
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"  style="background-color: #00deb6;color: white;margin-top: 20px;margin-left: 5px;width: 406px;border: none;">Đăng nhập</button>
               </div>
-              <br>
-              <div style="margin-top: 80px;">
-                Bạn chưa có tài khoản<a style="color: blue;font-size: 15px;">Tạo tài khoản</a>
-              </div>
-              <hr class="my-4">
-
+              <p class="divider-text" style="margin-top:20px" >
+                <span class="bg-light">HOẶC</span>
+            </p>
+            <p class="text-center">Bắt đầu với tài khoản miễn phí</p>
+            <p >
               <app-sociallogin></app-sociallogin>
+            </p>
+
             </form>
           </div>
         </div>
     </div>
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="border: 1px solid #ebedf2;border-top: none;">
-      <div >
-        <article class="card-body mx-auto" style="max-width: 450px;">
-          <div [hidden]="user" style="padding-top: 20px;">
+      <div>
+        <article class="card-body" style="margin-top: 1px;border: 1px solid rgb(240, 240, 240);" >
+          <div [hidden]="user" style="margin-top: 10px;" >
             <form class="form-signin" style="margin-top: -15px;"  #form="ngForm" (ngSubmit)="onSubmit()">
               <a style="margin: 15px;font-size: 15px;">Họ và tên</a>
-              <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;">
+              <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
                 <input type="email" id="inputEmail" class="form-control" required autofocus style="color: black;" name="Name" [(ngModel)]="name">
               </div>
               <a style="margin: 15px;font-size: 15px;">Số điện thoại</a>
-              <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;">
+              <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
                 <input type="phone" id="inputPassword" class="form-control" required style="color: black;" [(ngModel)]="phone" name="Phone">
               </div>
               <a style="margin: 15px;font-size: 15px;">Tạo mật khẩu</a>
-              <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;">
+              <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
                 <input type="password" id="inputEmail" class="form-control" required autofocus style="color: black;" [(ngModel)]="password" name="password">
               </div>
               <a style="margin: 15px;font-size: 15px;" >Nhập lại mật khẩu</a>
-              <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;">
+              <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
                 <input type="password" id="inputPassword" class="form-control" required style="color: black;" [(ngModel)]="confirmPassword" name="confirmPassword">
               </div>
-              <div id="recaptcha-container"></div>
         <!--capcha-->
-              <div class="form-group" style="padding-top: 20px;">
-                <button type="submit" name="button_1" class="btn btn-primary btn-block btn-create" > Tạo mật khẩu  </button>
+              <div class="form-group" style="padding-top: 0px;">
+                <button type="submit" name="button_1" class="btn btn-create" style="width:406px;margin-left:5px;background-color: #00deb6;" > Tạo mật khẩu  </button>
               </div>
+              
             </form>
 
         </div>
@@ -89,14 +91,7 @@
             </div>
           </form>
         </div>
-          <p class="divider-text" >
-                <span class="bg-light">HOẶC</span>
-            </p>
-          <p class="text-center">Bắt đầu với tài khảon miễn phí</p>
-          <p style="margin-left: -20px;">
-            <app-sociallogin></app-sociallogin>
-          </p>
-
+          
 
         </article>
         </div> <!-- card.// -->

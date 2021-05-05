@@ -1965,7 +1965,7 @@ btn-link
 .tab-outline .nav-tabs .nav-link:focus,
 .nav-tabs .nav-link:hover {
     border-color: transparent;
-    color: #5969ff !important;
+    color: #000000 !important;
 }
 
 .tab-outline .tab-content {
