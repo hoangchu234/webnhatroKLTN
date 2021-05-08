@@ -8,9 +8,7 @@ import { Account } from  '../../../model/Account';
 import { Subject} from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PaypalComponent } from '../publish/paypal/paypal.component';
-import { DialogEditMotelComponent } from './dialog-edit-motel/dialog-edit-motel.component';
-import { DialogDetailMotelPublishComponent } from '../../loginadmin/dialog-detail-motel-publish/dialog-detail-motel-publish.component';
-import { DialogExtendMotelsComponent } from './dialog-extend-motels/dialog-extend-motels.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export interface Type{
   id:number;
@@ -49,7 +47,7 @@ export class MagementPublishMotelComponent implements OnInit {
 
   checkStatus : Array<boolean> = [];
   checkStatusExtend : Array<boolean> = [];
-  constructor(public dialog: MatDialog,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
+  constructor(private router: Router,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     this.getMotels();
     this.getNewTypes();
@@ -60,6 +58,17 @@ export class MagementPublishMotelComponent implements OnInit {
     this.status = "Tất cả"
     
   }
+
+  public linkRouterChiTiet(name, id) {
+    //this.router.navigate( [{name: name, id: id}]);
+    this.router.navigate( ['/user/chi-tiet',name,id]);
+  }
+
+  public linkRouterGiaHan(name, id) {
+    //this.router.navigate( [{name: name, id: id}]);
+    this.router.navigate( ['/user/gia-han-tin',name,id]);
+  }
+  
 
   public handlePageChange(event) {
     this.page = event;
@@ -144,29 +153,29 @@ export class MagementPublishMotelComponent implements OnInit {
 
 
 
-  public openDialogUser(motel:Motel): void {
-    const dialogRef = this.dialog.open(DialogEditMotelComponent, {
-      width: '1000px',
-      height:'1000px',
-      data: motel
-     });
+  // public openDialogUser(motel:Motel): void {
+  //   const dialogRef = this.dialog.open(DialogEditMotelComponent, {
+  //     width: '1000px',
+  //     height:'1000px',
+  //     data: motel
+  //    });
  
-     dialogRef.afterClosed().subscribe((result: Motel) => {
+  //    dialogRef.afterClosed().subscribe((result: Motel) => {
       
          
-     });  
-   }
+  //    });  
+  //  }
 
-  public openDialogExtend(motel:Motel): void {
-    const dialogRef = this.dialog.open(DialogExtendMotelsComponent, {
-     width: '1000px',
-     height:'1000px',
-     data: motel
-    });
+  // public openDialogExtend(motel:Motel): void {
+  //   const dialogRef = this.dialog.open(DialogExtendMotelsComponent, {
+  //    width: '1000px',
+  //    height:'1000px',
+  //    data: motel
+  //   });
 
-    dialogRef.afterClosed().subscribe((result: Motel) => {
+  //   dialogRef.afterClosed().subscribe((result: Motel) => {
   
         
-    });
-  }
+  //   });
+  // }
 }

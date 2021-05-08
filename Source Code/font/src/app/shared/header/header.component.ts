@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit {
   // Name4 = "cho-thue-mat-bang";
   // Name5 = "tim-nguoi-o-ghep";
 
-  checkImage = false;
   checkLogin = false;
 
   checkreply = false;
@@ -46,9 +45,6 @@ export class HeaderComponent implements OnInit {
       if(this.authenticationService.currentAccountValue){
         if(this.authenticationService.currentAccountValue.user){
           this.getReply();
-          if(this.authenticationService.currentAccountValue.user.userImage != null){
-            this.checkImage = true;
-          }
           this.checkLogin = true;
         }
       }      
@@ -56,12 +52,18 @@ export class HeaderComponent implements OnInit {
 
   async ngOnInit(): Promise<void> { 
     this.types = await this.getTypes();
-    if(this.authenticationService.currentAccountValue){
-      this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+    try{
+      if(this.authenticationService.currentAccountValue){
+        this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+      }
+      else{
+        this.userImage = "../../../assets/images/blog_3.jpg"
+      }
     }
-    else{
-      this.userImage = "../../../assets/images/blog_3.jpg"
+    catch(err){
+
     }
+   
   }
   
   onClickNarbarURL(id){
@@ -168,7 +170,7 @@ export class HeaderComponent implements OnInit {
     catch(error){
       var role = Number(this.authenticationService.currentAccountValue.roleId);
       if(role == 1){
-        this.router.navigate(['/user/danh-muc']);
+        this.router.navigate(['/user/thong-tin-vi-tri']);
       }
       else{
         this.router.navigate(['/login']);

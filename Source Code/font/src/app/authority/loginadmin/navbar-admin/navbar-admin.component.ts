@@ -13,12 +13,15 @@ export class NavbarAdminComponent implements OnInit {
   username:string;
   //currentAccount: Account;
 
-  checkImage = false;
+  image = "";
   constructor(private router: Router,
     private authenticationService: AuthenticationService) { 
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
       if(this.authenticationService.currentAccountValue.employee.employeeImage != null){
-        this.checkImage = true;
+        this.image = this.authenticationService.currentAccountValue.employee.employeeImage;
+      }
+      else{
+        this.image = "../../../assets/images/blog_3.jpg";
       }
     }
 

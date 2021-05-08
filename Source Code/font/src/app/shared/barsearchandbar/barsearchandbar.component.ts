@@ -67,9 +67,22 @@ export class BarsearchandbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setData();
-    this.firstTime();
-    this.enterSearch();
+    try{
+      var link = this.route.url.toString().split("/");
+      if(link[2] == "chi-tiet"){
+
+      }
+      else{
+        this.setData();
+        this.firstTime();
+        this.enterSearch();
+      }
+
+    }
+    catch(err){
+
+    }
+
     
 
 /*

@@ -7,8 +7,8 @@ namespace Websitedangtintimkiemnhatro.Services
 {
     public class SMSoptions
     {
-        public string SMSAccountIdentification { get; set; }
-        public string SMSAccountPassword { get; set; }
-        public string SMSAccountFrom { get; set; }
+        public string To { get; set; }
+        public string From { get; set; }
+        public string Message { get; set; }
     }
 }

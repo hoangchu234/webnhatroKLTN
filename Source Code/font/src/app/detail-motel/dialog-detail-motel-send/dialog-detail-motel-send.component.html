@@ -1,9 +1,9 @@
 <p style="text-align: center;">Liên hệ người thuê nhà</p>
 <div style="margin-left: 25px;">
-<input style="margin-top: 20px;margin-bottom: 20px;" type="name" [(ngModel)]="name"  name="NnameMotel" class="form-control"  id="exampleFormControlInput1" placeholder="Nhập họ và tên">
-<input style="margin-top: 20px;margin-bottom: 20px;" type="phone" [(ngModel)]="phone"  name="phone" class="form-control"  id="exampleFormControlInput1" placeholder="Nhập số điện thoại">
-<input style="margin-top: 20px;margin-bottom: 20px;" type="email" [(ngModel)]="email"  name="email" class="form-control"  id="exampleFormControlInput1" placeholder="Email">
-<textarea autocomplete="off"  cols="20" type="decription"  [(ngModel)]="decription" name="decription" class="form-control"  id="exampleFormControlInput1" placeholder="Thông tin bạn muốn biết thêm" required="required" rows="2" style="margin-top: 20px;margin-bottom: 20px; width: 330px; height: 124px;"></textarea>
+<input style="margin-top: 20px;margin-bottom: 20px;" type="name" [(ngModel)]="name" ngDefaultControl name="NnameMotel" class="form-control"  id="exampleFormControlInput1" placeholder="Nhập họ và tên">
+<input style="margin-top: 20px;margin-bottom: 20px;" type="phone" [(ngModel)]="phone" ngDefaultControl name="phone" class="form-control"  id="exampleFormControlInput1" placeholder="Nhập số điện thoại">
+<input style="margin-top: 20px;margin-bottom: 20px;" type="email" [(ngModel)]="email" ngDefaultControl name="email" class="form-control"  id="exampleFormControlInput1" placeholder="Email">
+<textarea autocomplete="off"  cols="20" type="decription"  [(ngModel)]="decription" ngDefaultControl name="decription" class="form-control"  id="exampleFormControlInput1" placeholder="Thông tin bạn muốn biết thêm" required="required" rows="2" style="margin-top: 20px;margin-bottom: 20px; width: 330px; height: 124px;"></textarea>
 </div>
 <div style="text-align: center;">
 <button class="btn btn-warning" style="margin-top: 20px;margin-bottom: 20px;margin-right: 20px;" type="submit" (click)="save()">Gửi</button>

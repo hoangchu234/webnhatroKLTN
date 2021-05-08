@@ -30,7 +30,6 @@ export class DialogEditUserComponent implements OnInit {
  }
 
  public handleFileInput(event) {
-   console.log(event.target.files.item(0));
 
    var files: FileList;
    files = event.target.files;
@@ -50,7 +49,6 @@ export class DialogEditUserComponent implements OnInit {
     var nameUserImage = "userimages"
     var filePath = `${nameUserImage}/${this.image.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
     const fileRef = this.storage.ref(filePath);
-    console.log(filePath);
     this.storage.upload(filePath, this.image).snapshotChanges().pipe(
       finalize(() => {
         fileRef.getDownloadURL().subscribe((url) => {
@@ -66,7 +64,6 @@ export class DialogEditUserComponent implements OnInit {
           user.userImage = url;
           user.accountid = this.data.account.id;
   
-          console.log(user);
           this.userService.updateUser(user).subscribe(update => {
             alert("Lưu thành công")
 
@@ -88,7 +85,6 @@ export class DialogEditUserComponent implements OnInit {
     user.userImage = this.data.userImage;
     user.accountid = this.data.account.id;
 
-    console.log(user);
     this.userService.updateUser(user).subscribe(update => {
       alert("Lưu thành công")
 

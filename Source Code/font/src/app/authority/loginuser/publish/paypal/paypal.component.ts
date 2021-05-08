@@ -173,7 +173,6 @@ export class PaypalComponent implements OnInit {
           Finall.push(image);
         }
         this.saveNewMotel.images = Finall;
-        console.log(Finall);
         this.motelService.postMotel(this.saveNewMotel).subscribe(async newMotel => {
           this.resultSaveMotel = newMotel;
           var bill = new Bill();
@@ -183,7 +182,7 @@ export class PaypalComponent implements OnInit {
 
           //this.billService.addbill(bill).subscribe(data => console.log(data))
         });
-
+        localStorage.removeItem(StorageService.motelStorage)
         alert('Đăng tin thành công');
         
       }

@@ -17,7 +17,7 @@
             <label for="exampleFormControlInput1"><b>Loại hình nhà ở</b></label>
             <div style="border: 1px solid #f1f1f1;padding:5px;margin-left: -20px;">
               <div class="form-check" style="height: 30px;padding: 10px;" *ngFor='let liveTypes of liveTypes'>
-                <input name="liveType"  [(ngModel)]="liveType" class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 5px;text-align: center;" type="radio" name="liveTypes.name" id="liveTypes.id" [value]="liveTypes.id" >
+                <input name="liveType"  [(ngModel)]="liveType" ngDefaultControl class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 5px;text-align: center;" type="radio" name="liveTypes.name" id="liveTypes.id" [value]="liveTypes.id" >
                 <label class="form-check-label" for="exampleRadios1" style="margin-left: 20px;margin-top: 5px;">
                  {{liveTypes.name}}
                 </label>

@@ -34,16 +34,21 @@ export class MagementEmployeeComponent implements OnInit {
       }
     })
     */
-   this.employees = await this.employeesService.getEmployees() as Employee[];
-   for(let i=0; i<this.employees.length;i++){
-      if(this.employees[i].employeeImage != null)
-      {
-        this.checkImage[i] = true;
-      }
-      else{
-        this.checkImage[i] = false;
-      }
-    }
+   try{
+    this.employees = await this.employeesService.getEmployees() as Employee[];
+    for(let i=0; i<this.employees.length;i++){
+       if(this.employees[i].employeeImage != null)
+       {
+         this.checkImage[i] = true;
+       }
+       else{
+         this.checkImage[i] = false;
+       }
+     }
+   }
+   catch(err){
+     
+   }
   }
 
   onselecte(employee:Employee): void{

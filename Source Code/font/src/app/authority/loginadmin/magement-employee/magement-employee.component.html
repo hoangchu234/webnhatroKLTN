@@ -1,11 +1,46 @@
-<div class="container-fluid" style="margin-top: 20px;">
-
-    <!-- Page Heading -->
+<div class="content-wrapper">
+  <div>
+    <h3 class="page-title"> Quản lý nhân viên</h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Quản lý</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Quản lý nhân viên</li>
+      </ol>
+    </nav>
+  </div>
+  <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800 font" style="margin-left: 35px;font-weight: bold;">QUẢN LÝ NHÂN VIÊN </h1>
+  </div> -->
+  <div class="row">
+    <div class="col-md-9"><app-employee-detail [employee] = "selectEmployee"></app-employee-detail></div>
+    <div class="col-md-3">
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item nav-profile" *ngFor="let employee of employees; let i=index">
+            <a class="nav-link" (click)="onselecte(employee)">
+              <div class="nav-profile-image">
+                <img *ngIf="checkImage[i]" src="{{currentAccount.employee.employeeImage}}" alt="profile">
+                <img *ngIf="!checkImage[i]" src="../../../assets/images/blog_3.jpg" alt="profile">
+                <span class="login-status online"></span>
+               
+              </div>
+              <div class="nav-profile-text d-flex flex-column">
+                <span class="font-weight-bold mb-2">{{employee.hovaTen}}</span>
+                <span class="text-secondary text-small">{{employee.account.role.roleName}}</span>
+              </div>
+              <i *ngIf="!employee.account.isHD" class="mdi mdi-bookmark-check text-warning nav-profile-badge"></i>
+              <i *ngIf="employee.account.isHD" class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- <div class="container-fluid" style="margin-top: 20px;">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800 font" style="margin-left: 35px;font-weight: bold;">QUẢN LÝ NHÂN VIÊN </h1>
-    </div>
-
-    <!-- Content Row -->
+    </div> 
     <div class="row">
 
       <div class="col-md-9"><app-employee-detail [employee] = "selectEmployee"></app-employee-detail></div>
@@ -18,7 +53,7 @@
                   <img *ngIf="checkImage[i]" src="{{currentAccount.employee.employeeImage}}" alt="profile">
                   <img *ngIf="!checkImage[i]" src="../../../assets/images/blog_3.jpg" alt="profile">
                   <span class="login-status online"></span>
-                  <!--change to offline or busy as needed-->
+                 
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
                   <span class="font-weight-bold mb-2">{{employee.hovaTen}}</span>
@@ -33,7 +68,8 @@
       </div>
 
 
-    <!-- Content Row -->
+ 
 
 
-  </div>
+    </div>
+</div> -->

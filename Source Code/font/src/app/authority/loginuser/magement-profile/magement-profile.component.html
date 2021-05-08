@@ -2,8 +2,10 @@
 <div class="font" >
     <div class="super_container" style="margin-top:15px;">
       <!--Thanh tìm kiếm-->
-  
-      <app-tophead [name]="nametophead"></app-tophead>
+      <div class="container-fluid font" style="height: 50px;background-color:lightgrey;color: black;font-size: 13px;">
+        <div style="padding-top:15px;"><span style="margin-left: 40px;">Motel <div class="fa  fa-chevron-right" ></div><b style="margin-left:15px">Home</b> <div class="fa  fa-chevron-right" style="margin-left: 10px;margin-right: 15px;"></div></span></div>
+      </div>
+
       <div style="text-align: center;"><h2 style="margin-top: 10px;" ><b style="font-size: 22px; color: black;margin-top: -25px;">TRANG QUẢN LÝ THÔNG TIN CÁ NHÂN</b></h2></div>
       <!--kết thúc thanh tìm kiếm -->
       <div class="container" style="margin-bottom: 20px;margin-top: 20px;">
@@ -48,7 +50,7 @@
               <div class="container-fluid" style="padding-top: 20px;">
                 <div class="row" style="margin-bottom: 15px;">
                       <div *ngFor="let motel of motels | paginate: { itemsPerPage: 4, currentPage: page }">
-                         <div class="col-md-12" style="width: 270px;border-radius: 5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);margin:5PX;margin-bottom: 25px;">
+                         <div class="col-md-12" (click)="linkRouterChiTiet(motel.title, motel.id)" style="width: 270px;border-radius: 5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);margin:5PX;margin-bottom: 25px;">
                             <div class="img-box1">
                               <img [src]="motel.images[0].imageMotel"  class="img-fluid" alt="" style="height: 200px;width: 100%;border-radius: 5px;margin-top: 10px;">
                             </div>

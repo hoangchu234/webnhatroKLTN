@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogExtendMotelsComponent } from './dialog-extend-motels.component';
+import { DetailMotelPublishComponent } from './detail-motel-publish.component';
 
-describe('DialogExtendMotelsComponent', () => {
-  let component: DialogExtendMotelsComponent;
-  let fixture: ComponentFixture<DialogExtendMotelsComponent>;
+describe('DetailMotelPublishComponent', () => {
+  let component: DetailMotelPublishComponent;
+  let fixture: ComponentFixture<DetailMotelPublishComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogExtendMotelsComponent ]
+      declarations: [ DetailMotelPublishComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogExtendMotelsComponent);
+    fixture = TestBed.createComponent(DetailMotelPublishComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

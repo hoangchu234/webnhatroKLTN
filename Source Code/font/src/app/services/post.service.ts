@@ -40,6 +40,24 @@ export class PostService {
     );
   }
 
+  public deleteLike(idPost: number,idUser: number): Observable<any>{
+    const url = `${this.urlAPI + "/api/LikeCommentPosts/DeleteLikeCommentPost"}/${idPost}/${idUser}`;
+    return this.http.delete<LikeCommentPost>(url, httpOptions).pipe(
+      tap(deleteLike => deleteLike),
+      catchError(error => of(null))
+    );
+
+  }
+
+  public deleteLikeComment(idComment: number,idUser: number): Observable<any>{
+    const url = `${this.urlAPI + "/api/LikeCommentPosts/DeleteLikeCommentPostver2"}/${idComment}/${idUser}`;
+    return this.http.delete<LikeCommentPost>(url, httpOptions).pipe(
+      tap(deleteLike => deleteLike),
+      catchError(error => of(null))
+    );
+
+  }
+
   /*public getPost(id: number, skipNumber: number): Observable<any>{
     const url = `${this.urlAPI + "/api/Posts/GetPosts"}/${id}/${skipNumber}`;
     return this.http.get<Post[]>(url).pipe(
@@ -47,6 +65,26 @@ export class PostService {
       catchError(error => of([]))
     );
   }*/
+
+  public getCheckLike = async (idPost: number, idUser: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/LikeCommentPosts/GetCheckLikeOneTime"}/${idPost}/${idUser}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  public getCheckLikeComment = async (idComment: number, idUser: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/LikeCommentPosts/GetCheckLikeOneTimever2"}/${idComment}/${idUser}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 
   public getPostById = async (id: number) => {
     try {

@@ -83,6 +83,21 @@ export class AuthenticationService {
         );
     }
 
+    // public loginPhone = (account: Account) => {
+    //     var path = `${this.urlAPI}/api/Accounts/Signin`;
+    //     return this.http.post<any>(path, account, httpOptions).toPromise() as any;
+    // }
+
+    // loginPhone = async (account: Account) => {
+    //     try {
+    //         var path = this.urlAPI + "/api/Accounts/Signin";
+    //         return await this.http.post(path, account).toPromise();
+    //     }
+    //     catch (e) {
+    //         console.log(e);
+    //     }
+    //   }
+
     public loginFacebook = (account: Account) => {
         var path = `${this.urlAPI}/api/Accounts/Signinsocial`;
         return this.http.post<any>(path, account, httpOptions).toPromise() as any;
@@ -175,5 +190,15 @@ export class AuthenticationService {
           tap(updateAccount => updateAccount),
           catchError(error => of(new Account()))
         );
-      }
+    }
+
+    public getRole = async () => {
+        try {
+          const url = this.urlAPI + '/api/Users/GetRoles';
+          return await this.http.get(url).toPromise();
+        }
+        catch (error) {
+          console.log(error);
+        }
+    }
 }

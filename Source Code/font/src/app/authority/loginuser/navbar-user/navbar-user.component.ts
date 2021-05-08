@@ -5,6 +5,8 @@ import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular
 import { ReplyService } from 'src/app/services/reply.service';
 import { Reply } from 'src/app/model/Reply';
 import { MotelService } from 'src/app/services/motel.service';
+import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
+import { NewType } from 'src/app/model/NewType';
 
 @Component({
   selector: 'app-navbar-user',
@@ -19,15 +21,16 @@ export class NavbarUserComponent implements OnInit {
   public username:string;
   //currentAccount: Account;
 
-  Name1 = "cho-thue-nha-tro";
-  Name2 = "nha-cho-thue";
-  Name3 = "cho-thue-can-ho";
-  Name4 = "cho-thue-mat-bang";
-  Name5 = "tim-nguoi-o-ghep";
+  // Name1 = "cho-thue-nha-tro";
+  // Name2 = "nha-cho-thue";
+  // Name3 = "cho-thue-can-ho";
+  // Name4 = "cho-thue-mat-bang";
+  // Name5 = "tim-nguoi-o-ghep";
+  userImage;
 
   name: string;
-  checkImage = false;
   checkLogin = false;
+  types: NewType[] = [];
   constructor(private activeRoute: ActivatedRoute,
     private replyService:ReplyService,
     private router: Router,
@@ -36,45 +39,70 @@ export class NavbarUserComponent implements OnInit {
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
       if(this.authenticationService.currentAccountValue){
         this.getReply();
-        if(this.authenticationService.currentAccountValue.user.userImage != null){
-          this.checkImage = true;
-        }
+        // if(this.authenticationService.currentAccountValue.user.userImage != null){
+        //   this.checkImage = true;
+        // }
         this.checkLogin = true;
       }
       
     }
 
   ngOnInit(): void { 
+    try{
+      if(this.authenticationService.currentAccountValue){
+        this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+      }
+      else{
+        this.userImage = "../../../assets/images/blog_3.jpg"
+      }
+    }
+    catch(err){
 
-  }
-  
-  public callSetLocalStorage(){
-    if(localStorage.getItem('searchtext') != null){
-      localStorage.setItem('searchtext', "NULL")
     }
   }
+  
+  onClickURL(link){
+    window.location.replace(link);
+    //this.router.navigate([link]);
 
-  public onClickNewTypeOne(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/cho-thue-nha-tro']);
   }
 
-  public onClickNewTypeTwo(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/nha-cho-thue']);
+  onClickNarbarURL(id){
+    var type = this.types.find(a => a.id == id) as NewType;
+    var linkURL = '/home' + '/' + RemoveVietnameseTones.removeVietnameseTones(type.name)
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([linkURL]);
+      
+    }); 
   }
-  public onClickNewTypeThree(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/cho-thue-can-ho']);
-  }
-  public onClickNewTypeFour(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/cho-thue-mat-bang']);
-  }
-  public onClickNewTypeFive(){
-    this.callSetLocalStorage();
-    this.router.navigate(['/home/tim-nguoi-o-ghep-cap']);
-  }
+  
+  // public callSetLocalStorage(){
+  //   if(localStorage.getItem('searchtext') != null){
+  //     localStorage.setItem('searchtext', "NULL")
+  //   }
+  // }
+
+  // public onClickNewTypeOne(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/cho-thue-nha-tro']);
+  // }
+
+  // public onClickNewTypeTwo(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/nha-cho-thue']);
+  // }
+  // public onClickNewTypeThree(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/cho-thue-can-ho']);
+  // }
+  // public onClickNewTypeFour(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/cho-thue-mat-bang']);
+  // }
+  // public onClickNewTypeFive(){
+  //   this.callSetLocalStorage();
+  //   this.router.navigate(['/home/tim-nguoi-o-ghep-cap']);
+  // }
 
   get isUser() {
     try{
@@ -124,7 +152,7 @@ export class NavbarUserComponent implements OnInit {
     catch(error){
       var role = Number(this.authenticationService.currentAccountValue.roleId);
       if(role == 1){
-        this.router.navigate(['/user/danh-muc']);
+        this.router.navigate(['/user/thong-tin-vi-tri']);
       }
       else{
         this.router.navigate(['/login']);

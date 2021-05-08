@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Twilio.Clients;
 using Websitedangtintimkiemnhatro.Hubs;
 using Websitedangtintimkiemnhatro.Models;
 using Websitedangtintimkiemnhatro.Services;
@@ -46,12 +47,11 @@ namespace Websitedangtintimkiemnhatro
                     );
             });
 
-            services.AddSignalR();
+            //services.AddHttpClient<ITwilioRestClient, CustomTwilioClient>(client =>
+            //    client.DefaultRequestHeaders.Add("X-Custom-Header", "HttpClientFactory-Sample"));
+            services.AddHttpClient<ITwilioRestClient, CustomTwilioClient>();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-            services.Configure<SMSoptions>(Configuration);
+            services.AddSignalR();
 
             services.AddControllersWithViews()
                     .AddNewtonsoftJson(options =>

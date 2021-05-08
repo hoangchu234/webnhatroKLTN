@@ -21,7 +21,6 @@ export class SlidebarAdminComponent implements OnInit {
   employee:Employee;
   job:string;
 
-  account: Account;
   constructor(private employeeService:EmployeesService,
     private location:Location,
     private router: Router,
@@ -30,18 +29,20 @@ export class SlidebarAdminComponent implements OnInit {
       
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
       if(this.authenticationService.currentAccountValue.employee.employeeImage != null){
-        this.image = this.authenticationService.currentAccountValue.employee.employeeImage
+        this.image = this.authenticationService.currentAccountValue.employee.employeeImage;
       }
       else{
         this.image = "./../../assets/images/blog_3.jpg";
       }
-      this.account = this.authenticationService.currentAccountValue;
-      this.job = this.authenticationService.currentAccountValue.roleId;
+      this.employee = this.authenticationService.currentAccountValue.employee;
+
     }
 
-  ngOnInit(): void {
-   
-    
+  async ngOnInit(): Promise<void> {
+    var roles: any[] = [];
+    roles = await this.authenticationService.getRole() as any[];
+    var index = roles.findIndex(a => a.id === this.authenticationService.currentAccountValue.roleId);
+    this.job = roles[index].roleName;
   }
 
   get isAdmin() {

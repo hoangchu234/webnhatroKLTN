@@ -16,6 +16,8 @@ import { District } from 'src/app/model/District';
 import { Street } from 'src/app/model/Street';
 import { StreetService } from 'src/app/services/street.service';
 import { StorageService } from '../../../../storage.service';
+import { NewType } from 'src/app/model/NewType';
+import { TypeofnewService } from 'src/app/services/newstype.service';
 
 
 @Component({
@@ -40,6 +42,9 @@ export class ThongTinCoBanComponent implements OnInit {
   streets: Street [] = [];
   street:Street;
 
+  newTypes: NewType [];
+  newType: NewType;
+  
   phoneMotel;
 
   motelprevous:Motel;
@@ -47,10 +52,11 @@ export class ThongTinCoBanComponent implements OnInit {
   isWarning = false;
 
   //currentAccount:Account;
-  constructor(public streetService:StreetService,public dictrictService:DictrictService,private authenticationService: AuthenticationService,public dialog: MatDialog,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,private cityService: CitiesService, private provinceService: ProvincesService,public motelService:MotelService) {
+  constructor(public typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,private authenticationService: AuthenticationService,public dialog: MatDialog,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,private cityService: CitiesService, private provinceService: ProvincesService,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
- 
+
+    this.getNewTypes();
   }
 
   async ngOnInit(): Promise<void> {
@@ -63,22 +69,6 @@ export class ThongTinCoBanComponent implements OnInit {
 
       ///
       this.returnCity();
-
-      /*this.provinceService.getProvincesByCity(Number(this.motelprevous.cityId)).subscribe((data) => {
-        this.provinces.push(data.find(a => a.id == this.motelprevous.provinceId));
-        this.province = data.find(a => a.id == this.motelprevous.provinceId);
-        for (let i = 0; i < data.length; i++) {
-          if(this.motelprevous.provinceId == data[i].id){
-
-          }
-          else{
-            let province = new Province();
-            province.id = data[i].id;
-            province.name = data[i].name;
-            this.provinces.push(province);
-          }           
-        }
-      })*/
       const province = await this.provinceService.getProvincesByCity(Number(this.motelprevous.cityId)) as Province[];
       this.provinces.push(province.find(a => a.id == this.motelprevous.provinceId));
         this.province = province.find(a => a.id == this.motelprevous.provinceId);
@@ -94,21 +84,7 @@ export class ThongTinCoBanComponent implements OnInit {
           }           
         }
 
-      /*this.dictrictService.getDistrictByProvince(Number(this.motelprevous.provinceId)).subscribe((data) => {
-        this.districts.push(data.find(a => a.id == this.motelprevous.districtId));
-        this.district = data.find(a => a.id == this.motelprevous.districtId);
-        for (let i = 0; i < data.length; i++) {
-          if(this.motelprevous.districtId == data[i].id){
-
-          }
-          else{
-            let district = new District();
-            district.id = data[i].id;
-            district.name = data[i].name;
-            this.districts.push(district);
-          }           
-        }
-      })*/
+     
       const district = await this.dictrictService.getDistrictByProvince(Number(this.motelprevous.provinceId)) as District[];
       this.districts.push(district.find(a => a.id == this.motelprevous.districtId));
         this.district = district.find(a => a.id == this.motelprevous.districtId);
@@ -128,21 +104,7 @@ export class ThongTinCoBanComponent implements OnInit {
 
       }
       else{
-        /*this.streetService.getStreetByProvince(Number(this.motelprevous.provinceId)).subscribe((data) => {
-          this.streets.push(data.find(a => a.id == this.motelprevous.streetId));
-          this.street = data.find(a => a.id == this.motelprevous.streetId);
-          for (let i = 0; i < data.length; i++) {
-            if(this.motelprevous.streetId == data[i].id){
-  
-            }
-            else{
-              let street = new Street();
-              street.id = data[i].id;
-              street.name = data[i].name;
-              this.streets.push(street);
-            }           
-          }
-        })*/
+       
         const street = await this.streetService.getStreetByProvince(Number(this.motelprevous.provinceId)) as Street[];
         this.streets.push(street.find(a => a.id == this.motelprevous.streetId));
           this.street = street.find(a => a.id == this.motelprevous.streetId);
@@ -165,6 +127,11 @@ export class ThongTinCoBanComponent implements OnInit {
     }
   }
 
+  public getNewTypes = async () => {
+    //this.typeservice.getTypeExcepts().subscribe(gettypes => this.newTypes = gettypes);
+    this.newTypes = await this.typeservice.getTypeExcepts() as NewType[];
+  }
+
   public async returnCity(){
     const result = await this.cityService.getCitys() as City[];
       this.cities.push(result.find(a => a.id == this.motelprevous.cityId));
@@ -181,6 +148,13 @@ export class ThongTinCoBanComponent implements OnInit {
     this.typeMotel = "Thuê"
     this.isWarning = false;
 
+  }
+
+  public onChangeType(event)
+  {
+    let value = event.target.value;
+    var typeFind = this.newTypes.find(m => m.id == value);
+    this.newType = typeFind;
   }
 
   public onChangeCity(event)
@@ -312,8 +286,8 @@ export class ThongTinCoBanComponent implements OnInit {
       }
       motel.address = this.addressMotel;
       motel.phone = this.phoneMotel;
-
-      localStorage.setItem('StorageService.motelStorage', JSON.stringify(motel));
+      localStorage.setItem(StorageService.motelStorage, JSON.stringify(motel));
+      this.behaviorSubjectClass.setNewTypes(this.newType);
       this.router.navigateByUrl('/user/thong-tin-nha-tro');
     }
     else{
@@ -323,7 +297,7 @@ export class ThongTinCoBanComponent implements OnInit {
   }
 
   public prevous(){
-    this.router.navigateByUrl('/user/danh-muc');
+    this.router.navigateByUrl('/user/thong-tin-vi-tri');
   }
 
   public openDialog(): void {

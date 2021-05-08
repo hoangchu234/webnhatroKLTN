@@ -44,6 +44,15 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return motels;
         }
 
+        // GET: api/Motels
+        [HttpGet]
+        [Route("GetTotalMotelHot")]
+        public async Task<ActionResult<Object>> GetTotalMotelHot()
+        {
+            var motels = _context.Motels.Where(a => a.Typeservice == "Tin Hot").ToList();
+            return motels.Count().ToString() as Object;
+        }
+
         ////Tin search price decreas
         //[HttpGet]
         //[Route("Decrease/{name}")]
@@ -80,7 +89,9 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Motel>> GetMotel(int id)
         {
-            var motel = await _context.Motels.Include(a => a.City).Include(a => a.User).Include(a => a.Detail).ThenInclude(a => a.Typeofnew).Include(e => e.Images).FirstAsync(a => a.Id == id);
+            var motel = await _context.Motels.Include(a => a.City)
+                .Include(a => a.User)
+                .Include(a => a.Detail).ThenInclude(a => a.Typeofnew).Include(e => e.Images).FirstAsync(a => a.Id == id);
 
             if (motel == null)
             {

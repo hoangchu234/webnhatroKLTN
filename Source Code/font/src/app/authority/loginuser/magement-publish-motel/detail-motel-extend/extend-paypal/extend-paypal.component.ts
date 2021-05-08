@@ -16,6 +16,7 @@ import { BehaviorSubjectClass } from 'src/app/services/behaviorsubject';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { NewType } from 'src/app/model/NewType';
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-extend-paypal',
@@ -45,7 +46,7 @@ export class ExtendPaypalComponent implements OnInit {
     var usd = "0.000043";
     this.numberPayPal = this.money * Number(usd);
     this.numberPayPal = Number((this.numberPayPal).toFixed(1));
-    localStorage.setItem("money",this.numberPayPal.toString());
+    localStorage.setItem(StorageService.totalMoneyStorage,this.numberPayPal.toString());
     this.payPalConfig = {
     currency: 'USD',
     clientId: 'sb',

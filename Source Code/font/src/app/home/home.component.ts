@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
     this.motelService.postEmail(email).subscribe(email => this.emailsend == email);
   }*/
 
-  public linkRouter(name, id) {
+  linkRouter(name, id) {
     //this.router.navigate( [{name: name, id: id}]);
     this.router.navigate( ['/home/chi-tiet',name,id]);
   }
@@ -136,12 +136,12 @@ export class HomeComponent implements OnInit {
   }
 
   public onClickSeeMoreHCM(){
-    var name = "TP HCM"
+    var name = "Ho-Chi-Minh"
     this.router.navigate( ['/area',name]);
   }
 
   public onClickSeeMoreHN(){
-    var name = "Hà Nội"
+    var name = "Ha-Noi"
     this.router.navigate( ['/area',name]);
   }
 

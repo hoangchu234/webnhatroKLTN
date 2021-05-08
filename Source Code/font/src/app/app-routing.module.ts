@@ -4,7 +4,6 @@ import { Routes, RouterModule, PreloadAllModules  } from '@angular/router';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { LoginComponent } from './login/login.component';
-import { DanhMucComponent } from './authority/loginuser/publish/danh-muc/danh-muc.component';
 import { ThongTinCoBanComponent } from './authority/loginuser/publish/thong-tin-co-ban/thong-tin-co-ban.component';
 import { ThongTinCoBanNextComponent } from './authority/loginuser/publish/thong-tin-co-ban-next/thong-tin-co-ban-next.component';
 import { ThongTinCoBanNextNextComponent } from './authority/loginuser/publish/thong-tin-co-ban-next-next/thong-tin-co-ban-next-next.component';
@@ -40,6 +39,9 @@ import { MagementSendMessegerComponent } from './authority/loginuser/magement-se
 import { WebForumComponent } from './web-forum/web-forum.component'
 import { ChatsComponent} from './chats/chats.component'
 import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-post-forum.component';
+import { DetailMotelPublishComponent } from './authority/loginuser/magement-publish-motel/detail-motel-publish/detail-motel-publish.component';
+import { DetailMotelExtendComponent } from './authority/loginuser/magement-publish-motel/detail-motel-extend/detail-motel-extend.component';
+import { DetailMotelPublishMagementComponent } from './authority/loginadmin/detail-motel-publish-magement/detail-motel-publish-magement.component';
 
 const routes: Routes = [
   {
@@ -51,6 +53,7 @@ const routes: Routes = [
       { path: 'quan-ly-dich-vu',          component: MagementServiceComponent },
       { path: 'quan-ly-duyet-tin',          component: AdminPublishComponent },
       { path: 'nhan-vien-quan-ly-duyet-tin',          component: EmployeePublishComponent },
+      { path: 'chi-tiet/:name/:id',          component: DetailMotelPublishMagementComponent },
     ]
   },
 
@@ -65,10 +68,11 @@ const routes: Routes = [
       { path: 'thong-tin-chi-tiet-nha-tro',          component: ThongTinCoBanNextNextComponent },
       { path: 'thong-tin-nha-tro',          component: ThongTinCoBanNextComponent },
       { path: 'thong-tin-vi-tri',          component: ThongTinCoBanComponent },
-      { path: 'danh-muc',          component: DanhMucComponent },
       { path: 'thong-tin-ca-nhan',          component: MagementProfileComponent },
       { path: 'tin-da-dang',          component: TindadangComponent },
-      { path: 'lich-su-giao-dich',          component: MagementTransactionHistoryComponent }
+      { path: 'lich-su-giao-dich',          component: MagementTransactionHistoryComponent },
+      { path: 'chi-tiet/:name/:id',          component: DetailMotelPublishComponent },
+      { path: 'gia-han-tin/:name/:id',          component: DetailMotelExtendComponent }
     ]
   },
 

@@ -33,9 +33,20 @@ export class LoginuserComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
   public onLogout = () => {
     this.authenticationService.logout();
     this.router.navigate(['/home']);
     this.hoVaTen = '';
-  }  
+  }
+  
+  check(){
+    var link = this.router.url;
+    if(link == '/user/thong-tin-vi-tri' || link == '/user/thong-tin-nha-tro' || link == '/user/thong-tin-chi-tiet-nha-tro' || link == '/user/thong-tin-hinh-anh' || link == '/user/goi-thanh-toan' || link == '/user/thanh-toan-dong'){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 }

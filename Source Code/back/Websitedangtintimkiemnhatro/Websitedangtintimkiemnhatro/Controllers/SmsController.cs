@@ -6,7 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Twilio;
+using Twilio.Clients;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 using Websitedangtintimkiemnhatro.Models;
+using Websitedangtintimkiemnhatro.Services;
 
 namespace Websitedangtintimkiemnhatro.Controllers
 {
@@ -15,48 +20,45 @@ namespace Websitedangtintimkiemnhatro.Controllers
     public class SmsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public SmsController(ApplicationDbContext context)
+        private readonly ITwilioRestClient _client;
+
+        public SmsController(ApplicationDbContext context, ITwilioRestClient client)
         {
             _context = context;
-        }
-        public IConfiguration Configuration { get; set; }
-        public SmsController(IConfiguration config)
-        {
-            Configuration = config;
+            _client = client;
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<SMSUser> PostSMSUser(Models.SmsModel sendSmsModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            var VONAGE_API_KEY = Configuration["VONAGE_API_KEY"];
-        //            var VONAGE_API_SECRET = Configuration["VONAGE_API_SECRET"];
-        //            var credentials = Credentials.FromApiKeyAndSecret(VONAGE_API_KEY, VONAGE_API_SECRET);
-        //            var client = new SmsClient(credentials);
-        //            var request = new SendSmsRequest { To = sendSmsModel.To, From = sendSmsModel.From, Text = sendSmsModel.Text };
-        //            var response = client.SendAnSms(request);
-        //            ViewBag.MessageId = response.Messages[0].MessageId;
-        //        }
-        //        catch (VonageSmsResponseException ex)
-        //        {
-        //            ViewBag.Error = ex.Message;
-        //        }
-        //    }
-        //    return View("Index");
-        //}
+        [HttpPost]
+        public IActionResult SendSms(SMSoptions model)
+        {
+            string accountSid = Environment.GetEnvironmentVariable("AccountSid");
+            string authToken = Environment.GetEnvironmentVariable("AuthToken");
+
+            TwilioClient.Init(accountSid, authToken);
+            var message = MessageResource.Create(
+                body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
+                from: new Twilio.Types.PhoneNumber(model.From),
+                to: new Twilio.Types.PhoneNumber(model.To)
+            );
+
+            return Ok(message.Sid);
+        }
 
         //[HttpPost]
         //public async Task<ActionResult<SMSUser>> PostSMSUser(SMSUser sendSmsModel)
         //{
-        //    var VONAGE_API_KEY = Configuration["AccountSid"];
-        //    var VONAGE_API_SECRET = Configuration["AuthToken"];
-        //    var credentials = Credentials.FromApiKeyAndSecret(VONAGE_API_KEY, VONAGE_API_SECRET);
-        //    var request = new SendSmsRequest { To = sendSmsModel.To, From = sendSmsModel.From, Text = sendSmsModel.Text };
-        //    var response = client.SendAnSms(request);
+        //    string accountSid = Environment.GetEnvironmentVariable("AccountSid");
+        //    string authToken = Environment.GetEnvironmentVariable("AuthToken");
 
+        //    TwilioClient.Init(accountSid, authToken);
+
+        //    var message = MessageResource.Create(
+        //        from: new Twilio.Types.PhoneNumber(sendSmsModel.phone),
+        //        body: sendSmsModel.sms,
+        //        to: new Twilio.Types.PhoneNumber(sendSmsModel.phone)
+        //    );
+
+       
         //    _context.SMSUsers.Add(sendSmsModel);
 
         //    try

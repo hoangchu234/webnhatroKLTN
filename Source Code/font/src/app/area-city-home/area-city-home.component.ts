@@ -4,6 +4,7 @@ import { CitiesService } from '../services/cities.service';
 import { City } from '../model/City';
 import { ProvincesService } from '../services/provinces.service';
 import { Province } from '../model/Province';
+import { RemoveVietnameseTones } from '../removeVietnameseTones.service';
 
 export interface Data{
   id:number;
@@ -17,13 +18,10 @@ export interface Data{
 })
 export class AreaCityHomeComponent implements OnInit {
 
-  // Danh sách city và tên city
-  cities = new Array<City>();
-  city;
   // Danh sách province và tên province
-  provinces = new Array<Province>();
-  province;
+  provinces: Array<Province> = [];
   nameURL:string;
+  display = "";
 
   imageHCMs:Array<Data> = [
     {id: 0, text:'../../assets/images/image/quan1.jpg'},
@@ -65,25 +63,24 @@ export class AreaCityHomeComponent implements OnInit {
   checkHCM = false;
   checkHN = false;
 
-
   constructor(private provinceService: ProvincesService,private citiesService:CitiesService,private route: Router,private router: ActivatedRoute) {
-   }
+  }
 
   ngOnInit(): void {
     this.nameURL = this.router.snapshot.paramMap.get("name");
-    console.log(this.nameURL)
-    if(this.nameURL == "TP HCM"){
+    if(this.nameURL == "Ho-Chi-Minh"){
       this.checkHCM = true;
-      this.getProvinces("TP HCM")
+      this.display = "Hồ Chí Minh";
+      this.getProvinces("Hồ Chí Minh")
     }
-    if(this.nameURL == "Hà Nội"){
+    if(this.nameURL == "Ha-Noi"){
       this.checkHN = true;
+      this.display = "Hà Nội";
       this.getProvinces("Hà Nội")
     }
   }
 
   public async getProvinces(name){
-    console.log(name)
     /*this.provinceService.getProvincesByCityName(name).subscribe(data => {
       this.provinces = data
     })*/
@@ -91,15 +88,19 @@ export class AreaCityHomeComponent implements OnInit {
   }
 
   public onClickProvince (name)  {
-    this.province = name;
-    localStorage.setItem('province', name);
-    localStorage.setItem('searchtext', "NULL");
+    var city = "", province = "", district = "", street = "", price = "";
+
     if(this.checkHCM){
-      localStorage.setItem('city', "TP HCM");
+      city = this.nameURL;
+      province = RemoveVietnameseTones.removeVietnameseTones(name);
     }
     if(this.checkHN){
-      localStorage.setItem('city', "Hà Nội");
+      city = this.nameURL;
+      province = RemoveVietnameseTones.removeVietnameseTones(name);
     }
-    this.route.navigateByUrl('/home/cho-thue-nha-tro');
+
+    var link = '/home' + '/' + city + '/' + province + '/' + 'Phong-tro-nha-tro';
+
+    this.route.navigate( [link]);
   }
 }

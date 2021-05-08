@@ -18,6 +18,9 @@ export interface Type{
 })
 export class MangementChartComponent implements OnInit {
 
+  totalMotel = 0;
+  totalUser = 0;
+  totalMoney = 0;
   nametophead = "Trang thống kê"
   public news:Array<Type> = [
     {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
@@ -86,7 +89,9 @@ export class MangementChartComponent implements OnInit {
   }
 
   async ngOnInit() {
-    
+    this.totalMotel = await this.motelService.totalHot() as number;
+    this.totalUser = await this.motelService.totalUser() as number;
+    this.totalMoney = await this.motelService.totalMoney() as number;
     this.getPieChartData();
     this.getbarChartData();
 

@@ -22,9 +22,26 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
         // GET: api/Users
         [HttpGet]
+        [Route("GetTotalUser")]
+        public async Task<ActionResult<Object>> GetTotalUser()
+        {
+            var user = _context.Users.ToList();
+            return user.Count().ToString() as Object;
+        }
+
+        // GET: api/Users
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
+        }
+
+        // GET: api/Users
+        [HttpGet]
+        [Route("GetRoles")]
+        public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
+        {
+            return await _context.Roles.ToListAsync();
         }
 
         // GET: api/Users/5

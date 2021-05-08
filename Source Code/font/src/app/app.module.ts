@@ -11,7 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 //Use ngModel
 import { FormsModule } from '@angular/forms';
 
-import { DanhMucComponent } from './authority/loginuser/publish/danh-muc/danh-muc.component';
 
 import { ThongTinCoBanComponent } from './authority/loginuser/publish/thong-tin-co-ban/thong-tin-co-ban.component';
 import { ThongTinCoBanNextComponent } from './authority/loginuser/publish/thong-tin-co-ban-next/thong-tin-co-ban-next.component';
@@ -75,7 +74,6 @@ import { SearchMotelComponent } from './search-motel/search-motel.component';
 import { DialogSearchMotelComponent } from './search-motel/dialog-search-motel/dialog-search-motel.component';
 import { HomeComponent } from './home/home.component';
 import { AdminPublishComponent } from './authority/loginadmin/admin-publish/admin-publish.component';
-import { DialogDetailMotelPublishComponent } from './authority/loginadmin/dialog-detail-motel-publish/dialog-detail-motel-publish.component';
 import { EmployeePublishComponent } from './authority/loginadmin/employee-publish/employee-publish.component';
 import { MagementServiceComponent } from './authority/loginadmin/magement-service/magement-service.component';
 import { MagementBillComponent } from './authority/loginadmin/magement-bill/magement-bill.component';
@@ -109,9 +107,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { MagementSendMessegerComponent } from './authority/loginuser/magement-send-messeger/magement-send-messeger.component';
 import { DialogThongBaoComponent } from './authority/loginuser/publish/dialog-thong-bao/dialog-thong-bao.component';
-import { DialogEditMotelComponent } from '../app/authority/loginuser/magement-publish-motel/dialog-edit-motel/dialog-edit-motel.component';
-import { DialogExtendMotelsComponent } from './authority/loginuser/magement-publish-motel/dialog-extend-motels/dialog-extend-motels.component';
-import { ExtendPaypalComponent } from './authority/loginuser/magement-publish-motel/dialog-extend-motels/extend-paypal/extend-paypal.component';
+import { ExtendPaypalComponent } from './authority/loginuser/magement-publish-motel/detail-motel-extend/extend-paypal/extend-paypal.component';
 import { WebForumComponent } from './web-forum/web-forum.component';
 import { ChatsComponent } from './chats/chats.component';
 import { DialogPostComponent } from './web-forum/dialog-post/dialog-post.component';
@@ -120,11 +116,13 @@ import { ConverterPipe } from './converter-pipe.pipe';
 import { ClipboardModule } from 'ngx-clipboard';
 import { DialogInformComponent } from './dialog-inform/dialog-inform.component';
 import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-post-forum.component';
+import { DetailMotelPublishComponent } from './authority/loginuser/magement-publish-motel/detail-motel-publish/detail-motel-publish.component';
+import { DetailMotelExtendComponent } from './authority/loginuser/magement-publish-motel/detail-motel-extend/detail-motel-extend.component';
+import { DetailMotelPublishMagementComponent } from './authority/loginadmin/detail-motel-publish-magement/detail-motel-publish-magement.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DanhMucComponent,
     HelpComponent,
     ThongTinCoBanComponent,
     ThongTinCoBanNextComponent,
@@ -155,7 +153,6 @@ import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-p
     DialogSearchMotelComponent,
     HomeComponent,
     AdminPublishComponent,
-    DialogDetailMotelPublishComponent,
     MagementServiceComponent,
     MagementBillComponent,
     MagementEmployeeComponent,
@@ -173,15 +170,16 @@ import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-p
     AreaCityHomeComponent,
     MagementSendMessegerComponent,
     DialogThongBaoComponent,
-    DialogEditMotelComponent,
-    DialogExtendMotelsComponent,
     ExtendPaypalComponent,
     WebForumComponent,
     ChatsComponent,
     DialogPostComponent,
     ConverterPipe,
     DialogInformComponent,
-    DetailPostForumComponent
+    DetailPostForumComponent,
+    DetailMotelPublishComponent,
+    DetailMotelExtendComponent,
+    DetailMotelPublishMagementComponent
   ],
   imports: [
     BrowserModule,

@@ -310,4 +310,35 @@ export class MotelService {
       catchError(error => of(new Motel()))
     );
   }
+
+
+  public totalHot = async () => {
+    try {
+        const count = await fetch(`${this.urlAPI}/api/Motels/GetTotalMotelHot`);
+        return await count.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
+  }
+
+  public totalUser = async () => {
+    try {
+        const count = await fetch(`${this.urlAPI}/api/Users/GetTotalUser`);
+        return await count.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
+  }
+
+  public totalMoney = async () => {
+    try {
+        const count = await fetch(`${this.urlAPI}/api/Bills/GetTotalMoney`);
+        return await count.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
+  }
 }

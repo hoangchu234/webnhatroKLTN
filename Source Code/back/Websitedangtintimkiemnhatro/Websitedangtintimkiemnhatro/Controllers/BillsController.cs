@@ -28,6 +28,21 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return await _context.Bills.Include(a => a.Motel).ThenInclude(a => a.User).ThenInclude(a => a.Account).ToListAsync();
         }
 
+        // GET: api/Bills
+        [HttpGet]
+        [Route("GetTotalMoney")]
+        public async Task<ActionResult<Object>> GetTotalMoney()
+        {
+            var bills = _context.Bills.ToList();
+            float totalMoney = 0;
+            for (int i = 0; i < bills.Count; i++)
+            {
+                totalMoney = totalMoney + bills[i].PayMoney;
+            }
+
+            return totalMoney as Object;
+        }
+
         [HttpGet]
         [Route("Nows")]
         public async Task<ActionResult<IEnumerable<Bill>>> GetNows()

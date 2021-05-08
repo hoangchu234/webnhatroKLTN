@@ -12,44 +12,32 @@ import { ProvincesService } from 'src/app/services/provinces.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
-  selector: 'app-dialog-detail-motel-publish',
-  templateUrl: './dialog-detail-motel-publish.component.html',
-  styleUrls: ['./dialog-detail-motel-publish.component.css']
+  selector: 'app-detail-motel-publish-magement',
+  templateUrl: './detail-motel-publish-magement.component.html',
+  styleUrls: ['./detail-motel-publish-magement.component.css']
 })
-export class DialogDetailMotelPublishComponent implements OnInit {
+export class DetailMotelPublishMagementComponent implements OnInit {
 
   //currentAccount: Account;
   motel: Motel;
   motelImage: Image[] = [];
-
-  constructor(public dialogRef: MatDialogRef<DialogDetailMotelPublishComponent>,@Inject(MAT_DIALOG_DATA) public data: Motel,public provinceService:ProvincesService,private userService:UserService,private sanitizer: DomSanitizer,private router: Router,public dangtinService:MotelService ,private authenticationService: AuthenticationService) { 
+  image0 = "";
+  constructor(public provinceService:ProvincesService,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private route: Router,public dangtinService:MotelService ,private authenticationService: AuthenticationService) { 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     
 
   }
 
   async ngOnInit(): Promise<void> {
-    const id = this.data.id;
-    /*this.dangtinService.getMotelFromId(Number(id)).subscribe(getdetailmotel => {
-      this.motel = getdetailmotel
-      for(let i=0;i<this.motel.images.length;i++)
-      {
-        var imageone = new Image();
-        if(i !=0){
-          imageone.imageMotel = this.motel.images[i].imageMotel
-          this.motelImage.push(imageone);
-        }
-        
-      }
-    })*/
+    const id = this.router.snapshot.paramMap.get("id");
+
     this.motel = await this.dangtinService.getMotelFromId(Number(id)) as Motel;
-    for(let i=0;i<this.motel.images.length;i++)
+    this.image0 = this.motel.images[0].imageMotel;
+    for(let i=1;i<this.motel.images.length;i++)
     {
       var imageone = new Image();
-      if(i !=0){
-        imageone.imageMotel = this.motel.images[i].imageMotel
-        this.motelImage.push(imageone);
-      }
+      imageone.imageMotel = this.motel.images[i].imageMotel
+      this.motelImage.push(imageone);
       
     }
   }
@@ -60,17 +48,17 @@ export class DialogDetailMotelPublishComponent implements OnInit {
   }
 
   public onNoClick(): void {
-    this.dialogRef.close();
-    if(Number(this.authenticationService.currentAccountValue.roleId) == 4){
-      window.location.reload()
-      this.router.navigate(['/admin/quan-ly-duyet-tin']);
+    // if(Number(this.authenticationService.currentAccountValue.roleId) == 4){
+    //   window.location.reload()
+    //   this.route.navigate(['/admin/quan-ly-duyet-tin']);
      
-    }
-    if(Number(this.authenticationService.currentAccountValue.roleId) == 2 || Number(this.authenticationService.currentAccountValue.roleId) == 3){
-      window.location.reload()
-      this.router.navigate(['/admin/nhan-vien-quan-ly-duyet-tin']); 
+    // }
+    // if(Number(this.authenticationService.currentAccountValue.roleId) == 2 || Number(this.authenticationService.currentAccountValue.roleId) == 3){
+    //   window.location.reload()
+    //   this.route.navigate(['/admin/nhan-vien-quan-ly-duyet-tin']); 
      
-    }
+    // }
+    window.location.reload()
   }
 
   public onDuyetTin(motel: Motel){

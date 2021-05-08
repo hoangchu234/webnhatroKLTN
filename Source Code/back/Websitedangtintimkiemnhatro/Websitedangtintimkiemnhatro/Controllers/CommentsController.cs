@@ -219,8 +219,11 @@ namespace Websitedangtintimkiemnhatro.Controllers
                     throw;
                 }
             }
-
-            var commentNew = await _context.Comments.Include(a => a.User).Where(a => a.Id == comment.Id).FirstOrDefaultAsync();
+            List<Comment> listcomments = new List<Comment>();
+            var commentNew = await _context.Comments.Include(a => a.User).Where(a => a.Id == comment.Id)
+                 .Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, User = c.User, PostId = c.PostId, ParentCommentId = c.ParentCommentId, ChildComments = listcomments })
+                 .FirstOrDefaultAsync();
+            //var commentNew = await _context.Comments.Include(a => a.User).Where(a => a.Id == comment.Id).FirstOrDefaultAsync();
             return commentNew;
         }
 

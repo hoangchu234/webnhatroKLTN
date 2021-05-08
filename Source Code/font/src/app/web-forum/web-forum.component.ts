@@ -37,6 +37,7 @@ export class WebForumComponent implements OnInit {
 
   likePostData: Array<ILike> = [];
   likeCommentData: Array<ILike> = [];
+  countChildComment: Array<ILike> = [];
   latestNodesPerLevel;
 
   dataComment:Comment[] = [];
@@ -89,7 +90,7 @@ export class WebForumComponent implements OnInit {
       this.posts[i].comments.forEach(element => {
         this.dataComment.push(element);
       })
-      this.countLikeComment(this.dataComment);
+      
 
       //Hidden and display comment
       var arrayChildCommentCheck = Array<ICheckChildComment>();
@@ -101,7 +102,7 @@ export class WebForumComponent implements OnInit {
         arrayChildCommentCheck.push(this.pushArrayShowCommentChild(this.posts[i].comments[j].id,this.posts[i].comments[j].parentCommentId));
       }
       this.showChildCommentArray.push(this.pushArrayShowCommentParent(this.posts[i].id,arrayChildCommentCheck));
-      this.countLikeComment(this.posts[i].comments);
+      // this.countLikeComment(this.posts[i].comments);
 
       //
       /*var commentPost: CommentPost;
@@ -111,7 +112,9 @@ export class WebForumComponent implements OnInit {
         this.showChildComments.push(commentPost);
       }*/
     }
+
     //this.countLikePost(this.posts);
+    this.countLikeComment(this.dataComment);
     this.countLikePost(this.posts);
     //this.countLikeComment();
   }
@@ -280,6 +283,17 @@ export class WebForumComponent implements OnInit {
     }
   }
 
+  ////Display value like comment child
+  displayCountCommentChild(idPost,idComment){
+    const index = this.countComment.findIndex(a => a.idPost == idPost && a.idComment == idComment);
+    if(index == -1){
+      return 0;
+    }
+    else{
+      return this.countComment[index].count;
+    }
+  }
+
   //////////////////////////////////////////////////////////////////////////////////////////////
   addAItem(a,n,vitrithem,phantuthem){
     for(let i=n; i> vitrithem; i--){
@@ -428,7 +442,7 @@ export class WebForumComponent implements OnInit {
         this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(data.id,data.parentCommentId))
         this.comment.commentUser = "";
         this.countLikeComment(this.dataComment);
-
+        this.getCountCommentPost(data.id);
       })
       alert("Thành công");
     }
@@ -476,6 +490,8 @@ export class WebForumComponent implements OnInit {
           var arrayChildCommentCheck = Array<ICheckChildComment>();
           this.showChildCommentArray.push(this.pushArrayShowCommentParent(data.id,arrayChildCommentCheck));
           this.countLikePost(this.posts);
+          
+          alert("Đăng bài thành công")
         });
       }
      
@@ -646,17 +662,26 @@ export class WebForumComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // like post
-  livePost(idPost){
+  async livePost(idPost){
     if(this.checkLogin()){
-      var like: LikeCommentPost = {
-        idPost : idPost,
-        likePost : true,
-        idCommnent: null,
-        likeComment: null,
-        userId : this.authenticationService.currentAccountValue.user.id
+      const index = await this.postService.getCheckLike(idPost,this.authenticationService.currentAccountValue.user.id);
+      if(index == true){
+        this.postService.deleteLike(Number(idPost),Number(this.authenticationService.currentAccountValue.user.id)).subscribe(a => {
+          this.countLikePost(this.posts);
+        });
+        
       }
-      // like.userId = 26;
-      this.postLikeCommentPost(like);
+      else{
+        var like: LikeCommentPost = {
+          idPost : idPost,
+          likePost : true,
+          idCommnent: null,
+          likeComment: null,
+          userId : this.authenticationService.currentAccountValue.user.id
+        }
+        // like.userId = 26;
+        this.postLikeCommentPost(like);
+      }
     }
     else{
       this.openDialogInform();
@@ -694,17 +719,25 @@ export class WebForumComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // like comment
-  liveComment(idComment){
+  async liveComment(idComment){
     if(this.checkLogin()){
-      var like: LikeCommentPost = {
-        idPost : null,
-        likePost : null,
-        idCommnent: idComment,
-        likeComment: true,
-        userId : this.authenticationService.currentAccountValue.user.id
+      const index = await this.postService.getCheckLikeComment(idComment,this.authenticationService.currentAccountValue.user.id);
+      if(index == true){
+        this.postService.deleteLikeComment(Number(idComment),Number(this.authenticationService.currentAccountValue.user.id)).subscribe(a => {
+          this.countLikeComment(this.dataComment);
+        });
       }
-      // like.userId = 26;
-      this.postLikeCommentPost(like);
+      else{
+        var like: LikeCommentPost = {
+          idPost : null,
+          likePost : null,
+          idCommnent: idComment,
+          likeComment: true,
+          userId : this.authenticationService.currentAccountValue.user.id
+        }
+        this.postLikeCommentPost(like);
+        // like.userId = 26;
+      }
     }
     else{
       this.openDialogInform();
@@ -717,6 +750,7 @@ export class WebForumComponent implements OnInit {
   async countLikeComment(comments){
     // const result = await this.postService.getLikeComment() as any[];
     // this.likeComment = result.slice();
+    this.likeCommentData.splice(0,this.likeCommentData.length);
     var ilike = {id: 0 ,count: 0};
     for(let i=0;i<comments.length;i++){
       var count = await this.postService.getLikeComment(comments[i].id) as number;
@@ -732,7 +766,9 @@ export class WebForumComponent implements OnInit {
   // lưu like
   postLikeCommentPost(like){
     this.postService.postLikeCommentPost(like).subscribe(data => {
-      var index = this.posts.findIndex(a =>  Number(a.id) == data.idPost);
+      var index = this.posts.findIndex(a =>  Number(a.id) === data.idPost);
+      this.countLikePost(this.posts);
+      this.countLikeComment(this.dataComment);
     })
   }
 
@@ -752,6 +788,5 @@ export class WebForumComponent implements OnInit {
     else{
       return this.likeCommentData[index].count;
     }
-   
   }
 }

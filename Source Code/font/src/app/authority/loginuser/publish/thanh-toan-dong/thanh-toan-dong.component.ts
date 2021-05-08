@@ -85,13 +85,13 @@ export class ThanhToanDongComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: Motel) => { 
-      localStorage.removeItem('totalMoney'); 
+      localStorage.removeItem(StorageService.totalMoneyStorage); 
       var file: File[];
       var newType: NewType;
       this.behaviorSubjectClass.setDataImages(file);
       localStorage.removeItem(StorageService.motelStorage)
       this.behaviorSubjectClass.setNewTypes(newType);
-      this.router.navigateByUrl('/user/danh-muc');
+      this.router.navigateByUrl('/user/thong-tin-vi-tri');
     });
   }
 }

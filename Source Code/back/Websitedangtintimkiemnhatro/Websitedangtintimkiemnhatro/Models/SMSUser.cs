@@ -13,6 +13,7 @@ namespace Websitedangtintimkiemnhatro.Models
         public int Id { get; set; }
         public string sms { get; set; }
         public string date { get; set; }
+        public string phone { get; set; }
         public User user { get; set; }
         [ForeignKey("UserId")]
         [Required]

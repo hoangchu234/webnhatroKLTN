@@ -14,8 +14,8 @@ import { EmployeesService } from '../services/employees.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public phone:string;
-  public password:string;
+  public phone:string = "";
+  public password:string = "";
 
   //Normal register
   public name:string;
@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   resultaccount:Account[];
   remember: boolean = false;
 
+  showError: boolean = true;
   constructor(private employeeService:EmployeesService,
     private authenticationService: AuthenticationService,
     private router: Router,
@@ -53,69 +54,48 @@ export class LoginComponent implements OnInit {
     this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
-  public login = () => {  
-    try 
-    {
-      var account = new Account();
-      account.phone = this.phone;
-      account.password = this.password;
-      this.authenticationService.loginPhone(account).subscribe(account => {
+  clickChange(){
+    this.showError = true;
+  }
 
-        if(!account.isActive){
-          alert('Đăng nhập thất bại');
-        }
-        else{
-          this.authenticationService.saveAccount(account, this.remember);
-          if(Number(account.roleId) == 1){
-            // window.location.replace(link);
-            this.router.navigateByUrl('home');
-          }
-          else{
-            this.router.navigateByUrl('admin');
-          }
-    
-        }
-      })
-    } 
-    catch(e) 
-    {
-      console.log(e)
-      alert('Tài khoản không tồn tại!');
+  public login = () => {  
+    if(this.phone == "" || this.password == ""){
+      this.showError = false;
     }
-    /*this.authenticationService.login(this.password, this.phone).subscribe(
-      (data) => {
-        console.log(data);
-        console.log(data.isActive);
-        if (data.isActive) {
-          if (data != null && data.phone) {
-            localStorage.setItem('phone', data.phone);
-            localStorage.setItem('password', data.password);
-            alert('Đăng nhập thành công');
-            var role = Number(data.roleId);
-            console.log(role);
-            if(role == 1){
-              this.router.navigateByUrl('home');
-            }
-            else{
-              this.authenticationService.updateAccountisHD(data.id).subscribe(updateaccount => {
-                console.log(updateaccount);
-              })
-              this.router.navigateByUrl('admin');
-            }
-          }
-          else {
+    else{
+      try 
+      {
+        var accounta = new Account();
+        accounta.phone = this.phone;
+        accounta.password = this.password;
+        this.authenticationService.loginPhone(accounta).subscribe(account => {
+          if(account.isActive == false){
             alert('Đăng nhập thất bại');
           }
-        }
-        else {
-
-          this.authenticationService.logout();
-          alert('Bị lock tài khoản');
-        }
-
-      },
-      (error) => alert("Sai mật khẩu")//console.error(error)
-    )*/
+          else{
+            this.authenticationService.saveAccount(account, this.remember);
+            if(Number(account.roleId) == 1){
+              var link = '/home'
+              window.location.replace(link);
+              //this.router.navigateByUrl('home');
+            }
+            else{
+              var link = '/admin'
+              window.location.replace(link);
+              //this.router.navigateByUrl('admin');
+            }
+      
+          }
+        })
+      } 
+      catch(e) 
+      {
+        console.log(e)
+        alert('Tài khoản không tồn tại!');
+      }
+    }
+   
+   
   }
 
   public createNewAccount = async () => {
@@ -153,18 +133,24 @@ export class LoginComponent implements OnInit {
   };
 
   onSubmit() {
-    const appVerifier = this.recaptchaVerifier;
-    var p = this.phone;
-    var phoneNumber = "+84" + p.substring(0, p.length);    
-    var testVerificationCode = "123456";
-    firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        this.user = "Xac Thuc";
-        this.comfirm = confirmationResult;
-      })
-      .catch((err) => {
-        console.log('sms not sent', err);
-      });
+    if(this.name == "" || this.password == "" || this.phone == "" || this.confirmPassword == ""){
+      this.showError = false;
+    }
+    else{
+      const appVerifier = this.recaptchaVerifier;
+      var p = this.phone;
+      var phoneNumber = "+84" + p.substring(0, p.length);    
+      var testVerificationCode = "123456";
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          this.user = "Xac Thuc";
+          this.comfirm = confirmationResult;
+        })
+        .catch((err) => {
+          console.log('sms not sent', err);
+        });
+    }
+   
   };
 
 }

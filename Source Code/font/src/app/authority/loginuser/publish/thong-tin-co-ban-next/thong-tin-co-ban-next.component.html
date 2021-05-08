@@ -18,7 +18,7 @@
               <div class="form-group row">
                 <label class="col-sm-12" style="margin-top: 5px;"><b>Giá tiền </b></label>
                 <div class="col-sm-7" style="margin-top: 5px ;">
-                <input type="number" [(ngModel)]="priceMotel" name="priceMotel" class="form-control" placeholder="nhập số tiền bạn muốn">
+                <input type="number" [(ngModel)]="priceMotel" name="priceMotel" ngDefaultControl class="form-control" placeholder="nhập số tiền bạn muốn">
                 </div>
                 <div class="col-sm-5" style="margin-top:13px">
                   <select (change)="onChangeTypePriceMote($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
@@ -44,7 +44,7 @@
             <div class="form-group row">
               <label class="col-sm-12" style="margin-top: 5px;"><b>Diện tích</b> </label>
               <div class="col-sm-12" style="margin-top: 3px ;">
-              <input type="number"  [(ngModel)]="areaMotel" name="AreaMotel" class="form-control" placeholder="đơn vị tính m² " >
+              <input type="number"  [(ngModel)]="areaMotel" name="AreaMotel" ngDefaultControl class="form-control" placeholder="đơn vị tính m² " >
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@
             <div class=" form-group row">
               <label class="col-sm-12" for="exampleFormControlSelect1" style="margin-top: 5px;" ><b>Tiêu đề</b></label>
               <div class="col-sm-12" style="margin-top: 10px;">
-                <input name="Title"  [(ngModel)]="title" class="form-control" placeholder="Nhập tiêu đề tin của bạn" >
+                <input name="Title"  [(ngModel)]="title"  ngDefaultControl class="form-control" placeholder="Nhập tiêu đề tin của bạn" >
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
             <div class="form-group row" >
               <label class="col-sm-12" for="exampleFormControlSelect1" style="margin-top: 5px;" ><b>Mô tả</b></label>
               <div class="col-sm-12" style="margin-top: 10px;margin-left: -15px;">
-                <ck-editor name="editor1"  [(ngModel)]="description" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+                <ck-editor name="editor1"  [(ngModel)]="description" ngDefaultControl skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
               </div>
             </div>
           </div>

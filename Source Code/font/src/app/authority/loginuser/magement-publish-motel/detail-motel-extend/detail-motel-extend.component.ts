@@ -19,7 +19,13 @@ import { District } from 'src/app/model/District';
 import { Street } from 'src/app/model/Street';
 import { DictrictService } from 'src/app/services/dictrict.service';
 import { StreetService } from 'src/app/services/street.service';
-import { DialogDetailMotelPublishComponent } from 'src/app/authority/loginadmin/dialog-detail-motel-publish/dialog-detail-motel-publish.component';
+import { Serviceprice } from 'src/app/model/Serviceprice';
+import { ServicePriceService } from 'src/app/services/service-price.service';
+import { BillService } from 'src/app/services/bill.service';
+import { Bill } from 'src/app/model/Bill';
+import { ExtendPaypalComponent } from './extend-paypal/extend-paypal.component';
+import { ActivatedRoute } from '@angular/router';
+import { StorageService } from 'src/app/storage.service';
 
 export interface Data{
   id:number;
@@ -27,11 +33,11 @@ export interface Data{
 }
 
 @Component({
-  selector: 'app-dialog-edit-motel',
-  templateUrl: './dialog-edit-motel.component.html',
-  styleUrls: ['./dialog-edit-motel.component.css']
+  selector: 'app-detail-motel-extend',
+  templateUrl: './detail-motel-extend.component.html',
+  styleUrls: ['./detail-motel-extend.component.css']
 })
-export class DialogEditMotelComponent implements OnInit {
+export class DetailMotelExtendComponent implements OnInit {
 
   motel: Motel[] = [];
   newTypes: NewType [] = [];
@@ -100,44 +106,130 @@ export class DialogEditMotelComponent implements OnInit {
   title:string = "";
   decription:string = "";
 
-  checkSaveImage = false;
-  constructor(public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public dialogRef: MatDialogRef<DialogEditMotelComponent>,@Inject(MAT_DIALOG_DATA) public data: Motel,public motelService:MotelService) {
+  servicePrice: Serviceprice[] = [];
+  public news:Array<Data> = [
+    {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
+    {id: 1, text:'Tin VIP 3'}, // 
+    {id: 2, text:'Tin VIP 2'},
+    {id: 3, text:'Tin VIP 1'},
+    {id: 4, text:'Tin thường'},
+  ];
+  
+  public times:Array<Data> = [
+    {id: 0, text:'Đăng theo ngày'}, 
+    {id: 1, text:'Đăng theo tuần'}, 
+    {id: 2, text:'Đăng theo tháng'},
+  ];
+
+  time: string;
+
+  public months:Array<Data> = [
+    {id: 0, text:'1 Tháng'}, 
+    {id: 1, text:'2 Tháng'}, 
+    {id: 2, text:'3 Tháng'}, 
+    {id: 3, text:'4 Tháng'}, 
+    {id: 4, text:'5 Tháng'}, 
+    {id: 5, text:'6 Tháng'}, 
+    {id: 6, text:'7 Tháng'}, 
+    {id: 7, text:'8 Tháng'}, 
+    {id: 8, text:'9 Tháng'}, 
+    {id: 9, text:'10 Tháng'}, 
+    {id: 10, text:'11 Tháng'}, 
+    {id: 11, text:'12 Tháng'}, 
+  ];
+
+  public days:Array<Data> = [
+    {id: 0, text:'6 Ngày'}, 
+    {id: 1, text:'7 Ngày'}, 
+    {id: 2, text:'8 Ngày'}, 
+    {id: 3, text:'9 Ngày'}, 
+    {id: 4, text:'10 Ngày'}, 
+    {id: 5, text:'11 Ngày'}, 
+    {id: 6, text:'12 Ngày'}, 
+    {id: 7, text:'13 Ngày'}, 
+    {id: 8, text:'14 Ngày'}, 
+    {id: 9, text:'15 Ngày'}, 
+    {id: 10, text:'16 Ngày'}, 
+    {id: 11, text:'17 Ngày'}, 
+  ];
+
+  public weeks:Array<Data> = [
+    {id: 0, text:'1 Tuần'}, 
+    {id: 1, text:'2 Tuần'}, 
+    {id: 2, text:'3 Tuần'}, 
+    {id: 3, text:'4 Tuần'}, 
+    {id: 4, text:'5 Tuần'}, 
+    {id: 5, text:'6 Tuần'}, 
+    {id: 6, text:'7 Tuần'}, 
+    {id: 7, text:'8 Tuần'}, 
+    {id: 8, text:'9 Tuần'}, 
+    {id: 9, text:'10 Tuần'}, 
+  ];
+
+  setValueName: string = "Số ngày";
+  setArrayChoices: Array<Data> = [];
+
+  new: string;
+  timePublish:string;
+  //Xét tính tiền
+  totalprice:number = 0;
+  type:string[] = [];
+  priceBill:number;
+  motelById: Motel;
+
+  constructor(private router: ActivatedRoute,private billService:BillService,private priceService: ServicePriceService,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
+    
+  }
+
+  async ngOnInit(): Promise<void> {
+    const id = this.router.snapshot.paramMap.get("id");
+    this.motelById = await this.getDataMotelById(id);
+
     this.getNewTypes();
     this.getCities();
     this.getLiveType();
     this.getTypePrice();
     this.getDirect();
 
-    this.address = this.data.address;
-    this.price = this.data.price;
-    this.areaZone = this.data.areaZone;
-    this.title = this.data.title;
-    this.decription = this.data.description;
+    this.address = this.motelById.address;
+    this.price = this.motelById.price;
+    this.areaZone = this.motelById.areaZone;
+    this.title = this.motelById.title;
+    this.decription = this.motelById.description;
 
 
-    if(this.data.status == "Tin đã hết hạn"){
+    if(this.motelById.status == "Tin đã hết hạn"){
       this.checkOutOfDate = true;
     }
 
-    this.motelUpdate = this.data;
+    this.motelUpdate = this.motelById;
     // load image
-    for(let i=0 ;i< this.data.images.length;i++){
-      this.loadImageFromPC.push(this.data.images[i].imageMotel)
+    for(let i=0 ;i< this.motelById.images.length;i++){
+      this.loadImageFromPC.push(this.motelById.images[i].imageMotel)
     }
 
-    this.oldImage = this.data.images;
+    this.oldImage = this.motelById.images;
 
-    this.numberBath = this.data.detail.numberBath.toString();
-    this.numberLiving = this.data.detail.numberLiving.toString();
+    this.numberBath = this.motelById.detail.numberBath.toString();
+    this.numberLiving = this.motelById.detail.numberLiving.toString();
 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
-    this.phoneMotel = this.data.phone;
+    this.phoneMotel = this.motelById.phone;
+
+
+    //Xét bill
+    this.setArrayChoices = this.days;
+    this.new = 'Tin Hot';
+    this.time = 'Đăng theo ngày';
+    this.timePublish = '6 Ngày'
+    this.getServicePrices();
+
+    this.tinhTien();
   }
 
-  ngOnInit(): void {
-
+  async getDataMotelById(id){
+    return await this.motelService.getMotelFromId(Number(id)) as Motel;
   }
-
 
   public increaseNumberBath()
   {
@@ -174,13 +266,13 @@ export class DialogEditMotelComponent implements OnInit {
 
   public getTypePrice(){
     for(let i=0 ;i<this.typePriceMotels.length; i++){
-      if(this.data.priceType == this.typePriceMotels[i].text){
+      if(this.motelById.priceType == this.typePriceMotels[i].text){
         this.typePriceShowMotels.push(this.typePriceMotels[i])
         break;
       }
     }
     for(let i=0 ;i<this.typePriceMotels.length; i++){
-      if(this.data.priceType != this.typePriceMotels[i].text){
+      if(this.motelById.priceType != this.typePriceMotels[i].text){
         this.typePriceShowMotels.push(this.typePriceMotels[i])
       }
     }
@@ -188,13 +280,13 @@ export class DialogEditMotelComponent implements OnInit {
 
   public getDirect(){
     for(let i=0 ;i<this.directs.length; i++){
-      if(this.data.detail.director == this.directs[i].text){
+      if(this.motelById.detail.director == this.directs[i].text){
         this.directsShow.push(this.directs[i])
         break;
       }
     }
     for(let i=0 ;i<this.directs.length; i++){
-      if(this.data.detail.director != this.directs[i].text){
+      if(this.motelById.detail.director != this.directs[i].text){
         this.directsShow.push(this.directs[i])
       }
     }
@@ -202,21 +294,9 @@ export class DialogEditMotelComponent implements OnInit {
 
   public async getLiveType(){
     const result = await this.motelService.getLiveTypes() as LiveType[];
-    /*this.motelService.getLiveTypes().subscribe(getlivetype => {
-      this.liveTypes = getlivetype
-      for(let i=0;i<getlivetype.length;i++){
-        if(this.data.detail.liveTypeId == getlivetype[i].id)
-        {
-          this.arrayTrue.push(true);
-        }
-        else{
-          this.arrayTrue.push(false);
-        }
-      }
-    })*/
     this.liveTypes = result
     for(let i=0;i<result.length;i++){
-      if(this.data.detail.liveTypeId == result[i].id)
+      if(this.motelById.detail.liveTypeId == result[i].id)
       {
         this.arrayTrue.push(true);
       }
@@ -229,7 +309,7 @@ export class DialogEditMotelComponent implements OnInit {
   public async getCities(){
     const result = await this.cityService.getCitys() as City[];
     for(let i=1; i< result.length; i++){
-      if(result[i].id == this.data.cityId){
+      if(result[i].id == this.motelById.cityId){
         this.cities.push(result[i]);
         this.city = result[i];
         this.getProvinceById(result[i].id)
@@ -238,7 +318,7 @@ export class DialogEditMotelComponent implements OnInit {
     }
 
     for(let i=1; i< result.length; i++){
-      if(result[i].id != this.data.cityId){
+      if(result[i].id != this.motelById.cityId){
         this.cities.push(result[i]);
       }
     }
@@ -247,7 +327,7 @@ export class DialogEditMotelComponent implements OnInit {
   public async getProvinceById(ID){
     const result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
     for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.data.provinceId){
+      if(result[i].id == this.motelById.provinceId){
         this.provinces.push(result[i]);
         this.procince = result[i];
         this.getStreetById(result[i].id)
@@ -256,7 +336,7 @@ export class DialogEditMotelComponent implements OnInit {
       }
     }
     for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.data.provinceId){
+      if(result[i].id != this.motelById.provinceId){
         this.provinces.push(result[i]);
       }
     }
@@ -264,7 +344,7 @@ export class DialogEditMotelComponent implements OnInit {
 
     /*const list = this.provinceService.getProvincesByCity(Number(ID)).subscribe((data) => {
       for (let i = 0; i < data.length; i++) {
-        if(data[i].id == this.data.provinceId){
+        if(data[i].id == this.motelById.provinceId){
           this.provinces.push(data[i]);
           this.procince = data[i];
           this.getStreetById(data[i].id)
@@ -274,7 +354,7 @@ export class DialogEditMotelComponent implements OnInit {
       }
 
       for (let i = 1; i < data.length; i++) {
-        if(data[i].id != this.data.provinceId){
+        if(data[i].id != this.motelById.provinceId){
           this.provinces.push(data[i]);
         }
       }
@@ -285,30 +365,30 @@ export class DialogEditMotelComponent implements OnInit {
   public async getStreetById(ID){
     const result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
     for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.data.streetId){
+      if(result[i].id == this.motelById.streetId){
         this.streets.push(result[i]);
         this.street = result[i];
         break;
       }
     }
     for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.data.streetId){
+      if(result[i].id != this.motelById.streetId){
         this.streets.push(result[i]);
       }
     }
     if(result.length == 0){
       this.motelUpdate.streetId = "0"
     }
-    /*const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
+      /*const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
         for (let i = 0; i < data.length; i++) {
-          if(data[i].id == this.data.streetId){
+          if(data[i].id == this.motelById.streetId){
             this.streets.push(data[i]);
             this.street = data[i];
             break;
           }
         }
         for (let i = 1; i < data.length; i++) {
-          if(data[i].id != this.data.streetId){
+          if(data[i].id != this.motelById.streetId){
             this.streets.push(data[i]);
           }
         }
@@ -318,48 +398,50 @@ export class DialogEditMotelComponent implements OnInit {
       })*/
   }
 
+  /*public getDistricteById(ID){
+        const list = this.dictrictService.getDistrictByProvince(Number(ID)).subscribe((data) => {
+          for (let i = 0; i < data.length; i++) {
+            if(data[i].id == this.motelById.districtId){
+              this.districts.push(data[i]);
+              this.district = data[i];
+              break;
+            }
+          }
+          for (let i = 1; i < data.length; i++) {
+            if(data[i].id != this.motelById.districtId){
+              this.districts.push(data[i]);
+            }
+          }
+        
+      })
+  }*/
   public async getDistricteById(ID){
     const result = await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
     for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.data.districtId){
+      if(result[i].id == this.motelById.districtId){
         this.districts.push(result[i]);
         this.district = result[i];
         break;
       }
     }
     for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.data.districtId){
+      if(result[i].id != this.motelById.districtId){
         this.districts.push(result[i]);
       }
     }
   }
 
   public getNewTypes = async () => {
-
-    /*this.typeservice.getTypeExcepts().subscribe(gettypes => {
-      for (let i = 0; i < gettypes.length; i++) {
-        if(this.data.detail.typeofnewId.toString() == gettypes[i].id){
-          this.newTypes.push(gettypes[i]);
-
-          break;
-        }
-      }
-      for (let i = 0; i < gettypes.length; i++) {
-        if(this.data.detail.typeofnewId.toString() != gettypes[i].id){
-          this.newTypes.push(gettypes[i]);
-        }
-      }
-    });*/
     const result = await this.typeservice.getTypeExcepts() as NewType[];
     for (let i = 0; i < result.length; i++) {
-      if(this.data.detail.typeofnewId.toString() == result[i].id){
+      if(this.motelById.detail.typeofnewId.toString() == result[i].id){
         this.newTypes.push(result[i]);
 
         break;
       }
     }
     for (let i = 0; i < result.length; i++) {
-      if(this.data.detail.typeofnewId.toString() != result[i].id){
+      if(this.motelById.detail.typeofnewId.toString() != result[i].id){
         this.newTypes.push(result[i]);
       }
     }
@@ -437,21 +519,16 @@ export class DialogEditMotelComponent implements OnInit {
   public async onChangeLiveType(event, liveTypes: LiveType)
   {
     this.liveType = liveTypes.nameType;
-    /*this.motelService.getLiveTypes().subscribe(getlivetype => {
-      var id = getlivetype.find(a => a.nameType == this.liveType)
-      this.motelUpdate.detail.liveTypeId = id.id;
-    })*/ 
-
     const result = await this.motelService.getLiveTypes() as LiveType[];
     var id = result.find(a => a.nameType == this.liveType)
     this.motelUpdate.detail.liveTypeId = id.id;
+   
   }
 
   public handleFileInput(event) {
     var files: FileList;
     files = event.target.files;
-
-    this.checkSaveImage = true;
+  
     for(let i=0; i< files.length; i++)
     {
       const reader = new FileReader();
@@ -464,19 +541,15 @@ export class DialogEditMotelComponent implements OnInit {
   }
 
   public onDelete(id){
-    this.checkSaveImage = true;
     if(this.image.length == 1){
       var fileNew : File[] =[];
       this.image = fileNew;
     }
-
-
     this.loadImageFromPC.forEach((element,index)=>{
       if(index == id) {
         this.loadImageFromPC.splice(id,1);
       }
     });
-
 
     this.oldImage.forEach((element,index)=>{
       if(index == id) {
@@ -485,6 +558,149 @@ export class DialogEditMotelComponent implements OnInit {
     });
   }
 
+
+  // Bill
+  public async getServicePrices(){
+    this.servicePrice = await this.priceService.getServiceprices() as Serviceprice[];
+  }
+
+
+  public onChangeSetValueName(event){
+    let value = event.target.value;
+    var name = this.setArrayChoices[value].text.toString();
+    this.timePublish = name;
+    this.tinhTien();
+  }
+
+  public onChangetime(event){
+    try{
+      let value = event.target.value;
+      var name = this.times[value].text.toString();
+      this.time = name;
+  
+      if(Number(value) == 0){
+        this.setValueName = "Số ngày";
+        this.setArrayChoices = this.days;
+      }
+      else if(Number(value) == 1){
+        this.setValueName = "Số tuần";
+        this.setArrayChoices = this.weeks;
+      }
+      else {
+        this.setValueName = "Số tháng";
+        this.setArrayChoices = this.months;
+      }
+    }
+    catch(error){
+      this.setValueName = "Số tháng";
+      this.setArrayChoices = this.months;
+    }  
+    this.tinhTien();
+  }
+
+  public onChangeNewMotel(event)
+  {
+    try{
+      let value = event.target.value;
+      var name = this.news[value].text.toString();
+      this.new = name;
+      this.tinhTien();
+    }
+    catch (error){
+     
+    }
+
+  }
+
+  public tinhTien(){
+    console.log(this.timePublish.split(" "));
+    if(this.new == "Tin Hot"){
+      if(this.time == "Đăng theo ngày"){
+        this.priceBill = 50000
+        this.type = this.timePublish.split(" ");
+
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tuần"){
+        this.priceBill = 315000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tháng"){
+        this.priceBill = 120000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+    }
+    if(this.new == "Tin VIP 3"){
+      if(this.time == "Đăng theo ngày"){
+        this.priceBill = 30000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tuần"){
+        this.priceBill = 190000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tháng"){
+        this.priceBill = 800000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+    }
+    if(this.new == "Tin VIP 2"){
+      if(this.time == "Đăng theo ngày"){
+        this.priceBill = 20000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tuần"){
+        this.priceBill = 133000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tháng"){
+        this.priceBill = 540000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+    }
+    if(this.new == "Tin VIP 1"){
+      if(this.time == "Đăng theo ngày"){
+        this.priceBill = 10000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tuần"){
+        this.priceBill = 63000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tháng"){
+        this.priceBill = 240000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+    }
+    if(this.new == "Tin thường"){
+      if(this.time == "Đăng theo ngày"){
+        this.priceBill = 2000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tuần"){
+        this.priceBill = 12000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+      if(this.time == "Đăng theo tháng"){
+        this.priceBill = 48000
+        this.type = this.timePublish.split(" ");
+        this.totalprice = Number(this.type[0])*this.priceBill;
+      }
+    }
+  }
 
   public loadImage = async () => {
     //console.log(this.motelImageDelete)//hình cũ đã xóa
@@ -497,7 +713,7 @@ export class DialogEditMotelComponent implements OnInit {
     if(this.image.length != 0 && this.motelImageDelete.length != 0){
       for(let i=0; i< this.image.length;i++){
         var temp = this.image.length;
-        var filePath = `${this.data.title}/${this.image[i].name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+        var filePath = `${this.motelById.title}/${this.image[i].name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
         const fileRef = this.storage.ref(filePath);
         this.storage.upload(filePath, this.image[i]).snapshotChanges().pipe(
           finalize(() => {
@@ -509,8 +725,9 @@ export class DialogEditMotelComponent implements OnInit {
                 this.updateMotel();
                 this.deleteImageOld();
                 this.addImageNew();
+                this.addBill();
                 alert("Sửa thành công")
-                this.dialogRef.close();
+                
                 window.location.reload();
               }
             })
@@ -523,15 +740,16 @@ export class DialogEditMotelComponent implements OnInit {
 
       this.updateMotel();
       this.deleteImageOld();
+      this.addBill();
       alert("Sửa thành công")
-      this.dialogRef.close();
+     
       window.location.reload();
     }
 
     if(this.image.length != 0 && this.motelImageDelete.length == 0){
       for(let i=0; i< this.image.length;i++){
         var temp = this.image.length;
-        var filePath = `${this.data.title}/${this.image[i].name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+        var filePath = `${this.motelById.title}/${this.image[i].name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
         const fileRef = this.storage.ref(filePath);
         this.storage.upload(filePath, this.image[i]).snapshotChanges().pipe(
           finalize(() => {
@@ -542,8 +760,9 @@ export class DialogEditMotelComponent implements OnInit {
                 console.log("1 0")
                 this.updateMotel();
                 this.addImageNew();
+                this.addBill();
                 alert("Sửa thành công")
-                this.dialogRef.close();
+                
                 window.location.reload();
               }
             })
@@ -577,11 +796,12 @@ export class DialogEditMotelComponent implements OnInit {
       if(this.street == undefined){
 
       }
-      this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
-        console.log(data);
+      this.motelService.updateExtendMotel(this.motelUpdate).subscribe(data => {
+        this.addBill();
       });
       alert("Sửa thành công")
-      this.dialogRef.close();
+
+    
       window.location.reload();
     }
    
@@ -606,7 +826,9 @@ export class DialogEditMotelComponent implements OnInit {
     if(this.imagesURLFirebare.length){
       var motel = new Motel();
       motel.images = images;
-      this.imageService.postImageMotel(motel).subscribe();
+      this.imageService.postImageMotel(motel).subscribe(data =>{
+        
+      });
     }
 
     
@@ -639,9 +861,37 @@ export class DialogEditMotelComponent implements OnInit {
     if(this.street == undefined){
 
     }
-    this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
+    this.motelService.updateExtendMotel(this.motelUpdate).subscribe(data => {
       console.log(data);
     });
   }
+
+  public openDialogExtendPaypal(): void {
+    const dialogRef = this.dialog.open(ExtendPaypalComponent, {
+     width: '500px',
+     height:'500px',
+     data: this.totalprice
+    });
+
+    dialogRef.afterClosed().subscribe((result: Motel) => {
+      if(localStorage.getItem(StorageService.totalMoneyStorage)){
+        this.loadImage()
+      }
+    });
+  }
+
+  public async addBill(){
+    var bill = new Bill();
+    bill.motelId = this.motelUpdate.id;
+
+    var usd = "0.000043";
+    bill.payMoney =  Number(localStorage.getItem(StorageService.totalMoneyStorage));
   
+    var t = this.timePublish.split(" ");
+    bill.numberDatePublish = Number(t[0]);
+    bill.timeChoice = this.time;
+    console.log(bill)
+    await this.billService.addbill(bill);
+    localStorage.removeItem("money");
+  }
 }

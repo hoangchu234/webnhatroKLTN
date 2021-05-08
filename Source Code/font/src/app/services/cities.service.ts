@@ -32,7 +32,7 @@ export class CitiesService {
       return await this.http.get(this.urlAPI + "/api/Cities/GetLists").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 

@@ -230,20 +230,20 @@
             <a title="" href="newsfeed.html"><img class="img1" src="assets/forum/images1/logo.png" alt=""></a>
         </div>
         <div class="top-area">
-            <div class="main-menu">
+            <!-- <div class="main-menu">
                 <span>
                     <i class="fa fa-braille"></i>
                 </span>
-            </div>
+            </div> -->
             <div class="top-search">
                 <form method="post" class="">
                     <input type="text" placeholder="Search People, Pages, Groups etc">
                    
                 </form>
             </div>
-            <div class="page-name">
+            <!-- <div class="page-name">
                 <span>Newsfeed</span>
-             </div>
+             </div> -->
             <ul class="setting-area">
                 <li><a href="newsfeed.html" title="Home" data-ripple=""><i class="fa fa-home"></i></a></li>
                 <li>
@@ -743,8 +743,8 @@
                 </li>
             </ul>
             <div class="user-img1">
-                <h5>{{dataUser.hovaTen}}</h5>
-                <img class="img1" src="{{dataUser.userImage}}" alt="">
+                <h5 *ngIf="checkLogin()">{{dataUser.hovaTen}}</h5>
+                <img *ngIf="checkLogin()"  class="img1" style="height: 50px; width: 50px;" src="{{dataUser.userImage}}" alt="">
                 <span class="status f-online"></span>
                 <div class="user-setting">
                     <span class="seting-title">Chat setting <a href="#" title="">see all</a></span>
@@ -1232,7 +1232,7 @@
                                 <aside class="sidebar static left">
                                     <div class="widget">
                                         <div class="weather-widget low-opacity bluesh">
-                                            <div class="bg-image" style="background-image: url(assets/forum/images1/resources/weather.jpg)"></div>
+                                            <div class="bg-image" style="background-image: url(../../assets/forum/images1/weather.jpg)"></div>
                                             <span class="refresh-content"><i class="fa fa-refresh"></i></span>
                                             <div class="weather-week">
                                                 <div class="icon sun-shower">
@@ -1519,7 +1519,7 @@
                                                                     <p>{{item.commentUser}}</p>
                                                                     <div class="inline-itms">
                                                                         <span>{{item.createDate  | date}}</span>
-                                                                        <a class="we-reply" (click)="openComment(dataPost.id,item.id,item.parentCommentId)" title="Reply"><i class="fa fa-reply"></i></a>
+                                                                        <a class="we-reply" (click)="openComment(dataPost.id,item.id,item.parentCommentId)" title="Reply"><i class="fa fa-reply"></i><span>{{displayCountCommentChild(dataPost.id,item.id)}}</span></a>
                                                                         <a title=""><i (click)="liveComment(item.id)" class="fa fa-heart"></i><span>{{displayLikeComment(item.id)}}</span></a>
                                                                     </div>
                                                             </div>
@@ -1542,7 +1542,7 @@
                                                                 <div class="post-comt-box">
                                                                     <form method="post">
                                                                         <div id="postData.id">
-                                                                            <textarea placeholder="Trả lời bài post" name="dataPost.postUser"  [(ngModel)]="comment.commentUser"></textarea>
+                                                                            <textarea placeholder="Trả lời bài post" name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
                                                                         </div>
                                                                         <div class="add-smiles">
                                                                             <div class="uploadimage">
@@ -1588,7 +1588,7 @@
                                                         <div class="post-comt-box">
                                                             <form method="post">
                                                                 <div id="postData.id">
-                                                                    <textarea placeholder="Trả lời bài post"  name="dataPost.postUser"  [(ngModel)]="comment.commentUser"></textarea>
+                                                                    <textarea placeholder="Trả lời bài post"  name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
                                                                 </div>
                                                                 <div class="add-smiles">
                                                                     <div class="uploadimage">

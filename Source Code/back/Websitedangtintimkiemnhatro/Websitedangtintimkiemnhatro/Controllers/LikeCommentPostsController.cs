@@ -64,6 +64,69 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return likeCommentPost;
         }
 
+        // DELETE: api/LikeCommentPosts/5
+        [HttpDelete]
+        [Route("DeleteLikeCommentPost/{idPost}/{idUser}")]
+        public async Task<ActionResult<LikeCommentPost>> DeleteLikeCommentPost(int idPost, int idUser)
+        {
+            var likeCommentPost = _context.LikeCommentPosts.Where(a => a.IdPost == idPost && a.UserId == idUser).FirstOrDefault();
+            if (likeCommentPost == null)
+            {
+                return NotFound();
+            }
+
+            _context.LikeCommentPosts.Remove(likeCommentPost);
+            await _context.SaveChangesAsync();
+
+            return likeCommentPost;
+        }
+
+        // DELETE: api/LikeCommentPosts/5
+        [HttpDelete]
+        [Route("DeleteLikeCommentPostver2/{idComment}/{idUser}")]
+        public async Task<ActionResult<LikeCommentPost>> DeleteLikeCommentPostver2(int idComment, int idUser)
+        {
+            var likeCommentPost = _context.LikeCommentPosts.Where(a => a.IdCommnent == idComment && a.UserId == idUser).FirstOrDefault();
+            if (likeCommentPost == null)
+            {
+                return NotFound();
+            }
+
+            _context.LikeCommentPosts.Remove(likeCommentPost);
+            await _context.SaveChangesAsync();
+
+            return likeCommentPost;
+        }
+
+        // GET: api/LikeCommentPosts/5
+        [HttpGet]
+        [Route("GetCheckLikeOneTime/{idPost}/{idUser}")]
+        public async Task<ActionResult<Object>> GetCheckLikeOneTime(int idPost, int idUser)
+        {
+            var likeCommentPost = _context.LikeCommentPosts.Where(a => a.IdPost == idPost && a.UserId == idUser).ToList();
+
+            if (likeCommentPost.Count == 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        // GET: api/LikeCommentPosts/5
+        [HttpGet]
+        [Route("GetCheckLikeOneTimever2/{idComment}/{idUser}")]
+        public async Task<ActionResult<Object>> GetCheckLikeOneTimever2(int idComment, int idUser)
+        {
+            var likeCommentPost = _context.LikeCommentPosts.Where(a => a.IdCommnent == idComment && a.UserId == idUser).ToList();
+
+            if (likeCommentPost.Count == 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         private bool LikeCommentPostExists(int id)
         {

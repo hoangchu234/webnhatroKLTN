@@ -2,8 +2,8 @@
 <div class="form" style="margin-top: 130px;">
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist" style="text-align: center;">
-      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" style="height: 60px;width:240px;border-bottom: 0px;font-size: 15px;font-weight: bold;padding: 20px;">Đăng nhập</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" style="height: 60px;width:230px;border-bottom: 0px;font-size: 15px;font-weight: bold;padding: 20px;">Đăng ký</a>
+      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" (click) = "clickChange()" role="tab" aria-controls="nav-home" aria-selected="true" style="height: 60px;width:240px;border-bottom: 0px;font-size: 15px;font-weight: bold;padding: 20px;">Đăng nhập</a>
+      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" (click) = "clickChange()" role="tab" aria-controls="nav-profile" aria-selected="false" style="height: 60px;width:230px;border-bottom: 0px;font-size: 15px;font-weight: bold;padding: 20px;">Đăng ký</a>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
@@ -11,14 +11,21 @@
       
         <div style="margin-top: 1px;border: 1px solid rgb(240, 240, 240);" >
           <div class="card-body" >
-            <form class="form-signin"style="margin-top: -5px;" #form="ngForm" (ngSubmit)="login()">
+            <form class="form-signin"style="margin-top: -5px;" #formLogin="ngForm" (ngSubmit)="login()">
               <a style="margin: 15px;font-size: 15px;">Số điện thoại</a>
               <div class="form-label-group" style="padding-left: 20px">
-                <input  type="email" id="inputEmail" name="phone"  [(ngModel)]="phone" class="form-control" required autofocus style="color: black;margin-top: 5px;">
+                <input  type="text" id="phone" name="phone" minlength="10" [(ngModel)]="phone" ngDefaultControl class="form-control" required autofocus style="color: black;margin-top: 5px;">
+                <div [hidden]="showError" >
+                  <p *ngIf="formLogin.controls.phone?.errors?.required">Xin nhập số điện thoại</p>
+                  <p *ngIf="formLogin.controls.phone?.errors?.minlength">Xin nhập số điện thoại 9 số</p>
+                </div>
               </div>
               <a style="margin: 15px;font-size: 15px;" >Mật khẩu</a>
               <div class="form-label-group" style="padding-left: 20px;">
-                <input type="password" id="inputPassword" name="password"  [(ngModel)]="password" class="form-control" required style="color: black;margin-top: 5px;">
+                <input type="password" id="password" name="password"  [(ngModel)]="password"  ngDefaultControl class="form-control" required style="color: black;margin-top: 5px;">
+                <p [hidden]="showError" *ngIf="formLogin.controls.password?.errors?.required">
+                  Xin nhập mật khẩu
+                </p>
               </div>
 
               <div class="custom-control custom-checkbox mb-3" style="margin-left: 10px;" >
@@ -45,22 +52,34 @@
       <div>
         <article class="card-body" style="margin-top: 1px;border: 1px solid rgb(240, 240, 240);" >
           <div [hidden]="user" style="margin-top: 10px;" >
-            <form class="form-signin" style="margin-top: -15px;"  #form="ngForm" (ngSubmit)="onSubmit()">
+            <form class="form-signin" style="margin-top: -15px;"  #formRegister="ngForm" (ngSubmit)="onSubmit()">
               <a style="margin: 15px;font-size: 15px;">Họ và tên</a>
               <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
-                <input type="email" id="inputEmail" class="form-control" required autofocus style="color: black;" name="Name" [(ngModel)]="name">
+                <input type="text" id="name" class="form-control" required autofocus style="color: black;" name="name" [(ngModel)]="name" ngDefaultControl>
+                <p [hidden]="showError" *ngIf="formRegister.controls.name?.errors?.required">
+                  Xin nhập họ và tên
+                </p>
               </div>
               <a style="margin: 15px;font-size: 15px;">Số điện thoại</a>
               <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
-                <input type="phone" id="inputPassword" class="form-control" required style="color: black;" [(ngModel)]="phone" name="Phone">
+                <input type="text" id="phone2" class="form-control" required style="color: black;" [(ngModel)]="phone" name="phone2" ngDefaultControl>
+                <p [hidden]="showError" *ngIf="formRegister.controls.phone2?.errors?.required">
+                  Xin nhập số điện thoại
+                </p>
               </div>
               <a style="margin: 15px;font-size: 15px;">Tạo mật khẩu</a>
               <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
-                <input type="password" id="inputEmail" class="form-control" required autofocus style="color: black;" [(ngModel)]="password" name="password">
+                <input type="password" id="password2" class="form-control" required autofocus style="color: black;" [(ngModel)]="password" name="password2" ngDefaultControl>
+                <p [hidden]="showError" *ngIf="formRegister.controls.password2?.errors?.required">
+                  Xin nhập lại mật khẩu
+                </p>
               </div>
               <a style="margin: 15px;font-size: 15px;" >Nhập lại mật khẩu</a>
               <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
-                <input type="password" id="inputPassword" class="form-control" required style="color: black;" [(ngModel)]="confirmPassword" name="confirmPassword">
+                <input type="password" id="confirmPassword" class="form-control" required style="color: black;" [(ngModel)]="confirmPassword" name="confirmPassword" ngDefaultControl>
+                <p [hidden]="showError" *ngIf="formRegister.controls.confirmPassword?.errors?.required">
+                  Xin nhập lại mật khẩu
+                </p>
               </div>
         <!--capcha-->
               <div class="form-group" style="padding-top: 0px;">
@@ -71,7 +90,7 @@
 
         </div>
         <div *ngIf="user" >
-          <form #form="ngForm" (ngSubmit)="createNewAccount()">
+          <form #formPhone="ngForm" (ngSubmit)="createNewAccount()">
             <div class="container-fluid" id="signup" >
                 <hr>
                 <div class="card bg-light">
@@ -81,7 +100,10 @@
                       <div class="input-group-prepend">
 
                       </div>
-                          <input style="height: 60px;margin-left: 20px;" name="phone_number"  [(ngModel)]="phone_number" class="form-control" placeholder="code xac nhan" type="text">
+                          <input style="height: 60px;margin-left: 20px;" name="phone_number"  [(ngModel)]="phone_number" ngDefaultControl class="form-control" placeholder="code xac nhan" type="text">
+                          <p [hidden]="showError" *ngIf="formPhone.controls.phone_number?.errors?.required">
+                            Xin nhập mã xác nhận
+                          </p>
                       </div> <!-- form-group// -->
                       <div class="form-group">
                           <button type="submit" name="button_2" class="btn btn-primary btn-block btn-create" > Xác thực  </button>

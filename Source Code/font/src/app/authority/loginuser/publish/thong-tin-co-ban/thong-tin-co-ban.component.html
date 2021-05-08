@@ -18,8 +18,8 @@
                 <label class="col-sm-10" for="exampleFormControlSelect1"><b>Loại nhà trọ</b></label>
                 <label class="col-sm-2" for="exampleFormControlSelect1"><b >Loại hình</b></label>
                 <div class="col-sm-10" style="margin-top: 5px;"><!-- sẽ thay lại là loại nhà trọ-->
-                  <select (change)="onChangeCity($event)" aria-placeholder="Nhấn để chọn loại nhà trọ" class="form-control form-control-lg" style="color: black;">
-                    <option *ngFor='let citie of cities' [value]="citie.id" >{{citie.name}}</option>
+                  <select (change)="onChangeType($event)" aria-placeholder="Nhấn để chọn loại nhà trọ" class="form-control form-control-lg" style="color: black;">
+                    <option *ngFor='let type of newTypes' [value]="type.id" >{{type.name}}</option>
                 </select>
                 </div>
                 <div class="col-sm-2" style="padding-left: 28px;margin-top: 5px;" >
@@ -64,13 +64,13 @@
               <div class="form-group row">
                 <label class="col-sm-12" for="exampleFormControlSelect1"><b>Số điện thoại</b></label>
                 <div class="col-sm-12" style="margin-top: 5px ;margin-left: 0px;">
-                <input type="number" [(ngModel)]="phoneMotel" name="PhoneMotel" class="form-control" style="color: black;border-radius: 5px;background-color: white;" placeholder="Nhập số điện thoại" readonly>
+                <input type="number" [(ngModel)]="phoneMotel" ngDefaultControl name="PhoneMotel" class="form-control" style="color: black;border-radius: 5px;background-color: white;" placeholder="Nhập số điện thoại" readonly>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-12" for="exampleFormControlSelect1"><b>Địa chỉ</b></label>
                 <div class="col-sm-12" style="margin-top: 5px ;">
-                  <input type="email" style="border-radius: 5px;" [(ngModel)]="addressMotel" name="AddressMotel" class="form-control" id="exampleFormControlInput2" placeholder="Nhập địa chỉ">
+                  <input type="email" style="border-radius: 5px;" [(ngModel)]="addressMotel" ngDefaultControl name="AddressMotel" class="form-control" id="exampleFormControlInput2" placeholder="Nhập địa chỉ">
                 </div>
               </div>
               <div class="form-group row" >

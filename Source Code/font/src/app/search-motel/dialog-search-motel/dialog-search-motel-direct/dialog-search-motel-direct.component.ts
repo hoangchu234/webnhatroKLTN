@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-dialog-search-motel-direct',
@@ -20,8 +21,8 @@ export class DialogSearchMotelDirectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('directName')){
-      this.choiceDirect = localStorage.getItem('directName');
+    if(localStorage.getItem(StorageService.DirectSearchStorage) && localStorage.getItem(StorageService.DirectSearchStorage) != "Tất cả"){
+      this.choiceDirect = localStorage.getItem(StorageService.DirectSearchStorage);
     }
   }
 
@@ -35,8 +36,8 @@ export class DialogSearchMotelDirectComponent implements OnInit {
     }
     else{
       this.directtick.emit(data);
-      localStorage.setItem('directName', data);
     }
+    localStorage.setItem(StorageService.DirectSearchStorage, data);
     this.directnotify.emit('direct');
 
   }

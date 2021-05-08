@@ -50,9 +50,12 @@ export class MagementProfileComponent implements OnInit {
  
  ngOnInit(): void {
    this.checkDataMotel = "";
-
-  
  }
+
+ public linkRouterChiTiet(name, id) {
+  //this.router.navigate( [{name: name, id: id}]);
+  this.router.navigate( ['/home/chi-tiet',name,id]);
+}
 
  public handlePageChange(event) {
    this.page = event;
@@ -118,7 +121,6 @@ export class MagementProfileComponent implements OnInit {
  }
  
  public openDialog(): void {
-  console.log(this.dialogUser)
    const dialogRef = this.dialog.open(DialogEditUserComponent, {
      direction: "ltr",
      width: '400px',
@@ -128,15 +130,12 @@ export class MagementProfileComponent implements OnInit {
    dialogRef.afterClosed().subscribe((result: User) => {
      if (result)
      {
-       console.log('The dialog was closed');
-       console.log(result);
        window.location.reload();
      }
    });
  }
 
  public openDialogEditPhone(): void {
-   console.log(this.dialogUser)
     const dialogRef = this.dialog.open(DialogEditPhoneComponent, {
       direction: "ltr",
       width: '400px',
@@ -161,7 +160,6 @@ export class MagementProfileComponent implements OnInit {
        this.userService.updateAccount(account).subscribe(update => {
         alert("Lưu thành công")
         window.location.reload();
-        console.log(update)
       });
       
        
@@ -172,7 +170,6 @@ export class MagementProfileComponent implements OnInit {
   }
 
  public openDialogEditPassword(): void {
-   console.log(this.dialogUser)
     const dialogRef = this.dialog.open(DialogEditPasswordComponent, {
       direction: "ltr",
       width: '400px',
@@ -182,8 +179,6 @@ export class MagementProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: User) => {
       if (result)
       {
-       console.log('The dialog was closed');
-       console.log(result);
        var account = new Account();
        account.id = result.account.id;
        account.isActive = result.account.isActive;

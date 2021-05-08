@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { StorageService } from 'src/app/storage.service';
 @Component({
   selector: 'app-dialog-search-motel-area',
   templateUrl: './dialog-search-motel-area.component.html',
@@ -16,8 +17,8 @@ export class DialogSearchMotelAreaComponent implements OnInit {
   choice = "Tất cả"
   choiceArea
   constructor() { 
-    if(localStorage.getItem('areaName')){
-      this.choiceArea = localStorage.getItem('areaName');
+    if(localStorage.getItem(StorageService.AreaSearchStorage) && localStorage.getItem(StorageService.AreaSearchStorage) != "Tất cả"){
+      this.choiceArea = localStorage.getItem(StorageService.AreaSearchStorage);
     }
   }
 
@@ -34,9 +35,8 @@ export class DialogSearchMotelAreaComponent implements OnInit {
     }
     else{
       this.areatick.emit(data);
-      localStorage.setItem('areaName', data);
     }
-
+    localStorage.setItem(StorageService.AreaSearchStorage, data);
     this.areanotify.emit('area');
   }
 

@@ -2,6 +2,7 @@ import { Component, Inject, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AreaSearch } from 'src/app/model/AreaSearch';
 import { User } from 'src/app/model/User';
+import { StorageService } from 'src/app/storage.service';
 import { AreaSearchService } from '../../services/area-search.service'
 
 export interface Type{
@@ -48,23 +49,27 @@ export class DialogSearchMotelComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
-
-    if(localStorage.getItem('tickArea')){
+    if(localStorage.getItem(StorageService.AreaSearchTickStorage)){
       this.tickArea = "Tick xanh";
     }
-    if(localStorage.getItem('tickDirect')){
+    else{
+      this.tickArea = "";
+    }
+    if(localStorage.getItem(StorageService.DirectSearchTickStorage)){
       this.tickDirect = "Tick xanh";
+    }
+    else{
+      this.tickDirect = "";
     }
   }
 
   public deleteData(){
-    localStorage.removeItem('areaName');
-    localStorage.removeItem('directName');
-    localStorage.removeItem('tickArea');
-    this.tickArea = "";
-    localStorage.removeItem('tickDirect');
+    localStorage.removeItem(StorageService.AreaSearchStorage);
+    localStorage.removeItem(StorageService.DirectSearchStorage);
+    localStorage.removeItem(StorageService.AreaSearchTickStorage);
+    localStorage.removeItem(StorageService.DirectSearchTickStorage);
     this.tickDirect = "";
+    this.tickArea = "";
   }
 
   public onNotify(message: string): void { 
@@ -78,17 +83,17 @@ export class DialogSearchMotelComponent implements OnInit {
 
 
   public onTickArea(message: string): void { 
-    console.log(message)
     if(message == "Tất cả"){
       this.tickArea = "";
     }
     else{
       var dataArea = this.area.find(a => a.name == message);
+      console.log(dataArea)
       if(dataArea)
       {
         this.choiceArea = dataArea.name;
         this.tickArea = "Tick xanh";
-        localStorage.setItem('tickArea', "Tick xanh");
+        localStorage.setItem(StorageService.AreaSearchTickStorage, "Tick xanh");
       }
     }
    
@@ -106,7 +111,7 @@ export class DialogSearchMotelComponent implements OnInit {
       {
         this.choiceDirect = dataDirect.name;
         this.tickDirect = "Tick xanh";
-        localStorage.setItem('tickDirect', "Tick xanh");
+        localStorage.setItem(StorageService.DirectSearchTickStorage, "Tick xanh");
       }
     }
    

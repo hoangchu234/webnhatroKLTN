@@ -106,7 +106,7 @@ export class ProvincesService {
       catchError(error => of([]))
     );
   }*/
-  public getProvincesByCityName = async (id: number) => {
+  public getProvincesByCityName = async (name: string) => {
     try {
       const url = `${this.urlAPI + "/api/Provinces/GetProvinceByName"}/${name}`;
       return await this.http.get(url).toPromise();

@@ -155,9 +155,9 @@ export class SocialloginComponent implements OnInit {
         if (data.isActive) {
           try{
             this.createNewAccountSocial();
-            localStorage.setItem('phone', data.phone);
-            localStorage.setItem('password', data.password);
-            console.log(this.authenticationService);
+            // localStorage.setItem('phone', data.phone);
+            // localStorage.setItem('password', data.password);
+            // console.log(this.authenticationService);
             alert('Đăng nhập thành công');
             this.router.navigateByUrl('home');
           }

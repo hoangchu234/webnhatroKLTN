@@ -10,6 +10,7 @@ import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
 import { Router } from '@angular/router';
 import { Serviceprice } from 'src/app/model/Serviceprice';
 import { Bill } from 'src/app/model/Bill';
+import { StorageService } from 'src/app/storage.service';
 
 export interface Type{
   id:number;
@@ -110,7 +111,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
     this.getServicePrices();
 
     this.tinhTien();
-    localStorage.removeItem('currentImagesFile');
+    localStorage.removeItem(StorageService.ImageStorage);
   }
 
   public async getServicePrices(){
@@ -172,7 +173,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
 
   public next(){
 
-    this.motel = JSON.parse(localStorage.getItem('PublishMotel'));
+    this.motel = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     this.motel.typeservice = this.new;
     this.motel.time = this.timePublish;
 
@@ -184,8 +185,8 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
     bill.timeChoice = this.time;
     this.motel.bill = bill;
 
-    localStorage.removeItem('PublishMotel')
-    localStorage.setItem('PublishMotel', JSON.stringify(this.motel));
+    localStorage.removeItem(StorageService.motelStorage)
+    localStorage.setItem(StorageService.motelStorage, JSON.stringify(this.motel));
     this.router.navigateByUrl('/user/thanh-toan-dong'); 
    
   }
@@ -280,6 +281,6 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
       }
     }
 
-    localStorage.setItem('totalMoney', this.totalprice.toString());
+    localStorage.setItem(StorageService.totalMoneyStorage, this.totalprice.toString());
   }
 }

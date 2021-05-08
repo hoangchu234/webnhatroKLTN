@@ -1,0 +1,122 @@
+<div class="content-wrapper">
+    <div>
+      <h3 class="page-title"> Quản lý duyệt tin </h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Quản lý</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Quản lý duyệt tin</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="container" >
+        <div style="background-color: rgb(241, 241, 241);padding-top:20px ;padding-bottom:10px ">
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top:15px;">
+        
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+        
+                <div class="container-fluid" >
+                  <div class="row" >
+                    <div class="col-md-12" style="width: 100%;height:450px" ><img src="{{image0}}"></div>
+        
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item" *ngFor= "let images of motelImage">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-12" style="width: 100%;height:450px" ><img src="{{images.imageMotel}}"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        
+        </div>
+        
+        <div>
+          <div class="container" style="border-bottom:1px solid #808080;padding: 20px;">
+            <div class="row" style="padding:15px;color: black;padding-bottom: 30px;" >
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3"><b>ID tin: </b><a style="color: darkturquoise;">1363839</a></div>
+                  <div class="col-md-3"><b>Loại tin: </b><a style="color: darkturquoise;">{{motel.typemotel}}</a></div>
+                  <div class="col-md-3">Đăng hai tuần trước</div>
+                  <div class="col-md-3">Ngày hết hạn: {{motel.dateDue | date}}</div>
+                  <div class="col-md-12" style="padding-top: 40px;"><a style="color: darkturquoise;">{{motel.title}}</a> - <b>{{motel.address}}</b></div>
+        
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        
+          <div class="container" >
+            <div class="row" style="padding:15px;margin-bottom: 20px;">
+              <div class="col-md-8" style="border-right:1px solid grey;padding:10px;padding-top: 0px;">
+                <div class="row" >
+                <div class="col-md-6 row" >
+                  <a class="col-md-3 " >
+                    <img class="img-profile rounded-circle" *ngIf="motel.user.userImage"  src="{{motel.user.userImage}}" style="height: 50px;width: 50px;">
+                    <img class="img-profile rounded-circle" [hidden] = "motel.user.userImage" src="../../../assets/images/blog_3.jpg" style="height: 50px;width: 50px;">
+                  </a>
+                  <div class="col-md-9" style="font-size:15px">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><b>{{motel.user.hovaTen}}</b> </span>
+                    <div>{{motel.user.email}}</div>
+                  </div>
+                </div>
+                <div class="col-md-6 row" style="margin-left: 20px;">
+                    <div style="float: right;padding-left: 20px;background-color: white;color: black;width: 150px;">Phòng tắm<span class="fa  fa-bathtub" style="margin-left: 10px;color: black;margin-right: 10px;" ></span>{{motel.detail.numberBath}} </div>
+                    <div style="float: right;padding-left: 20px;background-color: white;color: black;width: 150px;margin-top: 20px;">Phòng ngủ<span class="fa fa-bed" style="margin-left: 10px;color: black;margin-right: 10px;" ></span>{{motel.detail.numberLiving}} </div>
+        
+                </div>
+              </div>
+              </div>
+              <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div>Giá:</div>
+                  </div>
+                  <div class="col-md-6">
+                    <div ><b>{{motel.price}} {{motel.priceType}}</b></div>
+                  </div>
+                  <div class="col-md-6"  style="padding-top:20px">
+                    <div>Diện tích:</div>
+                  </div>
+                  <div class="col-md-6" style="padding-top:20px">
+                    <div> <b>{{motel.areaZone}} {{motel.areaZoneType}}</b></div>
+                  </div>
+                  <div class="col-md-6"  style="padding-top:20px">
+                    <div>Loại nhà:</div>
+                  </div>
+                  <div class="col-md-6" style="padding-top:20px">
+                    <div> <b>{{motel.typeservice}}</b></div>
+                  </div>
+        
+                </div>
+              </div>
+              
+              <div class="col-md-12" style="margin-top: 20px;border: 1px solid black;">
+                <div style="font-weight: bold;font-size: 20px;margin-top: 10px;margin-bottom: 20px;">Thông tin mô tả</div>
+                  <div type="text" style="width:100%" [innerHTML]="getHTML(motel.description)">
+                  </div>
+              </div>
+            </div>
+            <button style="width:100%" class="btn btn-warning" *ngIf="!isAdmin" type="button" (click)="onDuyetTin(motel); onNoClick()" >Duyệt tin</button>
+        
+          </div>
+        </div>
+      </div>
+</div>
+
+  
+    
+    

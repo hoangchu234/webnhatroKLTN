@@ -1,19 +1,6 @@
 <app-navbar-user></app-navbar-user>
-<!-- ============================================================== -->
-<!-- main wrapper -->
-<!-- ============================================================== -->
 <div class="dashboard-main-wrapper">
-    <!-- ============================================================== -->
-    <!-- navbar -->
-    <!-- ============================================================== -->
-
-    <!-- ============================================================== -->
-    <!-- end navbar -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- left sidebar -->
-    <!-- ============================================================== -->
-    <div class="nav-left-sidebar sidebar-dark">
+    <div class="nav-left-sidebar sidebar-dark" *ngIf="check()">
         <div class="menu-list">
             <nav class="navbar navbar-expand-lg navbar-light">
 
@@ -138,9 +125,7 @@
                                 </ul>
                             </div>-->
                         </li>
-                        <li class="nav-divider font">
-                            Features
-                        </li>
+                       
                         <!--<li class="nav-item">
                             <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-7" aria-controls="submenu-7"><i class="fa fa-fw fa-inbox"></i>Apps <span class="badge badge-secondary">New</span></a>
                              <div id="submenu-7" class="collapse submenu" style="">
@@ -229,12 +214,7 @@
             </nav>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- end left sidebar -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- wrapper  -->
-    <!-- ============================================================== -->
+
     <div class="dashboard-wrapper">
         <div class="dashboard-ecommerce">
             <div class="container-fluid dashboard-content ">

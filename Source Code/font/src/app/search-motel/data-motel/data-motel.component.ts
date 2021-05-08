@@ -25,6 +25,7 @@ import { District } from 'src/app/model/District';
 import { Street } from 'src/app/model/Street';
 import { PriceSearchService } from 'src/app/services/price-search.service';
 import { PriceSearch } from 'src/app/model/PriceSearch';
+import { StorageService } from 'src/app/storage.service';
 
 
 export interface Type{
@@ -43,9 +44,9 @@ export class DataMotelComponent implements OnInit {
 
   public news:Array<Type> = [
     {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
-    {id: 1, text:'Tin VIP 3'}, // 
+    {id: 1, text:'Tin VIP 1'}, // 
     {id: 2, text:'Tin VIP 2'},
-    {id: 3, text:'Tin VIP 1'},
+    {id: 3, text:'Tin VIP 3'},
     {id: 4, text:'Tin thường'},
   ];
 
@@ -156,9 +157,9 @@ export class DataMotelComponent implements OnInit {
   }
 
 
-  public onCity(message:string){
-    this.motels = this.motelsearch.filter(a => a.city.name == message);
-  }
+  // public onCity(message:string){
+  //   this.motels = this.motelsearch.filter(a => a.city.name == message);
+  // }
 
   public async getTypes(){
     /*this.typeservice.getTypes().subscribe(gettypes => {
@@ -189,7 +190,7 @@ export class DataMotelComponent implements OnInit {
   }
 
   public getMotelDeffault(){
-    this.motels = this.motelsearch
+    this.motels = this.motelsearch;
     this.seach = "Mặc định"
   }
 
@@ -265,6 +266,13 @@ export class DataMotelComponent implements OnInit {
     
   }
 
+  public deleteData(){
+    localStorage.removeItem(StorageService.AreaSearchStorage);
+    localStorage.removeItem(StorageService.DirectSearchStorage);
+    localStorage.removeItem(StorageService.AreaSearchTickStorage);
+    localStorage.removeItem(StorageService.DirectSearchTickStorage);
+  }
+  
   public openDialog(): void {
     const dialogRef = this.dialog.open(DialogSearchMotelComponent, {
       direction: "ltr",
@@ -272,12 +280,12 @@ export class DataMotelComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      try{
-
-      }
-      catch(error){
-        console.log("errr")
-      }
+      // this.motelsearch = this.motels.slice();
+      // if(localStorage.getItem(StorageService.AreaSearchStorage)){
+      //   this.motelsearch = this.motelsearch.filter(a => a.detail. == localStorage.getItem('directName'))
+      //   this.totalRecord = this.motels.length;
+      //   console.log("directName")
+      //  }
     /*
       //1
       if(localStorage.getItem('areaName') == null && localStorage.getItem('directName') ){
@@ -480,17 +488,16 @@ export class DataMotelComponent implements OnInit {
     }
 
     const result =  await this.motelService.getmotelbyorder(idCity,idProvince,idDistrict,idStreet,idPrice,idType) as any;
-    // this.loadDataHot(result);
-    // this.loadData1(result);
-    // this.loadData2(result);
-    // this.loadData3(result);    
-    // this.loadDataThuong(result);
+    this.loadDataHot(result);
+    this.loadData1(result);
+    this.loadData2(result);
+    this.loadData3(result);    
+    this.loadDataThuong(result);
     if(this.motels.length){
-      console.log("have")
       this.motels.splice(0, this.motels.length);
     }
-    this.motels = result.slice();
-    this.totalRecord = result.length;
+    this.motels = this.motelsearch.slice();
+    this.totalRecord = this.motels.length;
    
   }
 

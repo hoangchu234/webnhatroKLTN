@@ -7,8 +7,8 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { Account } from  '../../../model/Account';
 import { Observable, Subject } from 'rxjs';
 import { startWith, map, debounce ,distinctUntilChanged,switchMap } from 'rxjs/operators';
-import { DialogDetailMotelPublishComponent } from '../dialog-detail-motel-publish/dialog-detail-motel-publish.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export interface Type{
   id:number;
@@ -42,7 +42,7 @@ export class EmployeePublishComponent implements OnInit {
   page:Number = 1;
 
   //currentAccount: Account;
-  constructor(public dialog: MatDialog,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
+  constructor(private router: ActivatedRoute,private route: Router,public dialog: MatDialog,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     this.getMotels();
   }
@@ -52,6 +52,12 @@ export class EmployeePublishComponent implements OnInit {
     this.status = "Tất cả"
     this.getTypes();
   }
+
+  public linkRouterChiTiet(name, id) {
+    //this.router.navigate( [{name: name, id: id}]);
+    this.route.navigate( ['/admin/chi-tiet',name,id]);
+  }
+
 
   public handlePageChange(event) {
     this.page = event;
@@ -197,18 +203,4 @@ export class EmployeePublishComponent implements OnInit {
       console.log(update);
     })
   }*/
-
-  openDialog(motel:Motel): void {
-    const dialogRef = this.dialog.open(DialogDetailMotelPublishComponent, {
-      direction: "ltr",
-      width: '1000px',
-      height:'600px',
-      data: motel
-    });
-
-    dialogRef.afterClosed().subscribe((result: Motel) => {
-      this.motels = this.searchmotels;
-    });
-  }
-
 }
