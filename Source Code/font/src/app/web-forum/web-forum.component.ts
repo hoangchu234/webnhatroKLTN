@@ -15,6 +15,9 @@ import { DialogInformComponent } from '../dialog-inform/dialog-inform.component'
 import { IRecentlyPost } from '../model/interface/IRecentlyPost';
 import { User } from '../model/User';
 import { ICommentParent } from '../model/interface/ICommentParent';
+import { INotifyComment } from '../model/interface/INotifyComment';
+import { ReportPost } from '../model/ReportPost';
+import { DialogReportComponent } from './dialog-report/dialog-report.component';
 
 @Component({
   selector: 'app-web-forum',
@@ -45,6 +48,9 @@ export class WebForumComponent implements OnInit {
   totalComment: number = 0;
   dataRecently: Array<IRecentlyPost> = [];
   dataUser:User;
+
+  notifys: Array<INotifyComment> = [];
+  countNotifyNotSee = 0;
   constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     this.getPosts();
     if(this.authenticationService.currentAccountValue){
@@ -75,8 +81,14 @@ export class WebForumComponent implements OnInit {
     this.totalComment = await this.postService.totalComment() as number;
     this.dataRecently = await this.postService.getRecentlyPost() as IRecentlyPost[];
     this.getCountParentComment();
+
+    if(this.checkLogin()){
+      this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
+      this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
+    }
   }
 
+  
   ///////////////////////////////////////////////////////////////////////////////////////////////
   // get data post and comment
   async getPosts() {
@@ -119,9 +131,34 @@ export class WebForumComponent implements OnInit {
     //this.countLikeComment();
   }
 
+  //////////////////////////////////////////////////////////////////////////////////////////////
+  public openDialogReport(id): void {
+    const dialogRef = this.dialog.open(DialogReportComponent, {
+      direction: "ltr",
+      width: '400px',
+      height: '500px',
+      data: id
+    });
+
+    dialogRef.afterClosed().subscribe((result: Post) => {
+     
+    });
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  onClickDetailPostINotify(data,name,id){
+    if(data.justSee == false){
+      data.justSee = true;
+      this.postService.updateCommentNotifyByOneUser(data).subscribe();
+    }
+    var link = '/forum' + '/' + name + '/' + id
+    this.route.navigateByUrl(link);
+  }
+
   ///////////////////////////////////////////////////////////////////////////////////////////////
   onClickDetailPost(name,id){
-    this.route.navigate( ['/forum',name,id]);
+    var link = '/forum' + '/' + name + '/' + id
+    this.route.navigateByUrl(link);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -153,6 +190,7 @@ export class WebForumComponent implements OnInit {
     this.showChildCommentArray[indexParent].childCommentCheck[indexChild].checkChildComment = !this.showChildCommentArray[indexParent].childCommentCheck[indexChild].checkChildComment;
 
     this.getComment(idPost, idComment,idParent);
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,7 +250,7 @@ export class WebForumComponent implements OnInit {
           id: sortedData[i].id,
           commentUser: `${sortedData[i].commentUser}`,
           user: sortedData[i].user,
-          data: sortedData[i].createDate,
+          createDate: sortedData[i].createDate,
           parentCommentId: sortedData[i].parentCommentId,
           childComments: [],
   
@@ -392,7 +430,7 @@ export class WebForumComponent implements OnInit {
       this.comment.postId = postId;
       // this.comment.userId = "26";
       this.comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
-      this.postService.postComment(this.comment).subscribe(async data => {
+      this.postService.postComment(this.comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
         //this.showComments.splice(0, this.showComments.length);
         //this.countComment.splice(0, this.countComment.length);
         //this.getPosts();
@@ -427,7 +465,7 @@ export class WebForumComponent implements OnInit {
       // this.comment.userId = "26";
       this.comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
       this.comment.parentCommentId = idComment;
-      this.postService.postComment(this.comment).subscribe(async data => {
+      this.postService.postComment(this.comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
         var indexPost = this.posts.findIndex(a => a.id == postId)
         var indexComment = this.posts[indexPost].comments.findIndex(a => a.id == idComment);
         data.childComments.length = 0;
@@ -578,7 +616,7 @@ export class WebForumComponent implements OnInit {
           id: sortedData[i].id,
           commentUser: `${sortedData[i].commentUser}`,
           user: sortedData[i].user,
-          data: sortedData[i].createDate,
+          createDate: sortedData[i].createDate,
           parentCommentId: sortedData[i].parentCommentId,
           childComments: [],
   

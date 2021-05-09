@@ -337,90 +337,29 @@
                         <a href="friend-requests.html" title="" class="more-mesg">View All</a>
                     </div>
                 </li>
-                <li>
-                    <a href="#" title="Notification" data-ripple="">
-                        <i class="fa fa-bell"></i><em class="bg-purple">7</em>
+                <li *ngIf="checkLogin()">
+                    <a  title="Notification" data-ripple="">
+                        <i class="fa fa-bell"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
                     </a>
                     <div class="dropdowns">
-                        <span>4 New Notifications <a href="#" title="">Mark all as read</a></span>
+                        <span>4 New Notifications <a  title="">Mark all as read</a></span>
                         <ul class="drops-menu">
-                            <li>
-                                <a href="notifications.html" title="">
+                            <li *ngFor="let data of notifys">
+                                <a title="" (click)="onClickDetailPostINotify(data,data.postUser,data.idPost)">
                                     <figure>
-                                        <img class="img1" src="assets/forum/images1/resources/thumb-1.jpg" alt="">
+                                        <img *ngIf="data.imageUser == 'null'" class="img1" src="../../assets/forum/images1/thumb-1.jpg" alt="">
+                                        <img *ngIf="data.imageUser != 'null'" class="img1" style="height: 50px; width: 50px;" src="{{data.imageUser}}" alt="">
                                         <span class="status f-online"></span>
                                     </figure>
                                     <div class="mesg-meta">
-                                        <h6>sarah Loren</h6>
-                                        <span>commented on your new profile status</span>
-                                        <i>2 min ago</i>
+                                        <h6>{{data.username}}</h6>
+                                        <span>{{data.userComment}}</span>
+                                        <i>{{data.day}} ngày trước</i>
                                     </div>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="notifications.html" title="">
-                                    <figure>
-                                        <img class="img1" src="assets/forum/images1/resources/thumb-2.jpg" alt="">
-                                        <span class="status f-online"></span>
-                                    </figure>
-                                    <div class="mesg-meta">
-                                        <h6>Jhon doe</h6>
-                                        <span>Nicholas Grissom just became friends. Write on his wall.</span>
-                                        <i>4 hours ago</i>
-                                        <figure>
-                                            <span>Today is Marina Valentine’s Birthday! wish for celebrating</span>
-                                            <img class="img1" src="assets/forum/images1/birthday.png" alt="">
-                                        </figure>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="notifications.html" title="">
-                                    <figure>
-                                        <img class="img1" src="assets/forum/images1/resources/thumb-3.jpg" alt="">
-                                        <span class="status f-online"></span>
-                                    </figure>
-                                    <div class="mesg-meta">
-                                        <h6>Andrew</h6>
-                                        <span>commented on your photo.</span>
-                                        <i>Sunday</i>
-                                        <figure>
-                                            <span>"Celebrity looks Beautiful in that outfit! We should see each"</span>
-                                            <img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
-                                        </figure>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="notifications.html" title="">
-                                    <figure>
-                                        <img class="img1" src="assets/forum/images1/resources/thumb-4.jpg" alt="">
-                                        <span class="status f-online"></span>
-                                    </figure>
-                                    <div class="mesg-meta">
-                                        <h6>Tom cruse</h6>
-                                        <span>nvited you to attend to his event Goo in</span>
-                                        <i>May 19</i>
-                                    </div>
-                                </a>
-                                <span class="tag">New</span>
-                            </li>
-                            <li>
-                                <a href="notifications.html" title="">
-                                    <figure>
-                                        <img class="img1" src="assets/forum/images1/resources/thumb-5.jpg" alt="">
-                                        <span class="status f-online"></span>
-                                    </figure>
-                                    <div class="mesg-meta">
-                                        <h6>Amy</h6>
-                                        <span>Andrew Changed his profile picture. </span>
-                                        <i>dec 18</i>
-                                    </div>
-                                </a>
-                                <span class="tag">New</span>
                             </li>
                         </ul>
-                        <a href="notifications.html" title="" class="more-mesg">View All</a>
+                        <a  title="" class="more-mesg">View All</a>
                     </div>
                 </li>
                 <li>
@@ -1476,13 +1415,17 @@
                                                 <img  class="img1" [src]="dataPost.user.userImage"  alt="2">
                                             </figure>
                                             <div class="friend-name">
-                                                <ins><a title="">{{dataPost.user.hovaTen}}</a></ins>
-                                                <span><i class="fa fa-globe"></i> Ngày đăng: {{dataPost.createDate | date}}</span>
-                                                <span>
-                                                    <a class="share-pst"(click)="copyContent()" title="Share">
-                                                        <i class="fa fa-share-alt"></i>
-                                                    </a>
-                                                </span>	
+                                                <div class="more">
+                                                    <div class="more-post-optns"><i class="fa fa-ellipsis-v"></i>
+                                                        <ul>
+                                                            <li><i class="fa fa-pencil-square-o"></i>Edit Post</li>
+                                                            <!-- <li><i class="fa fa-trash-o"></i>Delete Post</li> -->
+                                                            <li class="bad-report"><i class="fa fa-flag"></i>Report Post</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <ins><a href="time-line.html" title="">{{dataPost.user.hovaTen}}</a></ins>
+                                                <span><i class="fa fa-globe"></i> Ngày đăng: {{dataPost.createDate | date}} </span>
                                             </div>
                                             <div class="post-meta">
                                                 <p>
@@ -1498,6 +1441,14 @@
                                                         </li>
                                                         <li>
                                                             <div title="Like/Dislike"><i class="fa fa-heart" (click)="livePost(dataPost.id)"></i> <span>{{ displayLikePost()}}</span></div>
+                                                        </li>
+                                                        <li>
+                                                            <span>
+                                                                <a class="share-pst" (click)="copyContent()" title="Share">
+                                                                    <i class="fa fa-share-alt"></i>
+                                                                </a>
+                                                                <!-- <ins>20</ins> -->
+                                                            </span>	
                                                         </li>
                                                     </ul>
                                                     
@@ -1532,7 +1483,7 @@
                                                             </ul>
                                                             <!-- *ngIf="j == postData.comments.length" -->
                                                             <ul [hidden] = "showChildComments(dataPost.id,item.id,item.parentCommentId)" >
-                                                                <a *ngIf="countCommentComment(item.id)" (click)="moreCommentComment(dataPost.id,item.id)" class="showmore underline">{{countComment[j].count}} phản hồi</a>
+                                                                <a *ngIf="countCommentComment(item.id)" (click)="moreCommentComment(dataPost.id,item.id)" class="showmore underline">{{displayCountCommentChild(postData.id,item.id)}} phản hồi</a>
                                                             </ul>
                                                             <!-- *ngIf="j == postData.comments.length" -->
                                                             <ul *ngIf="checkLogin()" class="post-comment" [hidden] = "showChildComments(dataPost.id,item.id,item.parentCommentId)" >

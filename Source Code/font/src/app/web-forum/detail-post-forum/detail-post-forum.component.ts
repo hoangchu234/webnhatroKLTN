@@ -14,6 +14,7 @@ import { ICountComment } from 'src/app/model/interface/ICountComment';
 import { LikeCommentPost } from 'src/app/model/LikeCommentPost';
 import { ILike } from 'src/app/model/interface/ILike';
 import { DialogInformComponent } from 'src/app/dialog-inform/dialog-inform.component';
+import { INotifyComment } from 'src/app/model/interface/INotifyComment';
 
 @Component({
   selector: 'app-detail-post-forum',
@@ -36,11 +37,14 @@ export class DetailPostForumComponent implements OnInit {
   countComment: Array<ICountComment> = [];
   dataComment:Comment[] = [];
   user: User = {id: 0, hovaTen:"", gender:"", doB:null, email:"",facebook: "", userImage:"", createdDate:null, lastLogOnDate:null,account:null, accountid:""}
-  dataPost: Post= {id: "", postUser: '', createDate: null, user: this.user, userId: "", comment: null, comments: null};
+  dataPost: Post= {id: "", postUser: '', createDate: null, user: this.user, userId: "", comment: null, comments: null, hiddenOrNotHidden: null};
 
   countParentComment = 0;
   likePostData: number = 0;
   likeCommentData: Array<ILike> = [];
+
+  notifys: Array<INotifyComment> = [];
+  countNotifyNotSee = 0;
   constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     
     if(this.authenticationService.currentAccountValue){
@@ -78,7 +82,23 @@ export class DetailPostForumComponent implements OnInit {
     this.totalPost = await this.postService.totalPost() as number;
     this.totalComment = await this.postService.totalComment() as number;
     this.likePostData = await this.postService.getLikePost(Number(id)) as number;
+
+    if(this.checkLogin()){
+      this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
+      this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
+    }
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  async onClickDetailPostINotify(data,name,id){
+    if(data.justSee == false){
+      data.justSee = true;
+      this.postService.updateCommentNotifyByOneUser(data).subscribe();
+    }
+    var link = '/forum' + '/' + name + '/' + id
+    this.route.navigateByUrl(link);
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async getDataPost(id){
@@ -129,7 +149,7 @@ export class DetailPostForumComponent implements OnInit {
       // this.comment.postId = postId;
       // this.comment.userId = "26";
       comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
-      this.postService.postComment(comment).subscribe(async data => {
+      this.postService.postComment(comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
        
         data.childComments.length = 0;
         this.comments.unshift(data);
@@ -199,7 +219,7 @@ export class DetailPostForumComponent implements OnInit {
       // this.comment.userId = "26";
       comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
       comment.parentCommentId = idComment;
-      this.postService.postComment(comment).subscribe(async data => {
+      this.postService.postComment(comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
         var indexComment = this.comments.findIndex(a => a.id === idComment);
         data.childComments.length = 0;
         this.comments[indexComment].childComments.unshift(data);
@@ -311,7 +331,7 @@ export class DetailPostForumComponent implements OnInit {
           id: sortedData[i].id,
           commentUser: `${sortedData[i].commentUser}`,
           user: sortedData[i].user,
-          data: sortedData[i].createDate,
+          createDate: sortedData[i].createDate,
           parentCommentId: sortedData[i].parentCommentId,
           childComments: [],
   
@@ -410,7 +430,7 @@ export class DetailPostForumComponent implements OnInit {
           id: sortedData[i].id,
           commentUser: `${sortedData[i].commentUser}`,
           user: sortedData[i].user,
-          data: sortedData[i].createDate,
+          createDate: sortedData[i].createDate,
           parentCommentId: sortedData[i].parentCommentId,
           childComments: [],
   

@@ -5,6 +5,7 @@ export class Post {
     id: string;
     postUser: string;
     createDate:Date;
+    hiddenOrNotHidden:boolean;
     user:User;
     userId:string;
     comment:Comment;

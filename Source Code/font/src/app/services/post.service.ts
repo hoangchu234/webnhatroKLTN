@@ -5,6 +5,8 @@ import { Comment } from '../model/Comment';
 import { Observable,of, from } from 'rxjs';
 import { map ,tap, catchError} from 'rxjs/operators';
 import { LikeCommentPost } from '../model/LikeCommentPost';
+import { INotifyComment } from '../model/interface/INotifyComment';
+import { ReportPost } from '../model/ReportPost';
 
 const httpOptions ={
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -26,8 +28,9 @@ export class PostService {
     );
   }
 
-  public postComment(newComment: Comment): Observable<Comment>{
-    return this.http.post<Comment>(this.urlAPI + "/api/Comments", newComment, httpOptions).pipe(
+  public postComment(newComment: Comment,id: number): Observable<Comment>{
+    const url = `${this.urlAPI + "/api/Comments/PostComment"}/${id}`;
+    return this.http.post<Comment>(url, newComment, httpOptions).pipe(
       tap((comment: Comment) => comment),
       catchError(error => of(new Comment()))
     );
@@ -56,6 +59,13 @@ export class PostService {
       catchError(error => of(null))
     );
 
+  }
+
+  public updateCommentNotifyByOneUser(notifyComment: INotifyComment): Observable<any>{
+    return this.http.put(`${this.urlAPI + "/api/Comments/PutCommentNotifyByOneUser"}/${notifyComment.id}`, notifyComment, httpOptions).pipe(
+      tap(updatenotifyComment => updatenotifyComment),
+      catchError(error => of())
+    );
   }
 
   /*public getPost(id: number, skipNumber: number): Observable<any>{
@@ -273,4 +283,36 @@ export class PostService {
       console.log(e);
     }
   }
+
+  public getCommentNotifyByOneUser = async (id: string) => {
+    try {
+      const url = `${this.urlAPI + "/api/Comments/GetCommentNotifyByOneUser"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  public countCommentNotifyByOneUser = async (id: string) => {
+    try {
+      const url = `${this.urlAPI + "/api/Comments/CountCommentNotifyByOneUser"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+
+  ///report
+  public postReportPost(reportPost: ReportPost): Observable<ReportPost>{
+    const url = `${this.urlAPI + "/api/ReportPosts"}`;
+    return this.http.post<ReportPost>(url, reportPost, httpOptions).pipe(
+      tap((reportPost: ReportPost) => reportPost),
+      catchError(error => of(new ReportPost()))
+    );
+  }
+
+
 }

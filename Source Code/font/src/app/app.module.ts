@@ -119,6 +119,7 @@ import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-p
 import { DetailMotelPublishComponent } from './authority/loginuser/magement-publish-motel/detail-motel-publish/detail-motel-publish.component';
 import { DetailMotelExtendComponent } from './authority/loginuser/magement-publish-motel/detail-motel-extend/detail-motel-extend.component';
 import { DetailMotelPublishMagementComponent } from './authority/loginadmin/detail-motel-publish-magement/detail-motel-publish-magement.component';
+import { DialogReportComponent } from './dialog-report/dialog-report.component';
 
 @NgModule({
   declarations: [
@@ -179,7 +180,8 @@ import { DetailMotelPublishMagementComponent } from './authority/loginadmin/deta
     DetailPostForumComponent,
     DetailMotelPublishComponent,
     DetailMotelExtendComponent,
-    DetailMotelPublishMagementComponent
+    DetailMotelPublishMagementComponent,
+    DialogReportComponent
   ],
   imports: [
     BrowserModule,
