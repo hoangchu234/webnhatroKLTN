@@ -45,7 +45,7 @@ export class WebForumComponent implements OnInit {
   totalComment: number = 0;
   dataRecently: Array<IRecentlyPost> = [];
   dataUser:User;
-  constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
+  constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) {
     this.getPosts();
     if(this.authenticationService.currentAccountValue){
       this.dataUser = this.authenticationService.currentAccountValue.user;
@@ -80,7 +80,7 @@ export class WebForumComponent implements OnInit {
   ///////////////////////////////////////////////////////////////////////////////////////////////
   // get data post and comment
   async getPosts() {
-    this.posts = await this.postService.getSomePost() as Post[]; 
+    this.posts = await this.postService.getSomePost() as Post[];
     for(let i =0;i<this.posts.length;i++){
       // this.showComments.push(true);
       //count comment
@@ -90,12 +90,12 @@ export class WebForumComponent implements OnInit {
       this.posts[i].comments.forEach(element => {
         this.dataComment.push(element);
       })
-      
+
 
       //Hidden and display comment
       var arrayChildCommentCheck = Array<ICheckChildComment>();
       for(let j=0; j<this.posts[i].comments.length; j++){
-        
+
         this.posts[i].comments[j].childComments.length = 0;
         this.countComment.push(await this.pushCountComment(this.posts[i].id, this.posts[i].comments[j].id))
         // this.pushArrayShowCommentChild(this.posts[i].id,this.posts[i].comments[j].id,this.posts[i].comments[j].parentCommentId);
@@ -107,7 +107,7 @@ export class WebForumComponent implements OnInit {
       //
       /*var commentPost: CommentPost;
       commentPost.idPost = Number(this.posts[i].id);
-      for(let j=0; j<this.posts[i].comments.length; j++){   
+      for(let j=0; j<this.posts[i].comments.length; j++){
         commentPost.check.push(true);
         this.showChildComments.push(commentPost);
       }*/
@@ -140,7 +140,7 @@ export class WebForumComponent implements OnInit {
     }
     catch(err){
 
-    } 
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,7 +187,7 @@ export class WebForumComponent implements OnInit {
           this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(result[i].id,idComment));
         }
         // this.pushArrayShowCommentChild(this.posts[index].id,result[i].id,this.posts[index].comments[indexComment].id);
-      } 
+      }
       this.countLikeComment(this.dataComment);
 
       //var sortedData = data.sort((a, b) => Number(a.parentCommentId) - Number(b.parentCommentId));
@@ -195,10 +195,10 @@ export class WebForumComponent implements OnInit {
       var sortedData = data;
       //console.log(data)
       for(let i=0; i< sortedData.length; i++){
-        var level = 1; 
-        if (sortedData[i].parentCommentId == null) { 
+        var level = 1;
+        if (sortedData[i].parentCommentId == null) {
           level = 1;
-        }   
+        }
         else{
           var parentId = sortedData[i].parentCommentId;
           while (parentId != null) {
@@ -207,7 +207,7 @@ export class WebForumComponent implements OnInit {
             parentId = sortedData[indexSort].parentCommentId;
           }
         }
-  
+
         var node = {
           id: sortedData[i].id,
           commentUser: `${sortedData[i].commentUser}`,
@@ -215,21 +215,21 @@ export class WebForumComponent implements OnInit {
           data: sortedData[i].createDate,
           parentCommentId: sortedData[i].parentCommentId,
           childComments: [],
-  
+
         }
-  
+
         // if(sortedData[i].parentCommentId == null){
         //   // this.latestNodesPerLevel.push(node);
-        // } 
+        // }
         if(this.latestNodesPerLevel[level - 1] === undefined){
 
         }
-        else {  
+        else {
           this.latestNodesPerLevel[level - 1].childComments.push(node);
           this.latestNodesPerLevel[level] = node;
         }
-        
-  
+
+
       }
 
       // this.latestNodesPerLevel.shift();
@@ -257,7 +257,7 @@ export class WebForumComponent implements OnInit {
     catch(err){
 
     }
-    
+
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
@@ -461,7 +461,7 @@ export class WebForumComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   createPost(){
     if(this.authenticationService.checkLogin()){
-      this.openDialog();     
+      this.openDialog();
     }
     else{
       this.openDialogInform();
@@ -472,7 +472,7 @@ export class WebForumComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogPostComponent, {
       direction: "ltr",
       width: '400px',
-      height: '500px',
+      height:'auto',
       data: this.post
     });
 
@@ -490,11 +490,11 @@ export class WebForumComponent implements OnInit {
           var arrayChildCommentCheck = Array<ICheckChildComment>();
           this.showChildCommentArray.push(this.pushArrayShowCommentParent(data.id,arrayChildCommentCheck));
           this.countLikePost(this.posts);
-          
+
           alert("Đăng bài thành công")
         });
       }
-     
+
     });
   }
 
@@ -505,12 +505,12 @@ export class WebForumComponent implements OnInit {
       height: '300px'
     });
 
-    dialogRef.afterClosed().subscribe((result: Post) => {   
+    dialogRef.afterClosed().subscribe((result: Post) => {
     });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // more comment child 
+  // more comment child
   moreCommentComment(id, idParentComment){
     var number = 2;
     var skip = 0;
@@ -546,11 +546,11 @@ export class WebForumComponent implements OnInit {
           // this.dataComment.push(result[i]);
           this.addAItem(data,data.length,vitrithemdata,result[i]);
           this.addAItem(this.dataComment,this.dataComment.length,vitrithemdatacomment,result[i]);
-          // this.countLikeComment(element);      
+          // this.countLikeComment(element);
           this.countComment.push(await this.pushCountComment(id, result[i].id))
           var indexParent = this.showChildCommentArray.findIndex(a => a.idPost === id);
           this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(result[i].id,idParentComment));
-      }  
+      }
     }
     this.countLikeComment(this.dataComment);
 
@@ -558,13 +558,13 @@ export class WebForumComponent implements OnInit {
     if(result){
       // var sortedData = data.sort((a, b) => Number(a.parentCommentId) - Number(b.parentCommentId));
       this.latestNodesPerLevel = [{id: "root",commentUser: "",user: "",data: "",parentCommentId:"", childComments:[]}]
-  
+
       var sortedData = data;
       for(let i=0; i< sortedData.length; i++){
-        var level = 1; 
-        if (sortedData[i].parentCommentId == null) { 
+        var level = 1;
+        if (sortedData[i].parentCommentId == null) {
           level = 1;
-        }   
+        }
         else{
           var parentId = sortedData[i].parentCommentId;
           while (parentId != null) {
@@ -573,7 +573,7 @@ export class WebForumComponent implements OnInit {
             parentId = sortedData[indexSort].parentCommentId;
           }
         }
-  
+
         var node = {
           id: sortedData[i].id,
           commentUser: `${sortedData[i].commentUser}`,
@@ -581,23 +581,23 @@ export class WebForumComponent implements OnInit {
           data: sortedData[i].createDate,
           parentCommentId: sortedData[i].parentCommentId,
           childComments: [],
-  
+
         }
-  
+
         if(this.latestNodesPerLevel[level - 1] === undefined){
 
         }
-        else {  
+        else {
           this.latestNodesPerLevel[level - 1].childComments.push(node);
           this.latestNodesPerLevel[level] = node;
         }
-  
+
       }
       this.latestNodesPerLevel[0].childComments.forEach(element => {
         this.posts[index].comments.push(element)
       });
       // this.latestNodesPerLevel.shift();
-      
+
       // this.latestNodesPerLevel.forEach(element => {
       //   this.posts[index].comments.push(element)
       // });
@@ -643,7 +643,7 @@ export class WebForumComponent implements OnInit {
       result[i].comments.forEach(element => {
         this.dataComment.push(element);
       })
-      
+
       //Hidden and display comment
       var arrayChildCommentCheck = Array<ICheckChildComment>();
       for(let j=0; j<result[i].comments.length; j++){
@@ -669,7 +669,7 @@ export class WebForumComponent implements OnInit {
         this.postService.deleteLike(Number(idPost),Number(this.authenticationService.currentAccountValue.user.id)).subscribe(a => {
           this.countLikePost(this.posts);
         });
-        
+
       }
       else{
         var like: LikeCommentPost = {

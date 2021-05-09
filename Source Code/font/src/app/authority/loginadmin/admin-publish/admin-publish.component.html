@@ -1,25 +1,19 @@
 <div class="content-wrapper">
   <div>
-    <h3 class="page-title"> Quản lý duyệt tin </h3>
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Quản lý</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Quản lý duyệt tin</li>
-      </ol>
-    </nav>
+    <h3 class="page-title font"> Quản lý duyệt tin </h3>
+    <div class="container-fluid font" style="height: 50px;background-color:lightgrey;color: black;font-size: 13px;">
+            <div style="padding-top:15px;"><span style="margin-left: 40px;">Quản lý<div class="fa  fa-chevron-right" ></div><b style="margin-left:15px">Quản lý duyệt tin</b> <div class="fa  fa-chevron-right" style="margin-left: 10px;margin-right: 15px;"></div></span></div>
+          </div>
   </div>
-  <div class="container"  style=" margin-top: 20px;color: black;">
-
-    <br>
-
-    <div class="row">
+  <div class="container"  style=" color: black;">
+    <div class="row" style="margin-top:-20px">
       <!-- <div class="font" class="col-md-6" style="margin-left: -40px;"><div style="text-align: left;padding: 10px;" class="font"><h3 class="font"><b class="font">QUẢN LÝ DUYỆT TIN</b></h3></div></div> -->
       <div class="col-md-6">
         <div class="row" style="margin-left:100px" >
           <div class="col-md-4"></div>
           <div class="col-md-4" style="float:right;">
-            <div class="form-group">
-              <h3>Trạng thái tin</h3>
+            <div class="form-group row">
+              <div class="font">Trạng thái tin</div>
               <div >
                 <select (change)="onChangeStatus($event)" class="form-control form-control-lg" style="color: black;width:135px;height:40px">
                   <option *ngFor='let status of statuss' [value]="status.id">{{status.text}}</option>
@@ -29,8 +23,8 @@
           </div>
           </div>
           <div class="col-md-4" style="float:right;">
-            <div class="form-group">
-              <h3>Loại tin</h3>
+            <div class="form-group row">
+              <div class="font">Loại tin</div>
               <div >
                 <select (change)="onChangeNewType($event)" class="form-control form-control-lg" style="color: black;;width:135px;height:40px">
                   <option *ngFor='let newTypes of newTypes'  [value]="newTypes.id">{{newTypes.name}}</option>
