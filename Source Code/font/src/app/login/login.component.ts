@@ -73,16 +73,22 @@ export class LoginComponent implements OnInit {
             alert('Đăng nhập thất bại');
           }
           else{
-            this.authenticationService.saveAccount(account, this.remember);
-            if(Number(account.roleId) == 1){
-              var link = '/home'
-              window.location.replace(link);
-              //this.router.navigateByUrl('home');
+            if(account){
+              this.authenticationService.saveAccount(account, this.remember);
+              if(Number(account.roleId) == 1){
+                var link = '/home'
+                window.location.replace(link);
+                //this.router.navigateByUrl('home');
+              }
+              else{
+                var link = '/admin'
+                window.location.replace(link);
+                //this.router.navigateByUrl('admin');
+              }
             }
             else{
-              var link = '/admin'
-              window.location.replace(link);
-              //this.router.navigateByUrl('admin');
+              alert('Đăng nhập thất bại');
+
             }
       
           }

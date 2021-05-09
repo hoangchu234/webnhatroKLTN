@@ -58,5 +58,11 @@
         <i class="mdi mdi-crosshairs-gps menu-icon"></i>
       </a>
     </li>
+    <li class="nav-item">
+      <a *ngIf="isNotAdmin"  class="nav-link" [routerLink]="['/admin/dien-dan']">
+        <span class="menu-title" >Quản lý diễn đàn</span>
+        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+      </a>
+    </li>
   </ul>
 </nav>

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hoang\\Desktop\\CNPMM\\webnhatroKLTN\\Source Code\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro.csproj": {}
+    "D:\\HK2-2020-2021\\KLTN\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hoang\\Desktop\\CNPMM\\webnhatroKLTN\\Source Code\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro.csproj": {
+    "D:\\HK2-2020-2021\\KLTN\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hoang\\Desktop\\CNPMM\\webnhatroKLTN\\Source Code\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro.csproj",
+        "projectUniqueName": "D:\\HK2-2020-2021\\KLTN\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro.csproj",
         "projectName": "Websitedangtintimkiemnhatro",
-        "projectPath": "C:\\Users\\hoang\\Desktop\\CNPMM\\webnhatroKLTN\\Source Code\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro.csproj",
-        "packagesPath": "C:\\Users\\hoang\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hoang\\Desktop\\CNPMM\\webnhatroKLTN\\Source Code\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\obj\\",
+        "projectPath": "D:\\HK2-2020-2021\\KLTN\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "D:\\HK2-2020-2021\\KLTN\\back\\Websitedangtintimkiemnhatro\\Websitedangtintimkiemnhatro\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\hoang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "MailKit": {
               "target": "Package",
@@ -119,7 +121,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -5,7 +5,6 @@ import { MotelService } from '../../../../services/motel.service';
 import { Motel } from '../../../../model/Motel';
 import { Detail } from '../../../../model/Detail';
 import { LiveType } from '../../../../model/LiveType';
-import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
 import { StorageService } from 'src/app/storage.service';
 
 @Component({
@@ -23,9 +22,9 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
   btnDisabledBath = true;
   btnDisabledLiving = true;
   motelprevous:Motel;
-  constructor(private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,public motelService:MotelService) {
+  constructor(private router: Router,public motelService:MotelService) {
     this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
-    if(this.motelprevous.detail.numberBath){
+    if(this.motelprevous.detail.numberBath != undefined || this.motelprevous.detail.numberLiving != undefined){
       this.numberBath = this.motelprevous.detail.numberBath.toString();
       this.numberLiving = this.motelprevous.detail.numberLiving.toString();
 

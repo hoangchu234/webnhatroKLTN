@@ -7,7 +7,6 @@ import { Motel } from '../model/Motel';
 import { ProvincesService } from '../services/provinces.service'
 import { TypeofnewService } from '../services/newstype.service'
 import { MotelService } from '../services/motel.service'
-import { BehaviorSubjectClass } from '../services/behaviorsubject'
 import { PriceSearchService } from '../services/price-search.service'
 import { Router } from '@angular/router';
 import { List } from '../model/viewmodel/ListViewModel';

@@ -12,7 +12,6 @@ import { Image } from 'src/app/model/Image';
 import { Account } from 'src/app/model/Account';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { BehaviorSubjectClass } from 'src/app/services/behaviorsubject';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { NewType } from 'src/app/model/NewType';
@@ -31,7 +30,7 @@ export class ExtendPaypalComponent implements OnInit {
   //Xét tính tiền
   numberPayPal:number;
   money:number;
-  constructor(private authenticationService: AuthenticationService,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,public dialogRef: MatDialogRef<ExtendPaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: number,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) { 
+  constructor(private authenticationService: AuthenticationService,private router: Router,public dialogRef: MatDialogRef<ExtendPaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: number,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) { 
     this.money = this.data;
 
   }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Websitedangtintimkiemnhatro.Models;
 
 namespace Websitedangtintimkiemnhatro.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210509014355_TableReportPost")]
+    partial class TableReportPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -536,9 +538,6 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("HiddenOrNotHidden")
-                        .HasColumnType("bit");
-
                     b.Property<string>("PostUser")
                         .HasColumnType("nvarchar(max)");
 
@@ -639,14 +638,11 @@ namespace Websitedangtintimkiemnhatro.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<float>("Count")
+                        .HasColumnType("real");
+
                     b.Property<int>("PostId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Report")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Write")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

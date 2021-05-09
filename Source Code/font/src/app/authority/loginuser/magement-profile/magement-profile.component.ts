@@ -10,7 +10,6 @@ import { DialogEditPhoneComponent } from './dialog-edit-phone/dialog-edit-phone.
 import { DialogEditPasswordComponent } from './dialog-edit-password/dialog-edit-password.component';
 import { MotelService } from 'src/app/services/motel.service';
 import { Motel } from 'src/app/model/Motel';
-import { BehaviorSubjectClass } from 'src/app/services/behaviorsubject';
 
 @Component({
   selector: 'app-magement-profile',
@@ -41,7 +40,7 @@ export class MagementProfileComponent implements OnInit {
  checkImage = false;
  account = this.authenticationService.currentAccountValue;
 
- constructor(private motelService: MotelService,public dialog: MatDialog,private router: Router,private behaviorSubjectClass:BehaviorSubjectClass,private authenticationService: AuthenticationService,private userService: UserService) {
+ constructor(private motelService: MotelService,public dialog: MatDialog,private router: Router,private authenticationService: AuthenticationService,private userService: UserService) {
    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
    this.getUserById();
    this.getMotels();

@@ -68,6 +68,13 @@ export class PostService {
     );
   }
 
+  public updatPostById(post: Post): Observable<any>{
+    return this.http.put(`${this.urlAPI + "/api/Posts/PutPostById"}/${post.id}`, post, httpOptions).pipe(
+      tap(updatePost => updatePost),
+      catchError(error => of())
+    );
+  }
+
   /*public getPost(id: number, skipNumber: number): Observable<any>{
     const url = `${this.urlAPI + "/api/Posts/GetPosts"}/${id}/${skipNumber}`;
     return this.http.get<Post[]>(url).pipe(
@@ -314,5 +321,14 @@ export class PostService {
     );
   }
 
+  public getReportPosts = async () => {
+    try {
+      const url = `${this.urlAPI + "/api/ReportPosts/GetReportPosts"}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 
 }

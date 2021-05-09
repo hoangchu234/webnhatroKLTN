@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { MotelService } from '../../../../services/motel.service';
 import { Motel } from '../../../../model/Motel';
 import { Detail } from '../../../../model/Detail';
-import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
 import { MatDialog } from '@angular/material/dialog';
 import { DialogThongBaoComponent } from '../dialog-thong-bao/dialog-thong-bao.component';
 import { StorageService } from 'src/app/storage.service';
@@ -28,14 +27,15 @@ export class ThongTinCoBanNextComponent implements OnInit {
   areaMotel: string;
 
   directs:Array<Data> = [
-    {id: 0, text:'Đông'},
-    {id: 1, text:'Tây'},
-    {id: 2, text:'Nam'},
-    {id: 3, text:'Bắc'},
-    {id: 4, text:'Đông Bắc'},
-    {id: 5, text:'Đông Nam'},
-    {id: 6, text:'Tây Bắc'},
-    {id: 7, text:'Tây Nam'},
+    {id: 0, text:'Không xác định'},
+    {id: 1, text:'Đông'},
+    {id: 2, text:'Tây'},
+    {id: 3, text:'Nam'},
+    {id: 4, text:'Bắc'},
+    {id: 5, text:'Đông Bắc'},
+    {id: 6, text:'Đông Nam'},
+    {id: 7, text:'Tây Bắc'},
+    {id: 8, text:'Tây Nam'},
   ];
   direct: string;
 
@@ -48,9 +48,9 @@ export class ThongTinCoBanNextComponent implements OnInit {
   ];
   typePriceMotel: string;
   
-  constructor(public dialog: MatDialog,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,public motelService:MotelService) {
+  constructor(public dialog: MatDialog,private router: Router,public motelService:MotelService) {
     this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
-    if(this.motelprevous){
+    if(this.motelprevous.price != undefined){
       this.priceMotel = this.motelprevous.price;
       this.areaMotel = this.motelprevous.areaZone;
       this.title = this.motelprevous.title;

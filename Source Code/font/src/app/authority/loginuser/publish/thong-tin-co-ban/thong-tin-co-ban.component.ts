@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { MotelService } from '../../../../services/motel.service';
 import { DictrictService } from '../../../../services/dictrict.service';
 import { Motel } from '../../../../model/Motel';
-import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
 import { MatDialog } from '@angular/material/dialog';
 import { DialogThongBaoComponent } from '../dialog-thong-bao/dialog-thong-bao.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -52,9 +51,11 @@ export class ThongTinCoBanComponent implements OnInit {
   isWarning = false;
 
   //currentAccount:Account;
-  constructor(public typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,private authenticationService: AuthenticationService,public dialog: MatDialog,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,private cityService: CitiesService, private provinceService: ProvincesService,public motelService:MotelService) {
+  constructor(public typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,private authenticationService: AuthenticationService,public dialog: MatDialog,private router: Router,private cityService: CitiesService, private provinceService: ProvincesService,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
-    this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
+    if(JSON.parse(localStorage.getItem(StorageService.motelStorage))){
+      this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
+    }
 
     this.getNewTypes();
   }
@@ -64,67 +65,73 @@ export class ThongTinCoBanComponent implements OnInit {
     this.typeMotel = "Thuê";
 
     if(this.motelprevous){
-      this.phoneMotel = this.motelprevous.phone;
-      this.addressMotel = this.motelprevous.address;
-
-      ///
-      this.returnCity();
-      const province = await this.provinceService.getProvincesByCity(Number(this.motelprevous.cityId)) as Province[];
-      this.provinces.push(province.find(a => a.id == this.motelprevous.provinceId));
-        this.province = province.find(a => a.id == this.motelprevous.provinceId);
-        for (let i = 0; i < province.length; i++) {
-          if(this.motelprevous.provinceId == province[i].id){
-
-          }
-          else{
-            let province = new Province();
-            province.id = province[i].id;
-            province.name = province[i].name;
-            this.provinces.push(province);
-          }           
-        }
-
-     
-      const district = await this.dictrictService.getDistrictByProvince(Number(this.motelprevous.provinceId)) as District[];
-      this.districts.push(district.find(a => a.id == this.motelprevous.districtId));
-        this.district = district.find(a => a.id == this.motelprevous.districtId);
-        for (let i = 0; i < district.length; i++) {
-          if(this.motelprevous.districtId == district[i].id){
-
-          }
-          else{
-            let district = new District();
-            district.id = district[i].id;
-            district.name = district[i].name;
-            this.districts.push(district);
-          }           
-        }
-
-      if(this.motelprevous.streetId == "0"){
-
-      }
-      else{
-       
-        const street = await this.streetService.getStreetByProvince(Number(this.motelprevous.provinceId)) as Street[];
-        this.streets.push(street.find(a => a.id == this.motelprevous.streetId));
-          this.street = street.find(a => a.id == this.motelprevous.streetId);
-          for (let i = 0; i < street.length; i++) {
-            if(this.motelprevous.streetId == street[i].id){
-  
-            }
-            else{
-              let street = new Street();
-              street.id = street[i].id;
-              street.name = street[i].name;
-              this.streets.push(street);
-            }           
-          }
-      }
-
+      this.privous();
     }
     else{
       this.getCities();
     }
+  }
+
+  async privous(){
+    this.phoneMotel = this.motelprevous.phone;
+    this.addressMotel = this.motelprevous.address;
+     
+    try{
+      var getType = JSON.parse(localStorage.getItem(StorageService.TypeMotelStorage));
+      this.newType = getType
+      var indexTy = this.newTypes.findIndex(a => a.id === getType.id);
+      this.newTypes.splice(indexTy,1);
+      this.newTypes.unshift(this.newType);
+    }
+    catch(err){
+
+    }
+    //type
+    
+
+    //city
+    const city = await this.cityService.getCitys() as City[];
+    this.city = city.find(a => a.id == this.motelprevous.cityId);
+
+    this.cities.splice(0,this.cities.length);
+    this.cities = city.slice();
+
+    var indexCi = this.cities.findIndex(a => a.id === this.motelprevous.cityId);
+    this.cities.splice(indexCi,1);
+    this.cities.unshift(this.city);
+
+    //Province
+    const province = await this.provinceService.getProvincesByCity(Number(this.motelprevous.cityId)) as Province[];
+    this.province = province.find(a => a.id == this.motelprevous.provinceId);  
+    
+    this.provinces.splice(0,this.provinces.length);
+    this.provinces = province.slice();
+
+    var indexPr = this.provinces.findIndex(a => a.id === this.motelprevous.provinceId);
+    this.provinces.splice(indexPr,1);
+    this.provinces.unshift(this.province);
+
+    //District
+    const district = await this.dictrictService.getDistrictByProvince(Number(this.motelprevous.provinceId)) as District[];
+    this.district = district.find(a => a.id == this.motelprevous.districtId);
+
+    this.districts.splice(0,this.districts.length);
+    this.districts = district.slice();
+
+    var indexDi = this.districts.findIndex(a => a.id === this.motelprevous.districtId);
+    this.districts.splice(indexDi,1);
+    this.districts.unshift(this.district);
+
+    //street
+    const street = await this.streetService.getStreetByProvince(Number(this.motelprevous.provinceId)) as Street[];
+    this.street = street.find(a => a.id == this.motelprevous.streetId);
+      
+    this.streets.splice(0,this.streets.length);
+    this.streets = street.slice();
+
+    var indexst = this.streets.findIndex(a => a.id === this.motelprevous.streetId);
+    this.streets.splice(indexst,1);
+    this.streets.unshift(this.street);    
   }
 
   public getNewTypes = async () => {
@@ -132,18 +139,6 @@ export class ThongTinCoBanComponent implements OnInit {
     this.newTypes = await this.typeservice.getTypeExcepts() as NewType[];
   }
 
-  public async returnCity(){
-    const result = await this.cityService.getCitys() as City[];
-      this.cities.push(result.find(a => a.id == this.motelprevous.cityId));
-        this.city = result.find(a => a.id == this.motelprevous.cityId);
-        for(let i=1;i< result.length;i++){           
-          if(this.motelprevous.cityId == result[i].id){          
-          }
-          else{
-            this.cities.push(result[i]);
-          }
-        }
-  }
   public onClickTypeMotelButton() {
     this.typeMotel = "Thuê"
     this.isWarning = false;
@@ -194,16 +189,7 @@ export class ThongTinCoBanComponent implements OnInit {
   public async getStreetById(ID){
     var streetNew : Street [] = [];
     this.streets = streetNew;
-    /*const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
-      for (let i = 0; i < data.length; i++) {
-        let street = new Street();
-        street.id = data[i].id;
-        street.name = data[i].name;
-        this.streets.push(street);
-      }
-      this.street = data[0]
-      console.log(data)
-  })*/
+   
     const result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
     for (let i = 0; i < result.length; i++) {
       let street = new Street();
@@ -227,17 +213,6 @@ export class ThongTinCoBanComponent implements OnInit {
       this.province = list[0]
       this.getDistricteById(list[0].id)
       this.getStreetById(list[0].id)
-        /*const list = this.provinceService.getProvincesByCity(Number(ID)).subscribe((data) => {
-          for (let i = 0; i < data.length; i++) {
-            let province = new Province();
-            province.id = data[i].id;
-            province.name = data[i].name;
-            this.provinces.push(province);
-          }
-          this.province = data[0]
-          this.getDistricteById(data[0].id)
-          this.getStreetById(data[0].id)
-      })*/
   }
 
   public async getDistricteById(ID){
@@ -251,15 +226,7 @@ export class ThongTinCoBanComponent implements OnInit {
         this.districts.push(district);
       }
       this.district = list[0];
-        /*const list = this.dictrictService.getDistrictByProvince(Number(ID)).subscribe((data) => {
-          for (let i = 0; i < data.length; i++) {
-            let district = new District();
-            district.id = data[i].id;
-            district.name = data[i].name;
-            this.districts.push(district);
-          }
-          this.district = data[0];
-      })*/
+    
   }
 
   public async getCities(){
@@ -287,7 +254,8 @@ export class ThongTinCoBanComponent implements OnInit {
       motel.address = this.addressMotel;
       motel.phone = this.phoneMotel;
       localStorage.setItem(StorageService.motelStorage, JSON.stringify(motel));
-      this.behaviorSubjectClass.setNewTypes(this.newType);
+      // this.behaviorSubjectClass.setNewTypes(this.newType);
+      localStorage.setItem(StorageService.TypeMotelStorage, JSON.stringify(this.newType))
       this.router.navigateByUrl('/user/thong-tin-nha-tro');
     }
     else{

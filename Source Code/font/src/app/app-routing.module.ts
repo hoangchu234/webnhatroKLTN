@@ -42,6 +42,7 @@ import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-p
 import { DetailMotelPublishComponent } from './authority/loginuser/magement-publish-motel/detail-motel-publish/detail-motel-publish.component';
 import { DetailMotelExtendComponent } from './authority/loginuser/magement-publish-motel/detail-motel-extend/detail-motel-extend.component';
 import { DetailMotelPublishMagementComponent } from './authority/loginadmin/detail-motel-publish-magement/detail-motel-publish-magement.component';
+import { ManagementForumComponent } from './authority/loginadmin/management-forum/management-forum.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,7 @@ const routes: Routes = [
       { path: 'quan-ly-dich-vu',          component: MagementServiceComponent },
       { path: 'quan-ly-duyet-tin',          component: AdminPublishComponent },
       { path: 'nhan-vien-quan-ly-duyet-tin',          component: EmployeePublishComponent },
+      { path: 'dien-dan',          component: ManagementForumComponent },
       { path: 'chi-tiet/:name/:id',          component: DetailMotelPublishMagementComponent },
     ]
   },

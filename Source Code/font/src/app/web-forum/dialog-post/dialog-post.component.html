@@ -1,32 +1,20 @@
 <div class="central-meta">
-    <span class="create-post">Đăng bài thông báo</span>
+    <span class="create-post" *ngIf="!check">Đăng bài thông báo</span>
+    <span class="create-post" *ngIf="check">Sửa bài thông báo</span>
     <div class="new-postbox">
         <figure>
-            <img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
+            <img class="img1" src="../../assets/forum/images1/admin.jpg" alt="">
         </figure>
         <div class="newpst-input">
             <form method="post">
-                <textarea rows="2" placeholder="Share some what you are thinking?" matInput name="post"  [(ngModel)]="data.postUser" ngDefaultControl></textarea>
+                <textarea rows="2" placeholder="Câu hỏi bạn muốn hỏi..." matInput name="post"  [(ngModel)]="data" ngDefaultControl></textarea>
             </form>
         </div>
-        <div class="attachments">
-            <button class="post-btn" type="submit" data-ripple="" [mat-dialog-close]="data">Post</button>
+        <div class="attachments" *ngIf="!check">
+            <button class="post-btn" type="submit" data-ripple="" [mat-dialog-close]="data">Đăng bài</button>
         </div>
-        <!-- <div class="add-location-post">
-            <span>Drag map point to selected area</span>
-            <div class="row">
-
-                <div class="col-lg-6">
-                      <label class="control-label">Lat :</label>
-                      <input type="text" class="" id="us3-lat" />
-                </div>
-                <div class="col-lg-6">
-                      <label>Long :</label>
-                      <input type="text" class="" id="us3-lon" />
-                </div>
-            </div>
-
-              <div id="us3"></div>
-        </div> -->
+        <div class="attachments" *ngIf="check">
+            <button class="post-btn" type="submit" data-ripple="" [mat-dialog-close]="data">Sửa bài đăng</button>
+        </div>
     </div>
-</div><!-- add post new box -->
+</div>

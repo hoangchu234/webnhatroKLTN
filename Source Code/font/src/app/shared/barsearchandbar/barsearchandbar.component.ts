@@ -5,7 +5,6 @@ import { NewType } from '../../model/NewType';
 import { Province } from '../../model/Province';
 import { Motel } from '../../model/Motel';
 import { ProvincesService } from '../../services/provinces.service'
-import { BehaviorSubjectClass } from '../../services/behaviorsubject'
 import { TypeofnewService } from '../../services/newstype.service'
 import { MotelService } from '../../services/motel.service'
 import { Router,ActivatedRoute } from '@angular/router';

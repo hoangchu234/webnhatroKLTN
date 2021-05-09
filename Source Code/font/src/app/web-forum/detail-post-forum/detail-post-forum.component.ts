@@ -15,6 +15,8 @@ import { LikeCommentPost } from 'src/app/model/LikeCommentPost';
 import { ILike } from 'src/app/model/interface/ILike';
 import { DialogInformComponent } from 'src/app/dialog-inform/dialog-inform.component';
 import { INotifyComment } from 'src/app/model/interface/INotifyComment';
+import { DialogReportComponent } from '../dialog-report/dialog-report.component';
+import { DialogPostComponent } from '../dialog-post/dialog-post.component';
 
 @Component({
   selector: 'app-detail-post-forum',
@@ -45,6 +47,7 @@ export class DetailPostForumComponent implements OnInit {
 
   notifys: Array<INotifyComment> = [];
   countNotifyNotSee = 0;
+  postUser = "";
   constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     
     if(this.authenticationService.currentAccountValue){
@@ -89,16 +92,80 @@ export class DetailPostForumComponent implements OnInit {
     }
   }
 
+  ///////////////////////////////////////////////////////////////////////////////
+  createPost(){
+    if(this.authenticationService.checkLogin()){
+      this.postUser = this.dataPost.postUser
+      this.openDialogEdit(this.dataPost.id);
+    }
+    else{
+      this.openDialogInform();
+    }
+  }
+
+  public openDialogEdit(idPost): void {
+    const dialogRef = this.dialog.open(DialogPostComponent, {
+      direction: "ltr",
+      width: '400px',
+      height:'auto',
+      data: this.postUser
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if(result != undefined){
+        var post = new Post();
+        post.id = idPost;
+        post.postUser = result;
+        post.hiddenOrNotHidden = false;
+        post.userId = this.authenticationService.currentAccountValue.user.id.toString();
+        // result.userId = "26"
+        this.postService.updatPostById(post).subscribe(data => {
+
+        });
+        this.dataPost.postUser = result;
+        alert("Sửa bài thành công")
+      }
+    });
+  }
+
+   //////////////////////////////////////////////////////////////////////////////////////////////
+   checkReport(id){
+    if(this.checkLogin()){
+      this.openDialogReport(id);
+    }
+    else{
+      this.openDialogInform();
+    }
+  }
+  
+   public openDialogReport(id): void {
+    const dialogRef = this.dialog.open(DialogReportComponent, {
+      direction: "ltr",
+      width: '650px',
+      height: '',
+      data: id
+    });
+
+    dialogRef.afterClosed().subscribe((result: Post) => {
+     
+    });
+  }
+  
   ///////////////////////////////////////////////////////////////////////////////////////////////
-  async onClickDetailPostINotify(data,name,id){
+  onClickDetailPostINotify(data,name,id){
     if(data.justSee == false){
       data.justSee = true;
       this.postService.updateCommentNotifyByOneUser(data).subscribe();
     }
-    var link = '/forum' + '/' + name + '/' + id
-    this.route.navigateByUrl(link);
-  }
+    this.route.navigate(['/forum',name,id]);
 
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  onClickDetailPost(name,id){
+    var link = '/forum' + '/' + name + '/' + id
+    //this.route.navigate(['/forum',name,id]);
+    window.location.replace(link);
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async getDataPost(id){

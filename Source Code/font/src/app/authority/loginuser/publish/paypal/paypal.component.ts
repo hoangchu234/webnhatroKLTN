@@ -12,7 +12,6 @@ import { Image } from 'src/app/model/Image';
 import { Account } from 'src/app/model/Account';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { BehaviorSubjectClass } from 'src/app/services/behaviorsubject';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { NewType } from 'src/app/model/NewType';
@@ -48,7 +47,7 @@ export class PaypalComponent implements OnInit {
   //Load data
   loadDataToSee: Motel;
 
-  constructor(private authenticationService: AuthenticationService,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: Motel,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
+  constructor(private authenticationService: AuthenticationService,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: Motel,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.money = Number(localStorage.getItem(StorageService.totalMoneyStorage)); 
     this.loadDataToSee = JSON.parse(localStorage.getItem(StorageService.motelStorage));
@@ -197,9 +196,11 @@ export class PaypalComponent implements OnInit {
   }
   
   public onSubmit = async () => {
+    this.imageMotels = JSON.parse(localStorage.getItem(StorageService.ImageStorage));
+    this.newTypeMotel = JSON.parse(localStorage.getItem(StorageService.TypeMotelStorage));
 
-    this.behaviorSubjectClass.getDataImages().subscribe(getimagemotel => this.imageMotels = getimagemotel);
-    this.behaviorSubjectClass.getNewTypes().subscribe(getnewtypemotel => this.newTypeMotel = getnewtypemotel);
+    // this.behaviorSubjectClass.getDataImages().subscribe(getimagemotel => this.imageMotels = getimagemotel);
+    // this.behaviorSubjectClass.getNewTypes().subscribe(getnewtypemotel => this.newTypeMotel = getnewtypemotel);
     this.saveNewMotel = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     this.loadImage();
   };

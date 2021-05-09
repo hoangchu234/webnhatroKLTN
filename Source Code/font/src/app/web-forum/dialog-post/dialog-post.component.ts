@@ -9,8 +9,12 @@ import { Post } from '../../model/Post';
 })
 export class DialogPostComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<DialogPostComponent>, @Inject(MAT_DIALOG_DATA) public data: Post) { }
+  check = true;
+  constructor(public dialogRef: MatDialogRef<DialogPostComponent>, @Inject(MAT_DIALOG_DATA) public data: string) { }
 
   ngOnInit(): void {
+    if(this.data == ""){
+      this.check = false;
+    }
   }
 }

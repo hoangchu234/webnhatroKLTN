@@ -37,10 +37,22 @@ namespace Websitedangtintimkiemnhatro.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<LikeCommentPost> LikeCommentPosts { get; set; }
         public DbSet<SMSUser> SMSUsers { get; set; }
-
-
+        public DbSet<InformComment> InformComments { get; set; }
+        public DbSet<ReportPost> ReportPosts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ReportPost>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.HasOne(e => e.Post).WithMany(d => d.ReportPosts).HasForeignKey(d => d.PostId).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<InformComment>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.HasOne(e => e.Comment).WithMany(d => d.InformComments).HasForeignKey(d => d.CommentId).OnDelete(DeleteBehavior.Restrict);
+            });
+
             modelBuilder.Entity<SMSUser>(entity =>
             {
                 entity.Property(e => e.Id).UseIdentityColumn();

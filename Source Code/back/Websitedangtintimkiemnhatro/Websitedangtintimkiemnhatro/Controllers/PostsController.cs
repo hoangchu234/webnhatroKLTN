@@ -28,7 +28,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         {
             List<Comment> listcomments = new List<Comment>();
             //var comments = await _context.Comments.Include(a => a.User).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, PostId = c.PostId, ParentCommentId = c.ParentCommentId, User = c.User }).Take(2).ToListAsync();
-            var posts = await _context.Posts.Include(e => e.User).Select(c => new Post
+            var posts = await _context.Posts.Include(e => e.User).Where(a => a.HiddenOrNotHidden == false).Select(c => new Post
             {
                 Id = c.Id,
                 PostUser = c.PostUser,
@@ -46,7 +46,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         {
             List<Comment> listcomments = new List<Comment>();
             //var comments = await _context.Comments.Include(a => a.User).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser , CreateDate = c.CreateDate, User = c.User }).Take(2).ToListAsync();
-            var posts = await _context.Posts.Include(e => e.User).Select(c => new Post { Id = c.Id, PostUser = c.PostUser, CreateDate = c.CreateDate, User = c.User, 
+            var posts = await _context.Posts.Include(e => e.User).Where(a => a.HiddenOrNotHidden == false).Select(c => new Post { Id = c.Id, PostUser = c.PostUser, CreateDate = c.CreateDate, User = c.User, 
                         Comments = _context.Comments.Include(a => a.User).Where(a => a.PostId == c.Id).Select(c => new Comment { Id = c.Id, CommentUser = c.CommentUser, CreateDate = c.CreateDate, PostId = c.PostId, User = c.User, ParentCommentId = c.ParentCommentId, ChildComments = listcomments }).Take(2).ToList()
                         }).OrderByDescending(a => a.CreateDate).Take(10).ToListAsync();
             return posts;
@@ -67,22 +67,36 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return post;
         }
 
-        //// GET: api/Posts/GetCountLikePost
-        //[HttpGet]
-        //[Route("GetCountLikePost")]
-        //public async Task<ActionResult<Object>> GetCountLikePost()
-        //{
-        //    var like =  _context.LikeCommentPosts.ToList();
+        // PUT: api/Post/5
+        [HttpPut]
+        [Route("PutPostById/{id}")]
+        public async Task<ActionResult<Post>> PutPostById(int id, Post post)
+        {
+            if (id != post.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(post).State = EntityState.Modified;
 
-        //    var result = like.Where(a => a.LikePost == true).GroupBy(id => id.IdPost).OrderByDescending(id => id.Count()).Select(g => new { Id = g.Key, Count = g.Count() });
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PostExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    if (result == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return result as Object;
-        //}
+            var postNew = _context.Posts.Include(a => a.User).Where(a => a.Id == id).FirstOrDefault();
+            return postNew;
+        }
 
         // GET: api/Posts
         [HttpGet]
@@ -138,6 +152,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         public async Task<ActionResult<Post>> PostPost(Post post)
         {
             post.CreateDate = DateTime.Now;
+            post.HiddenOrNotHidden = false;
             _context.Posts.Add(post);
 
             try
@@ -168,6 +183,36 @@ namespace Websitedangtintimkiemnhatro.Controllers
             //var postNew = await _context.Posts.Include(a => a.User).Where(a => a.Id == post.Id).FirstOrDefaultAsync();
             return postNew; 
 
+        }
+
+        // PUT: api/Posts/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Post>> PutLikeCommentPosts(int id, Post post)
+        {
+            if (id != post.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(post).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PostExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            var postNew = _context.Posts.Include(a => a.User).Where(a => a.Id == id).FirstOrDefault();
+            return postNew;
         }
 
         private bool PostExists(int id)

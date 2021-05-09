@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Websitedangtintimkiemnhatro.Models;
 
 namespace Websitedangtintimkiemnhatro.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210508143741_TableInfromComment")]
+    partial class TableInfromComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -536,9 +538,6 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("HiddenOrNotHidden")
-                        .HasColumnType("bit");
-
                     b.Property<string>("PostUser")
                         .HasColumnType("nvarchar(max)");
 
@@ -628,31 +627,6 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Replys");
-                });
-
-            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.ReportPost", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Report")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Write")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("ReportPosts");
                 });
 
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Role", b =>
@@ -990,15 +964,6 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.HasOne("Websitedangtintimkiemnhatro.Models.User", "User")
                         .WithMany("Replys")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.ReportPost", b =>
-                {
-                    b.HasOne("Websitedangtintimkiemnhatro.Models.Post", "Post")
-                        .WithMany("ReportPosts")
-                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

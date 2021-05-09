@@ -4,7 +4,8 @@ import { Injectable } from "@angular/core";
 export class StorageService  
 {
     public static accountStorage: string = 'currentAccount';
-    public static motelStorage: string = 'saveMotel';
+    public static motelStorage: string = 'saveMotel'; 
+    public static TypeMotelStorage: string = 'typeMotel';
     public static ImageStorage: string = 'saveImageMotel';
     public static totalMoneyStorage: string = 'totalMoneny';
     public static AreaSearchStorage: string = 'area';

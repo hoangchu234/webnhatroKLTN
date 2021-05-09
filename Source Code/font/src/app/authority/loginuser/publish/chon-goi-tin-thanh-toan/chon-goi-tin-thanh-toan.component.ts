@@ -6,7 +6,6 @@ import { ServicePriceService } from '../../../../services/service-price.service'
 
 import { AngularFireStorage } from '@angular/fire/storage';
 import { DomSanitizer, } from '@angular/platform-browser';
-import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
 import { Router } from '@angular/router';
 import { Serviceprice } from 'src/app/model/Serviceprice';
 import { Bill } from 'src/app/model/Bill';
@@ -99,7 +98,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
   price:number;
 
 
-  constructor(private behaviorSubjectClass:BehaviorSubjectClass,private priceService: ServicePriceService,private router: Router,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
+  constructor(private priceService: ServicePriceService,private router: Router,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
 
   }
 
@@ -193,7 +192,6 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
 
   
   public tinhTien(){
-    console.log(this.timePublish.split(" "));
     if(this.new == "Tin Hot"){
       if(this.time == "Đăng theo ngày"){
         this.price = 50000

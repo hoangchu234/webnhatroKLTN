@@ -227,7 +227,7 @@
 
     <div class="topbar stick">
         <div class="logo">
-            <h1 style="color: rgb(255, 255, 255);">HOURS</h1>
+            <h1  style="color: rgb(255, 255, 255);"><a >HOURS</a></h1>
         </div>
         <div class="top-area" >
             <!-- <div class="main-menu">
@@ -262,7 +262,7 @@
             </div>
              <ul class="setting-area" style="float: right;">
 
-              <li>
+              <!-- <li>
                   <a href="#" title="Friend Requests" data-ripple="">
                       <i class="fa fa-user"  style="color: white;"></i><em class="bg-red">5</em>
                   </a>
@@ -352,94 +352,33 @@
                       </ul>
                       <a href="friend-requests.html" title="" class="more-mesg">View All</a>
                   </div>
-              </li>
-              <li>
-                  <a href="#" title="Notification" data-ripple="">
-                      <i class="fa fa-bell"  style="color: white;"></i><em class="bg-purple">7</em>
-                  </a>
-                  <div class="dropdowns">
-                      <span>4 New Notifications <a href="#" title="">Mark all as read</a></span>
-                      <ul class="drops-menu">
-                          <li>
-                              <a href="notifications.html" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-1.jpg" alt="">
-                                      <span class="status f-online"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>sarah Loren</h6>
-                                      <span>commented on your new profile status</span>
-                                      <i>2 min ago</i>
-                                  </div>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="notifications.html" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-2.jpg" alt="">
-                                      <span class="status f-online"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>Jhon doe</h6>
-                                      <span>Nicholas Grissom just became friends. Write on his wall.</span>
-                                      <i>4 hours ago</i>
-                                      <figure>
-                                          <span>Today is Marina Valentine’s Birthday! wish for celebrating</span>
-                                          <img class="img1" src="assets/forum/images1/birthday.png" alt="">
-                                      </figure>
-                                  </div>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="notifications.html" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-3.jpg" alt="">
-                                      <span class="status f-online"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>Andrew</h6>
-                                      <span>commented on your photo.</span>
-                                      <i>Sunday</i>
-                                      <figure>
-                                          <span>"Celebrity looks Beautiful in that outfit! We should see each"</span>
-                                          <img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
-                                      </figure>
-                                  </div>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="notifications.html" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-4.jpg" alt="">
-                                      <span class="status f-online"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>Tom cruse</h6>
-                                      <span>nvited you to attend to his event Goo in</span>
-                                      <i>May 19</i>
-                                  </div>
-                              </a>
-                              <span class="tag">New</span>
-                          </li>
-                          <li>
-                              <a href="notifications.html" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-5.jpg" alt="">
-                                      <span class="status f-online"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>Amy</h6>
-                                      <span>Andrew Changed his profile picture. </span>
-                                      <i>dec 18</i>
-                                  </div>
-                              </a>
-                              <span class="tag">New</span>
-                          </li>
-                      </ul>
-                      <a href="notifications.html" title="" class="more-mesg">View All</a>
-                  </div>
-              </li>
-              <li>
+              </li> -->
+              <li *ngIf="checkLogin()">
+                <a href="#" title="Notification" data-ripple="">
+                    <i class="fa fa-bell"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
+                </a>
+                <div class="dropdowns">
+                    <!-- <span>4 New Notifications <a title="">Mark all as read</a></span> -->
+                    <ul class="drops-menu" >
+                        <li *ngFor="let data of notifys">
+                            <a title="" (click)="onClickDetailPostINotify(data,data.postUser,data.idPost)">
+                                <figure>
+                                    <img *ngIf="data.imageUser == 'null'" class="img1" src="../../assets/forum/images1/admin.jpg" alt="">
+                                    <img *ngIf="data.imageUser != 'null'" class="img1" style="height: 50px; width: 50px;" src="{{data.imageUser}}" alt="">
+                                    <span class="status f-online"></span>
+                                </figure>
+                                <div class="mesg-meta">
+                                    <h6>{{data.username}}</h6>
+                                    <span>{{data.userComment}}</span>
+                                    <i>{{data.day}} ngày trước</i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- <a title="" class="more-mesg">View All</a> -->
+                </div>
+            </li>
+              <!-- <li>
                   <a href="#" title="Messages" data-ripple=""><i class="fa fa-commenting" style="color: white;"></i ><em class="bg-blue">9</em></a>
                   <div class="dropdowns">
                       <span>5 New Messages <a href="#" title="">Mark all as read</a></span>
@@ -514,7 +453,7 @@
                       </ul>
                       <a href="chat-messenger.html" title="" class="more-mesg">View All</a>
                   </div>
-              </li>
+              </li> -->
 
           </ul>
 
@@ -594,109 +533,8 @@
                                                 </ul>
                                             </div>
 
-                                        </div><!-- Weather Widget -->
-                                    </div><!-- weather widget-->
-                                    <!--<div class="widget whitish low-opacity">
-                                        <div style="background-image: url(assets/forum/images1/resources/dob2.png)" class="bg-image"></div>
-                                        <div class="dob-head">
-                                            <img class="img1" src="assets/forum/images1/resources/sug-page-5.jpg" alt="">
-                                            <span>22nd Birthday</span>
-                                            <div class="dob">
-                                                <i>19</i>
-                                                <span>September</span>
-                                            </div>
                                         </div>
-                                        <div class="dob-meta">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/dob-cake.gif" alt=""></figure>
-                                            <h6><a href="#" title="">Lucy Carbel</a> valentine's birthday</h6>
-                                            <p>leave a message with your best wishes on his profile.</p>
-                                        </div>
-                                    </div>-->
-                                    <!-- birthday widget -->
-                                    <!--div class="widget">
-                                        <h4 class="widget-title">Twitter feed</h4>
-                                        <ul class="twiter-feed">
-                                            <li>
-                                                <i class="fa fa-twitter"></i>
-                                                <span>
-                                                    <i>jhon william</i>
-                                                    @jhonwilliam
-                                                </span>
-                                                <p>tomorrow with the company we were working and 5 child run away from the working place. <a href="#" title="">#daydream5k</a> </p>
-                                                <em>2 hours ago</em>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-twitter"></i>
-                                                <span>
-                                                    <i>Kelly watson</i>
-                                                    @kelly
-                                                </span>
-                                                <p>tomorrow with the company we were working and 5 child run away from the working place. <a href="#" title="">#daydream5k</a> </p>
-                                                <em>2 hours ago</em>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-twitter"></i>
-                                                <span>
-                                                    <i>Jony bravo</i>
-                                                    @jonibravo
-                                                </span>
-                                                <p>tomorrow with the company we were working and 5 child run away from the working place. <a href="#" title="">#daydream5k</a> </p>
-                                                <em>2 hours ago</em>
-                                            </li>
-                                        </ul>
-                                    </div>-->
-                                    <!-- twitter feed-->
-                                    <!-- advertisment box -->
-                                    <!-- <div class="widget">
-                                        <h4 class="widget-title">Shortcuts</h4>
-                                        <ul class="naves">
-                                            <li>
-                                                <i class="ti-clipboard"></i>
-                                                <a href="newsfeed.html" title="">News feed</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-mouse-alt"></i>
-                                                <a href="inbox.html" title="">Inbox</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-files"></i>
-                                                <a href="fav-page.html" title="">My pages</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-user"></i>
-                                                <a href="timeline-friends.html" title="">friends</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-image"></i>
-                                                <a href="timeline-photos.html" title="">assets/forum/images1</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-video-camera"></i>
-                                                <a href="timeline-videos.html" title="">videos</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-comments-smiley"></i>
-                                                <a href="messages.html" title="">Messages</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-bell"></i>
-                                                <a href="notifications.html" title="">Notifications</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-share"></i>
-                                                <a href="people-nearby.html" title="">People Nearby</a>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-bar-chart-o"></i>
-                                                <a href="insights.html" title="">insights</a>
-                                            </li>
-                                            <li>
-                                                <i class="ti-power-off"></i>
-                                                <a href="landing.html" title="">Logout</a>
-                                            </li>
-                                        </ul>
-                                    </div> -->
-                                    <!-- Shortcuts -->
+                                    </div>
                                     <div class="widget">
                                         <h4 class="widget-title">Bài viết gần nhất</h4>
                                         <ul class="activitiez">
@@ -705,479 +543,48 @@
                                                     <i *ngIf="data.day == 0">{{data.hour}} tiếng trước</i>
                                                     <i *ngIf="data.day != 0">{{data.day}} ngày trước</i>
                                                     <span><a (click)="onClickDetailPost(data.postUser,data.id)" title="">{{data.postUser}}</a></span>
-                                                    <h6>bởi <a href="time-line.html">{{data.username}}</a></h6>
-                                                </div>
-                                            </li>
-                                            <!-- <li>
-                                                <div class="activity-meta">
-                                                    <i>30 Days Ago</i>
-                                                    <span><a href="#" title="">Posted your status. “Hello guys, how are you?”</a></span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="activity-meta">
-                                                    <i>2 Years Ago</i>
-                                                    <span><a href="#" title="">Share a video on her timeline.</a></span>
-                                                    <h6>"<a href="#">you are so funny mr.been.</a>"</h6>
-                                                </div>
-                                            </li> -->
-                                        </ul>
-                                    </div><!-- recent activites -->
-                                    <!--<div class="widget stick-widget">
-                                        <h4 class="widget-title">Who's follownig</h4>
-                                        <ul class="followers">
-                                            <li>
-                                                <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar2.jpg" alt=""></figure>
-                                                <div class="friend-meta">
-                                                    <h4><a href="time-line.html" title="">Kelly Bill</a></h4>
-                                                    <a href="#" title="" class="underline">Add Friend</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar4.jpg" alt=""></figure>
-                                                <div class="friend-meta">
-                                                    <h4><a href="time-line.html" title="">Issabel</a></h4>
-                                                    <a href="#" title="" class="underline">Add Friend</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar6.jpg" alt=""></figure>
-                                                <div class="friend-meta">
-                                                    <h4><a href="time-line.html" title="">Andrew</a></h4>
-                                                    <a href="#" title="" class="underline">Add Friend</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar8.jpg" alt=""></figure>
-                                                <div class="friend-meta">
-                                                    <h4><a href="time-line.html" title="">Sophia</a></h4>
-                                                    <a href="#" title="" class="underline">Add Friend</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar3.jpg" alt=""></figure>
-                                                <div class="friend-meta">
-                                                    <h4><a href="time-line.html" title="">Allen</a></h4>
-                                                    <a href="#" title="" class="underline">Add Friend</a>
+                                                    <h6>bởi <a >{{data.username}}</a></h6>
                                                 </div>
                                             </li>
                                         </ul>
-                                    </div>-->
-                                    <!-- who's following -->
+                                    </div>
                                 </aside>
-                            </div><!-- sidebar -->
-
+                            </div>
                             <div class="col-lg-6">
                                 <div class="central-meta postbox">
                                     <span class="create-post">Câu hỏi của bạn</span>
                                     <div class="new-postbox">
                                         <figure>
-                                            <img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
+                                            <img class="img1" style="width: 50px;height: 50px;" src="{{dataUser.userImage}}" alt="">
                                         </figure>
                                         <div class="newpst-input">
                                             <form method="post">
-                                                <textarea rows="2" placeholder="Bạn đang muốn cung cấp thông tin gì?" (click)="createPost()"></textarea>
+                                                <textarea rows="2" placeholder="Bạn đang muốn cung cấp thông tin gì?" (click)="createPost(0)"></textarea>
                                             </form>
                                         </div>
-                                        <!-- <div class="attachments">
-                                            <ul>
-                                                <li>
-                                                    <span class="add-loc">
-                                                        <i class="fa fa-map-marker"></i>
-                                                    </span>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-music"></i>
-                                                    <label class="fileContainer">
-                                                        <input type="file">
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-image"></i>
-                                                    <label class="fileContainer">
-                                                        <input type="file">
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-video-camera"></i>
-                                                    <label class="fileContainer">
-                                                        <input type="file">
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-camera"></i>
-                                                    <label class="fileContainer">
-                                                        <input type="file">
-                                                    </label>
-                                                </li>
-
-                                            </ul>
-
-                                        </div>
-                                        <div class="add-location-post">
-                                            <span>Drag map point to selected area</span>
-                                            <div class="row">
-
-                                                <div class="col-lg-6">
-                                                      <label class="control-label">Lat :</label>
-                                                      <input type="text" class="" id="us3-lat" />
-                                                </div>
-                                                <div class="col-lg-6">
-                                                      <label>Long :</label>
-                                                      <input type="text" class="" id="us3-lon" />
-                                                </div>
-                                            </div>
-
-                                              <div id="us3"></div>
-                                        </div> -->
                                     </div>
                                 </div>
-                                <!--<div class="central-meta item">
-                                    <div class="user-post">
-                                        <div class="friend-info">
-                                            <figure>
-                                                <img src="images/resources/nearly1.jpg" alt="">
-                                            </figure>
-                                            <div class="friend-name">
-                                                <div class="more">
-                                                    <div class="more-post-optns"><i class="ti-more-alt"></i>
-                                                        <ul>
-                                                            <li><i class="fa fa-pencil-square-o"></i>Edit Post</li>
-                                                            <li><i class="fa fa-trash-o"></i>Delete Post</li>
-                                                            <li class="bad-report"><i class="fa fa-flag"></i>Report Post</li>
-                                                            <li><i class="fa fa-address-card-o"></i>Boost This Post</li>
-                                                            <li><i class="fa fa-clock-o"></i>Schedule Post</li>
-                                                            <li><i class="fa fa-wpexplorer"></i>Select as featured</li>
-                                                            <li><i class="fa fa-bell-slash-o"></i>Turn off Notifications</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <ins><a href="time-line.html" title="">Jack Carter</a> Post Album</ins>
-                                                <span><i class="fa fa-globe"></i> published: September,15 2020 19:PM </span>
-                                            </div>
-                                            <div class="post-meta">
-                                                <p>
-                                                    Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.
-                                                </p>
-                                                <figure>
-                                                    <div class="img-bunch">
-                                                        <div class="row">
-                                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="images/resources/album1.jpg" alt="">
-                                                                    </a>
-                                                                </figure>
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="images/resources/album2.jpg" alt="">
-                                                                    </a>
-                                                                </figure>
-                                                            </div>
-                                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="images/resources/album6.jpg" alt="">
-                                                                    </a>
-                                                                </figure>
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="images/resources/album5.jpg" alt="">
-                                                                    </a>
-                                                                </figure>
-                                                                <figure>
-                                                                    <a href="#" title="" data-toggle="modal" data-target="#img-comt">
-                                                                    <img src="images/resources/album4.jpg" alt="">
-                                                                    </a>
-                                                                    <div class="more-photos">
-                                                                        <span>+15</span>
-                                                                    </div>
-                                                                </figure>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <ul class="like-dislike">
-                                                        <li><a class="bg-purple" href="#" title="Save to Pin Post"><i class="fa fa-thumb-tack"></i></a></li>
-                                                        <li><a class="bg-blue" href="#" title="Like Post"><i class="ti-thumb-up"></i></a></li>
-                                                        <li><a class="bg-red" href="#" title="dislike Post"><i class="ti-thumb-down"></i></a></li>
-                                                    </ul>
-                                                </figure>
-                                                <div class="we-video-info">
-                                                    <ul>
-                                                        <li>
-                                                            <span class="views" title="views">
-                                                                <i class="fa fa-eye"></i>
-                                                                <ins>1.2k</ins>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <div class="likes heart" title="Like/Dislike">❤ <span>2K</span></div>
-                                                        </li>
-                                                        <li>
-                                                            <span class="comment" title="Comments">
-                                                                <i class="fa fa-commenting"></i>
-                                                                <ins>52</ins>
-                                                            </span>
-                                                        </li>
-
-                                                        <li>
-                                                            <span>
-                                                                <a class="share-pst" href="#" title="Share">
-                                                                    <i class="fa fa-share-alt"></i>
-                                                                </a>
-                                                                <ins>20</ins>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="users-thumb-list">
-                                                        <a data-toggle="tooltip" title="Anderw" href="#">
-                                                            <img alt="" src="images/resources/userlist-1.jpg">
-                                                        </a>
-                                                        <a data-toggle="tooltip" title="frank" href="#">
-                                                            <img alt="" src="images/resources/userlist-2.jpg">
-                                                        </a>
-                                                        <a data-toggle="tooltip" title="Sara" href="#">
-                                                            <img alt="" src="images/resources/userlist-3.jpg">
-                                                        </a>
-                                                        <a data-toggle="tooltip" title="Amy" href="#">
-                                                            <img alt="" src="images/resources/userlist-4.jpg">
-                                                        </a>
-                                                        <a data-toggle="tooltip" title="Ema" href="#">
-                                                            <img alt="" src="images/resources/userlist-5.jpg">
-                                                        </a>
-                                                        <span><strong>You</strong>, <b>Sarah</b> and <a href="#" title="">24+ more</a> liked</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="coment-area" style="display: block;">
-                                                <ul class="we-comet">
-                                                    <li>
-                                                        <div class="comet-avatar">
-                                                            <img src="images/resources/nearly3.jpg" alt="">
-                                                        </div>
-                                                        <div class="we-comment">
-                                                            <h5><a href="time-line.html" title="">Jason borne</a></h5>
-                                                            <p>we are working for the dance and sing songs. this video is very awesome for the youngster. please vote this video and like our channel</p>
-                                                            <div class="inline-itms">
-                                                                <span>1 year ago</span>
-                                                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                                                <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a>
-                                                            </div>
-                                                        </div>
-
-                                                    </li>
-                                                    <li>
-                                                        <div class="comet-avatar">
-                                                            <img src="images/resources/comet-4.jpg" alt="">
-                                                        </div>
-                                                        <div class="we-comment">
-                                                            <h5><a href="time-line.html" title="">Sophia</a></h5>
-                                                            <p>we are working for the dance and sing songs. this video is very awesome for the youngster.
-                                                                <i class="em em-smiley"></i>
-                                                            </p>
-                                                            <div class="inline-itms">
-                                                                <span>1 year ago</span>
-                                                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                                                <a href="#" title=""><i class="fa fa-heart"></i><span>20</span></a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="" class="showmore underline">more comments+</a>
-                                                    </li>
-                                                    <li class="post-comment">
-                                                        <div class="comet-avatar">
-                                                            <img src="images/resources/nearly1.jpg" alt="">
-                                                        </div>
-                                                        <div class="post-comt-box">
-                                                            <form method="post">
-                                                                <textarea placeholder="Post your comment"></textarea>
-                                                                <div class="add-smiles">
-                                                                    <div class="uploadimage">
-                                                                        <i class="fa fa-image"></i>
-                                                                        <label class="fileContainer">
-                                                                            <input type="file">
-                                                                        </label>
-                                                                    </div>
-                                                                    <span class="em em-expressionless" title="add icon"></span>
-                                                                    <div class="smiles-bunch">
-                                                                        <i class="em em---1"></i>
-                                                                        <i class="em em-smiley"></i>
-                                                                        <i class="em em-anguished"></i>
-                                                                        <i class="em em-laughing"></i>
-                                                                        <i class="em em-angry"></i>
-                                                                        <i class="em em-astonished"></i>
-                                                                        <i class="em em-blush"></i>
-                                                                        <i class="em em-disappointed"></i>
-                                                                        <i class="em em-worried"></i>
-                                                                        <i class="em em-kissing_heart"></i>
-                                                                        <i class="em em-rage"></i>
-                                                                        <i class="em em-stuck_out_tongue"></i>
-                                                                    </div>
-                                                                </div>
-
-                                                                <button type="submit"></button>
-                                                            </form>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>-->
-                                <!-- album post -->
-                                <!-- add post new box -->
-                                <!--<div class="central-meta">
-                                    <span class="create-post">Recent Stories <a href="#" title="">See All</a></span>
-                                    <div class="story-postbox">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                                <div class="story-box">
-                                                    <figure>
-                                                        <img class="img1" src="assets/forum/images1/resources/story-1.jpg" alt="">
-                                                        <span>Add Your Story</span>
-                                                    </figure>
-                                                    <div class="story-thumb" data-toggle="tooltip" title="Add Your Story">
-                                                        <i class="fa fa-plus"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                                <div class="story-box">
-                                                    <figure>
-                                                        <img class="img1" src="assets/forum/images1/resources/story-2.jpg" alt="">
-                                                        <span>Adam James</span>
-                                                    </figure>
-                                                    <div class="story-thumb" data-toggle="tooltip" title="Adam James">
-                                                        <img class="img1" src="assets/forum/images1/resources/thumb-2.jpg" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                                <div class="story-box">
-                                                    <figure>
-                                                        <img class="img1" src="assets/forum/images1/resources/story-3.jpg" alt="">
-                                                        <span>Emily grey</span>
-                                                    </figure>
-                                                    <div class="story-thumb" data-toggle="tooltip" title="Emily grey">
-                                                        <img class="img1" src="assets/forum/images1/resources/thumb-3.jpg" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                                <div class="story-box">
-                                                    <figure>
-                                                        <img class="img1" src="assets/forum/images1/resources/story-4.jpg" alt="">
-                                                        <span>Jhon Deo</span>
-                                                    </figure>
-                                                    <div class="story-thumb" data-toggle="tooltip" title="Jhon Deo">
-                                                        <img class="img1" src="assets/forum/images1/resources/thumb-4.jpg" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="stories-wraper">
-                                            <div class="status-story">
-                                                <span class="close-story"><i class="ti-close"></i></span>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <div class="stories-users">
-                                                            <h5>Stories</h5>
-                                                            <div class="my-status">
-                                                                <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar10.jpg" alt=""></figure>
-                                                                <a href="#" title="" class="main-btn">Add New</a>
-                                                                <div class="story-user">
-                                                                    <span>My Story</span>
-                                                                    <ins>No updates</ins>
-                                                                </div>
-                                                            </div>
-                                                            <ul class="frnds-stories">
-                                                                <li>
-                                                                    <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar11.jpg" alt=""></figure>
-                                                                    <div class="story-user">
-                                                                        <span>Emily doll</span>
-                                                                        <ins>yesterday</ins>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar15.jpg" alt=""></figure>
-                                                                    <div class="story-user">
-                                                                        <span>Jhon Borny</span>
-                                                                        <ins>3 days ago</ins>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar12.jpg" alt=""></figure>
-                                                                    <div class="story-user">
-                                                                        <span>Sarah Khan</span>
-                                                                        <ins>2 days ago</ins>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar13.jpg" alt=""></figure>
-                                                                    <div class="story-user">
-                                                                        <span>Zara Hayat</span>
-                                                                        <ins>1 day ago</ins>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar14.jpg" alt=""></figure>
-                                                                    <div class="story-user">
-                                                                        <span>Zing Jang</span>
-                                                                        <ins>2 days ago</ins>
-                                                                    </div>
-                                                                </li>
-
-                                                                <li>
-                                                                    <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar16.jpg" alt=""></figure>
-                                                                    <div class="story-user">
-                                                                        <span>Emma watson</span>
-                                                                        <ins>jan,12 2020</ins>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <div id="btns-wrapper"></div>
-                                                        <div id="slideshow">
-                                                            <img class="img1" class="slide" src="https://placehold.it/856x380/FF6347/FFFFFF&amp;text=1" alt="11" />
-                                                            <img class="img1" class="slide" src="https://placehold.it/856x380/6FC6F7/FFFFFF&amp;text=2" alt="2" />
-                                                            <img class="img1" class="slide" src="https://placehold.it/856x380/f3e686/FFFFFF&amp;text=3" alt="3" />
-                                                            <img class="img1" class="slide" src="https://placehold.it/856x380/71eea3/FFFFFF&amp;text=4" alt="4" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
                                 <div *ngFor="let postData of posts; let i=index">
                                     <div class="central-meta item" *ngIf="myCondition(i)">
                                         <div class="user-post" >
                                             <div class="friend-info">
                                                 <figure>
-                                                        <img *ngIf="postData.user.userImage == 'null'" class="img1" src="../../assets/forum/images1/resources/friend-avatar2.jpg" alt="">
+                                                        <img *ngIf="postData.user.userImage == 'null'" class="img1" src="../../assets/forum/images1/admin.jpg" alt="2">
                                                         <img *ngIf="postData.user.userImage != 'null'" class="img1" src="{{postData.user.userImage}}"  alt="2">
                                                 </figure>
                                                 <div class="friend-name">
                                                         <div class="more">
                                                             <div class="more-post-optns"><i class="fa fa-ellipsis-v"></i>
                                                                 <ul>
-                                                                    <li><i class="fa fa-pencil-square-o"></i>Edit Post</li>
+                                                                    <li (click)="createPost(postData.id)"><i class="fa fa-pencil-square-o"></i>Sửa bài đăng</li>
                                                                     <!-- <li><i class="fa fa-trash-o"></i>Delete Post</li> -->
-                                                                    <li class="bad-report"><i class="fa fa-flag"></i>Report Post</li>
+                                                                    <li class="bad-report" (click)="checkReport(postData.id)" ><i class="fa fa-flag"></i>Báo cáo vi phạm</li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <ins>
                                                           <a title="">{{postData.user.hovaTen}}
-                                                            <span style="    float: right;margin-right: -35px;">
-                                                              <a class="share-pst"(click)="copyContent()" title="Share">
-                                                                  <i class="fa fa-share-alt"></i>
-                                                              </a>
-                                                            </span>
+                                                            
                                                           </a>
                                                         </ins>
 
@@ -1223,7 +630,7 @@
 
                                                                     <div class="comet-avatar">
                                                                             <img *ngIf="item.user.userImage != 'null'" class="img1" src="{{item.user.userImage}}" alt="">
-                                                                            <img *ngIf="item.user.userImage == 'null'" class="img1" src="assets/forum/images1/resources/nearly3.jpg" alt="">
+                                                                            <img *ngIf="item.user.userImage == 'null'" class="img1" src="../../assets/forum/images1/admin.jpg" alt="">
 
                                                                     </div>
                                                                     <div class="we-comment" >
@@ -1249,7 +656,7 @@
                                                                     <!-- *ngIf="j == postData.comments.length" -->
                                                                     <ul *ngIf="checkLogin()"  class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" >
                                                                         <div class="comet-avatar">
-                                                                            <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
+                                                                            <img class="img1" src="{{dataUser.userImage}}" alt="">
                                                                         </div>
                                                                         <div class="post-comt-box-reply">
                                                                             <form method="post">
@@ -1259,30 +666,7 @@
                                                                                 <div class=" add-smiles">
                                                                                   <span type="submit" (click)="saveChildComment(postData.id,item.id)" class="fa fa-arrow-circle-right"></span>
                                                                                 </div>
-                                                                                <!-- <div class="add-smiles">
-                                                                                    <div class="uploadimage">
-                                                                                        <i class="fa fa-image"></i>
-                                                                                        <label class="fileContainer">
-                                                                                            <input type="file" >
-                                                                                        </label>
-                                                                                    </div>
-                                                                                    <span class="em em-expressionless" title="add icon"></span>
-                                                                                    <div class="smiles-bunch">
-                                                                                        <i class="em em---1"></i>
-                                                                                        <i class="em em-smiley"></i>
-                                                                                        <i class="em em-anguished"></i>
-                                                                                        <i class="em em-laughing"></i>
-                                                                                        <i class="em em-angry"></i>
-                                                                                        <i class="em em-astonished"></i>
-                                                                                        <i class="em em-blush"></i>
-                                                                                        <i class="em em-disappointed"></i>
-                                                                                        <i class="em em-worried"></i>
-                                                                                        <i class="em em-kissing_heart"></i>
-                                                                                        <i class="em em-rage"></i>
-                                                                                        <i class="em em-stuck_out_tongue"></i>
-                                                                                    </div>
-                                                                                </div> -->
-
+                                                                          
                                                                             </form>
                                                                         </div>
 
@@ -1298,7 +682,7 @@
                                                             <!-- Add Comment-->
                                                             <li *ngIf="checkLogin()" class="post-comment" [hidden] = "showParentComments(postData.id)">
                                                                 <div class="comet-avatar">
-                                                                    <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
+                                                                    <img class="img1" src="{{dataUser.userImage}}" alt="">
                                                                 </div>
                                                                 <div class="post-comt-box">
                                                                     <form method="post">
@@ -1327,26 +711,22 @@
                                             <div class="user-post" >
                                                 <div class="friend-info">
                                                     <figure>
-                                                            <img *ngIf="postData.user.userImage == 'null'" class="img1" src="../../assets/forum/images1/resources/friend-avatar2.jpg" alt="">
+                                                            <img *ngIf="postData.user.userImage == 'null'" class="img1" src="../../assets/forum/images1/admin.jpg" alt="">
                                                             <img *ngIf="postData.user.userImage != 'null'" class="img1" src="{{postData.user.userImage}}"  alt="2">
                                                     </figure>
                                                     <div class="friend-name">
                                                             <div class="more">
                                                                 <div class="more-post-optns"><i class="fa fa-ellipsis-v"></i>
                                                                     <ul>
-                                                                        <li><i class="fa fa-pencil-square-o"></i>Edit Post</li>
+                                                                        <li (click)="createPost(postData.id)"><i class="fa fa-pencil-square-o"></i>Sửa bài đăng</li>
                                                                         <!-- <li><i class="fa fa-trash-o"></i>Delete Post</li> -->
-                                                                        <li class="bad-report"><i class="fa fa-flag"></i (click)="openDialogReport(postData.id)">Report Post</li>
+                                                                        <li class="bad-report" (click)="checkReport(postData.id)"><i  class="fa fa-flag"></i >Báo cáo vi phạm</li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                             <ins>
                                                               <a title="">{{postData.user.hovaTen}}
-                                                                <span style="    float: right;margin-right: -35px;">
-                                                                  <a class="share-pst"(click)="copyContent()" title="Share">
-                                                                      <i class="fa fa-share-alt"></i>
-                                                                  </a>
-                                                                </span>
+
                                                               </a>
                                                             </ins>
                                                             <span><i class="fa fa-globe"></i> Ngày đăng: {{postData.createDate | date}} </span>
@@ -1421,7 +801,7 @@
                                                                         <!-- *ngIf="j == postData.comments.length" -->
                                                                         <ul *ngIf="checkLogin()" class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" >
                                                                             <div class="comet-avatar">
-                                                                                <img class="img1" src="../../assets/forum/images1/resources/nearly1.jpg" alt="">
+                                                                                <img class="img1" src="{{dataUser.userImage}}" alt="">
                                                                             </div>
                                                                             <div class="post-comt-box-reply">
                                                                                 <form method="post">
@@ -1467,7 +847,7 @@
                                                                 <!-- Add Comment-->
                                                                 <li *ngIf="checkLogin()" class="post-comment" [hidden] = "showParentComments(postData.id)">
                                                                     <div class="comet-avatar">
-                                                                        <img class="img1" src="assets/forum/images1/resources/nearly1.jpg" alt="">
+                                                                        <img class="img1" src="{{dataUser.userImage}}" alt="">
                                                                     </div>
                                                                     <div class="post-comt-box-reply">
                                                                         <form method="post">
@@ -1530,7 +910,7 @@
                                         <img class="img1" src="../../assets/forum/images1/clock.png" alt="">
                                     </div>
                                     <div class="advertisment-box">
-                                      <h4 class="widget-title">Quảng cáo</h4>
+                                      <h4 class="widget-title" style="text-align: center;">Quảng cáo</h4>
                                       <figure>
                                           <a href="#" title="Advertisment"><img class="img1" src="assets/forum/images1/resources/ad-widget.gif" alt=""></a>
                                       </figure>

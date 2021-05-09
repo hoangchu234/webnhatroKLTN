@@ -2,11 +2,11 @@ import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MotelService } from '../../../../services/motel.service';
-import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
 import { Motel } from 'src/app/model/Motel';
 import { DialogThongBaoComponent } from '../dialog-thong-bao/dialog-thong-bao.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Image } from 'src/app/model/Image';
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-thong-tin-hinh-anh',
@@ -21,25 +21,26 @@ export class ThongTinHinhAnhComponent implements OnInit {
   loadImageFromPC: string [] = [];
   imageprevous:File [] = [];
   hasData = 0;
-  constructor(public dialog: MatDialog,private behaviorSubjectClass: BehaviorSubjectClass,private router: Router,public motelService:MotelService) { 
-    this.behaviorSubjectClass.getDataImages().subscribe(data => {
-      this.imageprevous = data;
+  constructor(public dialog: MatDialog,private router: Router,public motelService:MotelService) { 
+    var image = JSON.parse(localStorage.getItem(StorageService.ImageStorage));
+    if(image != undefined){
+      this.imageprevous = image;
       if(this.imageprevous.length != null){
         this.image = this.imageprevous;
         this.hasData = this.imageprevous.length;
       }
-     
+      
       for(let i=0; i< this.imageprevous.length; i++)
       {
         const reader = new FileReader();
         reader.readAsDataURL(this.imageprevous[i]);
         reader.onload = (event: any) => {
-          this.loadImageFromPC.push(event.target.result)
-        } 
-        
+        this.loadImageFromPC.push(event.target.result)
+      }     
+          
       }
       this.checkLoad = "load";
-    })
+    }
   }
 
   ngOnInit(): void {
@@ -50,12 +51,6 @@ export class ThongTinHinhAnhComponent implements OnInit {
 
     var files: FileList;
     files = event.target.files;
-    /*if(this.hasData != 0){
-      for(let i=0;i<this.imageprevous.length;i++){
-        this.image.push(this.imageprevous[i]) 
-      }
-    }*/
-
     
     for(let i=0; i< files.length; i++)
     {
@@ -68,7 +63,6 @@ export class ThongTinHinhAnhComponent implements OnInit {
     }
     this.checkLoad = "load";
 
-    console.log(this.image);
   }
 
   public onDelete(id){
@@ -78,8 +72,6 @@ export class ThongTinHinhAnhComponent implements OnInit {
       this.image = fileNew;
     }
     this.image.forEach((element,index)=>{
-      console.log(index)
-      console.log(id)
       if(element.name == this.image[id].name) {
         this.image.splice(id,1);
       }
@@ -100,8 +92,8 @@ export class ThongTinHinhAnhComponent implements OnInit {
 
   public next(){
     if(this.image.length){
-      var file: File[] = [];
-      this.behaviorSubjectClass.setDataImages(this.image);
+      // this.behaviorSubjectClass.setDataImages(this.image);
+      localStorage.setItem(StorageService.ImageStorage, JSON.stringify(this.image));
       this.router.navigateByUrl('/user/goi-thanh-toan');
 
     }

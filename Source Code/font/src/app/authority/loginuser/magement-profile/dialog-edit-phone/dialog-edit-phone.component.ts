@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Account } from  '../../../../model/Account';
 import { User } from  '../../../..//model/User';
 import { Router } from '@angular/router';
-import { BehaviorSubjectClass } from 'src/app/services/behaviorsubject';
 import { RegisterService } from 'src/app/services/register.service';
 import firebase from 'firebase';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -28,7 +27,6 @@ export class DialogEditPhoneComponent implements OnInit {
 
   constructor(private userService: UserService,public dialogRef: MatDialogRef<DialogEditPhoneComponent>,@Inject(MAT_DIALOG_DATA) public data: User,private authenticationService: AuthenticationService,
       private router: Router,
-      private behaviorSubjectClass:BehaviorSubjectClass,
       private service: RegisterService) {
         const firebaseConfig = {
           apiKey: "AIzaSyAA7gAsuYi-IeYgqUEcl6bojuu4wtjjmh8",

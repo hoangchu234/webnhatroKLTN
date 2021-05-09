@@ -197,15 +197,79 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return Content(list.Count.ToString());
         }
 
+        [HttpGet]
+        [Route("GetCommentNotifyByOneUser/{id}")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetCommentNotifyByOneUser(int id)
+        {
+            DateTime aDateTime = DateTime.Now;
+            var list = await _context.InformComments.Include(a => a.Comment).ThenInclude(a => a.User).Where(a => a.IdUserReceiced == id)
+                .Select(a => new { Id = a.Id, IdPost = a.Comment.PostId, PostUser = a.Comment.Post.PostUser, IdUserReceiced = a.IdUserReceiced, JustSee = a.JustSee, UserComment = a.Comment.CommentUser, Username = a.Comment.User.HovaTen, ImageUser = a.Comment.User.UserImage, Day = aDateTime.Subtract(a.Comment.CreateDate).Days }).ToListAsync();
+            return list;
+        }
+
+        [HttpGet]
+        [Route("CountCommentNotifyByOneUser/{id}")]
+        public async Task<ActionResult> CountCommentNotifyByOneUser(int id)
+        {
+            DateTime aDateTime = DateTime.Now;  
+            var list = await _context.InformComments.Where(a => a.IdUserReceiced == id && a.JustSee == false).ToListAsync();
+            return Content(list.Count().ToString());
+        }
+
+        // PUT: api/Comments/5
+        [HttpPut]
+        [Route("PutCommentNotifyByOneUser/{id}")]
+        public async Task<ActionResult<InformComment>> PutCommentNotifyByOneUser(int id, InformComment inform)
+        {
+            if (id != inform.Id)
+            {
+                return BadRequest();
+            }
+            inform.JustSee = true;
+            _context.Entry(inform).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!InformCommentsExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            var informNew = _context.InformComments.Where(a => a.Id == id).FirstOrDefault();
+            return informNew;
+        }
+
+        private bool InformCommentsExists(int id)
+        {
+            return _context.InformComments.Any(e => e.Id == id);
+        }
+
         // POST: api/Comments
         [HttpPost]
-        public async Task<ActionResult<Comment>> PostComment(Comment comment)
+        [Route("PostComment/{id}")]
+        public async Task<ActionResult<Comment>> PostComment(int id, Comment comment)
         {
             comment.CreateDate = DateTime.Now;
+
             _context.Comments.Add(comment);
 
             try
             {
+                await _context.SaveChangesAsync();
+                var infromComment = new InformComment();
+                infromComment.JustSee = false;
+                infromComment.IdUserReceiced = id;
+                infromComment.CommentId = comment.Id;
+                _context.InformComments.Add(infromComment);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)

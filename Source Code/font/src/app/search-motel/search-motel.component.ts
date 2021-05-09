@@ -10,7 +10,6 @@ import { CountNewTypeViewModel } from '../model/CountNewTypeViewModel';
 import { AuthenticationService } from '../services/authentication.service';
 import { Account } from  '../model/Account';
 import { UserService } from '../services/user.service'
-import { BehaviorSubjectClass } from '../services/behaviorsubject'
 import { data } from 'jquery';
 import { City } from '../model/City';
 
@@ -41,7 +40,7 @@ export class SearchMotelComponent implements OnInit {
   xetvalue = false;
 
   datasearch;
-  constructor(private behaviorSubjectClass:BehaviorSubjectClass,
+  constructor(
     private userService:UserService,
     private authenticationService: AuthenticationService,
     public dialog: MatDialog,

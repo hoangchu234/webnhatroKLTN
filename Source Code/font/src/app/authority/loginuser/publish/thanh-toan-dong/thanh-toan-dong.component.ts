@@ -13,7 +13,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AuthenticationService} from '../../../../services/authentication.service'
 
 import { Router } from '@angular/router';
-import { BehaviorSubjectClass } from '../../../../services/behaviorsubject'
 import { NewType } from 'src/app/model/NewType';
 import { TypeofnewService } from 'src/app/services/newstype.service';
 import { CitiesService } from 'src/app/services/cities.service';
@@ -31,16 +30,16 @@ import { StorageService } from 'src/app/storage.service';
 })
 export class ThanhToanDongComponent implements OnInit {
 
-  //currentAccount:Account;
+  currentAccount:Account;
   money:string;
   checkImage = false;
   loadDataToSee: Motel;
   loadDataType:string = "";
   loadDataCity:string = "";
   loadDataProvince:string = "";
-  constructor(public dialog: MatDialog,private cityService: CitiesService, private provinceService: ProvincesService,private typeservice:TypeofnewService,private behaviorSubjectClass: BehaviorSubjectClass,private priceService: ServicePriceService,private router: Router,private authenticationService: AuthenticationService,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
+  constructor(public dialog: MatDialog,private cityService: CitiesService, private provinceService: ProvincesService,private typeservice:TypeofnewService,private priceService: ServicePriceService,private router: Router,private authenticationService: AuthenticationService,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
   
-    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+    this.currentAccount = this.authenticationService.currentAccountValue;
     this.loadData();
     this.money = localStorage.getItem(StorageService.totalMoneyStorage); 
     if(this.authenticationService.currentAccountValue.user.userImage != null)
@@ -57,20 +56,17 @@ export class ThanhToanDongComponent implements OnInit {
 
   public async loadData(){
     this.loadDataToSee = JSON.parse(localStorage.getItem(StorageService.motelStorage));
-    console.log(this.loadDataToSee)
-    this.behaviorSubjectClass.getNewTypes().subscribe(getnewtypemotel => {
-      this.loadDataType = getnewtypemotel.name
-    });
-    /*this.cityService.getCityFromId(Number(this.loadDataToSee.cityId)).subscribe(getcity => {
-      this.loadDataCity = getcity.name;
 
-    })*/
     const result = await this.cityService.getCityFromId(Number(this.loadDataToSee.cityId)) as City;
     this.loadDataCity = result.name;
-    /*this.provinceService.getProvinceById(Number(this.loadDataToSee.provinceId)).subscribe(getprovince => {
-      this.loadDataProvince = getprovince.name;
-    })*/
-    this.loadDataProvince = await this.provinceService.getProvinceById(Number(this.loadDataToSee.provinceId)) as any;
+
+    const province = await this.provinceService.getProvinceById(Number(this.loadDataToSee.provinceId)) as Province;
+    this.loadDataProvince = province.name;
+
+    var getnewtypemotel = JSON.parse(localStorage.getItem(StorageService.TypeMotelStorage));
+    this.loadDataType = getnewtypemotel.name;
+
+
   }
 
   public prevous(){
@@ -86,11 +82,9 @@ export class ThanhToanDongComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Motel) => { 
       localStorage.removeItem(StorageService.totalMoneyStorage); 
-      var file: File[];
-      var newType: NewType;
-      this.behaviorSubjectClass.setDataImages(file);
+      localStorage.removeItem(StorageService.ImageStorage); 
       localStorage.removeItem(StorageService.motelStorage)
-      this.behaviorSubjectClass.setNewTypes(newType);
+      localStorage.removeItem(StorageService.TypeMotelStorage)
       this.router.navigateByUrl('/user/thong-tin-vi-tri');
     });
   }

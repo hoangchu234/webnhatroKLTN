@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Account } from  '../../model/Account';
 import { UserService } from '../../services/user.service'
-import { BehaviorSubjectClass } from '../../services/behaviorsubject'
 import { data } from 'jquery';
 import { Motel } from '../../model/Motel';
 import { User } from '../../model/User';
@@ -92,7 +91,7 @@ export class DataMotelComponent implements OnInit {
 
   linkURL = this.route.url;
 
-  constructor(private priceSearchServer:PriceSearchService,private provinceService: ProvincesService,public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService,private areaSearchService:AreaSearchService,private behaviorSubjectClass:BehaviorSubjectClass,private userService:UserService,private authenticationService: AuthenticationService,public dialog: MatDialog,private typeservice:TypeofnewService,private route: Router,private router: ActivatedRoute,private motelService:MotelService) {
+  constructor(private priceSearchServer:PriceSearchService,private provinceService: ProvincesService,public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService,private areaSearchService:AreaSearchService,private userService:UserService,private authenticationService: AuthenticationService,public dialog: MatDialog,private typeservice:TypeofnewService,private route: Router,private router: ActivatedRoute,private motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     this.getDataAreaZone();
     this.getMotelByURL();

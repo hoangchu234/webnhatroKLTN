@@ -26,7 +26,7 @@ import { DialogReportComponent } from './dialog-report/dialog-report.component';
 })
 export class WebForumComponent implements OnInit {
 
-  post = new Post();
+  postUser = ""
   posts: Post[];
   comment = new Comment();
   // showComments:boolean[] = [];
@@ -64,7 +64,7 @@ export class WebForumComponent implements OnInit {
         doB: null,
         email: "",
         facebook: "",
-        userImage: "../../assets/forum/images1/resources/admin.jpg",
+        userImage: "../../assets/forum/images1/admin.jpg",
         createdDate:null,
         lastLogOnDate:null,
         account:null,
@@ -132,11 +132,20 @@ export class WebForumComponent implements OnInit {
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
+  checkReport(id){
+    if(this.checkLogin()){
+      this.openDialogReport(id);
+    }
+    else{
+      this.openDialogInform();
+    }
+  }
+
   public openDialogReport(id): void {
     const dialogRef = this.dialog.open(DialogReportComponent, {
       direction: "ltr",
-      width: '400px',
-      height: '500px',
+      width: '650px',
+      height: '',
       data: id
     });
 
@@ -151,14 +160,15 @@ export class WebForumComponent implements OnInit {
       data.justSee = true;
       this.postService.updateCommentNotifyByOneUser(data).subscribe();
     }
-    var link = '/forum' + '/' + name + '/' + id
-    this.route.navigateByUrl(link);
+    // var link = '/forum' + '/' + name + '/' + id
+    this.route.navigate(['/forum',name,id]);
+
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
   onClickDetailPost(name,id){
-    var link = '/forum' + '/' + name + '/' + id
-    this.route.navigateByUrl(link);
+    // var link = '/forum' + '/' + name + '/' + id
+    this.route.navigate(['/forum',name,id]);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -497,13 +507,47 @@ export class WebForumComponent implements OnInit {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  createPost(){
+  createPost(idPost){
     if(this.authenticationService.checkLogin()){
-      this.openDialog();
+      if(idPost == 0){
+        this.postUser = "";
+        this.openDialog();
+      }
+      else if(idPost != 0){
+        var index = this.posts.findIndex(a => a.id === idPost);
+        this.postUser = this.posts[index].postUser
+        this.openDialogEdit(idPost);
+      }
     }
     else{
       this.openDialogInform();
     }
+  }
+
+  public openDialogEdit(idPost): void {
+    const dialogRef = this.dialog.open(DialogPostComponent, {
+      direction: "ltr",
+      width: '400px',
+      height:'auto',
+      data: this.postUser
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if(result != undefined){
+        var post = new Post();
+        post.id = idPost;
+        post.postUser = result;
+        post.hiddenOrNotHidden = false;
+        post.userId = this.authenticationService.currentAccountValue.user.id.toString();
+        // result.userId = "26"
+        this.postService.updatPostById(post).subscribe(data => {
+
+        });
+        var index = this.posts.findIndex(a => a.id === idPost);
+        this.posts[index].postUser = result;
+        alert("Sửa bài thành công")
+      }
+    });
   }
 
   public openDialog(): void {
@@ -511,19 +555,18 @@ export class WebForumComponent implements OnInit {
       direction: "ltr",
       width: '400px',
       height:'auto',
-      data: this.post
+      data: this.postUser
     });
 
-    dialogRef.afterClosed().subscribe((result: Post) => {
-      if(result.postUser){
-        result.userId = this.authenticationService.currentAccountValue.user.id.toString();
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if(result != undefined){
+        var post = new Post();
+        post.postUser = result;
+        post.hiddenOrNotHidden = false;
+        post.userId = this.authenticationService.currentAccountValue.user.id.toString();
         // result.userId = "26"
-        this.postService.postPost(this.post).subscribe(data => {
-          /*this.showComments.splice(0, this.showComments.length);
-          this.countComment.splice(0, this.countComment.length);
-          this.countChildComment.splice(0, this.countChildComment.length);
-          this.getPosts();*/
-          //var index = this.posts.findIndex(a => a.id == postId);
+        this.postService.postPost(post).subscribe(data => {
+         
           this.posts.unshift(data);
           var arrayChildCommentCheck = Array<ICheckChildComment>();
           this.showChildCommentArray.push(this.pushArrayShowCommentParent(data.id,arrayChildCommentCheck));
@@ -532,7 +575,6 @@ export class WebForumComponent implements OnInit {
           alert("Đăng bài thành công")
         });
       }
-
     });
   }
 
