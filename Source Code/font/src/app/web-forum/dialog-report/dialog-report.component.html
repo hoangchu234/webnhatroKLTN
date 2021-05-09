@@ -30,12 +30,12 @@
             </div>
           </div>
         <div [hidden] = "!isCheck">
-            <label>Báo cáo vi phạm</label>
-            <textarea placeholder="write someting about Post" rows="2" [(ngModel)]="write"  name="write"></textarea>
+            <label class="font" >Báo cáo vi phạm</label>
+            <textarea class="font" placeholder="Bạn hãy nhập lỗi vi phạm" rows="2" [(ngModel)]="write"  name="write"></textarea>
         </div>
-        <div>
-            <button data-ripple="" type="submit" class="main-btn" (click)="submit()">Submit</button>
-            <a data-ripple="" mat-dialog-close class="main-btn3 cancel">Close</a>
+        <div style="margin-top: 20px;">
+            <button data-ripple="" type="submit"  class="main-btn" (click)="submit()">Gửi</button>
+            <a data-ripple="" mat-dialog-close class="main-btn3 cancel">Đóng</a>
         </div>
         </form>	
     </div>

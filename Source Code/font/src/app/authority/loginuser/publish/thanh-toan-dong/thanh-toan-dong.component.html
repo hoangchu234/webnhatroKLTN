@@ -1,3 +1,4 @@
+<div style="margin-left: -150px;">
 <div class="container-fluid" style="height: 50px;background-color: #C0C0C0;">
   <div style="padding-top:15px;"><span style="margin-left: 10px;">Motel <div class="fa  fa-chevron-right" style="margin-right: 15px;"></div> <b style="margin-right: 10px;">Trang thanh toán</b> <div class="fa  fa-chevron-right"style="margin-right: 15px;"></div> <b>Thông tin hình ảnh</b></span></div>
 
@@ -12,134 +13,39 @@
   <div class="row" >
     <div class="font" style="font-size: 30px;margin: 10px;font-weight: bold;">Thông tin thanh toán</div>
     <div class="col-md-12 row" style="border-top: 1px solid black;border-bottom: 1px solid black;padding:30px;">
-      <div *ngIf="checkImage"  class="col-md-4" style="background-image: url({{currentAccount.user.userImage}});width: 100%;height: 200px;margin-left:-30px"></div>
-      <div *ngIf="!checkImage" class="col-md-4" style="background-image: url(../../assets/images/gallery_1.jpg);width: 100%;height: 200px;margin-left:-30px"></div>
-      <div class="col-md-8" style="font-size: 20px;">
+      <div *ngIf="checkImage"  class="col-md-12" style="background-image: url({{currentAccount.user.userImage}});width: 100%;height: 300px;margin-left:0px;border-radius: 5px;"></div>
+      <div *ngIf="!checkImage" class="col-md-12" style="background-image: url(../../assets/images/gallery_1.jpg);width: 100%;height: 300px;margin-left:0px;border-radius: 5px;"></div>
+      <div class="col-md-12" style="font-size: 20px;margin-top: 10px;">
 
-        <i>Tiêu đề tin :</i> {{loadDataToSee.title}}
+        <span class="font">Tiêu đề tin :</span> <span class="font">{{loadDataToSee.title}}</span>
         <br>
-        <i>Loại tin:</i> {{loadDataType}}
+        <span class="font">Loại tin:</span> <span class="font">{{loadDataType}}</span>
         <br>
-        <i>Thành phố:</i> {{loadDataCity}}
+        <span class="font">Thành phố:</span> <span class="font">{{loadDataCity}}</span>
         <br>
-        <i>Quân huyện:</i> {{loadDataProvince}}
+        <span class="font">Quân huyện:</span> <span class="font">{{loadDataProvince}}</span>
         <br>
-        <div style="position: absolute; bottom: 0;float: left; ">
-          <div >Số tiền phải trả:</div>
+        <div style="margin-top: 20px;">
+          <span style=" bottom: 0;float: left; ">
+            <div class="font" >Số tiền phải trả:</div>
+          </span>
+          <div style="bottom: 0;right:0 ">
+            <div class="font" style="color: rgb(255, 0, 0);margin-right: -60px;">{{money}} VND</div>
+          </div>
         </div>
-        <div style="position: absolute;bottom: 0;right:0 ">
-          <div style="color: red;margin-right: -60px;">{{money}} VND</div>
-        </div>
+        
       </div>
     </div>
     <div class="col-md-12 row" style="font-size: 25px;padding-top:30px;padding-left: 20px;">
       <div class="col-md-12">
-        <div style="float: left;margin-left: -30px;"><b>Thành tiền:</b></div>
+        <div style="float: left;margin-left: 10px;"><b>Thành tiền:</b></div>
         <div style="float: right;color:red;font-size: 25px;margin-right: -25px;"><b>{{money}} VND</b></div>
       </div>
     </div>
-    <div class="col-md-12" style="text-align: right">
-    <button class="btn btn-success" (click)="openDialogUser()" style="text-align: center;margin-left: 10px;height: 60px;width: 180px;">Đăng tin</button>
+    <div class="col-md-12" style="text-align: right;margin-top: 20px;">
+    <button class="btn btn-success" (click)="openDialogUser()" style="text-align: center;margin-left: 10px;height: 60px;width: 180px;border-radius: 10px;">Đăng tin</button>
     </div>
   </div>
 </form>
 </div>
-
-<!--<div class="container" style="width:900px" >
-  <div class="row" style="font-size:20px;" style="margin-left:-20px">
-    <b style="font-size:25px; padding-top: 20px;padding-bottom: 20px;">Chọn hình thức thanh toán</b>
-    <div class="col-md-12 row " >
-      <div class="form-check col-md-12 " style="border:1px solid black;border-radius:10px;padding:10px"  >
-        <input class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 20px;text-align: center;margin-left: 1px;" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-        <label class="form-check-label" for="exampleRadios1" style="margin: 17px;float: left;">
-          <b>Thẻ ngân hàng nội địa</b>
-        </label>
-        <label class="form-check-label" for="exampleRadios1" style="margin-left: 20px;float:right;">
-          <div class="fa fa-address-card" style="font-size: 50px;"></div>
-        </label>
-        <div class="col-md-12 row" style="margin-top:50px">
-          <div class="col-md-4" ><img src="../../assets/images/vietcombank.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-4" ><img src="../../assets/images/Sacombank.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-4" ><img src="../../assets/images/Vietinbank.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-          <br>
-          <div class="col-md-4" ><img src="../../assets/images/Agribank.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-4" ><img src="../../assets/images/VIB.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-4" ><img src="../../assets/images/VPbank.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-          <br>
-          <div class="col-md-4" ><img src="../../assets/images/Eximbank.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-4" ><img src="../../assets/images/Techcombank.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-4" ><a style="text-align:center;"><div style=" width: 100%;border:1px solid grey;margin:5px; height:73px;"> <b>Xem thêm</b></div></a></div>
-        </div>
-
-      </div>
-      <div class="form-check col-md-12 " style="border:1px solid black;border-radius:10px;margin-top: 10px;margin-bottom: 10px;"  >
-        <input class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 20px;text-align: center;margin-left: 1px;" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-        <label class="form-check-label" for="exampleRadios1" style="margin: 17px;float: left;">
-          <b>Thẻ quốc tế</b>
-        </label>
-        <label class="form-check-label" for="exampleRadios1" style="margin-left: 20px;float:right;">
-
-          <div class="fa fa-address-card" style="font-size: 50px;"></div>
-        </label>
-        <div class="col-md-12 row" style="margin-top:50px;margin-bottom: 20px;">
-          <div class="col-md-2" ><img src="../../assets/images/Visa.jpg" style=" width:100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-2" ><img src="../../assets/images/mastercard.png" style=" width:100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-2" ><img src="../../assets/images/jcb.png" style=" width: 100%;border:1px solid grey;margin:5px"></div>
-
-        </div>
-
-      </div>
-      <div class="form-check col-md-12 " style="border:1px solid black;border-radius:10px;margin-top: 10px;margin-bottom: 10px;"  >
-        <input class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 20px;text-align: center;margin-left: 1px;" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-        <label class="form-check-label" for="exampleRadios1" style="margin: 17px;float: left;">
-          <b>Ví momo</b>
-        </label>
-        <label class="form-check-label" for="exampleRadios1" style="margin-left: 20px;float:right;">
-
-          <div class="fa fa-address-card" style="font-size: 50px;"></div>
-        </label>
-        <div class="col-md-12 row" style="margin-top:50px;margin-bottom: 20px;">
-          <div class="col-md-1" ><img src="../../assets/images/momo.png" style=" width:100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-11" style="padding-top: 10px;" ><i >Hướng dẫn tải và thanh toán</i></div>
-        </div>
-
-      </div>
-      <div class="form-check col-md-12 " style="border:1px solid black;border-radius:10px;margin-top: 10px;margin-bottom: 10px;"  >
-        <input class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 20px;text-align: center;margin-left: 1px;" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-        <label class="form-check-label" for="exampleRadios1" style="margin: 17px;float: left;">
-          <b>Ví zalo</b>
-        </label>
-        <label class="form-check-label" for="exampleRadios1" style="margin-left: 20px;float:right;">
-
-          <div class="fa fa-address-card" style="font-size: 50px;"></div>
-        </label>
-        <div class="col-md-12 row" style="margin-top:50px;margin-bottom: 20px;">
-          <div class="col-md-1" ><img src="../../assets/images/zalo.png" style=" width:100%;border:1px solid grey;margin:5px"></div>
-          <div class="col-md-11"  style="padding-top: 10px;"><i >Hướng dẫn tải và thanh toán</i></div>
-        </div>
-
-      </div>
-      <div class="form-check col-md-12 " style="border:1px solid black;border-radius:10px;margin-top: 10px;margin-bottom: 10px;"  >
-        <input class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 20px;text-align: center;margin-left: 1px;" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-        <label class="form-check-label" for="exampleRadios1" style="margin: 17px;float: left;">
-          <b>Tại điểm giao dịch</b>
-        </label>
-        <label class="form-check-label" for="exampleRadios1" style="margin-left: 20px;float:right;">
-          <div class="fa fa-address-card" style="font-size: 50px;"></div>
-        </label>
-        <div class="col-md-12 row">
-          <div class="col-md-12" style="padding:20px;"><i >Danh sách điểm giao dịch</i></div>
-        </div>
-
-      </div>
-      <div class="form-check col-md-12" style="margin-top:15px;padding: 30px;">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" style="margin-top: 5px;">
-        <label class="form-check-label" for="exampleCheck1"><b>Yêu cầu hóa đơn GTGT cho đơn hàng này</b></label>
-        <br>
-        <i style="margin-left:20px;font-size:15px">chợ tốt phát hành HÓA ĐƠN ĐIỆN TỬ  và gửi đến khách hàng thông qua email</i>
-      </div>
-
-    </div>
-  </div>
-
-</div>-->
+</div>

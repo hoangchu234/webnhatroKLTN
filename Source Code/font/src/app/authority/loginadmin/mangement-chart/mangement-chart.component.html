@@ -1,12 +1,12 @@
 
 
- <div class="content-wrapper">
-  <h3 class="page-title">
+ <div class="content-wrapper" style="margin-top: -40px;">
+  <h3 class="page-title" >
     <span class="page-title-icon bg-gradient-primary text-white mr-2">
       <i class="mdi mdi-home"></i>
     </span> Home
   </h3>
-  <div class="row">
+  <div class="row" style="margin-top: 20px;">
     <div class="col-md-4 stretch-card grid-margin">
       <div class="card bg-gradient-danger card-img-holder text-white">
         <div class="card-body">
@@ -48,7 +48,7 @@
           <div class="clearfix">
             <h4 class="card-title float-left">Thống kê top 5 người đăng tin</h4>
           </div>
-          <div style="display: block;" *ngIf="LinechartReady">
+          <div style="display: block;"  *ngIf="LinechartReady">
             <canvas baseChart width="auto" height="auto"
               [datasets]="lineChartData"
               [labels]="lineChartLabels"
@@ -61,12 +61,12 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Thống kê theo loại tin</h4>
-          <div style="display: block" *ngIf="chartReady">
-          <canvas baseChart
+    <div class="col-md-5 ">
+      <div>
+        <div class="card-body"  style="width: 460px; display: block; height: 255px;">
+          <h4 class="card-title font" style=" margin-left:100px">Thống kê theo loại tin</h4>
+          <div style="display: block;" *ngIf="chartReady">
+          <canvas style="width: 460px; display: block; height: 255px;" baseChart
                     [data]="pieChartData"
                     [labels]="pieChartLabels"
                     [chartType]="pieChartType"
@@ -83,7 +83,7 @@
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Thống kê theo giá</h4>
+          <h4 class="card-title font">Thống kê theo giá</h4>
           <div style="display: block;" *ngIf="BarchartReady">
             <canvas baseChart
             [datasets]="barChartData"

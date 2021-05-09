@@ -227,7 +227,7 @@
 
     <div class="topbar stick">
         <div class="logo">
-            <h1  style="color: rgb(255, 255, 255);"><a >HOURS</a></h1>
+            <h1  style="color: rgb(255, 255, 255);"><a [routerLink]="['/home']" style="text-decoration: none;text-decoration-color:black ;">HOURS</a></h1>
         </div>
         <div class="top-area" >
             <!-- <div class="main-menu">
@@ -355,7 +355,7 @@
               </li> -->
               <li *ngIf="checkLogin()">
                 <a href="#" title="Notification" data-ripple="">
-                    <i class="fa fa-bell"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
+                    <i class="fa fa-bell" style="color:aliceblue"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
                 </a>
                 <div class="dropdowns">
                     <!-- <span>4 New Notifications <a title="">Mark all as read</a></span> -->
@@ -378,83 +378,7 @@
                     <!-- <a title="" class="more-mesg">View All</a> -->
                 </div>
             </li>
-              <!-- <li>
-                  <a href="#" title="Messages" data-ripple=""><i class="fa fa-commenting" style="color: white;"></i ><em class="bg-blue">9</em></a>
-                  <div class="dropdowns">
-                      <span>5 New Messages <a href="#" title="">Mark all as read</a></span>
-                      <ul class="drops-menu">
-                          <li>
-                              <a class="show-mesg" href="#" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-1.jpg" alt="">
-                                      <span class="status f-online"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>sarah Loren</h6>
-                                      <span><i class="ti-check"></i> Hi, how r u dear ...?</span>
-                                      <i>2 min ago</i>
-                                  </div>
-                              </a>
-                          </li>
-                          <li>
-                              <a class="show-mesg" href="#" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-2.jpg" alt="">
-                                      <span class="status f-offline"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>Jhon doe</h6>
-                                      <span><i class="ti-check"></i> We’ll have to check that at the office and see if the client is on board with</span>
-                                      <i>2 min ago</i>
-                                  </div>
-                              </a>
-                          </li>
-                          <li>
-                              <a class="show-mesg" href="#" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-3.jpg" alt="">
-                                      <span class="status f-online"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>Andrew</h6>
-                                      <span> <i class="fa fa-paperclip"></i>Hi Jack's! It’s Diana, I just wanted to let you know that we have to reschedule..</span>
-                                      <i>2 min ago</i>
-                                  </div>
-                              </a>
-                          </li>
-                          <li>
-                              <a class="show-mesg" href="#" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-4.jpg" alt="">
-                                      <span class="status f-offline"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>Tom cruse</h6>
-                                      <span><i class="ti-check"></i> Great, I’ll see you tomorrow!.</span>
-                                      <i>2 min ago</i>
-                                  </div>
-                              </a>
-                              <span class="tag">New</span>
-                          </li>
-                          <li>
-                              <a class="show-mesg" href="#" title="">
-                                  <figure>
-                                      <img class="img1" src="assets/forum/images1/resources/thumb-5.jpg" alt="">
-                                      <span class="status f-away"></span>
-                                  </figure>
-                                  <div class="mesg-meta">
-                                      <h6>Amy</h6>
-                                      <span><i class="fa fa-paperclip"></i> Sed ut perspiciatis unde omnis iste natus error sit </span>
-                                      <i>2 min ago</i>
-                                  </div>
-                              </a>
-                              <span class="tag">New</span>
-                          </li>
-                      </ul>
-                      <a href="chat-messenger.html" title="" class="more-mesg">View All</a>
-                  </div>
-              </li> -->
-
+             
           </ul>
 
             <!-- <span class="ti-settings main-menu" data-ripple=""></span> -->
@@ -497,37 +421,37 @@
                                                 <ul>
                                                     <li>
                                                         <span>Sun</span>
-                                                        <a href="#" title=""><i class="wi wi-day-sunny"></i></a>
+                                                        <a href="#" title=""><i class="fa fa fa-sun-o"></i></a>
                                                         <em>40°</em>
                                                     </li>
                                                     <li>
                                                         <span>Mon</span>
-                                                        <a href="#" title=""><i class="wi wi-day-cloudy"></i></a>
+                                                        <a href="#" title=""><i class="fa fa fa-sun-o"></i></a>
                                                         <em>10°</em>
                                                     </li>
                                                     <li>
                                                         <span>Tue</span>
-                                                        <a href="#" title=""><i class="wi wi-day-hail"></i></a>
+                                                        <a href="#" title=""><i class="fa fa fa-sun-o"></i></a>
                                                         <em>20°</em>
                                                     </li>
                                                     <li>
                                                         <span>Wed</span>
-                                                        <a href="#" title=""><i class="wi wi-day-lightning"></i></a>
+                                                        <a href="#" title=""><i class="fa fa fa-sun-o"></i></a>
                                                         <em>34°</em>
                                                     </li>
                                                     <li>
                                                         <span>Thu</span>
-                                                        <a href="#" title=""><i class="wi wi-day-showers"></i></a>
+                                                        <a href="#" title=""><i class="fa fa fa-sun-o"></i></a>
                                                         <em>22°</em>
                                                     </li>
                                                     <li>
                                                         <span>Fri</span>
-                                                        <a href="#" title=""><i class="wi wi-day-windy"></i></a>
+                                                        <a href="#" title=""><i class="fa fa fa-sun-o"></i></a>
                                                         <em>26°</em>
                                                     </li>
                                                     <li>
                                                         <span>Sat</span>
-                                                        <a href="#" title=""><i class="wi wi-day-sunny-overcast"></i></a>
+                                                        <a href="#" title=""><i class="fa fa fa-sun-o"></i></a>
                                                         <em>30°</em>
                                                     </li>
                                                 </ul>
@@ -540,10 +464,10 @@
                                         <ul class="activitiez">
                                             <li *ngFor="let data of dataRecently">
                                                 <div class="activity-meta">
-                                                    <i *ngIf="data.day == 0">{{data.hour}} tiếng trước</i>
-                                                    <i *ngIf="data.day != 0">{{data.day}} ngày trước</i>
+                                                    <i *ngIf="data.day == 0" class="font"  style="color: rgb(240, 107, 147);">{{data.hour}} tiếng trước</i>
+                                                    <i *ngIf="data.day != 0" class="font" style="color: rgb(240, 107, 147);">{{data.day}} ngày trước</i>
                                                     <span><a (click)="onClickDetailPost(data.postUser,data.id)" title="">{{data.postUser}}</a></span>
-                                                    <h6>bởi <a >{{data.username}}</a></h6>
+                                                    <h6>bởi <a style="color: blue;">{{data.username}}</a></h6>
                                                 </div>
                                             </li>
                                         </ul>
@@ -583,7 +507,7 @@
                                                             </div>
                                                         </div>
                                                         <ins>
-                                                          <a title="">{{postData.user.hovaTen}}
+                                                          <a title="" style="color:blue;">{{postData.user.hovaTen}}
                                                             
                                                           </a>
                                                         </ins>
@@ -725,7 +649,7 @@
                                                                 </div>
                                                             </div>
                                                             <ins>
-                                                              <a title="">{{postData.user.hovaTen}}
+                                                              <a title="" style="color: blue;">{{postData.user.hovaTen}}
 
                                                               </a>
                                                             </ins>
@@ -808,31 +732,9 @@
                                                                                     <div id="postData.id">
                                                                                         <textarea placeholder="Trả lời bài post" name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
                                                                                     </div>
-                                                                                    <div class="add-smiles">
-                                                                                        <div class="uploadimage">
-                                                                                            <i class="fa fa-image"></i>
-                                                                                            <label class="fileContainer">
-                                                                                                <input type="file" >
-                                                                                            </label>
-                                                                                        </div>
-                                                                                        <span class="em em-expressionless" title="add icon"></span>
-                                                                                        <div class="smiles-bunch">
-                                                                                            <i class="em em---1"></i>
-                                                                                            <i class="em em-smiley"></i>
-                                                                                            <i class="em em-anguished"></i>
-                                                                                            <i class="em em-laughing"></i>
-                                                                                            <i class="em em-angry"></i>
-                                                                                            <i class="em em-astonished"></i>
-                                                                                            <i class="em em-blush"></i>
-                                                                                            <i class="em em-disappointed"></i>
-                                                                                            <i class="em em-worried"></i>
-                                                                                            <i class="em em-kissing_heart"></i>
-                                                                                            <i class="em em-rage"></i>
-                                                                                            <i class="em em-stuck_out_tongue"></i>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <button type="submit" (click)="saveChildComment(postData.id,item.id)"> Post</button>
+                                                                                    <div class=" add-smiles">
+                                                                                        <span type="submit" (click)="saveChildComment(postData.id,item.id)" class="fa fa-arrow-circle-right"></span>
+                                                                                      </div>
                                                                                 </form>
                                                                             </div>
                                                                         </ul>
@@ -849,36 +751,14 @@
                                                                     <div class="comet-avatar">
                                                                         <img class="img1" src="{{dataUser.userImage}}" alt="">
                                                                     </div>
-                                                                    <div class="post-comt-box-reply">
+                                                                    <div class="post-comt-box">
                                                                         <form method="post">
                                                                             <div id="postData.id" >
                                                                                 <textarea style="border: 0.01px solid;" placeholder="Trả lời bài post"  name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
                                                                             </div>
-                                                                            <div class="add-smiles">
-                                                                                <div class="uploadimage">
-                                                                                    <i class="fa fa-image"></i>
-                                                                                    <label class="fileContainer">
-                                                                                        <input type="file" >
-                                                                                    </label>
-                                                                                </div>
-                                                                                <span class="em em-expressionless" title="add icon"></span>
-                                                                                <div class="smiles-bunch">
-                                                                                    <i class="em em---1"></i>
-                                                                                    <i class="em em-smiley"></i>
-                                                                                    <i class="em em-anguished"></i>
-                                                                                    <i class="em em-laughing"></i>
-                                                                                    <i class="em em-angry"></i>
-                                                                                    <i class="em em-astonished"></i>
-                                                                                    <i class="em em-blush"></i>
-                                                                                    <i class="em em-disappointed"></i>
-                                                                                    <i class="em em-worried"></i>
-                                                                                    <i class="em em-kissing_heart"></i>
-                                                                                    <i class="em em-rage"></i>
-                                                                                    <i class="em em-stuck_out_tongue"></i>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <button type="submit" (click)="saveComment(postData.id)"> Post</button>
+                                                                            <div class=" add-smiles">
+                                                                                <span type="submit" (click)="saveComment(postData.id)" class="fa fa-arrow-circle-right"></span>
+                                                                              </div>
                                                                         </form>
                                                                     </div>
                                                                 </li>
