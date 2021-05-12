@@ -80,6 +80,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         {
             account.IsActive = true;
             account.RoleId = 1;
+            account.IsHD = true;
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
@@ -87,6 +88,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
             account.User.CreatedDate = DateTime.Now;
             account.User.LastLogOnDate = DateTime.Now;
             account.User.Gender = true;
+            account.User.PubishFree = 3;
             _context.Users.Add(account.User);
             
 
@@ -127,7 +129,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 }
 
             }
-            return NotFound();
+            return Content("false");
         }
 
         // POST: api/Accounts/Signinsocial
@@ -142,7 +144,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 var accountfind = _context.Accounts.Include(m => m.User).Include(m => m.Employee).Include(a => a.Role).Where(m => m.User.Email == user.Email).FirstOrDefault();
                 return accountfind;
             }
-            return NotFound();
+            return Content("false");
         }
 
         // PUT: api/Accounts/Lockaccount

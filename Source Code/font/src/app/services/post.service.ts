@@ -7,6 +7,7 @@ import { map ,tap, catchError} from 'rxjs/operators';
 import { LikeCommentPost } from '../model/LikeCommentPost';
 import { INotifyComment } from '../model/interface/INotifyComment';
 import { ReportPost } from '../model/ReportPost';
+import { environment } from 'src/environments/environment';
 
 const httpOptions ={
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,7 +18,7 @@ const httpOptions ={
 })
 export class PostService {
 
-  private urlAPI = 'https://localhost:44324';
+  private urlAPI = environment.urlAPI;
 
   constructor(private http: HttpClient) { }
 
@@ -36,37 +37,76 @@ export class PostService {
     );
   }
 
-  public postLikeCommentPost(newLike: LikeCommentPost): Observable<LikeCommentPost>{
-    return this.http.post<LikeCommentPost>(this.urlAPI + "/api/LikeCommentPosts", newLike, httpOptions).pipe(
-      tap((like: LikeCommentPost) => like),
-      catchError(error => of(new LikeCommentPost()))
-    );
+  // public postLikeCommentPost(newLike: LikeCommentPost): Observable<LikeCommentPost>{
+  //   return this.http.post<LikeCommentPost>(this.urlAPI + "/api/LikeCommentPosts", newLike, httpOptions).pipe(
+  //     tap((like: LikeCommentPost) => like),
+  //     catchError(error => of(new LikeCommentPost()))
+  //   );
+  // }
+  postLikeCommentPost = async (newLike: LikeCommentPost) => {
+    try {
+      const url = `${this.urlAPI + "/api/LikeCommentPosts"}`;
+      return await this.http.post(url, newLike, httpOptions).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
-  public deleteLike(idPost: number,idUser: number): Observable<any>{
-    const url = `${this.urlAPI + "/api/LikeCommentPosts/DeleteLikeCommentPost"}/${idPost}/${idUser}`;
-    return this.http.delete<LikeCommentPost>(url, httpOptions).pipe(
-      tap(deleteLike => deleteLike),
-      catchError(error => of(null))
-    );
+  // public deleteLike(idPost: number,idUser: number): Observable<any>{
+  //   const url = `${this.urlAPI + "/api/LikeCommentPosts/DeleteLikeCommentPost"}/${idPost}/${idUser}`;
+  //   return this.http.delete<LikeCommentPost>(url, httpOptions).pipe(
+  //     tap(deleteLike => deleteLike),
+  //     catchError(error => of(null))
+  //   );
 
+  // }
+
+  deleteLike = async (idPost: number,idUser: number) =>{
+    try {
+      const url = `${this.urlAPI + "/api/LikeCommentPosts/DeleteLikeCommentPost"}/${idPost}/${idUser}`;
+      return await this.http.delete(url, httpOptions).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
-  public deleteLikeComment(idComment: number,idUser: number): Observable<any>{
-    const url = `${this.urlAPI + "/api/LikeCommentPosts/DeleteLikeCommentPostver2"}/${idComment}/${idUser}`;
-    return this.http.delete<LikeCommentPost>(url, httpOptions).pipe(
-      tap(deleteLike => deleteLike),
-      catchError(error => of(null))
-    );
+  // public deleteLikeComment(idComment: number,idUser: number): Observable<any>{
+  //   const url = `${this.urlAPI + "/api/LikeCommentPosts/DeleteLikeCommentPostver2"}/${idComment}/${idUser}`;
+  //   return this.http.delete<LikeCommentPost>(url, httpOptions).pipe(
+  //     tap(deleteLike => deleteLike),
+  //     catchError(error => of(null))
+  //   );
 
+  // }
+
+  deleteLikeComment = async (idComment: number,idUser: number) =>{
+    try {
+      const url = `${this.urlAPI + "/api/LikeCommentPosts/DeleteLikeCommentPostver2"}/${idComment}/${idUser}`;
+      return await this.http.delete(url, httpOptions).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
-  public updateCommentNotifyByOneUser(notifyComment: INotifyComment): Observable<any>{
-    return this.http.put(`${this.urlAPI + "/api/Comments/PutCommentNotifyByOneUser"}/${notifyComment.id}`, notifyComment, httpOptions).pipe(
-      tap(updatenotifyComment => updatenotifyComment),
-      catchError(error => of())
-    );
+  updateCommentNotifyByOneUser = async (notifyComment,id) => {
+    try {
+      const url = `${this.urlAPI + "/api/Comments/PutCommentNotifyByOneUser"}/${id}`;
+      return await this.http.put(url, notifyComment, httpOptions).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
+
+  // public updateCommentNotifyByOneUser(notifyComment: INotifyComment): Observable<any>{
+  //   return this.http.put(`${this.urlAPI + "/api/Comments/PutCommentNotifyByOneUser"}/${notifyComment.id}`, notifyComment, httpOptions).pipe(
+  //     tap(updatenotifyComment => updatenotifyComment),
+  //     catchError(error => of())
+  //   );
+  // }
 
   public updatPostById(post: Post): Observable<any>{
     return this.http.put(`${this.urlAPI + "/api/Posts/PutPostById"}/${post.id}`, post, httpOptions).pipe(

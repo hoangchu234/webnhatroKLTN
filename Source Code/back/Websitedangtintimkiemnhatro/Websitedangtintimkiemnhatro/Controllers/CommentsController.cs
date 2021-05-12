@@ -203,7 +203,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         {
             DateTime aDateTime = DateTime.Now;
             var list = await _context.InformComments.Include(a => a.Comment).ThenInclude(a => a.User).Where(a => a.IdUserReceiced == id)
-                .Select(a => new { Id = a.Id, IdPost = a.Comment.PostId, PostUser = a.Comment.Post.PostUser, IdUserReceiced = a.IdUserReceiced, JustSee = a.JustSee, UserComment = a.Comment.CommentUser, Username = a.Comment.User.HovaTen, ImageUser = a.Comment.User.UserImage, Day = aDateTime.Subtract(a.Comment.CreateDate).Days }).ToListAsync();
+                .Select(a => new { Id = a.Id, IdPost = a.Comment.PostId, PostUser = a.Comment.Post.PostUser, IdUserReceiced = a.IdUserReceiced, JustSee = a.JustSee, IdComment = a.CommentId, UserComment = a.Comment.CommentUser, Username = a.Comment.User.HovaTen, ImageUser = a.Comment.User.UserImage, Day = aDateTime.Subtract(a.Comment.CreateDate).Days }).ToListAsync();
             return list;
         }
 

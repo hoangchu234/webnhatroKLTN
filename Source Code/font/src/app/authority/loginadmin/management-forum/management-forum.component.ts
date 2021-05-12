@@ -30,8 +30,25 @@ export class ManagementForumComponent implements OnInit {
   }
 
   async hiddenPost(idPost){
-    const post = await this.postService.getPostById(idPost) as Post;
-    post.hiddenOrNotHidden = false;
-    this.postService.updatPostById(post).subscribe();
+    var post = await this.postService.getPostById(idPost) as Post;
+    if(post.hiddenOrNotHidden == true){
+      alert("Bài viết này đã được ẩn");
+    }
+    else{
+      var postUpdate:Post={
+        id:post.id,
+        postUser:post.postUser, 
+        createDate:post.createDate, 
+        hiddenOrNotHidden: true, 
+        user:null,
+        userId:post.userId, 
+        comment:null, 
+        comments:null
+      }
+      this.postService.updatPostById(postUpdate).subscribe(a => {
+        alert("Ẩn bài thành công");
+      });
+    }
+    
   }
 }

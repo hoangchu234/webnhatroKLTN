@@ -39,26 +39,18 @@ export class NavbarUserComponent implements OnInit {
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
       if(this.authenticationService.currentAccountValue){
         this.getReply();
-        // if(this.authenticationService.currentAccountValue.user.userImage != null){
-        //   this.checkImage = true;
-        // }
         this.checkLogin = true;
+        if(this.authenticationService.currentAccountValue.user.userImage != null){
+          this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+        }
+        if(this.authenticationService.currentAccountValue.user.userImage == null){
+          this.userImage = "../../../assets/images/blog_3.jpg"
+        }
       }
       
     }
 
   ngOnInit(): void { 
-    try{
-      if(this.authenticationService.currentAccountValue){
-        this.userImage = this.authenticationService.currentAccountValue.user.userImage;
-      }
-      else{
-        this.userImage = "../../../assets/images/blog_3.jpg"
-      }
-    }
-    catch(err){
-
-    }
   }
   
   onClickURL(link){

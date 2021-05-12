@@ -1091,7 +1091,7 @@ header.sticky {
 
 .drops-menu > li:nth-child(2n) > a,
 .drops-menu > li:nth-child(2n) > div{
-    background: whitesmoke none repeat scroll 0 0;
+    /* background: whitesmoke none repeat scroll 0 0; */
 }
 
 .drops-menu > li a figure,

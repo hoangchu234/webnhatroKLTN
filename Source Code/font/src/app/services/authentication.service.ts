@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable,of, from } from 'rxjs';
 import { map ,tap, catchError} from 'rxjs/operators';
 import { StorageService } from '../storage.service';
+import { environment } from 'src/environments/environment';
+import { User } from '../model/User';
 
 const httpOptions ={
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -24,7 +26,7 @@ export class AuthenticationService {
     private account_storage: string = StorageService.accountStorage;
     public remember: boolean = false;
 
-    private urlAPI = 'https://localhost:44324';
+    private urlAPI = environment.urlAPI;
 
     constructor(private http: HttpClient) {
         //this.currentAccountSubject = new BehaviorSubject<Account>(
@@ -76,12 +78,22 @@ export class AuthenticationService {
         else  sessionStorage.setItem(this.account_storage, JSON.stringify(temp));
     }
 
-    public loginPhone(account: Account): Observable<Account>{
-        return this.http.post<Account>(this.urlAPI + "/api/Accounts/Signin", account, httpOptions).pipe(
-          tap((account: Account) => account),
-          catchError(error => of(new Account()))
-        );
-    }
+    // public loginPhone(account: Account): Observable<Account>{
+    //     return this.http.post<Account>(this.urlAPI + "/api/Accounts/Signin", account, httpOptions).pipe(
+    //       tap((account: Account) => account),
+    //       catchError(error => of(new Account()))
+    //     );
+    // }
+
+    loginPhone = async (account: Account) => {
+        try {
+          const url = `${this.urlAPI + "/api/Accounts/Signin"}`;
+          return await this.http.post(url, account, httpOptions).toPromise();
+        }
+        catch (e) {
+          console.log(e);
+        }
+      }
 
     // public loginPhone = (account: Account) => {
     //     var path = `${this.urlAPI}/api/Accounts/Signin`;
@@ -134,41 +146,49 @@ export class AuthenticationService {
         );
     }*/
 
-   public loginSocial = (email: string) => {
-            console.log(email);
-            const loginUrl = `${this.urlAPI}/api/Accounts/Signinsocial`;
-            console.log(loginUrl);
-            return this.http.post<any>(loginUrl, { email })
-            .pipe(
-            map((account) => {
-            // console.log(user);
-            if (account != null){
-                const newAccount = {} as Account;
-                newAccount.id = account.id;
-                newAccount.username = account.username;
-                newAccount.password = account.password;
-                newAccount.roleId = account.roleId;
-                newAccount.isActive = account.isActive;
-                newAccount.role = account.role;
-                if(Number(account.roleId) == Number(1)){
-                    newAccount.user = account.user;
-                }
-                else{
-                    newAccount.isHD = "1";
-                    newAccount.employee = account.employee;
-                }                 
-                console.log(account);
-                localStorage.setItem('currentAccount', JSON.stringify(newAccount));
-                this.currentAccountSubject.next(newAccount);
-                return account;
-            } 
-            else {
-                return null;
-            }
-        })
-        );
-    }
+//    public loginSocial = (email: string) => {
+//             const loginUrl = `${this.urlAPI}/api/Accounts/Signinsocial`;
+//             return this.http.post<any>(loginUrl, { email })
+//             .pipe(
+//             map((account) => {
+//             // console.log(user);
+//             if (account != null){
+//                 const newAccount = {} as Account;
+//                 newAccount.id = account.id;
+//                 newAccount.username = account.username;
+//                 newAccount.password = account.password;
+//                 newAccount.roleId = account.roleId;
+//                 newAccount.isActive = account.isActive;
+//                 newAccount.role = account.role;
+//                 if(Number(account.roleId) == Number(1)){
+//                     newAccount.user = account.user;
+//                 }
+//                 else{
+//                     newAccount.isHD = "1";
+//                     newAccount.employee = account.employee;
+//                 }                 
+//                 console.log(account);
+//                 localStorage.setItem('currentAccount', JSON.stringify(newAccount));
+//                 this.currentAccountSubject.next(newAccount);
+//                 return account;
+//             } 
+//             else {
+//                 return null;
+//             }
+//         })
+//         );
+//     }
   
+    loginSocial = async (user:User) => {
+        try {
+            const loginUrl = `${this.urlAPI}/api/Accounts/Signinsocial`;
+            return await this.http.post(loginUrl, user, httpOptions).toPromise();
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
     public logout = () => {
         //localStorage.removeItem('phone');
         //localStorage.removeItem('password');

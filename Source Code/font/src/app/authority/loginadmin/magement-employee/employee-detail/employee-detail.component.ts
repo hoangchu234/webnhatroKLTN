@@ -12,15 +12,11 @@ import { EmployeesService } from '../../../../services/employees.service'
 export class EmployeeDetailComponent implements OnInit {
 
   @Input() employee:Employee;
-  checkImage = false;
   constructor(private route:ActivatedRoute,private employeesService:EmployeesService,private location:Location) { 
     
   }
 
   ngOnInit(): void {
-    if(this.employee.employeeImage != null){
-      this.checkImage = true
-    }
   }
 
   public onSubmit(employee){

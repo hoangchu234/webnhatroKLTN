@@ -96,7 +96,9 @@ export class SocialloginComponent implements OnInit {
   
  
   public email:string;
+  userName = "";
   public checkmail;
+  remember: boolean = false;
 
   constructor(private authenticationService: AuthenticationService,private router: Router,private service: RegisterService,private userService:UserService,private serviceregister: RegisterService) {
     const firebaseConfig = {
@@ -120,8 +122,9 @@ export class SocialloginComponent implements OnInit {
   }
 
   public async search(email) {
-    this.checkmail = await this.userService.getsearchemail(email) as Account[];
-    if (this.checkmail) {
+    this.checkmail = await this.userService.getsearchemail(email);
+    console.log(this.checkmail)
+    if (this.checkmail.length == 0) {
       this.createNewAccountSocial();
     }
     else {
@@ -131,49 +134,89 @@ export class SocialloginComponent implements OnInit {
 
   public createNewAccountSocial = async () => {
     try {
-      let account = new Account();
       let user = new User();
-
-      console.log(account.user);
       user.email = this.email;
+      user.hovaTen = this.userName;
+      let account = new Account();
       account.user = user;
-      console.log(account);
-      const resultaccount = await this.serviceregister.addAccount(account) as any;          
-      this.router.navigateByUrl('home');
-      alert('Đăng nhập thành công');
+      account.username = this.userName;
+      const resultaccount = await this.serviceregister.addAccount(account) as any;   
+      if(resultaccount != false){
+        var accountLogin = resultaccount as Account;
+        if(accountLogin.isActive == false){
+          alert('Đăng nhập thất bại');
+        }
+        else{
+          if(accountLogin){
+            this.authenticationService.saveAccount(accountLogin, this.remember);
+            if(Number(accountLogin.roleId) == 1){
+              var link = '/home'
+              window.location.replace(link);
+              //this.router.navigateByUrl('home');
+            }
+            else{
+              var link = '/admin'
+              window.location.replace(link);
+              //this.router.navigateByUrl('admin');
+            }
+          }
+          else{
+            alert('Đăng nhập thất bại');
+
+          }
+        }
+      }
+      else{
+        alert('Đăng nhập thất bại');
+
+      }
     }
     catch (e) {
       alert('Đăng nhập thất bại');
     }
   };
 
-  public login = () => {
-    this.authenticationService.loginSocial(this.email).subscribe(
-      (data) => {
-        console.log(data);
-        console.log(data.isActive);
-        if (data.isActive) {
-          try{
-            this.createNewAccountSocial();
-            // localStorage.setItem('phone', data.phone);
-            // localStorage.setItem('password', data.password);
-            // console.log(this.authenticationService);
-            alert('Đăng nhập thành công');
-            this.router.navigateByUrl('home');
+  public login = async () => {
+    try 
+    {
+      var user = new User();
+      user.email = this.email;
+      const result = await this.authenticationService.loginSocial(user);
+      if(result != false){
+        var account = result as Account;
+        if(account.isActive == false){
+          alert('Đăng nhập thất bại');
+        }
+        else{
+          if(account){
+            this.authenticationService.saveAccount(account, this.remember);
+            if(Number(account.roleId) == 1){
+              var link = '/home'
+              window.location.replace(link);
+              //this.router.navigateByUrl('home');
+            }
+            else{
+              var link = '/admin'
+              window.location.replace(link);
+              //this.router.navigateByUrl('admin');
+            }
           }
-          catch{
+          else{
             alert('Đăng nhập thất bại');
+
           }
         }
-        else {
-          
-          this.authenticationService.logout();
-            alert('Lock data');
-        }
-        
-      },
-      (error) => console.error(error)
-    )
+      }
+      else{
+        alert('Đăng nhập thất bại');
+
+      }
+    } 
+    catch(e) 
+    {
+      console.log(e)
+      alert('Tài khoản không tồn tại!');
+    }
   }
 
   public async googleSignin(){
@@ -185,8 +228,8 @@ export class SocialloginComponent implements OnInit {
         var token = confirmationResult.credential.signInMethod;
         // The signed-in user info.
         var user = confirmationResult.user;
-        console.log(user.providerData);
         this.email = user.email;
+        this.userName = user.displayName;
         //this.createNewAccountSocial();
         this.search(this.email)
       }).catch(function(error) {

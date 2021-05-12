@@ -51,10 +51,15 @@ export class WebForumComponent implements OnInit {
 
   notifys: Array<INotifyComment> = [];
   countNotifyNotSee = 0;
+  image = "";
   constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     this.getPosts();
+    this.image = "../../assets/forum/images1/resources/friend-avatar2.jpg";
     if(this.authenticationService.currentAccountValue){
       this.dataUser = this.authenticationService.currentAccountValue.user;
+      if(this.dataUser.userImage == null){
+        this.dataUser.userImage = "../../assets/forum/images1/resources/friend-avatar2.jpg";
+      }
     }
     else{
       var user: User ={
@@ -64,11 +69,12 @@ export class WebForumComponent implements OnInit {
         doB: null,
         email: "",
         facebook: "",
-        userImage: "../../assets/forum/images1/admin.jpg",
+        userImage: "../../assets/forum/images1/resources/friend-avatar2.jpg",
         createdDate:null,
         lastLogOnDate:null,
         account:null,
-        accountid:""
+        accountid:"",
+        pubishFree:null
       }
       this.dataUser = user;
     }
@@ -84,6 +90,11 @@ export class WebForumComponent implements OnInit {
 
     if(this.checkLogin()){
       this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
+      for(let i=0; i< this.notifys.length;i++){
+        if(this.notifys[i].imageUser == null){
+          this.notifys[i].imageUser = this.image;
+        }
+      }
       this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
     }
   }
@@ -93,10 +104,14 @@ export class WebForumComponent implements OnInit {
   // get data post and comment
   async getPosts() {
     this.posts = await this.postService.getSomePost() as Post[];
+
     for(let i =0;i<this.posts.length;i++){
-      // this.showComments.push(true);
+      // add image default
+      if(this.posts[i].user.userImage == null){
+        this.posts[i].user.userImage = this.image;
+      }
       //count comment
-      this.getCountCommentPost(this.posts[i].id);
+      this.getCountCommentPostEnd(this.posts[i].id);
       // this.getCountChildComment(this.posts[i].id);
       //
       this.posts[i].comments.forEach(element => {
@@ -109,6 +124,10 @@ export class WebForumComponent implements OnInit {
       for(let j=0; j<this.posts[i].comments.length; j++){
 
         this.posts[i].comments[j].childComments.length = 0;
+        // add image default
+        if(this.posts[i].comments[j].user.userImage == null){
+          this.posts[i].comments[j].user.userImage = this.image;
+        }
         this.countComment.push(await this.pushCountComment(this.posts[i].id, this.posts[i].comments[j].id))
         // this.pushArrayShowCommentChild(this.posts[i].id,this.posts[i].comments[j].id,this.posts[i].comments[j].parentCommentId);
         arrayChildCommentCheck.push(this.pushArrayShowCommentChild(this.posts[i].comments[j].id,this.posts[i].comments[j].parentCommentId));
@@ -155,19 +174,24 @@ export class WebForumComponent implements OnInit {
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
-  onClickDetailPostINotify(data,name,id){
+  async onClickDetailPostINotify(data){
     if(data.justSee == false){
       data.justSee = true;
-      this.postService.updateCommentNotifyByOneUser(data).subscribe();
+      var update = {id: data.id,idUserReceiced: data.idUserReceiced,justSee: data.justSee,commentId: data.idComment};
+      const result = await this.postService.updateCommentNotifyByOneUser(update,data.id)
     }
-    // var link = '/forum' + '/' + name + '/' + id
-    this.route.navigate(['/forum',name,id]);
-
+    this.route.navigate(['/forum',data.postUser,data.idPost]);
+    // this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    //   this.route.navigate(['/forum',data.postUser,data.idPost]);
+    // }); 
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
   onClickDetailPost(name,id){
     // var link = '/forum' + '/' + name + '/' + id
+    // this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    //   this.route.navigate(['/forum',name,id]);
+    // }); 
     this.route.navigate(['/forum',name,id]);
   }
 
@@ -226,6 +250,10 @@ export class WebForumComponent implements OnInit {
         vitrithemdatacomment++;
         if(indexFind == -1){
           //data.push(result[i]);
+          // add image default
+          if(result[i].user.userImage == null){
+            result[i].user.userImage = this.image;
+          }
           this.addAItem(data,data.length,vitrithemdata,result[i]);
           this.addAItem(this.dataComment,this.dataComment.length,vitrithemdatacomment,result[i]);
           // this.dataComment.push(result[i]);
@@ -362,9 +390,14 @@ export class WebForumComponent implements OnInit {
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
-  // count comment parent for each post
-  async getCountCommentPost(id) {
+  // count comment parent for each post end
+  async getCountCommentPostEnd(id) {
     this.countCommentPost.push(await this.postService.getCountCommentPost(id) as number);
+  }
+
+  // count comment parent for each post end
+  async getCountCommentPostFirst(id) {
+    this.countCommentPost.unshift(await this.postService.getCountCommentPost(id) as number);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
@@ -446,6 +479,10 @@ export class WebForumComponent implements OnInit {
         //this.getPosts();
         data.childComments.length = 0;
         var index = this.posts.findIndex(a => a.id == postId);
+        // add image default
+        if(data.user.userImage == null){
+          data.user.userImage = this.image;
+        }
         this.posts[index].comments.unshift(data);
 
         this.dataComment.unshift(data);
@@ -479,6 +516,10 @@ export class WebForumComponent implements OnInit {
         var indexPost = this.posts.findIndex(a => a.id == postId)
         var indexComment = this.posts[indexPost].comments.findIndex(a => a.id == idComment);
         data.childComments.length = 0;
+        // add image default
+        if(data.user.userImage == null){
+          data.user.userImage = this.image;
+        }
         this.posts[indexPost].comments[indexComment].childComments.unshift(data);
         ////////////////
         this.dataComment.push(data)
@@ -490,7 +531,7 @@ export class WebForumComponent implements OnInit {
         this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(data.id,data.parentCommentId))
         this.comment.commentUser = "";
         this.countLikeComment(this.dataComment);
-        this.getCountCommentPost(data.id);
+        // this.getCountCommentPost(data.id);
       })
       alert("Thành công");
     }
@@ -566,12 +607,14 @@ export class WebForumComponent implements OnInit {
         post.userId = this.authenticationService.currentAccountValue.user.id.toString();
         // result.userId = "26"
         this.postService.postPost(post).subscribe(data => {
-         
+          if(data.user.userImage == null){
+            data.user.userImage = this.image;
+          }
           this.posts.unshift(data);
           var arrayChildCommentCheck = Array<ICheckChildComment>();
           this.showChildCommentArray.push(this.pushArrayShowCommentParent(data.id,arrayChildCommentCheck));
           this.countLikePost(this.posts);
-
+          this.getCountCommentPostFirst(data.id);
           alert("Đăng bài thành công")
         });
       }
@@ -624,6 +667,10 @@ export class WebForumComponent implements OnInit {
       if(indexFind == -1){
       // data.push(result[i]);
           // this.dataComment.push(result[i]);
+          // add image default
+          if(result[i].user.userImage == null){
+            result[i].user.userImage = this.image;
+          }
           this.addAItem(data,data.length,vitrithemdata,result[i]);
           this.addAItem(this.dataComment,this.dataComment.length,vitrithemdatacomment,result[i]);
           // this.countLikeComment(element);
@@ -699,6 +746,10 @@ export class WebForumComponent implements OnInit {
     var index = this.posts.findIndex(a => a.id == id);
     for(let i=0; i< result.length; i++){
       result[i].childComments.length = 0;
+      // add image default
+      if(result[i].user.userImage == null){
+        result[i].user.userImage = this.image;
+      }
       this.posts[index].comments.push(result[i]);
       this.dataComment.push(result[i]);
       this.countComment.push(await this.pushCountComment(id, result[i].id));
@@ -719,7 +770,7 @@ export class WebForumComponent implements OnInit {
   async getMorePosts(number, skip){
     const result = await this.postService.getMorePost(number,skip) as Post[]
     for(let i=0; i< result.length; i++){
-      this.getCountCommentPost(result[i].id);
+      this.getCountCommentPostEnd(result[i].id);
       result[i].comments.forEach(element => {
         this.dataComment.push(element);
       })
@@ -733,6 +784,10 @@ export class WebForumComponent implements OnInit {
         arrayChildCommentCheck.push(this.pushArrayShowCommentChild(result[i].comments[j].id,result[i].comments[j].parentCommentId));
       }
       this.showChildCommentArray.push(this.pushArrayShowCommentParent(result[i].id,arrayChildCommentCheck));
+      // add image default
+      if(result[i].user.userImage == null){
+        result[i].user.userImage = this.image;
+      }
       this.posts.push(result[i]);
       // this.showComments.push(true);
       // this.getCountChildComment(this.posts[i].id);
@@ -746,12 +801,10 @@ export class WebForumComponent implements OnInit {
     if(this.checkLogin()){
       const index = await this.postService.getCheckLike(idPost,this.authenticationService.currentAccountValue.user.id);
       if(index == true){
-        this.postService.deleteLike(Number(idPost),Number(this.authenticationService.currentAccountValue.user.id)).subscribe(a => {
-          this.countLikePost(this.posts);
-        });
-
+        const result = await this.postService.deleteLike(Number(idPost),Number(this.authenticationService.currentAccountValue.user.id))
+        
       }
-      else{
+      else if(index == false){
         var like: LikeCommentPost = {
           idPost : idPost,
           likePost : true,
@@ -760,8 +813,9 @@ export class WebForumComponent implements OnInit {
           userId : this.authenticationService.currentAccountValue.user.id
         }
         // like.userId = 26;
-        this.postLikeCommentPost(like);
+        await this.postLikeCommentPost(like);
       }
+      this.countLikePost(this.posts);
     }
     else{
       this.openDialogInform();
@@ -803,9 +857,8 @@ export class WebForumComponent implements OnInit {
     if(this.checkLogin()){
       const index = await this.postService.getCheckLikeComment(idComment,this.authenticationService.currentAccountValue.user.id);
       if(index == true){
-        this.postService.deleteLikeComment(Number(idComment),Number(this.authenticationService.currentAccountValue.user.id)).subscribe(a => {
-          this.countLikeComment(this.dataComment);
-        });
+        const result = await this.postService.deleteLikeComment(Number(idComment),Number(this.authenticationService.currentAccountValue.user.id))
+        
       }
       else{
         var like: LikeCommentPost = {
@@ -815,9 +868,9 @@ export class WebForumComponent implements OnInit {
           likeComment: true,
           userId : this.authenticationService.currentAccountValue.user.id
         }
-        this.postLikeCommentPost(like);
-        // like.userId = 26;
+        await this.postLikeCommentPost(like);
       }
+      this.countLikeComment(this.dataComment);
     }
     else{
       this.openDialogInform();
@@ -844,12 +897,8 @@ export class WebForumComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // lưu like
-  postLikeCommentPost(like){
-    this.postService.postLikeCommentPost(like).subscribe(data => {
-      var index = this.posts.findIndex(a =>  Number(a.id) === data.idPost);
-      this.countLikePost(this.posts);
-      this.countLikeComment(this.dataComment);
-    })
+  async postLikeCommentPost(like){
+    const result = await this.postService.postLikeCommentPost(like)
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -869,4 +918,10 @@ export class WebForumComponent implements OnInit {
       return this.likeCommentData[index].count;
     }
   }
+
+  ////
+  onLogout = () => {
+    this.authenticationService.logout();
+    window.location.reload();
+  }  
 }

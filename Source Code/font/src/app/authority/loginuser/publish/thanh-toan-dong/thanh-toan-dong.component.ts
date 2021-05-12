@@ -37,6 +37,7 @@ export class ThanhToanDongComponent implements OnInit {
   loadDataType:string = "";
   loadDataCity:string = "";
   loadDataProvince:string = "";
+  hasSave = false;
   constructor(public dialog: MatDialog,private cityService: CitiesService, private provinceService: ProvincesService,private typeservice:TypeofnewService,private priceService: ServicePriceService,private router: Router,private authenticationService: AuthenticationService,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
   
     this.currentAccount = this.authenticationService.currentAccountValue;
@@ -77,15 +78,18 @@ export class ThanhToanDongComponent implements OnInit {
   public openDialogUser(): void {
     const dialogRef = this.dialog.open(PaypalComponent, {
      width: '400px',
-     height:'400px'
+     height:'400px',
+     data:this.hasSave
     });
 
-    dialogRef.afterClosed().subscribe((result: Motel) => { 
-      localStorage.removeItem(StorageService.totalMoneyStorage); 
-      localStorage.removeItem(StorageService.ImageStorage); 
-      localStorage.removeItem(StorageService.motelStorage)
-      localStorage.removeItem(StorageService.TypeMotelStorage)
-      this.router.navigateByUrl('/user/thong-tin-vi-tri');
+    dialogRef.afterClosed().subscribe((result: boolean) => { 
+      if(result == true){
+        localStorage.removeItem(StorageService.totalMoneyStorage); 
+        localStorage.removeItem(StorageService.ImageStorage); 
+        localStorage.removeItem(StorageService.motelStorage)
+        localStorage.removeItem(StorageService.TypeMotelStorage)
+        this.router.navigateByUrl('/user/thong-tin-vi-tri');
+      }
     });
   }
 }
