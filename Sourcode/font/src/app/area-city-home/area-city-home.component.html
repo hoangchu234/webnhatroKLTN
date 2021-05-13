@@ -1,0 +1,118 @@
+<app-header></app-header>
+<p style="text-align: center;font-weight: bold;font-size: 30px; margin-top: 80px;">Khu vực {{display}}</p>
+<div class="container" *ngIf="checkHCM" style="margin-left: 260px;">
+    <div style="margin-top: 5px;margin-bottom: 30px;">
+      <div class="row">
+            <div *ngFor= 'let provinces of provinces; let i=index'>
+                <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 3 && i >=0">
+                    <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHCMs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                    <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+    <div style="margin-top: 30px;margin-bottom: 30px;">
+      <div class="row">
+        <div *ngFor= 'let provinces of provinces; let i=index'>
+            <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 6 && i >=3">
+                <div style="height:  190px;width: 310px;background-color: royalblue;background-image: url({{imageHCMs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 30px;margin-bottom: 30px;">
+      <div class="row">
+        <div *ngFor= 'let provinces of provinces; let i=index'>
+            <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 9 && i >=6">
+                <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHCMs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div style="margin-top: 30px;margin-bottom: 30px;">
+        <div class="row">
+          <div *ngFor= 'let provinces of provinces; let i=index'>
+              <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 12 && i >=9">
+                  <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHCMs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                  <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div style="margin-top: 30px;margin-bottom: 30px;">
+        <div class="row">
+          <div *ngFor= 'let provinces of provinces; let i=index'>
+              <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 15 && i >=12">
+                  <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHCMs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                  <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div style="margin-top: 30px;margin-bottom: 5px;">
+        <div class="row">
+          <div *ngFor= 'let provinces of provinces; let i=index'>
+              <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 18 && i >=15">
+                  <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHCMs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                  <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="checkHN" style="margin-left: 260px;">
+    <div style="margin-top: 5px;margin-bottom: 30px;">
+      <div class="row" >
+            <div *ngFor= 'let provinces of provinces; let i=index'>
+                <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 3 && i >=0">
+                    <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHNs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                    <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+    <div style="margin-top: 30px;margin-bottom: 30px;">
+      <div class="row">
+        <div *ngFor= 'let provinces of provinces; let i=index'>
+            <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 6 && i >=3">
+                <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHNs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 30px;margin-bottom: 30px;">
+      <div class="row">
+        <div *ngFor= 'let provinces of provinces; let i=index'>
+            <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 9 && i >=6">
+                <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHNs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div style="margin-top: 30px;margin-bottom: 5px;">
+        <div class="row">
+          <div *ngFor= 'let provinces of provinces; let i=index'>
+              <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 11 && i >=10">
+                  <div style="height: 190px;width: 310;background-color: royalblue;background-image: url({{imageHNs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                  <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,306 @@
+<div style="text-align: center;"><h2><b>THÔNG TIN NHÀ TRỌ</b></h2></div>
+
+<div class="super_container" style="color: black;background-color: rgb(228, 228, 228);margin: 10px;padding: 10px;">
+    <div class="container=fluid"  style=" color: black;padding:5px ;">
+      <br>
+      <div class="col-md-6"></div>
+      <div>
+        <div class="container-fluid" >
+          <div class="row">
+            <div class="col-md-6">
+              <form>
+                <div class="form-group row">
+                    <label class="col-sm-3" for="exampleFormControlSelect1">Loại nhà trọ</label>
+                    <div class="col-sm-9" style="margin-top: -10px ;">
+                        <select  (change)="onChangeNewType($event)" class="form-control form-control-lg" style="color: black;">
+                            <option *ngFor="let newtype of newTypes">{{newtype.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3" for="exampleFormControlSelect1">Loại hình</label>
+                  <div class="col-sm-9" style="padding-left: 28px;margin-top: -10px;" >
+                  <!--<button type="submit" class="btn btn-primary" click="clickbuy()"  style="height:45px;width: 100px;margin-left:-23px;padding: 5px;">Mua bán</button>-->
+                  <button type="submit" style="height:45px;width: 100px;margin-left: -22px;" [class.yellow-background]="true"  class="btn btn-primary">Cho thuê</button>
+                  </div>
+                <br>
+                <br>
+                <br>
+                </div>
+                <div class="form-group row" style="margin-top: -30px;">
+                  <label class="col-sm-3" for="exampleFormControlSelect1">Tỉnh thành phố</label>
+                  <div  class="col-sm-9" style="margin-top: -10px ;" placeholder="Nhập tên dự án">
+                    <select (change)="onChangeCity($event)" class="form-control form-control-lg" style="color: black;">
+                        <option *ngFor="let city of cities">{{city.name}}</option>
+                    </select>
+                  </div>
+
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3" for="exampleFormControlSelect1">Quận/Huyện </label>
+                  <div class="col-sm-9" style="margin-top: -10px ;">
+                    <select (change)="onChangeProvince($event)"  class="form-control form-control-lg" style="color: black;">
+                        <option *ngFor="let province of provinces">{{province.name}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3" for="exampleFormControlSelect1">Phường/Xã </label>
+                  <div class="col-sm-9" style="margin-top: -10px ;">
+                    <select (change)="onChangeDistrict($event)"  class="form-control form-control-lg" style="color: black;">
+                        <option *ngFor="let district of districts">{{district.name}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3" for="exampleFormControlSelect1">Đường/Phố </label>
+                  <div class="col-sm-9" style="margin-top: -10px ;">
+                    <select (change)="onChangeStreet($event)"  class="form-control form-control-lg" style="color: black;">
+                        <option *ngFor="let street of streets">{{street.name}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3" for="exampleFormControlSelect1">Số điện thoại</label>
+                  <div class="col-sm-9" style="margin-top: -10px ;">
+                  <input type="number"   [(ngModel)]="phoneMotel" name="PhoneMotel" ngDefaultControl class="form-control" style="color: black;" readonly>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3" for="exampleFormControlSelect1">Địa chỉ</label>
+                  <div class="col-sm-9" style="margin-top: -10px ;">
+                    <input type="email" [(ngModel)]="address"  name="AddressMotel" ngDefaultControl class="form-control" id="exampleFormControlInput2">
+                  </div>
+                </div>
+                </form>
+            </div>
+            <div class="col-md-6" style="margin-top:-13px">
+              <iframe width="100%" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=%20Ho%20Chi%20Minh%20City+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe> <a href='https://embedmaps.net'></a> <script type='text/javascript' src='https://maps-generator.com/google-maps-authorization/script.js?id=dbed74534fca59a6c3ee7c80b657ad108b84a339'></script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="super_container" style="color: black;background-color: rgb(228, 228, 228);margin: 10px;padding: 20px;">
+  <br>
+  <div class="col-md-6"></div>
+  <div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+            <div class="form-group row">
+              <label class="col-sm-2" style="margin-top: 5px;">Giá tiền </label>
+              <div class="col-sm-6" style="margin-top: -10px ;">
+              <input type="number" [(ngModel)]="price" name="priceMotel" ngDefaultControl class="form-control" style="margin-left: -6px;">
+              </div>
+              <div class="col-sm-4">
+                  <select (change)="onChangePriceType($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
+                      <option *ngFor='let typePriceMotel of typePriceShowMotels' [value]="typePriceMotel.text">{{typePriceMotel.text}}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="form-group row" >
+              <label class="col-sm-2" style="margin-top: 5px;">Diện tích </label>
+              <div class="col-sm-6" style="margin-top: -10px ;width: 100%;">
+              <input type="number" [(ngModel)]="areaZone"  name="AreaMotel" ngDefaultControl class="form-control" placeholder="min" style="margin-left: -6px;" >
+              </div>
+              <div class="col-sm-4">
+                m²
+              </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label class="col-sm-4" for="exampleFormControlSelect1" style="margin-top:5px">Hướng nhà</label>
+            <div class="col-sm-8">
+              <select (change)="onChangeDirect($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
+                  <option *ngFor='let direct of directsShow' [value]="direct.text">{{direct.text}}</option>
+                </select>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-12" style="padding-top: 20px;">
+          <div class="form-group row" style="margin-top: -20px;">
+            <label class="col-sm-2" for="exampleFormControlSelect1" >Tiêu đề</label>
+            <div class="col-sm-10" style="margin-top: -10px; margin-left: -55px;;">
+              <input name="Title" [(ngModel)]="title" class="form-control" ngDefaultControl style="float: right;" placeholder="" >
+            </div>
+          </div>
+
+          <div class="form-group row" style="padding-top: 20px;margin-left: -10px;">
+            <label class="col-sm-2" for="exampleFormControlSelect1" >Mô tả</label>
+            <div class="col-sm-10" style="margin-top: -10px; margin-left: -65px;">
+              <ck-editor name="editor1" [(ngModel)]="decription" ngDefaultControl  skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="super_container" style="color: black;background-color: rgb(228, 228, 228);margin: 10px;padding: 20px;">
+    <div class="container"  style=" color: black;padding:5px ;">
+        <br>
+        <div class="col-md-6"></div>
+        <div style="font-size: 20px;padding-left: 100px;" >
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 " style="height:400px; ">
+                <label for="exampleFormControlInput1"><b>Loại hình nhà ở</b></label>
+                <div style="padding:5px;margin-left: 20px;margin-top: -20px;">
+                    <div class="form-check" style="height: 30px;padding: 10px;" *ngFor='let liveTypes of liveTypes; let i=index'>
+                        <input name="liveType" (change)="onChangeLiveType($event,liveTypes)"  class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 5px;text-align: center;" type="radio" value="true" [checked]="arrayTrue[i]">
+                        <label class="form-check-label" for="exampleRadios1" style="margin-left: 20px;margin-top: 5px;">
+                            {{liveTypes.name}}
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="margin-top:40px;margin-left: -45px;">
+                  <label class="col-sm-4" for="exampleFormControlInput1" ><b>Số phòng ngủ</b></label>
+                  <div class="col-sm-4" style="margin-top: -5px;margin-left: -35px;">
+                    <button style="margin-left:20px;" class="btn btn-danger" (click)="decreaseNumberBath()" [disabled] = "btnDisabledBath" ><div class="fa  fa-minus"></div></button>
+                    <label name="NumberBath" type="text" style="margin-left: 16px;"><h3>{{numberBath}}</h3></label>
+                    <button style="margin-left:20px;" class="btn btn-danger"  (click)="increaseNumberBath()"><div class="fa fa-plus"></div></button>
+                  </div>
+                  <div class="col-sm-4"></div>
+                  <br>
+                  <br>
+                  <br>
+                  <label class="col-sm-4" for="exampleFormControlInput1" ><b>Số phòng vệ sinh</b></label>
+                  <div class="col-sm-4" style="margin-top: -5px;margin-left: -35px;">
+                    <button style="margin-left:20px;" class="btn btn-danger" (click)="decreaseNumberLiving()" [disabled] = "btnDisabledLiving" ><div class="fa  fa-minus"></div></button>
+                    <label name="numberLiving" type="text" style="margin-left: 16px;"><h3>{{numberLiving}}</h3></label>
+                    <button style="margin-left:20px;" class="btn btn-danger"  (click)="increaseNumberLiving()"><div class="fa fa-plus"></div></button>
+                  </div>
+                  <div class="col-sm-4"></div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+
+      </div>
+</div>
+<div class="super_container" style="color: black;background-color: rgb(228, 228, 228);margin: 10px;padding: 10px;">
+    <div class="container"  style="color: black;padding:5px ;">
+        <br>
+        <div class="col-md-6"></div>
+        <div>
+          <div class="container">
+            <div class="row">
+              <div class="container" style="border:1px solid grey;text-align: center;background-color: gainsboro;">
+                <div style="margin-bottom:10px;margin-top: 20px;">Tin đăng có hình ảnh thường hiệu quả hơn 50% tin đăng không có hình ảnh</div>
+                <div>(Kéo thả tới vị trí đầu tin bên trái nếu bạn muốn làm ảnh đại diện )</div>
+                <div   class="row" style="margin-top:20px;margin-left: 50px;">
+                  <div *ngFor='let file of loadImageFromPC; let i=index' >
+                    <div class="col-md-3"><img [src]="file" class="title-image" style="width:190px;height: 190px;" ></div>
+                      <button  class="btn btn-warning" style="text-align: center;margin:10px;"><i (click)="onDelete(i)"  class="fa fa-times-circle-o"></i></button>
+                    </div>
+                </div>
+                <input  style="display: none" type="file" id="file" (change)="handleFileInput($event)" multiple #fileInput>
+                <button type="button" (click)="fileInput.click()" class="btn btn-success "  style="margin-top: 50px;width: 350px;height: 80px;height: 60px;border-radius: 10px;" >
+                  Thêm ảnh
+                </button>
+                <div style="color: red;margin-top: 20px;">* Lưu ý: Ảnh tải lên không được là ảnh sao chép trên internet, không chứa logo, kích thước hình ảnh tối thiểu 300 x 300px</div>
+              </div>
+            </div>
+
+        </div>
+
+
+      </div>
+      </div>
+</div>
+
+
+
+<div class="super_container" style="color: black;background-color: rgb(228, 228, 228);margin: 10px;padding: 10px;">
+    <div class="container"  style="color: black;">
+      <br>
+      <div class="col-md-6"></div>
+      <div class="col-md-12" >
+        <table class="table table-bordered" >
+          <thead style="background-color:darkblue;color: white;">
+            <tr>
+              <th scope="col" class="font" style="color: white;"></th>
+              <th *ngFor= 'let serviceprice of servicePrice; let i=index' scope="col" class="font" style="color: white;">{{serviceprice.typeofnew}}</th>
+            </tr>
+          </thead>
+          <tbody style="color: black;">
+            <tr>
+              <td style="font-weight: bold;color: red;">Giá ngày</td>
+              <td *ngFor= 'let serviceprice of servicePrice; let i=index'>{{serviceprice.priceDate}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;color: red;">Giá tuần </td>
+              <td *ngFor= 'let serviceprice of servicePrice; let i=index'>{{serviceprice.priceWeek}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;color: red;">Giá tháng </td>
+              <td *ngFor= 'let serviceprice of servicePrice; let i=index'>{{serviceprice.priceMonth}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;color: red;">Giá UP TOP </td>
+              <td *ngFor= 'let serviceprice of servicePrice; let i=index'>{{serviceprice.priceUpTop}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;color: red;">Tối thiểu </td>
+              <td *ngFor= 'let serviceprice of servicePrice; let i=index'>{{serviceprice.date}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top: 30px;" >
+        <div class="container">
+          <div class="row" style="padding:10px ;    margin-left: 10px;">
+            <form style="width:100%" class="row">
+              <div class="col-md-4">
+                <div class="form-group row" style="padding:5px ;">
+                  <label for="exampleFormControlSelect1">Loại tin</label>
+                  <div class="col-sm-12" style="margin-top: 10px ;width: 400px;color: black;">
+                  <select (change)="onChangeNewMotel($event)" class="form-control form-control-lg" style="color: black;">
+                    <option *ngFor='let new of news' [value]="new.id" >{{new.text}}</option>
+                  </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group row" style="padding:5px ;">
+                  <label for="exampleFormControlSelect1">Gói thời gian</label>
+                  <div class="col-sm-12" style="margin-top: 10px ;width: 400px;color:black;">
+                    <select (change)="onChangetime($event)" class="form-control form-control-lg" style="color: black;">
+                      <option *ngFor='let time of times' [value]="time.id" >{{time.text}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group row" style="padding:5px ;">
+                  <label for="exampleFormControlSelect1">{{setValueName}}</label>
+                  <div class="col-sm-12" style="margin-top: 10px ;width: 400px;">
+                    <select (change)="onChangeSetValueName($event)" class="form-control form-control-lg" style="color: black;">
+                      <option *ngFor='let setArrayChoice of setArrayChoices' [value]="setArrayChoice.id" >{{setArrayChoice.text}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-12" style="border-bottom:1px solid grey;margin-top: 20px;margin-bottom: 20px;">
+                <h3 class="font">Giá trị đăng tin:<span style="color: blue;">{{totalprice | currency : "VNĐ"}}</span></h3>
+              </div>
+            </form>
+
+          </div>
+        </div>
+        <button class="btn btn-warning"   aria-hidden="true" style="padding: 10px;width: 100%;height: 50px;font-size: 20px;margin-top: 20px;" (click)="openDialogExtendPaypal()">Gia hạn tin</button>
+      </div>
+    </div>
+  </div>
+
+

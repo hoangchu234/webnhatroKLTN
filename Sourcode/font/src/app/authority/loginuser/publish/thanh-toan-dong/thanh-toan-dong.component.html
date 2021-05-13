@@ -1,0 +1,51 @@
+<div style="margin-left: -150px;">
+<div class="container-fluid" style="height: 50px;background-color: #C0C0C0;">
+  <div style="padding-top:15px;"><span style="margin-left: 10px;">Motel <div class="fa  fa-chevron-right" style="margin-right: 15px;"></div> <b style="margin-right: 10px;">Trang thanh toán</b> <div class="fa  fa-chevron-right"style="margin-right: 15px;"></div> <b>Thông tin hình ảnh</b></span></div>
+
+</div>
+<div class="container-fluid" style="padding-top:10px;margin-bottom: 20px;margin-top: 40px;">
+  <i class="fa fa-angle-left" (click)="prevous()" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;"></i>Quay trở lại
+  <div class="col-md-12" style="height: 4px; background-color: green;"></div>
+</div>
+
+<div class="container-fluid" style="width:900px;">
+  <form style="width:100%" class="row">
+  <div class="row" >
+    <div class="font" style="font-size: 30px;margin: 10px;font-weight: bold;">Thông tin thanh toán</div>
+    <div class="col-md-12 row" style="border-top: 1px solid black;border-bottom: 1px solid black;padding:30px;">
+      <div *ngIf="checkImage"  class="col-md-12" style="background-image: url({{currentAccount.user.userImage}});width: 100%;height: 300px;margin-left:0px;border-radius: 5px;"></div>
+      <div *ngIf="!checkImage" class="col-md-12" style="background-image: url(../../assets/images/gallery_1.jpg);width: 100%;height: 300px;margin-left:0px;border-radius: 5px;"></div>
+      <div class="col-md-12" style="font-size: 20px;margin-top: 10px;">
+
+        <span class="font">Tiêu đề tin :</span> <span class="font">{{loadDataToSee.title}}</span>
+        <br>
+        <span class="font">Loại tin:</span> <span class="font">{{loadDataType}}</span>
+        <br>
+        <span class="font">Thành phố:</span> <span class="font">{{loadDataCity}}</span>
+        <br>
+        <span class="font">Quân huyện:</span> <span class="font">{{loadDataProvince}}</span>
+        <br>
+        <div style="margin-top: 20px;">
+          <span style=" bottom: 0;float: left; ">
+            <div class="font" >Số tiền phải trả:</div>
+          </span>
+          <div style="bottom: 0;right:0 ">
+            <div class="font" style="color: rgb(255, 0, 0);margin-right: -60px;">{{money}} VND</div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="col-md-12 row" style="font-size: 25px;padding-top:30px;padding-left: 20px;">
+      <div class="col-md-12">
+        <div style="float: left;margin-left: 10px;"><b>Thành tiền:</b></div>
+        <div style="float: right;color:red;font-size: 25px;margin-right: -25px;"><b>{{money}} VND</b></div>
+      </div>
+    </div>
+    <div class="col-md-12" style="text-align: right;margin-top: 20px;">
+    <button class="btn btn-success" (click)="openDialogUser()" style="text-align: center;margin-left: 10px;height: 60px;width: 180px;border-radius: 10px;">Đăng tin</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>

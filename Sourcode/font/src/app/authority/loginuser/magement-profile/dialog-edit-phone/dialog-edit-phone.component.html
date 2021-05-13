@@ -1,0 +1,27 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12" >
+          <form  #form="ngForm" (ngSubmit)="onSubmit()">
+            <div style="margin-top:20px;padding: 5px;">Số diện thoại cũ</div>
+            <div style="height: 30px;padding: 5px;">
+              <input style="width: 100%;padding: 5px;border: 1px solid black;"  name="phoneuser" [(ngModel)]="data.account.phone" ngDefaultControl readonly>
+            </div>
+            <div style="margin-top:20px;padding: 5px;">Số diện thoại mới</div>
+            <div style="height: 30px;padding: 5px;">
+              <input matInput  style="width: 100%;padding: 5px;border: 1px solid black;" [(ngModel)]="phone" ngDefaultControl name="Phone">
+            </div>
+            <div id="recaptcha-container" style="margin-top: 15px;"></div>
+            <div>
+              <button style="padding: 10px;margin-top:10px;margin-left: 5px;"  type="submit" >Lấy mã xác thực</button>
+            </div>
+            <div  style="margin-top:20px;padding: 5px;">Nhập mã xác thực</div>
+            <div style="height: 30px;padding: 5px;">
+              <input style="width: 100%;padding: 5px;border: 1px solid black;" name="phone_number"  [(ngModel)]="phone_number" ngDefaultControl>
+            </div>
+          </form>
+
+          <button style="margin-top: 20px;text-align: center;margin-left: 80px;" class="btn btn-warning" (click)="onChangePhone()" [mat-dialog-close]="data" type="button" >Cập nhật thông tin</button>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+
+<div class="super_container" style="color: black;margin-left: -150px;">
+  <div class="container-fluid" style="height: 50px;background-color: #C0C0C0;">
+    <div style="padding-top:15px;"><span style="margin-left: 10px;">Motel <div class="fa  fa-chevron-right" style="margin-right: 15px;"></div> <b style="margin-right: 10px;">Trang đang tin</b> <div class="fa  fa-chevron-right"style="margin-right: 15px;"></div> <b>Thông tin cá nhân next</b></span></div>
+  </div>
+
+  <div class="container"  style=" margin-top: 40px;color: black;padding:5px ;">
+    <i class="fa fa-angle-left" (click)="prevous()" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;"></i>Quay trở lại
+    <div class="col-md-6" style="height: 4px; background-color: green;"></div>
+    <br>
+    <div style="text-align: center;"><h2><b>Thông tin cơ bản</b></h2></div>
+    <div class="col-md-6"></div>
+    <div style="font-size: 20px;padding-left: 100px;padding-top: 50px;" >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 " style="height:450px; ">
+            <label for="exampleFormControlInput1"><b>Loại hình nhà ở</b></label>
+            <div style="border: 1px solid #f1f1f1;padding:5px;margin-left: -20px;">
+              <div class="form-check" style="height: 30px;padding: 10px;" *ngFor='let liveTypes of liveTypes'>
+                <input name="liveType"  [(ngModel)]="liveType" ngDefaultControl class="form-check-input" style="height: 1em;border: 0px;width: 5%;margin-top: 5px;text-align: center;" type="radio" name="liveTypes.name" id="liveTypes.id" [value]="liveTypes.id" >
+                <label class="form-check-label" for="exampleRadios1" style="margin-left: 20px;margin-top: 5px;">
+                 {{liveTypes.name}}
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12 row" style="margin-top:40px;margin-left: -45px;">
+              <label class="col-sm-4" for="exampleFormControlInput1" ><b>Số phòng ngủ</b></label>
+              <div class="col-sm-4" style="margin-top: -5px;margin-left: -35px;">
+                <button style="margin-left:20px;" class="btn btn-danger" (click)="decreaseNumberBath()" [disabled] = "btnDisabledBath"><div class="fa  fa-minus"></div></button>
+                <label name="NumberBath" type="text" style="margin-left: 16px;"><h3>{{numberBath}}</h3></label>
+                <button style="margin-left:20px;" class="btn btn-danger" (click)="increaseNumberBath()"><div class="fa fa-plus"></div></button>
+              </div>
+              <div class="col-sm-4"></div>
+              <br>
+              <br>
+              <br>
+              <label class="col-sm-4" for="exampleFormControlInput1" ><b>Số phòng vệ sinh</b></label>
+              <div class="col-sm-4" style="margin-top: -5px;margin-left: -35px;">
+                <button style="margin-left:20px;" class="btn btn-danger" (click)="decreaseNumberLiving()" [disabled] = "btnDisabledLiving"><div class="fa  fa-minus"></div></button>
+                <label name="numberLiving" type="text" style="margin-left: 16px;"><h3>{{numberLiving}}</h3></label>
+                <button style="margin-left:20px;" class="btn btn-danger" (click)="increaseNumberLiving()"><div class="fa fa-plus"></div></button>
+              </div>
+              <div class="col-sm-4"></div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <button class="btn btn-warning"  href=# aria-hidden="true" style="padding: 10px;width: 100%;height: 50px;font-size: 20px;margin-top: 40px;" (click)='next()'>Tiếp tục<i style="margin-left: 20px;font-size: 20px;" class="fa fa-angle-right"></i></button>
+
+  </div>
+</div>
+

@@ -1,0 +1,35 @@
+
+
+<div class="super_container">
+  <div class="container-fluid font" style="height: 50px;background-color:lightgrey;color: black;font-size: 13px;">
+    <div style="padding-top:15px;"><span style="margin-left: 40px;">Motel <div class="fa  fa-chevron-right" ></div><b style="margin-left:15px">Quản lý tin nhắn</b> <div class="fa  fa-chevron-right" style="margin-left: 10px;margin-right: 15px;"></div></span></div>
+  </div>
+
+    <div class="col-md-12" style="padding-top: 0px;margin-top: 30px; ">
+        <table class="table table-bordered" >
+          <thead style="background-color:darkblue;color: white;">
+            <tr>
+              <th scope="col-md-1" class="font" style="color: white;">Họ và tên</th>
+              <th scope="col-md-1" class="font" style="color: white;">Số điện thoại</th>
+              <th scope="col" class="font" style="color: white;">Email</th>
+              <th scope="col" class="font" style="color: white;">Tin nhắn</th>
+            </tr>
+          </thead>
+          <tbody style="color: black;">
+            <tr *ngFor="let reply of reply | paginate: { itemsPerPage: 10, currentPage: page }">
+              <td>{{reply.name}}</td>
+              <td>{{reply.phone}}</td>
+              <td>{{reply.email}}</td>
+              <td>{{reply.decription}}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        
+    </div>
+    <DIV style="margin-left:470px;margin-top: 25PX;">
+    <pagination-controls (pageChange)="page = $event" ></pagination-controls>
+    </DIV>  
+
+</div>
+  

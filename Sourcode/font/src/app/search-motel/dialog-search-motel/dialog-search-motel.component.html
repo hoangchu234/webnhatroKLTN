@@ -1,0 +1,31 @@
+<!--<div class="container-fluid" [hidden]="wasverify">
+    <div class="row">
+      <div class="col-md-12" style="width:100%;text-align: center;background-color: rgb(160, 160, 160);height: 40px;padding: 10px;">Bộ lọc</div>
+      <button class="btn btn-light col-md-12" style="width:100%;text-align: left;" >Diện tích<i (click)="onChoiceArea()"  class="fa fa-chevron-right" style="float: right;"></i></button>
+      <button class="btn btn-light col-md-12" style="width:100%;text-align: left;border-top:1px solid black" >Số phòng<i class="fa fa-chevron-right" style="float: right;"></i><i class="fa fa-check-circle-o" style="float: right;color: green;"></i></button>
+      <button class="btn btn-light col-md-12" style="width:100%;text-align: left;border-top:1px solid black" >Hướng<i class="fa fa-chevron-right" style="float: right;"></i></button>
+      <button class="btn btn-light col-md-12" style="width:100%;text-align: left;border-top:1px solid black" >Pháp lý<i class="fa fa-chevron-right" style="float: right;"></i> </button>
+      <button class="btn btn-light col-md-12" style="width:100%;text-align: left;border-top:1px solid black;border-bottom: 1px solid black;" >Thời gian đăng<i class="fa fa-chevron-right" style="float: right;"></i></button>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+      <button class="col-md-5 btn btn-light" style="padding: 5px;background-color: rgb(198, 145, 214);height:35px;"><b>Xóa bộ lọc</b></button>
+      <button class="col-md-7 btn btn-light" style="padding: 5px;background-color: rgb(108, 152, 182);height:35px;"><b>Áp dụng</b></button>
+    </div>
+</div>
+
+<app-dialog-search-motel-detail *ngIf="wasverify" [typeSearch]="openDetailSearch"  [typeSearchDetail]="areaSearch" (notify)='onNotify($event)'></app-dialog-search-motel-detail>-->
+
+<div class="container-fluid"  [hidden]="wasDirect" [hidden]="wasArea">
+  <div class="row">
+    <div class="col-md-12" style="width:100%;text-align: center;background-color: rgb(160, 160, 160);height: 40px;padding: 10px;">Bộ lọc</div>
+    <button class="btn btn-light col-md-12" style="width:100%;text-align: left;" >Diện tích<i (click)="onChoiceArea()"  class="fa fa-chevron-right" style="float: right;"></i><i *ngIf="tickArea" class="fa fa-check-circle-o" style="float: right;color: green;"></i></button>
+    <button class="btn btn-light col-md-12" style="width:100%;text-align: left;border-top:1px solid black" >Hướng<i (click)="onChoiceDirect()"  class="fa fa-chevron-right" style="float: right;"></i><i *ngIf="tickDirect" class="fa fa-check-circle-o" style="float: right;color: green;"></i></button>
+  </div>
+  <div class="row" style="margin-top: 20px;">
+    <button (click)="deleteData()" class="col-md-5 btn btn-light" style="padding: 5px;background-color: rgb(198, 145, 214);height:35px;"><b>Xóa bộ lọc</b></button>
+    <button class="col-md-7 btn btn-light" style="padding: 5px;background-color: rgb(108, 152, 182);height:35px;" (click)="onNoClick()"><b>Áp dụng</b></button>
+  </div>
+</div>
+
+<app-dialog-search-motel-area *ngIf="wasArea" [areaTypeSearch]="openDetailSearch"  [areaData]="areaSearch" (areanotify)='onNotify($event)' (areatick)='onTickArea($event)'></app-dialog-search-motel-area>
+<app-dialog-search-motel-direct *ngIf="wasDirect" [directTypeSearch]="openDetailSearch"  [directData]="directSearch" (directnotify)='onNotify($event)' (directtick)='onTickDirect($event)'></app-dialog-search-motel-direct>

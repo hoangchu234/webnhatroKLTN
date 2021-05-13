@@ -1,0 +1,148 @@
+
+
+ <div class="content-wrapper" style="margin-top: -40px;">
+  <h3 class="page-title" >
+    <span class="page-title-icon bg-gradient-primary text-white mr-2">
+      <i class="mdi mdi-home"></i>
+    </span> Home
+  </h3>
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="card-body">
+          <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+          <h4 class="font-weight-normal mb-3">Số lượng nhà trọ HOT <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+          </h4>
+          <h2 class="mb-5">{{totalMotel}}</h2>
+          <h6 class="card-text">Increased by 60%</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-gradient-info card-img-holder text-white">
+        <div class="card-body">
+          <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+          <h4 class="font-weight-normal mb-3">Số lượng người dùng<i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+          </h4>
+          <h2 class="mb-5">{{totalUser}}</h2>
+          <h6 class="card-text">Decreased by 10%</h6>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-gradient-success card-img-holder text-white">
+        <div class="card-body">
+          <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+          <h4 class="font-weight-normal mb-3">Số tiền<i class="mdi mdi-diamond mdi-24px float-right"></i>
+          </h4>
+          <h2 class="mb-5">{{totalMoney}}</h2>
+          <h6 class="card-text">Increased by 5%</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-7 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="clearfix">
+            <h4 class="card-title float-left">Thống kê top 5 người đăng tin</h4>
+          </div>
+          <div style="display: block;"  *ngIf="LinechartReady">
+            <canvas baseChart width="auto" height="auto"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+            </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 ">
+      <div>
+        <div class="card-body"  style="width: 460px; display: block; height: 255px;">
+          <h4 class="card-title font" style=" margin-left:100px">Thống kê theo loại tin</h4>
+          <div style="display: block;" *ngIf="chartReady">
+          <canvas style="width: 460px; display: block; height: 255px;" baseChart
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    [chartType]="pieChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title font">Thống kê theo giá</h4>
+          <div style="display: block;" *ngIf="BarchartReady">
+            <canvas baseChart
+            [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [legend]="barChartLegend"
+              [chartType]="barChartType">
+            </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <h1 style="padding: 20px;margin-bottom: 30px;text-align: center;font-size: 25px; font-weight: bold;" class="font"> TRANG THỐNG KÊ</h1> -->
+<!-- <div class="container-fluid" >
+  <div class="row">
+    <div class="col-md-6">
+      <h1 class="font" style="text-align: center;">Thống kê theo loại tin</h1>
+      <div style="display: block" *ngIf="chartReady">
+      <canvas baseChart
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+
+    <div class="font" class="col-md-6">
+      <h1 class="font" style="text-align: center;">Thống kê top 5 người đăng tin</h1>
+      <div style="display: block;" *ngIf="LinechartReady">
+        <canvas baseChart width="auto" height="auto"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+        </canvas>
+</div>
+
+
+    </div>
+  </div>
+</div>
+<div class="container" style="margin-top:50px">
+<h1 class="font" style="text-align: center;" >Thống kê theo giá</h1>
+<div style="display: block;" *ngIf="BarchartReady">
+  <canvas baseChart
+  [datasets]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [plugins]="barChartPlugins"
+    [legend]="barChartLegend"
+    [chartType]="barChartType">
+  </canvas>
+</div>
+</div>
+ -->
