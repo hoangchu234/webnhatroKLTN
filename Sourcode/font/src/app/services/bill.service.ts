@@ -92,7 +92,8 @@ export class BillService {
   }*/
   public addbill = async (newBill: Bill) => {
     try {
-      return await this.http.post(this.urlAPI, newBill).toPromise();
+      const url = `${this.urlAPI + "/api/Bills"}`;
+      return await this.http.post(url, newBill).toPromise();
     }
     catch (e) {
       console.log(e);

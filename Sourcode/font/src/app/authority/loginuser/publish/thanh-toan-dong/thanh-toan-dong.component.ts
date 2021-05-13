@@ -83,13 +83,7 @@ export class ThanhToanDongComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => { 
-      if(result == true){
-        localStorage.removeItem(StorageService.totalMoneyStorage); 
-        localStorage.removeItem(StorageService.ImageStorage); 
-        localStorage.removeItem(StorageService.motelStorage)
-        localStorage.removeItem(StorageService.TypeMotelStorage)
-        this.router.navigateByUrl('/user/thong-tin-vi-tri');
-      }
+      this.router.navigateByUrl('/user/thong-tin-vi-tri');
     });
   }
 }

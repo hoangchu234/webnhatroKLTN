@@ -22,6 +22,13 @@ export interface Type{
   text:string;
 }
 
+export interface Data{
+  lastModified:string;
+  name:string;
+  size:string;
+  type:string
+}
+
 @Component({
   selector: 'app-paypal',
   templateUrl: './paypal.component.html',
@@ -33,7 +40,9 @@ export class PaypalComponent implements OnInit {
   showSuccess: boolean;
 
   //Lấy data lưu
-  imageMotels: File [] = [];
+  imageMotels : Array<Data> = [];
+  load : Array<string> = [];
+  loadImages: Array<string> = [];
   saveNewMotel: Motel;
   imagesURLFirebare:Array<string> = [];
   newTypeMotel;
@@ -131,14 +140,25 @@ export class PaypalComponent implements OnInit {
     this.router.navigate(['/user/quan-ly-dang-tin']);
   }
 
-     //Lưu tiền motel
-  public loadImage = async () => {
+  // change base64 to file
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });    
+    return blob;
+ }
 
+  //Lưu tiền motel
+  public loadImage = async () => {
     for(let i=0; i< this.imageMotels.length;i++){
       var temp = this.imageMotels.length;
       var filePath = `${this.saveNewMotel.title}/${this.imageMotels[i].name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
       const fileRef = this.storage.ref(filePath);
-      this.storage.upload(filePath, this.imageMotels[i]).snapshotChanges().pipe(
+      this.storage.upload(filePath, this.dataURItoBlob(this.load[i])).snapshotChanges().pipe(
         finalize(() => {
           fileRef.getDownloadURL().subscribe((url) => {
             this.imagesURLFirebare.push(url);
@@ -176,12 +196,18 @@ export class PaypalComponent implements OnInit {
           bill = this.saveNewMotel.bill;
           bill.motelId = newMotel.id;
           await this.billService.addbill(bill);
-
           //this.billService.addbill(bill).subscribe(data => console.log(data))
         });
         this.data = true;
-        alert('Đăng tin thành công');
+
+        localStorage.removeItem(StorageService.totalMoneyStorage); 
+        localStorage.removeItem(StorageService.ImageStorage); 
+        localStorage.removeItem(StorageService.loadImageStorage)
+        localStorage.removeItem(StorageService.motelStorage)
+        localStorage.removeItem(StorageService.TypeMotelStorage)
         
+        alert('Đăng tin thành công');
+        this.dialogRef.close();
       }
       else{
         alert('Đăng tin thất bại');
@@ -192,9 +218,15 @@ export class PaypalComponent implements OnInit {
       console.log(e)
     }
   }
-  
+
   public onSubmit = async () => {
     this.imageMotels = JSON.parse(localStorage.getItem(StorageService.ImageStorage));
+    this.loadImages = JSON.parse(localStorage.getItem(StorageService.loadImageStorage));
+    for(let i=0;i < this.loadImages.length;i++){
+      var link = this.loadImages[i].split(/,(.+)/)[1];
+      this.load.push(link);
+    }
+
     this.newTypeMotel = JSON.parse(localStorage.getItem(StorageService.TypeMotelStorage));
 
     // this.behaviorSubjectClass.getDataImages().subscribe(getimagemotel => this.imageMotels = getimagemotel);
