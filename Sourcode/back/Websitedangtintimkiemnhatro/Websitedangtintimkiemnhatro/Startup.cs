@@ -76,7 +76,8 @@ namespace Websitedangtintimkiemnhatro
                 }
             });
 
-            app.UseCors(options => options.WithOrigins("http://localhost:4200", "http://localhost:49938")
+            //app.UseCors(options => options.WithOrigins("http://localhost:4200", "http://localhost:49938")
+            app.UseCors(options => options.WithOrigins("*")
             .AllowAnyMethod()
             .AllowAnyHeader());
 
