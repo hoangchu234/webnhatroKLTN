@@ -112,7 +112,6 @@ import { WebForumComponent } from './web-forum/web-forum.component';
 import { ChatsComponent } from './chats/chats.component';
 import { DialogPostComponent } from './web-forum/dialog-post/dialog-post.component';
 
-import { ConverterPipe } from './converter-pipe.pipe';
 import { ClipboardModule } from 'ngx-clipboard';
 import { DialogInformComponent } from './dialog-inform/dialog-inform.component';
 import { DetailPostForumComponent } from './web-forum/detail-post-forum/detail-post-forum.component';
@@ -177,14 +176,13 @@ import { ManagementForumComponent } from './authority/loginadmin/management-foru
     WebForumComponent,
     ChatsComponent,
     DialogPostComponent,
-    ConverterPipe,
     DialogInformComponent,
     DetailPostForumComponent,
     DetailMotelPublishComponent,
     DetailMotelExtendComponent,
     DetailMotelPublishMagementComponent,
     DialogReportComponent,
-    ManagementForumComponent
+    ManagementForumComponent,
   ],
   imports: [
     BrowserModule,

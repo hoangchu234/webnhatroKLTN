@@ -45,10 +45,10 @@ export class NavbarAdminComponent implements OnInit {
   }
 
   public onLogout = () => {
-    this.authenticationService.logout();
-    window.location.reload();
-    this.router.navigate(['/home']);
     this.username = '';
+    this.authenticationService.logout();
+    this.router.navigate(['/home']);
+
   }  
 
 }

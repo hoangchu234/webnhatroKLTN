@@ -38,7 +38,7 @@ export class DetailPostForumComponent implements OnInit {
   countCommentPost = 0;
   countComment: Array<ICountComment> = [];
   dataComment:Comment[] = [];
-  user: User = {id: 0, hovaTen:"", gender:"", doB:null, email:"",facebook: "", userImage:"", createdDate:null, lastLogOnDate:null,account:null, accountid:""}
+  user: User = {id: 0, hovaTen:"", gender:"", doB:null, email:"",facebook: "", userImage:"", createdDate:null, lastLogOnDate:null,account:null, accountid:"", pubishFree:null}
   dataPost: Post= {id: "", postUser: '', createDate: null, user: this.user, userId: "", comment: null, comments: null, hiddenOrNotHidden: null};
 
   countParentComment = 0;
@@ -48,8 +48,9 @@ export class DetailPostForumComponent implements OnInit {
   notifys: Array<INotifyComment> = [];
   countNotifyNotSee = 0;
   postUser = "";
+  image = "";
   constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
-    
+    this.image = "../../assets/forum/images1/resources/friend-avatar2.jpg";
     if(this.authenticationService.currentAccountValue){
       this.dataUser = this.authenticationService.currentAccountValue.user;
     }
@@ -61,11 +62,12 @@ export class DetailPostForumComponent implements OnInit {
         doB: null,
         email: "",
         facebook: "",
-        userImage: "../../assets/forum/images1/resources/admin.jpg",
+        userImage: "../../assets/forum/images1/resources/friend-avatar2.jpg",
         createdDate:null,
         lastLogOnDate:null,
         account:null,
-        accountid:""
+        accountid:"",
+        pubishFree:null
       }
       this.dataUser = user;
     }
@@ -88,6 +90,11 @@ export class DetailPostForumComponent implements OnInit {
 
     if(this.checkLogin()){
       this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
+      for(let i=0; i< this.notifys.length;i++){
+        if(this.notifys[i].imageUser == null){
+          this.notifys[i].imageUser = this.image;
+        }
+      }
       this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
     }
   }
@@ -152,19 +159,23 @@ export class DetailPostForumComponent implements OnInit {
   }
   
   ///////////////////////////////////////////////////////////////////////////////////////////////
-  onClickDetailPostINotify(data,name,id){
+  async onClickDetailPostINotify(data){
     if(data.justSee == false){
       data.justSee = true;
-      this.postService.updateCommentNotifyByOneUser(data).subscribe();
+      var update = {id: data.id,idUserReceiced: data.idUserReceiced,justSee: data.justSee,commentId: data.idComment};
+      const result = await this.postService.updateCommentNotifyByOneUser(update,data.id)
     }
-    this.route.navigate(['/forum',name,id]);
-
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate(['/forum',data.postUser,data.idPost]);
+    }); 
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////
   onClickDetailPost(name,id){
-    var link = '/forum' + '/' + name + '/' + id
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate(['/forum',name,id]);
+    }); 
     //this.route.navigate(['/forum',name,id]);
-    window.location.replace(link);
+    //window.location.replace(link);
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +185,7 @@ export class DetailPostForumComponent implements OnInit {
       this.user = result.user;
       this.dataPost = result;
       if(this.dataPost.user.userImage == null){
-        this.dataPost.user.userImage = "../../assets/forum/images1/resources/friend-avatar2.jpg";
+        this.dataPost.user.userImage = this.image;
       }
     }
     catch(err){
@@ -186,7 +197,7 @@ export class DetailPostForumComponent implements OnInit {
     var result = await this.postService.getParentCommentById(id) as Comment[];
     for(let i=0;i<result.length;i++){
       if(result[i].user.userImage == null){
-        result[i].user.userImage = "../../assets/forum/images1/resources/friend-avatar2.jpg";
+        result[i].user.userImage = this.image;
       }
       this.countComment.push(await this.pushCountComment(id, result[i].id))
     }
@@ -219,6 +230,10 @@ export class DetailPostForumComponent implements OnInit {
       this.postService.postComment(comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
        
         data.childComments.length = 0;
+        if(data.user.userImage == null)
+        {
+          data.user.userImage = this.image;
+        }
         this.comments.unshift(data);
         this.dataComment.unshift(data);
         this.getCountCommentPost(postId);
@@ -243,6 +258,10 @@ export class DetailPostForumComponent implements OnInit {
     const result = await this.postService.getCommentPosts(id,number,skip) as Comment[]
     for(let i=0; i< result.length; i++){
       result[i].childComments.length = 0;
+      if(result[i].user.userImage == null)
+      {
+        result[i].user.userImage = this.image;
+      }
       this.comments.push(result[i]);
       this.dataComment.push(result[i]);
       // this.countComment.push(await this.pushCountComment(id, result[i].id));
@@ -289,6 +308,10 @@ export class DetailPostForumComponent implements OnInit {
       this.postService.postComment(comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
         var indexComment = this.comments.findIndex(a => a.id === idComment);
         data.childComments.length = 0;
+        if(data.user.userImage == null)
+        {
+          data.user.userImage = this.image;
+        }
         this.comments[indexComment].childComments.unshift(data);
         this.dataComment.push(data)
         this.getCountCommentPost(postId);
@@ -364,6 +387,10 @@ export class DetailPostForumComponent implements OnInit {
       if(indexFind == -1){
       // data.push(result[i]);
           // this.dataComment.push(result[i]);
+          if(result[i].user.userImage == null)
+          {
+            result[i].user.userImage = this.image;
+          }
           this.addAItem(data,data.length,vitrithemdata,result[i]);
           this.addAItem(this.dataComment,this.dataComment.length,vitrithemdatacomment,result[i]);
           // this.countLikeComment(element);  
@@ -463,6 +490,10 @@ export class DetailPostForumComponent implements OnInit {
         vitrithemdatacomment++;
         if(indexFind == -1){
           //data.push(result[i]);
+          if(result[i].user.userImage == null)
+          {
+            result[i].user.userImage = this.image;
+          }
           this.addAItem(data,data.length,vitrithemdata,result[i]);
           this.addAItem(this.dataComment,this.dataComment.length,vitrithemdatacomment,result[i]);
           
@@ -614,9 +645,8 @@ export class DetailPostForumComponent implements OnInit {
     if(this.checkLogin()){
       const index = await this.postService.getCheckLike(idPost,this.authenticationService.currentAccountValue.user.id);
       if(index == true){
-        this.postService.deleteLike(Number(idPost),Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async a => {
-          this.likePostData = await this.postService.getLikePost(Number(idPost)) as number;
-        });
+        const result = await this.postService.deleteLike(Number(idPost),Number(this.authenticationService.currentAccountValue.user.id))
+        
         
       }
       else{
@@ -628,35 +658,17 @@ export class DetailPostForumComponent implements OnInit {
           userId : this.authenticationService.currentAccountValue.user.id
         }
         // like.userId = 26;
-        this.postLikeCommentPost(like);
+        await this.postLikeCommentPost(like);
       }
+      this.likePostData = await this.postService.getLikePost(Number(idPost)) as number;
     }
     else{
       this.openDialogInform();
     }
   }
 
-  // async countLikePost(post){
-  //   var index = this.likePost.findIndex(a => a.id === Number(post.id));
-  //   if(index == -1){
-  //     var ilike : ILike = {
-  //       id: Number(post.id),
-  //       count:0
-  //     }
-  //     this.likePostData = ilike.count;
-  //   }
-  //   else{
-  //     this.likePostData = this.likePost[index].count;
-  //   }
-  // }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // lưu like
-  postLikeCommentPost(like){
-    this.postService.postLikeCommentPost(like).subscribe(data => {
-      this.likePostData++;
-      this.countLikeComment(this.dataComment);
-    })
+  async postLikeCommentPost(like){
+    const result = await this.postService.postLikeCommentPost(like)
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -665,10 +677,7 @@ export class DetailPostForumComponent implements OnInit {
     if(this.checkLogin()){
       const index = await this.postService.getCheckLikeComment(idComment,this.authenticationService.currentAccountValue.user.id);
       if(index == true){
-        this.postService.deleteLikeComment(Number(idComment),Number(this.authenticationService.currentAccountValue.user.id)).subscribe(a => {
-          this.countLikeComment(this.dataComment);
-        });
-        
+        const result = await this.postService.deleteLikeComment(Number(idComment),Number(this.authenticationService.currentAccountValue.user.id))        
       }
       else{
         var like: LikeCommentPost = {
@@ -681,6 +690,7 @@ export class DetailPostForumComponent implements OnInit {
         // like.userId = 26;
         this.postLikeCommentPost(like);
       }
+      this.countLikeComment(this.dataComment);
     }
     else{
       this.openDialogInform();
@@ -716,4 +726,10 @@ export class DetailPostForumComponent implements OnInit {
     }
    
   }
+
+  ////
+  onLogout = () => {
+    this.authenticationService.logout();
+    window.location.reload();
+  }  
 }

@@ -1,8 +1,7 @@
 <div class="row" *ngIf="employee" style="border: 1px solid black;padding: 30px;">
         <div class="col-md-5" style="text-align:center; margin-top: 20px;">
 
-          <img *ngIf="checkImage"  src="{{employee.employeeImage}}" alt="profile" style="width:180px;height:180px;text-align: center;margin-top: 60px;">
-          <img *ngIf="!checkImage"  src="../../../assets/images/blog_3.jpg" alt="profile" style="width:180px;height:180px;text-align: center;margin-top: 60px;">
+          <img  [src]="employee.employeeImage" alt="profile" style="width:180px;height:180px;text-align: center;margin-top: 60px;">
 
         </div>
         <div class="col-md-7" >

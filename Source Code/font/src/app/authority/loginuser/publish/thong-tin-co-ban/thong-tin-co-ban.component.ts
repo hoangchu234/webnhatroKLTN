@@ -41,7 +41,7 @@ export class ThongTinCoBanComponent implements OnInit {
   streets: Street [] = [];
   street:Street;
 
-  newTypes: NewType [];
+  newTypes: Array<NewType>= [];
   newType: NewType;
   
   phoneMotel;
@@ -58,6 +58,7 @@ export class ThongTinCoBanComponent implements OnInit {
     }
 
     this.getNewTypes();
+
   }
 
   async ngOnInit(): Promise<void> {
@@ -76,21 +77,19 @@ export class ThongTinCoBanComponent implements OnInit {
     this.phoneMotel = this.motelprevous.phone;
     this.addressMotel = this.motelprevous.address;
      
-    try{
-      var getType = JSON.parse(localStorage.getItem(StorageService.TypeMotelStorage));
-      this.newType = getType
-      var indexTy = this.newTypes.findIndex(a => a.id === getType.id);
-      this.newTypes.splice(indexTy,1);
-      this.newTypes.unshift(this.newType);
-    }
-    catch(err){
-
-    }
     //type
-    
+    this.newTypes.splice(0,this.newTypes.length);
+    await this.getNewTypes();
+    var getType = JSON.parse(localStorage.getItem(StorageService.TypeMotelStorage));
+    this.newType = getType;
+    var indexTy = this.newTypes.findIndex(a => a.id === getType.id);
+    this.newTypes.splice(indexTy,1);
+    this.newTypes.unshift(this.newType);
+
 
     //city
     const city = await this.cityService.getCitys() as City[];
+    city.shift();
     this.city = city.find(a => a.id == this.motelprevous.cityId);
 
     this.cities.splice(0,this.cities.length);
@@ -137,6 +136,8 @@ export class ThongTinCoBanComponent implements OnInit {
   public getNewTypes = async () => {
     //this.typeservice.getTypeExcepts().subscribe(gettypes => this.newTypes = gettypes);
     this.newTypes = await this.typeservice.getTypeExcepts() as NewType[];
+    this.newType = this.newTypes[0];
+    console.log(this.newType)
   }
 
   public onClickTypeMotelButton() {

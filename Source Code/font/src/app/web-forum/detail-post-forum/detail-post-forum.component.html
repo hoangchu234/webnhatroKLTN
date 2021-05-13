@@ -161,7 +161,7 @@
     
     <div class="topbar stick">
         <div class="logo">
-            <h1  style="color: rgb(255, 255, 255);" ><a [routerLink]="['/home']" style="text-decoration: none;text-decoration-color: black;">HOURS</a></h1>
+            <h1  style="color: rgb(255, 255, 255);"><a [routerLink]="['/home']" style="text-decoration: none;text-decoration-color:black ;">HOURS</a></h1>
         </div>
         <div class="top-area" >
             <!-- <div class="main-menu">
@@ -175,24 +175,32 @@
              </div> -->
              <div class="user-img1" style="float: right;">
                 <h5 *ngIf="checkLogin()">{{dataUser.hovaTen}}</h5>
-                <img *ngIf="checkLogin()" class="img1" style="height: 50px; width: 50px;" src="{{dataUser.userImage}}" alt="">
-                <span class="status f-online"></span>
-                <div class="user-setting">
-                    <span class="seting-title">Chat setting <a href="#" title="">see all</a></span>
-                    <ul class="chat-setting">
-                        <li><a href="#" title=""><span class="status f-online"></span>online</a></li>
-                        <li><a href="#" title=""><span class="status f-away"></span>away</a></li>
-                        <li><a href="#" title=""><span class="status f-off"></span>offline</a></li>
-                    </ul>
-                    <span class="seting-title">User setting <a href="#" title="">see all</a></span>
-                    <ul class="log-out">
-                        <li><a href="about.html" title=""><i class="ti-user"></i> view profile</a></li>
-                        <li><a href="setting.html" title=""><i class="ti-pencil-alt"></i>edit profile</a></li>
-                        <li><a href="#" title=""><i class="ti-target"></i>activity log</a></li>
-                        <li><a href="setting.html" title=""><i class="ti-settings"></i>account setting</a></li>
-                        <li><a href="logout.html" title=""><i class="ti-power-off"></i>log out</a></li>
-                    </ul>
-                </div>
+                <img *ngIf="checkLogin()" class="img1" style="height: 50px; width: 50px;" [src]="dataUser.userImage" alt="">
+                <span *ngIf="checkLogin()" class="status f-online"></span>
+                <div class="nav-item nav-profile dropdown" style="visibility: visible;" *ngIf="checkLogin()">
+                    <a class="nav-link " id="profileDropdown"  data-toggle="dropdown" aria-expanded="false" style="margin-top: -40px;">
+                      <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown" style="font-size: 20px;">
+                        <a [routerLink]="['/user/thong-tin-ca-nhan']" class="dropdown-item font">
+                          <i class="mdi mdi-account mr-2 text-success "></i>Thông tin cá nhân</a>
+                          <div class="dropdown-divider"></div>
+                        <a [routerLink]="['/user/quan-ly-dang-tin']" class="dropdown-item font" >
+                          <i class="mdi mdi-message-processing mr-2 text-warning font"></i>Tin đã đăng </a>
+                        <a [routerLink]="['/user/quan-ly-messeger']" class="dropdown-item font" >
+                          <i class="mdi mdi-file-find mr-2 text-warning font"></i>Quản lý tin nhắn</a>
+                        <div class="dropdown-divider"></div>
+                        <a [routerLink]="['/user/lich-su-giao-dich']" class="dropdown-item font" >
+                          <i class="mdi  mdi-history mr-2 text-success font"></i>Lịch sử giao dịch</a>
+                        <a [routerLink]="['/bang-gia-dich-vu']" class="dropdown-item font" >
+                          <i class="mdi mdi-newspaper mr-2 text-success font"></i>Bảng giá dịch vụ</a>
+                        <div class="dropdown-divider"></div>
+                        <a [routerLink]="['/tro-giup']" class="dropdown-item font" >
+                          <i class="mdi mdi-help-circle mr-2 text-primary font"></i> Trợ giúp</a>
+                        <a (click)='onLogout()' class="dropdown-item font">
+                          <i class="mdi mdi-logout mr-2 text-primary font"></i>Đăng xuất</a>
+                        <div class="dropdown-divider"></div>
+                      </div>
+                    </a>
+                  </div>
             </div>
              <ul class="setting-area" style="float: right;">
 
@@ -288,17 +296,28 @@
                   </div>
               </li> -->
               <li *ngIf="checkLogin()">
-                <a href="#" title="Notification" data-ripple="">
+                <a title="Notification" data-ripple="">
                     <i class="fa fa-bell" style="color:aliceblue"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
                 </a>
                 <div class="dropdowns">
                     <!-- <span>4 New Notifications <a title="">Mark all as read</a></span> -->
                     <ul class="drops-menu" >
                         <li *ngFor="let data of notifys">
-                            <a title="" (click)="onClickDetailPostINotify(data,data.postUser,data.idPost)">
+                            <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="!data.justSee" style="background-color: whitesmoke;">
                                 <figure>
-                                    <img *ngIf="data.imageUser == 'null'" class="img1" src="../../assets/forum/images1/admin.jpg" alt="">
-                                    <img *ngIf="data.imageUser != 'null'" class="img1" style="height: 50px; width: 50px;" src="{{data.imageUser}}" alt="">
+                                    <img class="img1" style="height: 50px; width: 50px;" [src]="data.imageUser" alt="">
+                                    <span class="status f-online"></span>
+                                </figure>
+                                <div class="mesg-meta">
+                                    <h6>{{data.username}}</h6>
+                                    <span>{{data.userComment}}</span>
+                                    <i>{{data.day}} ngày trước</i>
+                                </div>
+                            </a>
+
+                            <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="data.justSee">
+                                <figure>
+                                    <img class="img1" style="height: 50px; width: 50px;" [src]="data.imageUser" alt="">
                                     <span class="status f-online"></span>
                                 </figure>
                                 <div class="mesg-meta">
@@ -319,7 +338,8 @@
         </div>
 
         <!-- nav menu -->
-    </div><!-- topbar -->
+    </div>
+
     <section>
         <div class="gap2 gray-bg">
             <div class="container">
@@ -393,17 +413,17 @@
                                     <div class="advertisment-box">
                                         <h4 class="widget-title">Quảng cáo</h4>
                                         <figure>
-                                            <a href="#" title="Advertisment"><img class="img1" src="assets/forum/images1/resources/ad-widget.gif" alt=""></a>
+                                            <a href="#" title="Advertisment"><img class="img1" src="../../../assets/forum/images1/resources/ad-widget.gif" alt=""></a>
                                         </figure>
                                     </div>
                                     <div class="widget">
                                         <h4 class="widget-title">Bài viết gần nhất</h4>
                                         <ul class="activitiez">
                                             <li *ngFor="let data of dataRecently">
-                                                <div class="activity-meta">
+                                                <div class="activity-meta" (click)="onClickDetailPost(data.postUser,data.id)">
                                                     <i *ngIf="data.day == 0" style="color: rgb(240, 107, 147);" class="font">{{data.hour}} tiếng trước</i>
                                                     <i *ngIf="data.day != 0" style="color: rgb(240, 107, 147);" class="font">{{data.day}} ngày trước</i>
-                                                    <span><a (click)="onClickDetailPost(data.postUser,data.id)" title="">{{data.postUser}}</a></span>
+                                                    <span><a title="">{{data.postUser}}</a></span>
                                                     <h6>bởi <a style="color: blue;">{{data.username}}</a></h6>
                                                 </div>
                                             </li>
@@ -417,7 +437,7 @@
                                     <div class="user-post">
                                         <div class="friend-info">
                                             <figure>
-                                                <img  class="img1" [src]="dataPost.user.userImage"  alt="2">
+                                                <img  class="img1" style="width: 50px;height: 50px;"  [src]="dataPost.user.userImage"  alt="2">
                                             </figure>
                                             <div class="friend-name">
                                                 <div class="more">
@@ -467,8 +487,7 @@
                                                     <ng-template #recursiveListTmpl let-list="list">
                                                         <li *ngFor="let item of list;let j=index">
                                                             <div class="comet-avatar">
-                                                                    <img *ngIf="item.user.userImage != 'null'" class="img1" src="{{item.user.userImage}}" alt="">
-                                                                    <img *ngIf="item.user.userImage == 'null'" class="img1" src="../../assets/forum/images1/admin.jpg" alt="">
+                                                                    <img class="img1" style="width: 50px;height: 50px;"  [src]="item.user.userImage" alt="">
                                                             </div>
                                                             <div class="we-comment" >
                                                                     <h5><a href="time-line.html" title="">{{item.user.hovaTen}}</a></h5>
@@ -493,7 +512,7 @@
                                                             <!-- *ngIf="j == postData.comments.length" -->
                                                             <ul *ngIf="checkLogin()" class="post-comment" [hidden] = "showChildComments(dataPost.id,item.id,item.parentCommentId)" >
                                                                 <div class="comet-avatar">
-                                                                    <img class="img1" src="{{dataUser.userImage}}" alt="">
+                                                                    <img class="img1" style="width: 50px;height: 50px;"  [src]="dataUser.userImage" alt="">
                                                                 </div>
                                                                 <div class="post-comt-box-reply">
                                                                     <form method="post">
@@ -517,7 +536,7 @@
                                                     <!-- Add Comment-->
                                                     <li *ngIf="checkLogin()" class="post-comment" >
                                                         <div class="comet-avatar">
-                                                            <img class="img1" src="{{dataPost.user.userImage}}" alt="">
+                                                            <img class="img1" style="width: 50px;height: 50px;"  [src]="dataUser.userImage" alt="">
                                                         </div>
                                                         <div class="post-comt-box">
                                                             <form method="post">

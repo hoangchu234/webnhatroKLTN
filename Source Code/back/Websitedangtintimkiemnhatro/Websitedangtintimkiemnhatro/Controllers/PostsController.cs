@@ -119,7 +119,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         public async Task<ActionResult<Object>> GetRecentlyPost()
         {
             //, Username = g.User.HovaTen, Time = aDateTime.Subtract(g.CreateDate)
-            var posts = _context.Posts.Include(a => a.User).OrderByDescending(a => a.CreateDate).ToList();
+            var posts = _context.Posts.Include(a => a.User).Where(a => a.HiddenOrNotHidden == false).OrderByDescending(a => a.CreateDate).ToList();
             DateTime aDateTime = DateTime.Now;
             //TimeSpan interval;
             var result = posts.Select(g => new { Id = g.Id, PostUser = g.PostUser, Username = g.User.HovaTen, Day = aDateTime.Subtract(g.CreateDate).Days, Hour = aDateTime.Subtract(g.CreateDate).Hours }).Take(5);

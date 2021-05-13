@@ -19,6 +19,7 @@ namespace Websitedangtintimkiemnhatro.Models
         public bool Gender { get; set; }
         public string Title { get; set; }
         public string UserImage { get; set; }
+        public int? PubishFree { get; set; }
         public Account Account { get; set; }
         [ForeignKey("AccountId")]
         [Required]

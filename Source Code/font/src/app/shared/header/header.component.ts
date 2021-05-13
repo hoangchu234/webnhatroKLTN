@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   countReply = 0;
 
   public username:string;
-  userImage;
+  userImage = "";
 
   // Name1 = "cho-thue-nha-tro";
   // Name2 = "nha-cho-thue";
@@ -47,23 +47,17 @@ export class HeaderComponent implements OnInit {
           this.getReply();
           this.checkLogin = true;
         }
+        if(this.authenticationService.currentAccountValue.user.userImage != null){
+          this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+        }
+        if(this.authenticationService.currentAccountValue.user.userImage == null){
+          this.userImage = "../../../assets/images/blog_3.jpg"
+        }
       }      
     }
 
   async ngOnInit(): Promise<void> { 
     this.types = await this.getTypes();
-    try{
-      if(this.authenticationService.currentAccountValue){
-        this.userImage = this.authenticationService.currentAccountValue.user.userImage;
-      }
-      else{
-        this.userImage = "../../../assets/images/blog_3.jpg"
-      }
-    }
-    catch(err){
-
-    }
-   
   }
   
   onClickNarbarURL(id){

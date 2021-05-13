@@ -12,37 +12,23 @@ export class MagementEmployeeComponent implements OnInit {
 
   employees:Employee[] = [];
   selectEmployee:Employee;
-  checkImage: Boolean[] = [];
-  constructor(private router: Router,private employeesService: EmployeesService) { }
+  image = "";
+  constructor(private router: Router,private employeesService: EmployeesService) { 
+    this.image = "../../../assets/images/blog_3.jpg";
+   }
 
-  ngOnInit(): void {
-    this.getEmployees();
+  async ngOnInit(): Promise<void> {
+    await this.getEmployees();
    
   }
 
   public async getEmployees(){
-    /*this.employeesService.getEmployees().subscribe(getemployees => {
-      this.employees = getemployees
-      for(let i=0; i<this.employees.length;i++){
-        if(this.employees[i].employeeImage != null)
-        {
-          this.checkImage[i] = true;
-        }
-        else{
-          this.checkImage[i] = false;
-        }
-      }
-    })
-    */
    try{
     this.employees = await this.employeesService.getEmployees() as Employee[];
     for(let i=0; i<this.employees.length;i++){
-       if(this.employees[i].employeeImage != null)
+       if(this.employees[i].employeeImage == null)
        {
-         this.checkImage[i] = true;
-       }
-       else{
-         this.checkImage[i] = false;
+        this.employees[i].employeeImage = this.image;
        }
      }
    }

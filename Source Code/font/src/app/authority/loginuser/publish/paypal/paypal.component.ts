@@ -46,8 +46,8 @@ export class PaypalComponent implements OnInit {
 
   //Load data
   loadDataToSee: Motel;
-
-  constructor(private authenticationService: AuthenticationService,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: Motel,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
+ 
+  constructor(private authenticationService: AuthenticationService,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: boolean,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.money = Number(localStorage.getItem(StorageService.totalMoneyStorage)); 
     this.loadDataToSee = JSON.parse(localStorage.getItem(StorageService.motelStorage));
@@ -59,7 +59,6 @@ export class PaypalComponent implements OnInit {
 
   private initConfig(): void {
     // Gía tiền
-    console.log(this.money);
     var usd = "0.000043";
     this.numberPayPal = this.money * Number(usd);
     this.numberPayPal = Number((this.numberPayPal).toFixed(1));
@@ -143,7 +142,6 @@ export class PaypalComponent implements OnInit {
         finalize(() => {
           fileRef.getDownloadURL().subscribe((url) => {
             this.imagesURLFirebare.push(url);
-            console.log(url)
             if(Number(this.imageMotels.length) == Number(this.imagesURLFirebare.length)){
               this.save();
             }
@@ -181,7 +179,7 @@ export class PaypalComponent implements OnInit {
 
           //this.billService.addbill(bill).subscribe(data => console.log(data))
         });
-        localStorage.removeItem(StorageService.motelStorage)
+        this.data = true;
         alert('Đăng tin thành công');
         
       }

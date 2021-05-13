@@ -61,4 +61,8 @@ export class SlidebarAdminComponent implements OnInit {
     return this.authenticationService.currentAccountValue && Number(this.authenticationService.currentAccountValue.roleId) === 2;
   }
   
+  public onLogout = () => {
+    this.authenticationService.logout();
+    this.router.navigate(['/home']);
+  } 
 }

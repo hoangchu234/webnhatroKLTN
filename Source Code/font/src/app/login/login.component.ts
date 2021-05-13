@@ -51,14 +51,19 @@ export class LoginComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    try{
+      this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    }
+    catch(err){
+
+    }
   }
 
   clickChange(){
     this.showError = true;
   }
 
-  public login = () => {  
+  public login = async () => {  
     if(this.phone == "" || this.password == ""){
       this.showError = false;
     }
@@ -68,7 +73,9 @@ export class LoginComponent implements OnInit {
         var accounta = new Account();
         accounta.phone = this.phone;
         accounta.password = this.password;
-        this.authenticationService.loginPhone(accounta).subscribe(account => {
+        const result = await this.authenticationService.loginPhone(accounta);
+        if(result != false){
+          var account = result as Account;
           if(account.isActive == false){
             alert('Đăng nhập thất bại');
           }
@@ -90,9 +97,12 @@ export class LoginComponent implements OnInit {
               alert('Đăng nhập thất bại');
 
             }
-      
           }
-        })
+        }
+        else{
+          alert('Đăng nhập thất bại');
+
+        }
       } 
       catch(e) 
       {
@@ -117,9 +127,8 @@ export class LoginComponent implements OnInit {
             account.phone = this.phone;
             user.hovaTen = this.name;
             account.user = user;
-            this.service.addAccount(account).subscribe(newAccount => {
-              this.resultaccount.push(newAccount);
-            });
+            const result = await this.service.addAccount(account) as Account;
+            this.resultaccount.push(result);
             this.router.navigateByUrl('home');
             alert('Success');
           }).catch(err =>{

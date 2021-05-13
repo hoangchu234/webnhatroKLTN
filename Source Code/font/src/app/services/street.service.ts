@@ -3,6 +3,7 @@ import { Street } from '../model/Street';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable,of, from } from 'rxjs';
 import { map ,tap, catchError} from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 const httpOptions ={
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -13,7 +14,7 @@ const httpOptions ={
 })
 export class StreetService {
 
-  private urlAPI = 'https://localhost:44324';
+  private urlAPI = environment.urlAPI;
 
   constructor( private http: HttpClient) { }
 

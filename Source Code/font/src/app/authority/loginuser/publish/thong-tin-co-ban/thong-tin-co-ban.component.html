@@ -70,7 +70,10 @@
               <div class="form-group row">
                 <label class="col-sm-12" for="exampleFormControlSelect1"><b>Địa chỉ</b></label>
                 <div class="col-sm-12" style="margin-top: 5px ;">
-                  <input type="email" style="border-radius: 5px;" [(ngModel)]="addressMotel" ngDefaultControl name="AddressMotel" class="form-control" id="exampleFormControlInput2" placeholder="Nhập địa chỉ">
+                  <input type="email" style="border-radius: 5px;" [(ngModel)]="addressMotel" ngDefaultControl name="AddressMotel" class="form-control" id="exampleFormControlInput2" placeholder="Nhập địa chỉ" #AddressMotel="ngModel">
+                  <p *ngIf="AddressMotel?.errors?.required">
+                    Xin nhập địa chỉ
+                  </p>
                 </div>
               </div>
               <div class="form-group row" >

@@ -12,4 +12,5 @@ export class User {
     lastLogOnDate:Date;
     account:Account;
     accountid:string;
+    pubishFree:number;
 }

@@ -4,6 +4,7 @@ import { User } from '../model/User';
 import { Observable,of, from, BehaviorSubject } from 'rxjs';
 import { map ,tap, catchError} from 'rxjs/operators';
 import { Account } from '../model/Account';
+import { environment } from 'src/environments/environment';
 
 const httpOptions ={
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -13,9 +14,7 @@ const httpOptions ={
   providedIn: 'root'
 })
 export class UserService {
-  private urlAPI = 'https://localhost:44324';
-
-  
+  private urlAPI = environment.urlAPI;
 
   constructor(private http: HttpClient) { }
 
