@@ -241,27 +241,27 @@
              </div> -->
              <div class="user-img1" style="float: right;">
                 <h5 *ngIf="checkLogin()">{{dataUser.hovaTen}}</h5>
-                <img *ngIf="checkLogin()" class="img1" style="height: 50px; width: 50px;" [src]="dataUser.userImage" alt="">
+                <img *ngIf="checkLogin()" class="img1" style="height: 40px; width: 50px;" [src]="dataUser.userImage" alt="">
                 <span *ngIf="checkLogin()" class="status f-online"></span>
                 <div class="nav-item nav-profile dropdown" style="visibility: visible;" *ngIf="checkLogin()">
                     <a class="nav-link " id="profileDropdown"  data-toggle="dropdown" aria-expanded="false" style="margin-top: -40px;">
                       <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown" style="font-size: 20px;">
-                        <a [routerLink]="['/user/thong-tin-ca-nhan']" class="dropdown-item font">
+                        <a [routerLink]="['/user/thong-tin-ca-nhan']" class="dropdown-item font" style="height: 50px;">
                           <i class="mdi mdi-account mr-2 text-success "></i>Thông tin cá nhân</a>
                           <div class="dropdown-divider"></div>
-                        <a [routerLink]="['/user/quan-ly-dang-tin']" class="dropdown-item font" >
+                        <a [routerLink]="['/user/quan-ly-dang-tin']" class="dropdown-item font" style="height: 50px;">
                           <i class="mdi mdi-message-processing mr-2 text-warning font"></i>Tin đã đăng </a>
-                        <a [routerLink]="['/user/quan-ly-messeger']" class="dropdown-item font" >
+                        <a [routerLink]="['/user/quan-ly-messeger']" class="dropdown-item font" style="height: 50px;">
                           <i class="mdi mdi-file-find mr-2 text-warning font"></i>Quản lý tin nhắn</a>
                         <div class="dropdown-divider"></div>
-                        <a [routerLink]="['/user/lich-su-giao-dich']" class="dropdown-item font" >
+                        <a [routerLink]="['/user/lich-su-giao-dich']" class="dropdown-item font" style="height: 50px;">
                           <i class="mdi  mdi-history mr-2 text-success font"></i>Lịch sử giao dịch</a>
-                        <a [routerLink]="['/bang-gia-dich-vu']" class="dropdown-item font" >
+                        <a [routerLink]="['/bang-gia-dich-vu']" class="dropdown-item font" style="height: 50px;">
                           <i class="mdi mdi-newspaper mr-2 text-success font"></i>Bảng giá dịch vụ</a>
                         <div class="dropdown-divider"></div>
-                        <a [routerLink]="['/tro-giup']" class="dropdown-item font" >
+                        <a [routerLink]="['/tro-giup']" class="dropdown-item font" style="height: 50px;">
                           <i class="mdi mdi-help-circle mr-2 text-primary font"></i> Trợ giúp</a>
-                        <a (click)='onLogout()' class="dropdown-item font">
+                        <a (click)='onLogout()' class="dropdown-item font" style="height: 50px;">
                           <i class="mdi mdi-logout mr-2 text-primary font"></i>Đăng xuất</a>
                         <div class="dropdown-divider"></div>
                       </div>
@@ -281,7 +281,7 @@
                         <li *ngFor="let data of notifys" >
                             <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="!data.justSee" style="background-color: whitesmoke;">
                                 <figure>
-                                    <img class="img1" style="height: 50px; width: 50px;" [src]="data.imageUser" alt="">
+                                    <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="">
                                     <span class="status f-online"></span>
                                 </figure>
                                 <div class="mesg-meta">
@@ -293,7 +293,7 @@
 
                             <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="data.justSee">
                                 <figure>
-                                    <img class="img1" style="height: 50px; width: 50px;" [src]="data.imageUser" alt="">
+                                    <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="">
                                     <span class="status f-online"></span>
                                 </figure>
                                 <div class="mesg-meta">
@@ -408,7 +408,7 @@
                                     <span class="create-post">Câu hỏi của bạn</span>
                                     <div class="new-postbox">
                                         <figure >
-                                            <img  class="img1" style="width: 50px;height: 50px;" [src]="dataUser.userImage" alt="">
+                                            <img  class="img1" style="width: 50px;height: 40px;" [src]="dataUser.userImage" alt="">
                                         </figure>
                                         <div class="newpst-input">
                                             <form method="post">
@@ -422,7 +422,7 @@
                                         <div class="user-post" >
                                             <div class="friend-info">
                                                 <figure>
-                                                        <img class="img1" style="width: 50px;height: 50px;" [src]="postData.user.userImage"  alt="1">
+                                                        <img class="img1" style="width: 50px;height: 40px;" [src]="postData.user.userImage"  alt="1">
                                                 </figure>
                                                 <div class="friend-name">
                                                         <div class="more">
@@ -481,7 +481,7 @@
                                                                 <li *ngFor="let item of list;let j=index">
 
                                                                     <div class="comet-avatar">
-                                                                            <img class="img1" style="width: 50px;height: 50px;"  [src]="item.user.userImage" alt="">
+                                                                            <img class="img1" style="width: 50px;height: 40px;"  [src]="item.user.userImage" alt="">
                                                                     </div>
                                                                     <div class="we-comment" >
                                                                             <h5><a href="time-line.html" title="">{{item.user.hovaTen}}</a></h5>
@@ -506,7 +506,7 @@
                                                                     <!-- *ngIf="j == postData.comments.length" -->
                                                                     <ul *ngIf="checkLogin()"  class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" >
                                                                         <div class="comet-avatar">
-                                                                            <img class="img1" style="width: 50px;height: 50px;"  [src]="dataUser.userImage" alt="">
+                                                                            <img class="img1" style="width: 50px;height: 40px;"  [src]="dataUser.userImage" alt="">
                                                                         </div>
                                                                         <div class="post-comt-box-reply">
                                                                             <form method="post">
@@ -532,7 +532,7 @@
                                                             <!-- Add Comment-->
                                                             <li *ngIf="checkLogin()" class="post-comment" [hidden] = "showParentComments(postData.id)">
                                                                 <div class="comet-avatar">
-                                                                    <img class="img1" style="width: 50px;height: 50px;"  [src]="dataUser.userImage" alt="">
+                                                                    <img class="img1" style="width: 50px;height: 40px;"  [src]="dataUser.userImage" alt="">
                                                                 </div>
                                                                 <div class="post-comt-box">
                                                                     <form method="post">
@@ -561,7 +561,7 @@
                                             <div class="user-post" >
                                                 <div class="friend-info">
                                                     <figure>
-                                                        <img class="img1" style="width: 50px;height: 50px;"  [src]="postData.user.userImage"  alt="1">
+                                                        <img class="img1" style="width: 50px;height: 40px;"  [src]="postData.user.userImage"  alt="1">
                                                     </figure>
                                                     <div class="friend-name">
                                                             <div class="more">
@@ -624,7 +624,7 @@
                                                                 <ng-template #recursiveListTmpl let-list="list">
                                                                     <li *ngFor="let item of list;let j=index">
                                                                         <div class="comet-avatar">
-                                                                                <img class="img1" style="width: 50px;height: 50px;"  [src]="item.user.userImage" alt="">
+                                                                                <img class="img1" style="width: 50px;height: 40px;"  [src]="item.user.userImage" alt="">
                                                                         </div>
                                                                         <div class="we-comment" >
                                                                                 <h5><a href="time-line.html" title="">{{item.user.hovaTen}}</a></h5>
@@ -649,7 +649,7 @@
                                                                         <!-- *ngIf="j == postData.comments.length" -->
                                                                         <ul *ngIf="checkLogin()" class="post-comment" [hidden] = "showChildComments(postData.id,item.id,item.parentCommentId)" >
                                                                             <div class="comet-avatar">
-                                                                                <img class="img1" style="width: 50px;height: 50px;"  [src]="dataUser.userImage" alt="">
+                                                                                <img class="img1" style="width: 50px;height: 40px;"  [src]="dataUser.userImage" alt="">
                                                                             </div>
                                                                             <div class="post-comt-box-reply">
                                                                                 <form method="post">
@@ -673,7 +673,7 @@
                                                                 <!-- Add Comment-->
                                                                 <li *ngIf="checkLogin()" class="post-comment" [hidden] = "showParentComments(postData.id)">
                                                                     <div class="comet-avatar">
-                                                                        <img class="img1" style="width: 50px;height: 50px;"  [src]="dataUser.userImage" alt="">
+                                                                        <img class="img1" style="width: 50px;height: 40px;"  [src]="dataUser.userImage" alt="">
                                                                     </div>
                                                                     <div class="post-comt-box">
                                                                         <form method="post">

@@ -1,12 +1,15 @@
-<div class="content-wrapper" style="margin-top:-40px" >
-    <div>
+<div class="content-wrapper"style="margin-top:-50px">
 
-        <div class="container-fluid font" style="height: 50px;background-color:lightgrey;color: black;font-size: 13px;margin-top:10px">
-            <div style="padding-top:15px;"><span style="margin-left: 40px;">Quản lý    <div class="fa  fa-chevron-right" ></div><b style="margin-left:15px">Quản lý vi phạm</b> <div class="fa  fa-chevron-right" style="margin-left: 10px;margin-right: 15px;"></div></span></div>
-        </div>
-        <h3 class="page-title font" style="text-align: center;font-size: 22px;margin-top: 20px;" > Quản lý vi phạm </h3>
-    </div>
-    <div class="container"  style="color: black;margin-left: -30px;">
+  <div>
+    <h3 class="page-title font" style=" float:right;margin-top: 10px;margin-bottom: 20px;" > Quản lý vi phạm</h3>
+    <nav aria-label="breadcrumb" style=" float:left" >
+      <ol class="breadcrumb" style="border: none;">
+        <li class="breadcrumb-item"><a>Quản lý</a></li>
+        <li class="breadcrumb-item active font" aria-current="page">Quản lý vi phạm</li>
+      </ol>
+    </nav>
+  </div>
+    <div class="container"  style="color: black;margin-left: -10px;">
       <br>  
       <div class="col-md-12" style="padding-top: 0px;">
         <table class="table table-bordered" >
@@ -22,16 +25,16 @@
           </thead>
           <tbody style="color: black;margin-left: 40px;">
             <tr *ngFor="let report of reports | paginate: { itemsPerPage: 10, currentPage: page }">
-                <td><textarea style="height: 50px;width:430px;border:none">{{report.postUser}}</textarea></td>
-                <td>{{report.hovaTen}}</td>
-                <td>{{report.createDate | date}}</td>
-                <td><div style="height: 50px">{{report.report}}</div></td>
-                <td><div style="height: 50px;width:200px;border:none;"><div>{{report.write}}</div></div></td>
+                <td><textarea class="font" style="height: 100px;width:430px;border:none">{{report.postUser}}</textarea></td>
+                <td><div style=" margin-top: -30px;">{{report.hovaTen}}</div></td>
+                <td><div style=" margin-top: -30px;">{{report.createDate | date}}</div></td>
+                <td><div style="height: 50px;margin-top: -10px;">{{report.report}}</div></td>
+                <td><div style="height: 50px;width:200px;border:none;margin-top: -10px"><div>{{report.write}}</div></div></td>
                 <td style="text-align: center;">
-                    <button *ngIf="!report.hiddenOrNotHidden" type="button" class="btn btn-info btn-sm" (click)="hiddenPost(report.idPost)">
+                    <button *ngIf="!report.hiddenOrNotHidden" style="margin-top: -30px;" type="button" class="btn btn-info btn-sm" (click)="hiddenPost(report.idPost)">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <button *ngIf="report.hiddenOrNotHidden" type="button" class="btn btn-info btn-sm" disabled>
+                    <button *ngIf="report.hiddenOrNotHidden" style="margin-top: -30px;" type="button" class="btn btn-info btn-sm" disabled>
                         <i class="fa fa-edit"></i>
                     </button>
                 </td>
