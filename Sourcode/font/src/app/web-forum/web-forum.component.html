@@ -418,7 +418,7 @@
                                     </div>
                                 </div>
                                 <div *ngFor="let postData of posts; let i=index">
-                                    <div class="central-meta item" *ngIf="myCondition(i)">
+                                    <div class="central-meta item" *ngIf="myCondition(i)" >
                                         <div class="user-post" >
                                             <div class="friend-info">
                                                 <figure>
@@ -558,8 +558,8 @@
                                 <div class="flex">
                                     <div *ngFor="let postData of posts; let i=index">
                                         <div class="central-meta item content" *ngIf="!myCondition(i)">
-                                            <div class="user-post" >
-                                                <div class="friend-info">
+                                            <div class="user-post" style="width:505px">
+                                                <div class="friend-info" style="width:505px">
                                                     <figure>
                                                         <img class="img1" style="width: 50px;height: 40px;"  [src]="postData.user.userImage"  alt="1">
                                                     </figure>

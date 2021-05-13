@@ -29,7 +29,7 @@
                 <td><div style=" margin-top: -30px;">{{report.hovaTen}}</div></td>
                 <td><div style=" margin-top: -30px;">{{report.createDate | date}}</div></td>
                 <td><div style="height: 50px;margin-top: -10px;">{{report.report}}</div></td>
-                <td><div style="height: 50px;width:200px;border:none;margin-top: -10px"><div>{{report.write}}</div></div></td>
+                <td><div style="height: 50px;width:200px;border:none;margin-top: -10px"><textarea style="height: auto;width:auto;border:none;margin-top: -10px;">{{report.write}}</textarea></div></td>
                 <td style="text-align: center;">
                     <button *ngIf="!report.hiddenOrNotHidden" style="margin-top: -30px;" type="button" class="btn btn-info btn-sm" (click)="hiddenPost(report.idPost)">
                         <i class="fa fa-edit"></i>
