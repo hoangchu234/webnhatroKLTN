@@ -110,7 +110,6 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
     this.getServicePrices();
 
     this.tinhTien();
-    localStorage.removeItem(StorageService.ImageStorage);
   }
 
   public async getServicePrices(){
@@ -186,6 +185,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
 
     localStorage.removeItem(StorageService.motelStorage)
     localStorage.setItem(StorageService.motelStorage, JSON.stringify(this.motel));
+    localStorage.setItem(StorageService.totalMoneyStorage, this.totalprice.toString());
     this.router.navigateByUrl('/user/thanh-toan-dong'); 
    
   }
@@ -279,6 +279,5 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
       }
     }
 
-    localStorage.setItem(StorageService.totalMoneyStorage, this.totalprice.toString());
   }
 }

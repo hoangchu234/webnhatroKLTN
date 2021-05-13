@@ -14,7 +14,7 @@ import { StorageService } from 'src/app/storage.service';
 })
 export class ThongTinCoBanNextNextComponent implements OnInit {
 
-  liveType: string;
+  liveType: string = "";
   numberBath: string;
   numberLiving: string;
   liveTypes:LiveType[];
@@ -38,7 +38,9 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
   }
 
   public async getLiveType(){
-    this.liveTypes = await this.motelService.getLiveTypes() as LiveType[];
+    const result = await this.motelService.getLiveTypes() as LiveType[];
+    this.liveTypes = result.slice();
+    this.liveTypes.shift();
     //this.motelService.getLiveTypes().subscribe(getlivetype => this.liveTypes = getlivetype)
   }
 
@@ -82,7 +84,12 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
 
     let detail = new Detail();
     
-    detail.liveTypeId = this.liveType;
+    if(this.liveType == ""){
+      detail.liveTypeId = "1";
+    }
+    else{
+      detail.liveTypeId = this.liveType;
+    }
 
     detail.numberBath = Number(this.numberBath);
     detail.numberLiving = Number(this.numberLiving);

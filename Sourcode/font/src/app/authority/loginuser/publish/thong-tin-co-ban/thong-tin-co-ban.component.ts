@@ -137,7 +137,6 @@ export class ThongTinCoBanComponent implements OnInit {
     //this.typeservice.getTypeExcepts().subscribe(gettypes => this.newTypes = gettypes);
     this.newTypes = await this.typeservice.getTypeExcepts() as NewType[];
     this.newType = this.newTypes[0];
-    console.log(this.newType)
   }
 
   public onClickTypeMotelButton() {

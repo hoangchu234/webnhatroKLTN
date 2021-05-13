@@ -72,6 +72,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("PutPostById/{id}")]
         public async Task<ActionResult<Post>> PutPostById(int id, Post post)
         {
+            post.CreateDate = DateTime.Now;
             if (id != post.Id)
             {
                 return BadRequest();
