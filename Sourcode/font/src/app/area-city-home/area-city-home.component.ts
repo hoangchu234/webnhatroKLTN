@@ -56,7 +56,6 @@ export class AreaCityHomeComponent implements OnInit {
     {id: 7, text:'../../assets/images/image/q8.jpg'},
     {id: 8, text:'../../assets/images/image/q9.jpg'},
     {id: 9, text:'../../assets/images/image/q10.jpg'},
-    {id: 10, text:'../../assets/images/image/q11.jpg'},
   ];
 
 
@@ -75,8 +74,8 @@ export class AreaCityHomeComponent implements OnInit {
     }
     if(this.nameURL == "Ha-Noi"){
       this.checkHN = true;
-      this.display = "Hà Nội";
-      this.getProvinces("Hà Nội")
+      this.display = "Hà Nội";
+      this.getProvinces("Hà Nội")
     }
   }
 
