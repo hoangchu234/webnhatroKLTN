@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:real_estate/data.dart';
 import 'package:real_estate/filter.dart';
@@ -23,18 +24,20 @@ class _SearchState extends State<Search> {
 
   // Call API get dữ liệu và map vào list đối tượng Motel
   _getMotel() async{
-    API.getMotels().then((res) {
+    API.getMotels(0,0,0,0,0,2).then((res) {
       setState(() {
         var jsRes = json.decode(utf8.decode(res.bodyBytes));
         List<dynamic> list = jsRes;
         for(int i=0;i<list.length;i++){
           List<dynamic> list_image =  list.elementAt(i)['images'];
-          Property p = new Property(list.elementAt(i)['typemotel'], list.elementAt(i)['title'], list.elementAt(i)['price'], list.elementAt(i)['address'],list.elementAt(i)['areaZone'] , list.elementAt(i)['time'], list.elementAt(i)['description'], list_image.elementAt(0)['imageMotel'], list_image.elementAt(1)['imageMotel'],[
-            list_image.elementAt(1)['imageMotel'],
-            list_image.elementAt(1)['imageMotel'],
-            list_image.elementAt(1)['imageMotel'],
-            list_image.elementAt(1)['imageMotel'],
-            list_image.elementAt(1)['imageMotel'],
+          Property p = new Property(list.elementAt(i)['typemotel'], list.elementAt(i)['title'], list.elementAt(i)['price'],
+                                    list.elementAt(i)['address'],list.elementAt(i)['phone'], list.elementAt(i)['detail']['numberBath'] , list.elementAt(i)['detail']['numberLiving'] , list.elementAt(i)['time'], list.elementAt(i)['description'],
+                                    list_image.elementAt(0)['imageMotel'], list_image.elementAt(0)['imageMotel'],[
+            list_image.elementAt(0)['imageMotel'],
+            list_image.elementAt(0)['imageMotel'],
+            list_image.elementAt(0)['imageMotel'],
+            list_image.elementAt(0)['imageMotel'],
+            list_image.elementAt(0)['imageMotel'],
             ],);
           p.images = new List<String>();
           for(int j=0;j<list_image.length;j++){
@@ -58,7 +61,6 @@ class _SearchState extends State<Search> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        
         centerTitle: true,
         title: Text("Trang tìm kiếm",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
         titleSpacing: 5,
@@ -69,10 +71,10 @@ class _SearchState extends State<Search> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 10, left: 24, right: 24, bottom: 16),
+            padding: EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 10),
             child: TextField(
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 20,
                 height: 1,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,              
@@ -105,7 +107,7 @@ class _SearchState extends State<Search> {
           ),
 
           Padding(
-            padding: EdgeInsets.only(top: 16),
+            padding: EdgeInsets.only(top: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -173,11 +175,11 @@ class _SearchState extends State<Search> {
           ),
 
           Padding(
-            padding: EdgeInsets.only(right: 24, left: 24, top: 24, bottom: 12),
+            padding: EdgeInsets.only(right: 12, left: 20, top: 12, bottom: 6),
             child: Row(
               children: [
                 Text(
-                  "53",
+                  properties.length.toString(),
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -187,9 +189,9 @@ class _SearchState extends State<Search> {
                   width: 8,
                 ),
                 Text(
-                  "Results found",
+                  "Kết quả tìm thấy",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                   ),
                 ),
               ],
@@ -198,7 +200,7 @@ class _SearchState extends State<Search> {
 
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.only(left:15, ),
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
@@ -243,11 +245,36 @@ class _SearchState extends State<Search> {
       list.add(
         Hero(
           tag: properties[i].frontImage,
-          child: buildProperty(properties[i], i)
+          child: Container(
+              child: Row(
+                  children:[
+                  Container(
+                      child:Column(
+                      children:[
+                            buildProperty(properties[i], i)]
+                      )
+                  ),
+                    Container(
+                        child:Column(
+                            children:[
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal:12, vertical: 6),
+                                child: buildProperty(properties[i+1], i+1),
+
+                              )]
+                        )
+                    ),
+                  ]
+
+            )
+          )
         )
       );
+      i++;
     }
+
     return list;
+
   }
 
   Widget buildProperty(Property property, int index){
@@ -258,182 +285,344 @@ class _SearchState extends State<Search> {
           MaterialPageRoute(builder: (context) => Detail(property: property)),
         );
       },
-      child: Card(
-        margin: EdgeInsets.only(bottom: 24),
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
-          ),
-        ),
-        child: Container(
-          height: 210,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              // image: AssetImage(property.frontImage),
-              image: NetworkImage(property.frontImage),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.7),
-                ],
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+      child:Container(
+        child: Row(
+          children:[
+            Container(
 
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.yellow[700],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
+              child:Column(
+                children:[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 6),
+                    child: Column(
+                        children:[
+                          Card(
+                            margin: EdgeInsets.only(bottom: 6),
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+
+                            child: Container(
+                              height: 130,
+                              width: 175,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  // image: AssetImage(property.frontImage),
+                                  image: NetworkImage(property.frontImage),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.black.withOpacity(0.7),
+                                    ],
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.yellow[700],
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(5),
+                                        ),
+                                      ),
+                                      width: 80,
+                                      padding: EdgeInsets.symmetric(vertical: 4,),
+                                      child: Center(
+                                        child: Text(
+                                          "Cho " + property.label,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    Expanded(
+                                      child: Container(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ]
                     ),
                   ),
-                  width: 80,
-                  padding: EdgeInsets.symmetric(vertical: 4,),
-                  child: Center(
-                    child: Text(
-                      "Cho " + property.label,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-
-                Expanded(
-                  child: Container(),
-                ),
-
-                Column(
-                  children: [
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-
+                  Container(
+                    width: 160,
+                    margin: EdgeInsets.only(bottom: 12),
+                    child:Column(
+                      children:[
                         Text(
                           property.name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                            color: Colors.black,
+                            fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
+                        Container(
+                          height:12 ,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              property.price + "Triều đồng",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 10,
+                              ),
+                            ),
+                            Spacer(flex: 1,),
+                            Text(
+                              property.review ,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height:12 ,
+                        ),
                         Text(
-                          "đ" + property.price,
+                          property.location,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 10,
                           ),
                         ),
 
-                      ],
-                    ),
+                      ]
+                    )
 
-                    SizedBox(
-                      height: 4,
-                    ),
-                    
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                  )
+                ]
+            ),),
 
-                        Row(
-                          children: [
 
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.white,
-                              size: 14,
-                            ),
 
-                            SizedBox(
-                              width: 4,
-                            ),
+          ]
 
-                            Text(
-                              property.location,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-
-                            SizedBox(
-                              width: 8,
-                            ),
-
-                            Icon(
-                              Icons.zoom_out_map,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-
-                            SizedBox(
-                              width: 4,
-                            ),
-
-                            Text(
-                              property.sqm + " m²",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-
-                          ],
-                        ),
-
-                        Row(
-                          children: [
-
-                            Icon(
-                              Icons.star,
-                              color: Colors.yellow[700],
-                              size: 14,
-                            ),
-
-                            SizedBox(
-                              width: 4,
-                            ),
-
-                            Text(
-                              property.review + " ngày đăng",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-
-                          ],
-                        ),
-
-                      ],
-                    ),
-                  ],
-                ),
-
-              ],
-            ),
-          ),
         ),
-      ),
+      )
+      // child: Column(
+      //
+      //    children: [
+      //    Card(
+      //     margin: EdgeInsets.only(bottom: 24),
+      //     clipBehavior: Clip.antiAlias,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.all(
+      //         Radius.circular(15),
+      //       ),
+      //     ),
+      //
+      //     child: Container(
+      //       height: 210,
+      //       decoration: BoxDecoration(
+      //         image: DecorationImage(
+      //           // image: AssetImage(property.frontImage),
+      //           image: NetworkImage(property.frontImage),
+      //           fit: BoxFit.cover,
+      //         ),
+      //       ),
+      //       child: Container(
+      //         padding: EdgeInsets.all(20),
+      //         decoration: BoxDecoration(
+      //           gradient: LinearGradient(
+      //             begin: Alignment.topCenter,
+      //             end: Alignment.bottomCenter,
+      //             colors: [
+      //                 Colors.transparent,
+      //                 Colors.black.withOpacity(0.7),
+      //             ],
+      //           ),
+      //         ),
+      //         child: Column(
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: [
+      //
+      //
+      //             Container(
+      //               decoration: BoxDecoration(
+      //                 color: Colors.yellow[700],
+      //                 borderRadius: BorderRadius.all(
+      //                   Radius.circular(5),
+      //                 ),
+      //               ),
+      //               width: 80,
+      //               padding: EdgeInsets.symmetric(vertical: 4,),
+      //               child: Center(
+      //                 child: Text(
+      //                   "Cho " + property.label,
+      //                   style: TextStyle(
+      //                     color: Colors.white,
+      //                     fontSize: 14,
+      //                     fontWeight: FontWeight.bold,
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //
+      //             Expanded(
+      //               child: Container(),
+      //             ),
+      //
+      //             Column(
+      //               children: [
+      //
+      //                 Row(
+      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                   children: [
+      //
+      //                     Text(
+      //                       property.name,
+      //                       style: TextStyle(
+      //                         color: Colors.white,
+      //                         fontSize: 18,
+      //                         fontWeight: FontWeight.bold,
+      //                       ),
+      //                     ),
+      //
+      //                     Text(
+      //                       "đ" + property.price,
+      //                       style: TextStyle(
+      //                         color: Colors.white,
+      //                         fontSize: 18,
+      //                         fontWeight: FontWeight.bold,
+      //                       ),
+      //                     ),
+      //
+      //                   ],
+      //                 ),
+      //
+      //                 SizedBox(
+      //                   height: 4,
+      //                 ),
+      //
+      //                 Row(
+      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                   children: [
+      //
+      //                     Row(
+      //                       children: [
+      //
+      //                         Icon(
+      //                           Icons.location_on,
+      //                           color: Colors.white,
+      //                           size: 14,
+      //                         ),
+      //
+      //                         SizedBox(
+      //                           width: 4,
+      //                         ),
+      //
+      //                         Text(
+      //                           property.location,
+      //                           style: TextStyle(
+      //                             color: Colors.white,
+      //                             fontSize: 14,
+      //                           ),
+      //                         ),
+      //
+      //                         SizedBox(
+      //                           width: 8,
+      //                         ),
+      //
+      //                         Icon(
+      //                           Icons.zoom_out_map,
+      //                           color: Colors.white,
+      //                           size: 16,
+      //                         ),
+      //
+      //                         SizedBox(
+      //                           width: 4,
+      //                         ),
+      //
+      //                         Text(
+      //                           property.sqm + " m²",
+      //                           style: TextStyle(
+      //                             color: Colors.white,
+      //                             fontSize: 14,
+      //                           ),
+      //                         ),
+      //
+      //                       ],
+      //                     ),
+      //
+      //                     Row(
+      //                       children: [
+      //
+      //                         Icon(
+      //                           Icons.star,
+      //                           color: Colors.yellow[700],
+      //                           size: 14,
+      //                         ),
+      //
+      //                         SizedBox(
+      //                           width: 4,
+      //                         ),
+      //
+      //                         Text(
+      //                           property.review + " ngày đăng",
+      //                           style: TextStyle(
+      //                             color: Colors.white,
+      //                             fontSize: 14,
+      //                           ),
+      //                         ),
+      //
+      //                       ],
+      //                     ),
+      //
+      //                   ],
+      //                 ),
+      //               ],
+      //             ),
+      //
+      //           ],
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      //      Container(
+      //        margin: EdgeInsets.only(bottom: 44),
+      //
+      //        child:Text(
+      //          property.name,
+      //          style: TextStyle(
+      //            color: Colors.black,
+      //            fontSize: 18,
+      //            fontWeight: FontWeight.bold,
+      //          ),
+      //        ),
+      //      ),
+      //    ],
+      // ),
+
     );
   }
+
 
   void _showBottomSheet(){
     showModalBottomSheet(
