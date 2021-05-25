@@ -8,7 +8,7 @@ import 'package:real_estate/detail.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'API.dart';
 
-
+String dropdownValue = 'One';
 class Search extends StatefulWidget {
   @override
   _SearchState createState() => _SearchState();
@@ -62,7 +62,7 @@ class _SearchState extends State<Search> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Trang tìm kiếm",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
+        title: Text("Tìm kiếm nhà trọ",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
         titleSpacing: 5,
         backgroundColor: Colors.white,
       ),
@@ -70,41 +70,41 @@ class _SearchState extends State<Search> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 10),
-            child: TextField(
-              style: TextStyle(
-                fontSize: 20,
-                height: 1,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,              
-              ),
-              decoration: InputDecoration(
-                hintText: 'Tìm kiếm',
-                hintStyle: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey[400],
-                ),
-                enabledBorder: UnderlineInputBorder(      
-                  borderSide: BorderSide(color: Colors.grey[400]),   
-                ),  
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[400]),
-                ),
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[400]),
-                ),
-                suffixIcon: Padding(
-                  padding: EdgeInsets.only(left: 16),
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.grey[400],
-                    size: 28,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 10),
+          //   child: TextField(
+          //     style: TextStyle(
+          //       fontSize: 20,
+          //       height: 1,
+          //       color: Colors.black,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //     // decoration: InputDecoration(
+          //     //   hintText: 'Tìm kiếm',
+          //     //   hintStyle: TextStyle(
+          //     //     fontSize: 20,
+          //     //     color: Colors.grey[400],
+          //     //   ),
+          //     //   enabledBorder: UnderlineInputBorder(
+          //     //     borderSide: BorderSide(color: Colors.grey[400]),
+          //     //   ),
+          //     //   focusedBorder: UnderlineInputBorder(
+          //     //     borderSide: BorderSide(color: Colors.grey[400]),
+          //     //   ),
+          //     //   border: UnderlineInputBorder(
+          //     //     borderSide: BorderSide(color: Colors.grey[400]),
+          //     //   ),
+          //     //   suffixIcon: Padding(
+          //     //     padding: EdgeInsets.only(left: 16),
+          //     //     child: Icon(
+          //     //       Icons.search,
+          //     //       color: Colors.grey[400],
+          //     //       size: 28,
+          //     //     ),
+          //     //   ),
+          //     // ),
+          //   ),
+          // ),
 
           Padding(
             padding: EdgeInsets.only(top: 10),
@@ -181,7 +181,7 @@ class _SearchState extends State<Search> {
                 Text(
                   properties.length.toString(),
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -191,7 +191,7 @@ class _SearchState extends State<Search> {
                 Text(
                   "Kết quả tìm thấy",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 ),
               ],
@@ -413,6 +413,37 @@ class _SearchState extends State<Search> {
                           ),
                         ),
 
+                        // Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     DropdownButton<String>(
+                        //       value: dropdownValue,
+                        //       icon: const Icon(Icons.arrow_downward),
+                        //       iconSize: 24,
+                        //       elevation: 16,
+                        //       style: const TextStyle(color: Colors.deepPurple),
+                        //       underline: Container(
+                        //         height: 2,
+                        //         color: Colors.deepPurpleAccent,
+                        //       ),
+                        //       onChanged: (newValue) {
+                        //         setState(() {
+                        //           dropdownValue = newValue;
+                        //         });
+                        //       },
+                        //       items: <String>['One', 'Two', 'Free', 'Four','five','six','a','a','a','a','a','a','a','a','a','a','a','a','a','a']
+                        //           .map<DropdownMenuItem<String>>((String value) {
+                        //         return DropdownMenuItem<String>(
+                        //           value: value,
+                        //           child: Text(value),
+                        //         );
+                        //
+                        //       }).toList(),
+                        //
+                        //     )
+                        //
+                        //
+                        //
+                        //   ],)
                       ]
                     )
 

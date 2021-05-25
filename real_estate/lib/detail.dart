@@ -45,7 +45,7 @@ class Detail extends StatelessWidget {
 
 
 
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
 
         child:
         Column(
