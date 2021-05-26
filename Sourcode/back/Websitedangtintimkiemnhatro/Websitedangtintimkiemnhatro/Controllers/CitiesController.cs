@@ -23,6 +23,20 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
         // GET: api/Cities
         [HttpGet]
+        [Route("GetCitiesApp")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetCitiesApp()
+        {
+            var cities = await _context.Citys.Where(a => a.Id !=0).ToListAsync();
+            var getcities = cities.Select(c => new
+            {
+                Id = c.Id,
+                Name = c.Name,
+            }).ToList();
+            return getcities;
+        }
+
+        // GET: api/Cities
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<City>>> GetCitys()
         {
             return await _context.Citys.ToListAsync();

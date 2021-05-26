@@ -17,6 +17,14 @@ class Property {
 
 }
 
+class City {
+
+  int id;
+  String name;
+  City(this.id, this.name);
+
+}
+
 // List<Property> getPropertyList(){
 //   return <Property>[
 //     Property(

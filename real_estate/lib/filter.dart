@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
+
+import 'API.dart';
+import 'data.dart';
 
 
 
@@ -11,19 +16,40 @@ class Filter extends StatefulWidget {
 
 class _FilterState extends State<Filter> {
 
+  List<City> cities = new List<City>();
+  _getCity() async{
+    API.getCities().then((res) {
+      setState(() {
+        var jsRes = json.decode(utf8.decode(res.bodyBytes));
+        print(jsRes);
+        List<dynamic> list = jsRes;
+        for(int i=0;i<list.length;i++){
+          City p = new City(list.elementAt(i)['id'],list.elementAt(i)['name']);
+          cities.add(p);
+          print(p.toString());
+        }
+      });
+    });
+  }
+  @override
+  void initState() {
+    _getCity();
+    super.initState();
+  }
+
   var selectedRange = RangeValues(500, 1000);
-  String country_id;
-  List<String> country = [
-    "Vietnam",
-    "Brazil",
-    "Canada",
-    "India",
-    "Mongalia",
-    "USA",
-    "China",
-    "Russia",
-    "Germany"
-  ];
+  // String country_id;
+  // List<String> country = [
+  //   "Vietnam",
+  //   "Brazil",
+  //   "Canada",
+  //   "India",
+  //   "Mongalia",
+  //   "USA",
+  //   "China",
+  //   "Russia",
+  //   "Germany"
+  // ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +60,6 @@ class _FilterState extends State<Filter> {
 
           Row(
             children: [
-
               Text(
                 "Lọc",
                 style: TextStyle(
@@ -117,19 +142,16 @@ class _FilterState extends State<Filter> {
           Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                DropdownSearch<String>(
-                  items: [
-                    "Brazil",
-                    "Italia",
-                    "Tunisia",
-                    'Canada',
-                    'Zraoua',
-                    'France',
-                    'Belgique'
-                  ],
+                DropdownSearch<City>(
+                  items: cities?.map<DropdownMenuItem<String>>((item) {
+                    return new DropdownMenuItem(
+                      child: new Text(item.name),
+                      value: item.id.toString(),
+                    );
+                  })?.toList() ?? [],
                   label: "Thành phố",
                   onChanged: print,
-                  selectedItem: "Hồ Chí Minh",
+                  selectedItem: cities[0],
                   showSearchBox: true,
                   searchBoxDecoration: InputDecoration(
                     border: OutlineInputBorder(),
