@@ -717,22 +717,101 @@ namespace Websitedangtintimkiemnhatro.Controllers
         }
 
 
-        // GET: api/Motels/GetMotelByProvince/name
+        // GET: api/Motels/GetMotelByListId/name
         [HttpGet]
-        [Route("GetMotelByProvince/{id}")]
-        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelByProvince(int id)
+        [Route("GetMotelByListId/{id}")]
+        public async Task<ActionResult<Image>> GetMotelByListId(int id)
         {
-            var models = await _context.Motels
-                .Include(m => m.Detail)
-                .Include(m => m.Images)
-                .Where(a => a.ProvinceId == id && a.Status == "Tin đang hiển thị" && a.Verify == true).ToListAsync();
+            var image = _context.Images
+                .Where(a => a.MotelId == id).FirstOrDefault();
 
-            if (models == null)
+            if (image == null)
             {
                 return NotFound();
             }
 
-            return models;
+            return image;
+        }
+
+        public static double distanceBetween2Points(double la1, double lo1, double la2, double lo2)
+        {
+            double R = 6371;
+            double dLat = (la2 - la1) * (Math.PI / 180);
+            double dLon = (lo2 - lo1) * (Math.PI / 180);
+            double la1ToRad = la1 * (Math.PI / 180);
+            double la2ToRad = la2 * (Math.PI / 180);
+            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) + Math.Cos(la1ToRad)
+                        * Math.Cos(la2ToRad) * Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            double d = R * c;
+            return d;
+        }
+
+        // GET: api/Python
+        [HttpGet]
+        [Route("GetDataTitlePython/{id}")]
+        public async Task<ActionResult<Object>> GetDataTitlePython(int id)
+        {
+            var motel = _context.Motels.Where(a => a.Id == id).FirstOrDefault();
+            return motel.Title;
+        }
+
+        // GET: api/Python
+        [HttpGet]
+        [Route("GetDataPython/{id}")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetDataPython(int id)
+        {
+            var motels = await _context.Motels
+                .Include(m => m.Detail)
+                .Where(a => a.Status == "Tin đang hiển thị" && a.Verify == true).ToListAsync();
+
+            var motel = _context.Motels.Where(a => a.Id == id).FirstOrDefault();
+            List<Motel> t = new List<Motel>();
+            foreach (Motel element in motels)
+            {
+                //t.Add(distanceBetween2Points(Double.Parse(motel.Latitude), Double.Parse(motel.Longitude), Double.Parse(element.Latitude), Double.Parse(element.Longitude)).ToString());
+                if (distanceBetween2Points(Double.Parse(motel.Latitude), Double.Parse(motel.Longitude), Double.Parse(element.Latitude), Double.Parse(element.Longitude)) <= 10)
+                {
+                    t.Add(element);
+                }
+            }
+
+            var result = t.Select(c => new
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Price = c.Price,
+                PriceType = c.PriceType,
+                DateUpdate = c.DateUpdate,
+                DateDue = c.DateDue,
+                Time = c.Time,
+                Status = c.Status,
+                Verify = c.Verify,
+                Address = c.Address,
+                Description = c.Description,
+                Phone = c.Phone,
+                Typemotel = c.Typemotel,
+                AreaZone = c.AreaZone,
+                AreaZoneType = c.AreaZoneType,
+                Typeservice = c.Typeservice,
+                Bathroom = c.Detail.NumberBath,
+                Livingroom = c.Detail.NumberLiving,
+                Latitude = c.Latitude,
+                Longitude = c.Longitude,
+                City = _context.Citys.Where(a => a.Id == c.CityId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                Province = _context.Provinces.Where(a => a.Id == c.ProvinceId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                District = _context.Districts.Where(a => a.Id == c.DistrictId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                Street = _context.Streets.Where(a => a.Id == c.StreetId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                User = _context.Users.Where(a => a.Id == c.UserId).Select(a => new { Id = a.Id, HovaTen = a.HovaTen }).FirstOrDefault(),
+            })
+            .OrderByDescending(a => a.DateUpdate).ToList();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
         }
     }
 }

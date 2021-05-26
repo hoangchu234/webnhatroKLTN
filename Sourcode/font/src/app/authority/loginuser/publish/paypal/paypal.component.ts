@@ -16,6 +16,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { NewType } from 'src/app/model/NewType';
 import { StorageService } from 'src/app/storage.service';
+import { City } from 'src/app/model/City';
+import { Province } from 'src/app/model/Province';
+import { District } from 'src/app/model/District';
+import { Street } from 'src/app/model/Street';
+import { CitiesService } from 'src/app/services/cities.service';
+import { DictrictService } from 'src/app/services/dictrict.service';
+import { StreetService } from 'src/app/services/street.service';
+import { ProvincesService } from 'src/app/services/provinces.service';
 
 export interface Type{
   id:number;
@@ -56,7 +64,7 @@ export class PaypalComponent implements OnInit {
   //Load data
   loadDataToSee: Motel;
  
-  constructor(private authenticationService: AuthenticationService,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: boolean,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
+  constructor(private provinceService:ProvincesService,public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService,private authenticationService: AuthenticationService,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: boolean,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.money = Number(localStorage.getItem(StorageService.totalMoneyStorage)); 
     this.loadDataToSee = JSON.parse(localStorage.getItem(StorageService.motelStorage));
@@ -172,6 +180,22 @@ export class PaypalComponent implements OnInit {
       
   }
   
+  async getDataCititesById(id){
+    return await this.cityService.getCityFromId(Number(id)) as City;
+  }
+
+  async getDataProvinceById(id){
+    return await this.provinceService.getProvinceById(Number(id)) as Province;
+  }
+
+  async getDataDistrictById(id){
+    return await this.dictrictService.getDistrictFromId(Number(id)) as District;
+  }
+
+  async getDataStreetById(id){
+    return await this.streetService.getStreetFromId(Number(id)) as Street;
+  }
+  
   public save = async () => {
     try 
     {
@@ -179,6 +203,15 @@ export class PaypalComponent implements OnInit {
         this.saveNewMotel.detail.typeofnewId = this.newTypeMotel.id;  
         this.saveNewMotel.userId = this.authenticationService.currentAccountValue.user.id;
         this.saveNewMotel.status = "Tin đang ẩn";
+
+        const city = await this.getDataCititesById(this.saveNewMotel.cityId);
+        const provicnce = await this.getDataProvinceById(this.saveNewMotel.provinceId);
+        const district = await this.getDataDistrictById(this.saveNewMotel.districtId);
+        const street = await this.getDataStreetById(this.saveNewMotel.streetId);
+        const data = street.name + ", " + district.name + ", " + provicnce.name + ", " + city.name;
+        const a = await this.motelService.getAPI(data);
+        this.saveNewMotel.latitude = a[0].latitude;
+        this.saveNewMotel.longitude = a[0].longitude;
         //this.motelnew.typeservice = this.new;
         //this.motelnew.time = this.datatime;
 

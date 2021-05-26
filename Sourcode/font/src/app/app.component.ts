@@ -29,7 +29,18 @@ export class AppComponent implements OnInit{
     }
     
   ngOnInit(): void {
-    //this.signalRService.startConnection();
+    this.signalRService.startConnection();
+
+    // const connection = new signalR.HubConnectionBuilder()  
+    //   .configureLogging(signalR.LogLevel.Information)  
+    //   .withUrl(environment.urlAPI + '/notify')  
+    //   .build();  
+  
+    // connection.start().then(function () {  
+    //   console.log('SignalR Connected!');  
+    // }).catch(function (err) {  
+    //   return console.error(err.toString());  
+    // });  
 
   }
 

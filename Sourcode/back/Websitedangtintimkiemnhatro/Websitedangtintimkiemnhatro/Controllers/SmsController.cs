@@ -31,17 +31,20 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [HttpPost]
         public IActionResult SendSms(SMSoptions model)
         {
-            string accountSid = Environment.GetEnvironmentVariable("AccountSid");
-            string authToken = Environment.GetEnvironmentVariable("AuthToken");
+            //var message = MessageResource.Create(
+            //               to: new PhoneNumber(model.To),
+            //               from: new PhoneNumber(model.From),
+            //               body: model.Message,
+            //               client: _client);
 
+            var accountSid = "ACe56747cf5aa4bfad909a56411f6a2cb2";
+            var authToken = "9b202d2c03e5890536d7010d59c0e3e7";
             TwilioClient.Init(accountSid, authToken);
-            var message = MessageResource.Create(
-                body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
-                from: new Twilio.Types.PhoneNumber(model.From),
-                to: new Twilio.Types.PhoneNumber(model.To)
-            );
-
-            return Ok(message.Sid);
+            MessageResource response = MessageResource.Create(
+                    body: model.Message,
+                    from: model.From,
+                    to: model.To);
+            return Ok(response.Sid);
         }
 
         //[HttpPost]

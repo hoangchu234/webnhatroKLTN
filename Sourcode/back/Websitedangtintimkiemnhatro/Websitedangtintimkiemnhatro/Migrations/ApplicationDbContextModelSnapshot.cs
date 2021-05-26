@@ -470,6 +470,12 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.Property<int>("DistrictId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Latitude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Longitude")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
@@ -671,34 +677,6 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.SMSUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("date")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("sms")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SMSUsers");
                 });
 
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Serviceprice", b =>
@@ -1002,15 +980,6 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.HasOne("Websitedangtintimkiemnhatro.Models.Post", "Post")
                         .WithMany("ReportPosts")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.SMSUser", b =>
-                {
-                    b.HasOne("Websitedangtintimkiemnhatro.Models.User", "user")
-                        .WithMany("SMSUsers")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

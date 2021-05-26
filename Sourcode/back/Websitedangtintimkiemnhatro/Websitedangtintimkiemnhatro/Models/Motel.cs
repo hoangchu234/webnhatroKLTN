@@ -27,6 +27,8 @@ namespace Websitedangtintimkiemnhatro.Models
         public string AreaZone { get; set; }
         public string AreaZoneType { get; set; }
         public string Typeservice { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
         public City City { get; set; }
         [ForeignKey("CityId")]
         [Required]

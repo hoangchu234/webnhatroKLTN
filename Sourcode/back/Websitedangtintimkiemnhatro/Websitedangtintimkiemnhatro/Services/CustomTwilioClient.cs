@@ -18,8 +18,8 @@ namespace Websitedangtintimkiemnhatro.Services
             httpClient.DefaultRequestHeaders.Add("X-Custom-Header", "HttpClientFactory-Sample");
 
             _innerClient = new TwilioRestClient(
-                config["Twilio:AccountSid"],
-                config["Twilio:AuthToken"],
+                config["ACe56747cf5aa4bfad909a56411f6a2cb2"],
+                config["9b202d2c03e5890536d7010d59c0e3e7"],
                 httpClient: new SystemNetHttpClient(httpClient));
         }
 

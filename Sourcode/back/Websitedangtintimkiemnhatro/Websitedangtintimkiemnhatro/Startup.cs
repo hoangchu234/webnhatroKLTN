@@ -35,23 +35,24 @@ namespace Websitedangtintimkiemnhatro
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder
-                    .WithOrigins("https://localhost:4200", "http://localhost:49938")
-                    //.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials()
-                    );
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder
+            //        .WithOrigins("https://localhost:4200")
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader()
+            //        .AllowCredentials()
+            //        );
+            //});
+
+            services.AddSignalR();
 
             //services.AddHttpClient<ITwilioRestClient, CustomTwilioClient>(client =>
             //    client.DefaultRequestHeaders.Add("X-Custom-Header", "HttpClientFactory-Sample"));
             services.AddHttpClient<ITwilioRestClient, CustomTwilioClient>();
 
-            services.AddSignalR();
+            
 
             services.AddControllersWithViews()
                     .AddNewtonsoftJson(options =>
@@ -77,18 +78,27 @@ namespace Websitedangtintimkiemnhatro
             });
 
             //app.UseCors(options => options.WithOrigins("http://localhost:4200", "http://localhost:49938")
-            app.UseCors(options => options.WithOrigins("*")
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+            //app.UseCors(options => options.WithOrigins("*")
+            //                        .AllowAnyMethod()
+            //                        .AllowAnyHeader());
 
-
-            app.UseCors("CorsPolicy");
+            app.UseCors(options => options.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            //app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //    endpoints.MapHub<BroadcastHub>("/notify");
+            //});
 
             app.UseEndpoints(endpoints =>
             {

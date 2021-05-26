@@ -10,6 +10,7 @@ import { DialogDetailMotelSendComponent } from './dialog-detail-motel-send/dialo
 import { ProvincesService } from '../services/provinces.service';
 import { Image } from '../model/Image';
 import { User } from '../model/User';
+import { IRecommendation } from '../model/interface/IRecommendation';
 
 @Component({
   selector: 'app-detail-motel',
@@ -22,7 +23,8 @@ export class DetailMotelComponent implements OnInit {
   motel: Motel;
   user: string = "";
   urlImageFirst:string = "";
-  motelrecommendation:Motel[]; //Các nhà trọ liên quan đến motel theo quận
+  motelrecommendation:IRecommendation[] = []; 
+  listImage: String[] = []
   provincename; //tên province
   phone:string = ""
 
@@ -83,18 +85,28 @@ export class DetailMotelComponent implements OnInit {
   }
 
   public async getRecommend(){
-    /*this.provinceService.getProvinces().subscribe(getprovince =>{
-      this.provinces = getprovince;
-      var a = this.provinces.find(a => a.id == this.motel.provinceId);
-      this.provincename = a.name;
-      this.motelService.getmotelprovinces(this.provincename).subscribe(getmotellist =>{
-      this.motelrecommendation = getmotellist;
-    })
-    })*/
-    const result = await this.provinceService.getProvinces() as Province[];
-    var name = result.find(a => a.id == this.motel.provinceId);
-    this.provincename = name.name;
-    this.motelrecommendation = await this.motelService.getmotelprovinces(Number(this.motel.provinceId)) as Motel[];
+    // const result = await this.provinceService.getProvinces() as Province[];
+    // var name = result.find(a => a.id == this.motel.provinceId);
+    // this.provincename = name.name;
+    const id = this.router.snapshot.paramMap.get("id");
+    var data = await this.motelService.getRecommendation(Number(id)) as IRecommendation[];
+    this.motelrecommendation = data.slice()
+    if(data.length != 0){
+      for(let i=0; i <data.length; i++){
+        var image = await this.motelService.getmotelReommendation(Number(data[i].Id)) as Image;
+        this.listImage.push(image.imageMotel)
+      }
+    }
+
+  }
+
+  checkRecommendation(){
+    if(this.motelrecommendation.length !=0){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   public openDialog(): void {

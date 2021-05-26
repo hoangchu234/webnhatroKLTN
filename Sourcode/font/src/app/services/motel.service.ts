@@ -270,9 +270,9 @@ export class MotelService {
       catchError(error => of([]))
     );
   }*/
-  public getmotelprovinces = async (id: number) => {
+  public getmotelReommendation = async (id: number) => {
     try {
-      const url = `${this.urlAPI + "/api/Motels/GetMotelByProvince"}/${id}`;
+      const url = `${this.urlAPI + "/api/Motels/GetMotelByListId"}/${id}`;
       return await this.http.get(url).toPromise();
     }
     catch (error) {
@@ -341,5 +341,34 @@ export class MotelService {
     catch (error) {
        console.log(error);
     }  
+  }
+
+  public getAPI = async (query: string) => {
+    try {
+      const params = {
+        access_key: 'ef5baff03057088f3625e1963c89ccbf',
+        query: query
+      }
+      const url = "http://api.positionstack.com/v1/forward";
+      return await this.http.get(url,{params}).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  getRecommendation = async (id) => {
+    try 
+    {
+      const url = "http://127.0.0.1:5000/";
+      const formData: FormData = new FormData();
+      formData.append('id',id);
+      formData.append('linktitle',"http://localhost:61101/api/Motels/GetDataTitlePython/");
+      formData.append('linkdata',"http://localhost:61101/api/Motels/GetDataPython/");
+      return await this.http.post(url, formData).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 }

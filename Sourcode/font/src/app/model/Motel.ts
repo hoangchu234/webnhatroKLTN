@@ -40,6 +40,8 @@ export class Motel {
     detail:Detail;
     provinceId: string;
     province: Province;
+    latitude: string;
+    longitude: string;
 }
 
 

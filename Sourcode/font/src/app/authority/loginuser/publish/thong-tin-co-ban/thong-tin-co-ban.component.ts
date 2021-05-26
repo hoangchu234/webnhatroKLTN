@@ -238,19 +238,38 @@ export class ThongTinCoBanComponent implements OnInit {
     this.getProvinceById(result[1].id)
   }
 
-  public next(){
+  async getViTri(){
+    var data = this.city.name + ", " + this.province.name + ", " + this.district.name + ", " + this.street.name
+    var get = await this.motelService.getAPI(data) as any[]
+    if(get.length !=0 ){
+      return get
+    }
+    else{
+      get = await this.motelService.getAPI(this.addressMotel) as any[]
+    }
+    return get
+  }
+
+  public async next(){
     if( this.typeMotel && this.city.id && this.province.id && this.addressMotel && this.phoneMotel){
       let motel = new Motel(); 
       motel.typemotel = this.typeMotel;
       motel.cityId = this.city.id;
       motel.provinceId = this.province.id;
       motel.districtId = this.district.id;
+      
       if(this.street == undefined){
         motel.streetId = "0";
       }
       else{
         motel.streetId = this.street.id;
       }
+      
+      var data = await this.getViTri()
+      motel.latitude = data[0].latitude
+      motel.longitude = data[0].longitude
+
+
       motel.address = this.addressMotel;
       motel.phone = this.phoneMotel;
       localStorage.setItem(StorageService.motelStorage, JSON.stringify(motel));

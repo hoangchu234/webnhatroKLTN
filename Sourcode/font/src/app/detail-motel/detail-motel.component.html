@@ -119,13 +119,11 @@
 </div>
 
 
-<div class="container-fluid body" >
+<!-- <div class="container-fluid body" >
   <div class="row" style="margin-top: 70px;" >
     <div class="col-md-12">
       <h2 class="font" style="font-size: 24px;">Các nhà trọ <b>{{provincename}}</b></h2>
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Carousel indicators -->
-    <!-- Wrapper for carousel items -->
     <div class="carousel-inner" >
       <div class="carousel-item active">
         <div class="row">
@@ -182,7 +180,78 @@
 
 
     </div>
-      <!-- Carousel controls -->
+      <a class="carousel-control-prev" href="#myCarousel" data-slide="prev" style="margin-left: -20px;">
+        <i class="fa fa-angle-left"></i>
+      </a>
+      <a class="carousel-control-next" href="#myCarousel" data-slide="next"style="margin-right: -20px;">
+        <i class="fa fa-angle-right"></i>
+      </a>
+    </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container-fluid body" *ngIf="checkRecommendation()">
+  <div class="row" style="margin-top: 70px;" >
+    <div class="col-md-12">
+      <h2 class="font" style="font-size: 24px;">Các nhà trọ <b>liên quan</b></h2>
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" >
+      <div class="carousel-item active">
+        <div class="row">
+          <div class="col-md-1"></div>
+        <ng-container  *ngFor= 'let motel of motelrecommendation; let i=index' >
+          <div class="col-md-2" style="margin-bottom: 10px;">
+            <div  *ngIf="i < 5 && i >=0">
+              <div style="box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 5px;;border-radius: 10px;"  >
+                <div class="thumb-wrapper" style="text-align:start;" >
+                  <div class="img-box1">
+                    <img  [src]="listImage[i]" (click)="linkRouter(motel.Title, motel.Id)" class="img-fluid" alt="" style="height: 180px;width: 100%;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+                  </div>
+                  <br>
+                  <p class="chu" style="margin-left: 5px;" (click)="linkrouter(motel.Title, motel.Id)">{{motel.Title}}</p>
+                  <div class="property-attr " style="color: black;font-size: 14px;">
+                    <span style="font-weight: bold;margin-left: 5px;" class="land">{{motel.AreaZone}} {{motel.AreaZoneType}}</span>
+                    <span style="margin-left:15px">{{motel.Livingroom}} PN {{motel.Bathroom}} WC</span>
+                  </div>
+                  <p class="price" style="margin-left: 5px;">{{motel.Price}} {{motel.PriceType}}</p>
+                  <div style="height: 20px;"></div>
+                </div>
+              </div>
+              </div>
+            </div>
+        </ng-container>
+      </div>
+      </div>
+      <div class="carousel-item" >
+        <div class="row">
+          <div class="col-md-1"></div>
+          <ng-container  *ngFor= 'let motel of motelrecommendation; let i=index' >
+            <div class="col-md-2">
+              <div  *ngIf="i < 10 && i >=5">
+                <div style="box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 5px;;border-radius: 10px;"  >
+                  <div class="thumb-wrapper" style="text-align:start;" >
+                    <div class="img-box1">
+                      <img  [src]="istImage[i]" (click)="linkRouter(motel.Title, motel.Id)" class="img-fluid" alt="" style="height: 180px;width: 100%;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+                    </div>
+                    <br>
+                    <p class="chu" style="margin-left: 5px;" (click)="linkrouter(motel.Title, motel.Id)">{{motel.Title}}</p>
+                    <div class="property-attr " style="color: black;font-size: 14px;">
+                      <span style="font-weight: bold;margin-left: 5px;" class="land">{{motel.AreaZone}} {{motel.AreaZoneType}}</span>
+                      <span style="margin-left:15px">{{motel.Livingroom}} PN {{motel.Bathroom}} WC</span>
+                    </div>
+                    <p class="price" style="margin-left: 5px;">{{motel.Price}} {{motel.PriceType}}</p>
+                    <div style="height: 20px;"></div>
+                  </div>
+                </div>
+                </div>
+              </div>
+          </ng-container>
+        </div>
+      </div>
+
+
+    </div>
       <a class="carousel-control-prev" href="#myCarousel" data-slide="prev" style="margin-left: -20px;">
         <i class="fa fa-angle-left"></i>
       </a>
@@ -193,5 +262,6 @@
     </div>
   </div>
 </div>
+
 </div>
 
