@@ -6,11 +6,15 @@
   </div>
   <div class="container"  style=" margin-top: 40px;color: black;padding:5px ;">
     <div class="row" style="margin-bottom: 10px;">
-      <div class="col-sm-2"><i class="fa fa-angle-left" (click)="prevous()" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;"></i>Quay lại</div>
+      <div class="col-sm-2"><i class="fa fa-angle-left" (click)="step1()" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;"></i>Quay lại</div>
       <div style="text-align: center;" class="col-sm-8"><h2 style="margin-top: -10px;" ><b style="font-size: 22px; color: black;margin-top: -25px;">TRANG ĐĂNG TIN</b></h2></div>
     </div>
-    <i style="margin-bottom: 10px;"></i><b>Bước 2</b>
-    <div class="col-md-3" style="height: 4px; background-color: #2FFB2F;margin-top: 5px;"></div>
+    <div>
+      <button class="button"(click)="step1()">Bước 1</button>
+      <button class="button" (click)="step2()" style="background-color: aqua;">Bước 2</button>
+      <button class="button" (click)="step3()">Bước 3</button>
+      <button class="button"(click)="step4()">Bước 4</button>
+    </div> 
     <div style="margin-top: 10px;" >
       <div class="container-fluid">
         <div class="row">

@@ -59,8 +59,19 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
     
   }
 
-  public prevous(){
+  public step1(){
+    this.router.navigateByUrl('/user/thong-tin-vi-tri');
+  }
+  public step2(){
     this.router.navigateByUrl('/user/thong-tin-nha-tro');
+  }
+
+
+  public step3(){
+    this.router.navigateByUrl('/user/thong-tin-chi-tiet-nha-tro');
+  }
+  public step4(){
+    this.router.navigateByUrl('/user/thong-tin-hinh-anh');
   }
 
   public increaseNumberLiving()
