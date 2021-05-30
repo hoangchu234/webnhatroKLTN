@@ -12,14 +12,26 @@ class API{
   //   String url = baseUrl + get;
   //   return http.get(url);
   // }
-  static Future getMotels(int city, int province, int district, int street, int price, int type) {
-    const get ="/Motels/GetMotelByOrder";
-    var url = baseUrl + get + "/" + city.toString() + "/" + province.toString() + "/" + district.toString() + "/" + street.toString() + "/" + price.toString() + "/" + type.toString();
+  static Future getMotels(int city, int province, int fisrtPrice, int endPrice, int type) {
+    const get ="/Motels/GetMotelByApp";
+    var url = baseUrl + get + "/" + city.toString() + "/" + province.toString() + "/" + fisrtPrice.toString() + "/" + endPrice.toString() + "/" + type.toString();
     return http.get(url);
   }
 
   static Future getCities() {
     const get ="/Cities/GetCitiesApp";
+    var url = baseUrl + get;
+    return http.get(url);
+  }
+
+  static Future getProvinces(int id) {
+    const get ="/Provinces/GetProvincesApp";
+    var url = baseUrl + get + "/" + id.toString();
+    return http.get(url);
+  }
+
+  static Future getTypes() {
+    const get ="/Typeofnews";
     var url = baseUrl + get;
     return http.get(url);
   }

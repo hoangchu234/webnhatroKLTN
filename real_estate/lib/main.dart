@@ -4,7 +4,9 @@ import 'package:real_estate/loading.dart';
 import 'package:real_estate/search.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApp(
+  ));
+
 }
 
 class MyApp extends StatelessWidget {

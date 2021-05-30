@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
+import 'package:real_estate/Finding.dart';
 
 import 'API.dart';
 import 'data.dart';
@@ -15,41 +16,83 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
+  List<bool>isSelectedroom =[true,false,false,false];
+  List<bool>isSelectedshower =[true,false,false,false];
+  RangeValues _currentRangeValues = const RangeValues(0, 20);
+  int idCiti= 1;
+  int idProvince= 1;
+  int idPType= 2;
+  int startprice = 0;
+  int endtprice = 20;
 
   List<City> cities = new List<City>();
+  List<Province> provinces = new List<Province>();
+  List<Type> types = new List<Type>();
+  List<String> city_names = new List<String>();
+  List<String> province_names = new List<String>();
+  List<String> type_name = new List<String>();
+  String textData = "Huyện Bình Chánh";
   _getCity() async{
     API.getCities().then((res) {
       setState(() {
         var jsRes = json.decode(utf8.decode(res.bodyBytes));
-        print(jsRes);
         List<dynamic> list = jsRes;
         for(int i=0;i<list.length;i++){
           City p = new City(list.elementAt(i)['id'],list.elementAt(i)['name']);
           cities.add(p);
-          print(p.toString());
+          city_names.add(p.name.toString());
         }
       });
     });
   }
+
+  _getType() async{
+    API.getTypes().then((res) {
+      setState(() {
+        var jsRes = json.decode(utf8.decode(res.bodyBytes));
+        List<dynamic> list = jsRes;
+        for(int i=1;i<list.length;i++){
+          Type p = new Type(list.elementAt(i)['id'],list.elementAt(i)['name'],list.elementAt(i)['details']);
+          type_name.add(p.name.toString());
+          types.add(p);
+        }
+      });
+    });
+  }
+
+  _getProvince(int id) async{
+    API.getProvinces(id).then((res) {
+      setState(() {
+        var jsRes = json.decode(utf8.decode(res.bodyBytes));
+
+        List<dynamic> list = jsRes;
+        if(province_names.length != 0){
+          province_names = new List<String>();
+        }
+        if(provinces.length != 0){
+          provinces = new List<Province>();
+        }
+        for(int i=0;i<list.length;i++){
+          Province p = new Province(list.elementAt(i)['id'],list.elementAt(i)['name']);
+          province_names.add(p.name.toString());
+          provinces.add(p);
+        }
+      });
+      textData = province_names[0];
+    });
+  }
+
+
   @override
   void initState() {
     _getCity();
+    _getProvince(1);
+    _getType();
     super.initState();
   }
 
   var selectedRange = RangeValues(500, 1000);
-  // String country_id;
-  // List<String> country = [
-  //   "Vietnam",
-  //   "Brazil",
-  //   "Canada",
-  //   "India",
-  //   "Mongalia",
-  //   "USA",
-  //   "China",
-  //   "Russia",
-  //   "Germany"
-  // ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -103,16 +146,22 @@ class _FilterState extends State<Filter> {
           ),
 
           RangeSlider(
-            values: selectedRange,
-            onChanged: (RangeValues newRange) {
+            values: _currentRangeValues,
+            min: 0,
+            max: 20,
+            divisions: 20,
+            labels: RangeLabels(
+              _currentRangeValues.start.round().toString() + " triệu",
+              _currentRangeValues.end.round().toString()+ " triệu",
+
+            ),
+            onChanged: (RangeValues values) {
               setState(() {
-                selectedRange = newRange;
+                _currentRangeValues = values;
+                startprice =_currentRangeValues.start.round();
+                endtprice =_currentRangeValues.end.round();
               });
             },
-            min: 70,
-            max: 1000,
-            activeColor: Colors.blue[900],
-            inactiveColor: Colors.grey[300],
           ),
 
           Row(
@@ -120,14 +169,14 @@ class _FilterState extends State<Filter> {
             children: [
 
               Text(
-                r"70VNĐ",
+                r"0 triệu",
                 style: TextStyle(
                   fontSize: 14,
                 ),
               ),
 
               Text(
-                r"$1000VNĐ",
+                r"20 triệu",
                 style: TextStyle(
                   fontSize: 14,
                 ),
@@ -142,16 +191,15 @@ class _FilterState extends State<Filter> {
           Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                DropdownSearch<City>(
-                  items: cities?.map<DropdownMenuItem<String>>((item) {
-                    return new DropdownMenuItem(
-                      child: new Text(item.name),
-                      value: item.id.toString(),
-                    );
-                  })?.toList() ?? [],
+                DropdownSearch<String>(
+                  items: city_names,
                   label: "Thành phố",
-                  onChanged: print,
-                  selectedItem: cities[0],
+                  onChanged: (text){
+                    int data = city_names.indexOf(text);
+                    _getProvince(cities[data].id);
+                    idCiti=cities[data].id;
+                  },
+                  selectedItem:"Hồ Chí Minh",
                   showSearchBox: true,
                   searchBoxDecoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -191,18 +239,13 @@ class _FilterState extends State<Filter> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 DropdownSearch<String>(
-                  items: [
-                    "Brazil",
-                    "Italia",
-                    "Tunisia",
-                    'Canada',
-                    'Zraoua',
-                    'France',
-                    'Belgique'
-                  ],
+                  items: province_names,
                   label: "Quận Huyện",
-                  onChanged: print,
-                  selectedItem: "Hồ Chí Minh",
+                  onChanged: (text){
+                  int data = province_names.indexOf(text);
+                  idProvince=provinces[data].id;
+                  },
+                  selectedItem: textData,
                   showSearchBox: true,
                   searchBoxDecoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -238,53 +281,73 @@ class _FilterState extends State<Filter> {
                 ),
                 Divider(),
               ]),
-          Text(
-            "Rooms",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-
-          SizedBox(
-            height: 10,
-          ),
-
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                DropdownSearch<String>(
+                  items: type_name,
+                  label: "Loại nhà trọ",
+                  onChanged: (text){
+                    int data = type_name.indexOf(text);
+                    idPType = types[data].id;
+                  },
+                  selectedItem: "Phòng trọ, nhà trọ",
+                  showSearchBox: true,
+                  searchBoxDecoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
+                    labelText: "Search a country",
+                  ),
+                  popupTitle: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColorDark,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Country',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  popupShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                    ),
+                  ),
+                ),
+                Divider(),
+              ]),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              buildOption("Any", false),
-              buildOption("1", false),
-              buildOption("2", true),
-              buildOption("3+", false),
-
-            ],
-          ),
-
-          SizedBox(
-            height: 10,
-          ),
-
-          Text(
-            "Bathrooms",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-
-          SizedBox(
-            height: 16,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-
-              buildOption("Any", true),
-              buildOption("1", false),
-              buildOption("2", false),
-              buildOption("3+", false),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(95, 0, 8, 0),
+                child: Center(
+                  child: RaisedButton(
+                    color: Colors.blue[800],
+                    child: Text(
+                      'Lọc tìm kiếm ',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white
+                      ),
+                    ),
+                    onPressed: () {
+                      _sendDataToSecondScreen(context);
+                    },
+                  ),
+                ),
+              )
 
             ],
           ),
@@ -293,18 +356,24 @@ class _FilterState extends State<Filter> {
       ),
     );
   }
-
-  Widget buildOption(String text, bool selected){
+  void _sendDataToSecondScreen(BuildContext context) {
+    String CitiToSend =idCiti.toString();
+    String ProvinceToSend =idProvince.toString();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Find(citi: CitiToSend,province:ProvinceToSend ,startprice: startprice.toString(),endprice: endtprice.toString(),idtype: idPType.toString(),),
+        ));
+  }
+  Widget buildOption(String text){
     return Container(
       height: 45,
       width: 65,
       decoration: BoxDecoration(
-        color: selected ? Colors.blue[900] : Colors.transparent,
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),
         border: Border.all(
-          width: selected ? 0 : 1,
           color: Colors.grey,
         )
       ),
@@ -312,11 +381,14 @@ class _FilterState extends State<Filter> {
         child: Text(
           text,
           style: TextStyle(
-            color: selected ? Colors.white : Colors.black,
             fontSize: 14,
           ),
         ),
+
       ),
+
+
     );
+
   }
 }

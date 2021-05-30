@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,18 +10,22 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'API.dart';
 
 String dropdownValue = 'One';
-class Search extends StatefulWidget {
+class Find extends StatefulWidget {
+  final String province;
+  final String citi;
+  final String endprice;
+  final String startprice;
+  final String idtype;
+  // receive data from the FirstScreen as a parameter
+  Find({Key key, @required this.province,@required this.citi,@required this.startprice,@required this.endprice,@required this.idtype}) : super(key: key);
+
   @override
-  _SearchState createState() => _SearchState();
+  _FindState createState() => _FindState();
 }
 
-class _SearchState extends State<Search> {
+class _FindState extends State<Find> {
 
   List<Property> properties = new List<Property>();
-  // List<Property> properties = getPropertyList();
-
-  // List<Motel> motels = new List<Motel>();
-  // List<MyData> myDatas = new List<MyData>();
 
   // Call API get dữ liệu và map vào list đối tượng Motel
   List<String> type_name = new List<String>();
@@ -39,8 +44,8 @@ class _SearchState extends State<Search> {
     });
   }
 
-  _getMotel(int type) async{
-    API.getMotels(0,0,-1,-1,type).then((res) {
+  _getMotel(int city, int province, int fisrtPirce, int endPrice, int type) async{
+    API.getMotels(city,province,fisrtPirce,endPrice,type).then((res) {
       setState(() {
         if(this.typeFirst != this.typeChange){
           this.typeFirst = this.typeChange;
@@ -53,7 +58,7 @@ class _SearchState extends State<Search> {
             List<dynamic> list_image =  list.elementAt(i)['images'];
             Property p = new Property(list.elementAt(i)['typemotel'], list.elementAt(i)['title'], list.elementAt(i)['price'],
               list.elementAt(i)['address'],list.elementAt(i)['phone'], list.elementAt(i)['numberBath'] , list.elementAt(i)['numberLiving'] , list.elementAt(i)['time'], list.elementAt(i)['description'],
-              list_image.elementAt(0)['imageMotel'], list_image.elementAt(0)['imageMotel'],list.elementAt(i)['typeservice'] , list.elementAt(i)['user']['hovaten'], list.elementAt(i)['user']['image'],[
+              list_image.elementAt(0)['imageMotel'], list_image.elementAt(0)['imageMotel'],list.elementAt(i)['typeservice'], list.elementAt(i)['user']['hovaten'],list.elementAt(i)['user']['image'],[
                 list_image.elementAt(0)['imageMotel'],
                 list_image.elementAt(0)['imageMotel'],
                 list_image.elementAt(0)['imageMotel'],
@@ -70,15 +75,18 @@ class _SearchState extends State<Search> {
             }
             properties.add(p);
             // print(p.toString());
-            // print(properties);
+
           }
+
         }
       });
     });
   }
   @override
   void initState() {
-    _getMotel(this.typeFirst);
+    print(widget.citi + " " + widget.province + " " +  widget.startprice + " " + widget.endprice + " " + this.typeFirst.toString());
+    this.typeFirst = int.parse(widget.idtype);
+    _getMotel(int.parse(widget.citi), int.parse(widget.province), int.parse(widget.startprice), int.parse(widget.endprice), this.typeFirst);
     _getType();
     super.initState();
   }
@@ -89,7 +97,7 @@ class _SearchState extends State<Search> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("HOURS",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
+        title: Text("Lọc tin",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
         titleSpacing: 5,
         backgroundColor: Colors.white,
 
@@ -111,9 +119,9 @@ class _SearchState extends State<Search> {
                       children: [
                         ListView(
 
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          children:buildFilter()
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            children:buildFilter()
                         ),
                         Align(
                           alignment: Alignment.centerRight,
@@ -124,8 +132,8 @@ class _SearchState extends State<Search> {
                                 begin: Alignment.centerRight,
                                 end: Alignment.centerLeft,
                                 colors: [
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
+                                  Theme.of(context).scaffoldBackgroundColor,
+                                  Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
                                 ],
                               ),
                             ),
@@ -162,6 +170,12 @@ class _SearchState extends State<Search> {
                     fontSize: 16,
                   ),
                 ),
+                // Text(
+                //   "citi" + widget.citi +"/province" + widget.province+"/"+ widget.startprice+ "/"+widget.endprice,
+                //   style: TextStyle(
+                //     fontSize: 16,
+                //   ),
+                // ),
                 SizedBox(
                   width: 60,
                 ),
@@ -249,7 +263,7 @@ class _SearchState extends State<Search> {
                     ),
                     onPressed: () {
                       this.typeChange = i+1;
-                      this._getMotel(this.typeChange);
+                      this._getMotel(0,0,-1,-1,this.typeChange);
                     },
                     child: Text(type_name[i],
                       style: TextStyle(
@@ -332,184 +346,184 @@ class _SearchState extends State<Search> {
 
   Widget buildProperty(Property property, int index){
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Detail(property: property)),
-        );
-      },
-      child:Container(
-        child: Row(
-          children:[
-            Container(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Detail(property: property)),
+          );
+        },
+        child:Container(
+          child: Row(
+              children:[
+                Container(
 
-              child:Column(
-                children:[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 6),
-                    child: Column(
-                        children:[
-                          Card(
-                            margin: EdgeInsets.only(bottom: 6),
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                            ),
+                  child:Column(
+                      children:[
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 6),
+                          child: Column(
+                              children:[
+                                Card(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                  ),
 
-                            child: Container(
-                              height: 130,
-                              width: 175,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  // image: AssetImage(property.frontImage),
-                                  image: NetworkImage(property.frontImage),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.transparent,
-                                      Colors.black.withOpacity(0.7),
-                                    ],
+                                  child: Container(
+                                    height: 130,
+                                    width: 175,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        // image: AssetImage(property.frontImage),
+                                        image: NetworkImage(property.frontImage),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    child: Container(
+                                      padding: EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.black.withOpacity(0.7),
+                                          ],
+                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.yellow[700],
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(5),
+                                              ),
+                                            ),
+                                            width: 80,
+                                            padding: EdgeInsets.symmetric(vertical: 4,),
+                                            child: Center(
+                                              child: Text(
+                                                property.typeService,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+
+                                          Expanded(
+                                            child: Container(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.yellow[700],
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5),
-                                        ),
-                                      ),
-                                      width: 80,
-                                      padding: EdgeInsets.symmetric(vertical: 4,),
-                                      child: Center(
-                                        child: Text(
-                                          property.typeService,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-
-                                    Expanded(
-                                      child: Container(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ]
-                    ),
-                  ),
-                  Container(
-                    width: 160,
-                    margin: EdgeInsets.only(bottom: 12),
-                    child:Column(
-                      children:[
-                        Text(
-                          property.name,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
+                              ]
                           ),
                         ),
                         Container(
-                          height:12 ,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              property.price + " Triều đồng",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 10,
-                              ),
-                            ),
-                            Spacer(flex: 1,),
-                            Text(
-                              property.review ,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          height:12 ,
-                        ),
-                        Text(
-                          property.location,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10,
-                          ),
-                        ),
+                            width: 160,
+                            margin: EdgeInsets.only(bottom: 12),
+                            child:Column(
+                                children:[
+                                  Text(
+                                    property.name,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Container(
+                                    height:12 ,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        property.price + "Triều đồng",
+                                        textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                      Spacer(flex: 1,),
+                                      Text(
+                                        property.review ,
+                                        textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    height:12 ,
+                                  ),
+                                  Text(
+                                    property.location,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 10,
+                                    ),
+                                  ),
 
-                        // Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     DropdownButton<String>(
-                        //       value: dropdownValue,
-                        //       icon: const Icon(Icons.arrow_downward),
-                        //       iconSize: 24,
-                        //       elevation: 16,
-                        //       style: const TextStyle(color: Colors.deepPurple),
-                        //       underline: Container(
-                        //         height: 2,
-                        //         color: Colors.deepPurpleAccent,
-                        //       ),
-                        //       onChanged: (newValue) {
-                        //         setState(() {
-                        //           dropdownValue = newValue;
-                        //         });
-                        //       },
-                        //       items: <String>['One', 'Two', 'Free', 'Four','five','six','a','a','a','a','a','a','a','a','a','a','a','a','a','a']
-                        //           .map<DropdownMenuItem<String>>((String value) {
-                        //         return DropdownMenuItem<String>(
-                        //           value: value,
-                        //           child: Text(value),
-                        //         );
-                        //
-                        //       }).toList(),
-                        //
-                        //     )
-                        //
-                        //
-                        //
-                        //   ],)
+                                  // Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //   children: [
+                                  //     DropdownButton<String>(
+                                  //       value: dropdownValue,
+                                  //       icon: const Icon(Icons.arrow_downward),
+                                  //       iconSize: 24,
+                                  //       elevation: 16,
+                                  //       style: const TextStyle(color: Colors.deepPurple),
+                                  //       underline: Container(
+                                  //         height: 2,
+                                  //         color: Colors.deepPurpleAccent,
+                                  //       ),
+                                  //       onChanged: (newValue) {
+                                  //         setState(() {
+                                  //           dropdownValue = newValue;
+                                  //         });
+                                  //       },
+                                  //       items: <String>['One', 'Two', 'Free', 'Four','five','six','a','a','a','a','a','a','a','a','a','a','a','a','a','a']
+                                  //           .map<DropdownMenuItem<String>>((String value) {
+                                  //         return DropdownMenuItem<String>(
+                                  //           value: value,
+                                  //           child: Text(value),
+                                  //         );
+                                  //
+                                  //       }).toList(),
+                                  //
+                                  //     )
+                                  //
+                                  //
+                                  //
+                                  //   ],)
+                                ]
+                            )
+
+                        )
                       ]
-                    )
-
-                  )
-                ]
-            ),),
+                  ),),
 
 
 
-          ]
+              ]
 
-        ),
-      )
+          ),
+        )
       // child: Column(
       //
       //    children: [
@@ -710,22 +724,24 @@ class _SearchState extends State<Search> {
 
   void _showBottomSheet(){
     showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
+        context: context,
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
         ),
-      ),
-      builder: (BuildContext context){ 
-        return Wrap(
-          children: [
-            Filter(),
-          ],
-        );
-      }
+        builder: (BuildContext context){
+          return Wrap(
+            children: [
+              Filter(),
+            ],
+          );
+        }
     );
   }
 
 }
+
+

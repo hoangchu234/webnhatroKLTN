@@ -11,9 +11,12 @@ class Property {
   String description;
   String frontImage;
   String ownerImage;
+  String typeService;
+  String hovaten;
+  String imageUser;
   List<String> images;
 
-  Property(this.label, this.name, this.price, this.location, this.sqm, this.bathroom, this.livingroom, this.review, this.description, this.frontImage, this.ownerImage, this.images);
+  Property(this.label, this.name, this.price, this.location, this.sqm, this.bathroom, this.livingroom, this.review, this.description, this.frontImage, this.ownerImage, this.typeService, this.hovaten, this.imageUser, this.images);
 
 }
 
@@ -22,6 +25,23 @@ class City {
   int id;
   String name;
   City(this.id, this.name);
+
+}
+
+class Province {
+
+  int id;
+  String name;
+  Province(this.id, this.name);
+
+}
+
+class Type {
+
+  int id;
+  String name;
+  String details;
+  Type(this.id, this.name, this.details);
 
 }
 

@@ -34,12 +34,12 @@ class Detail extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
-            title: Text("Trang chi tiết",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
+            title: Text("Chi tiết tin",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
         titleSpacing: 5,
         backgroundColor: Colors.white,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).pop()
           ),
         ),
 
@@ -233,17 +233,17 @@ class Detail extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    buildFeature(Icons.hotel, property.livingroom.toString() + "Bedroom"),
-                    buildFeature(Icons.wc, property.bathroom.toString() + "Bedroom"),
-                    buildFeature(Icons.kitchen, "0 Kitchen"),
-                    buildFeature(Icons.local_parking, "0 Parking"),
+                    buildFeature(Icons.hotel, property.livingroom.toString() + " phòng ngủ"),
+                    buildFeature(Icons.wc, property.bathroom.toString() + " phòng tắm"),
+                    buildFeature(Icons.kitchen, "0 phòng bếp"),
+                    buildFeature(Icons.local_parking, "0 đậu xe"),
 
                   ],
                 ),
               ),
               //decription
               Padding(
-                padding: EdgeInsets.only(right: 12, left: 12, bottom: 12,),
+                padding: EdgeInsets.only(right: 12, left: 20,top:12),
                 child:Row(
                   children: [
                     Text(
@@ -251,6 +251,7 @@ class Detail extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
+                        fontWeight:FontWeight.bold,
                       ),
                     ),
                   ],
@@ -258,11 +259,9 @@ class Detail extends StatelessWidget {
               ),
               Padding(
                   padding: EdgeInsets.only(right: 12, left: 12, bottom: 12,),
-
                   child:Html(data:property.description,
                           style:{
                             "html": Style(
-                              backgroundColor: Colors.white,
                               color: Colors.black,
                             ),
                           }),
@@ -280,7 +279,7 @@ class Detail extends StatelessWidget {
                           width: 65,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: NetworkImage(property.ownerImage),
+                              image: NetworkImage(property.imageUser),
                               fit: BoxFit.cover,
                             ),
                             shape: BoxShape.circle,
@@ -294,9 +293,9 @@ class Detail extends StatelessWidget {
                           children: [
 
                             Text(
-                              "James Milner",
+                              property.hovaten,
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -304,7 +303,7 @@ class Detail extends StatelessWidget {
                               height: 4,
                             ),
                             Text(
-                              "Property Owner",
+                              property.sqm,
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.grey[500],
