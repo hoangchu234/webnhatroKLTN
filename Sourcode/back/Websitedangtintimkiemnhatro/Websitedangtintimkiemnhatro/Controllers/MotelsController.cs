@@ -387,6 +387,67 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return models;
         }
 
+        // GET: api/Motels/GetMotelByApp
+        [HttpGet]
+        [Route("GetMotelByApp/{city}/{province}/{fisrtPrice}/{endPrice}/{type}")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetMotelByApp(int city, int province, int fisrtPrice, int endPrice, int type)
+        {
+            var models = await _context.Motels
+                .Include(m => m.Detail)
+                .Include(m => m.Images)
+                .Where(a => a.Status == "Tin đang hiển thị" && a.Verify == true)
+                .OrderByDescending(a => a.Detail.TypeofnewId)
+                .ToListAsync();
+
+            if (type != 1)
+            {
+                models = models.Where(a => a.Detail.TypeofnewId == type).ToList();
+            }
+            if (city != 0)
+            {
+                models = models.Where(a => a.CityId == city).ToList();
+            }
+            if (province != 0)
+            {
+                models = models.Where(a => a.ProvinceId == province).ToList();
+            }
+
+            if (fisrtPrice != -1 && endPrice != -1)
+            {
+                var numberone = float.Parse(fisrtPrice.ToString()) * 1.0000;
+                var numbertwo = float.Parse(endPrice.ToString()) * 1.0000;
+
+                models = models.Where(a => numberone <= float.Parse(a.Price) && numbertwo >= float.Parse(a.Price)).ToList();
+            }
+
+            var result = models.Select(a => new
+            {
+                id = a.Id,
+                typemotel = a.Typemotel,
+                title = a.Title,
+                price = a.Price,
+                address = a.Address,
+                phone = a.Phone,
+                numberBath = a.Detail.NumberBath,
+                numberLiving = a.Detail.NumberLiving,
+                time = a.Time,
+                dateUpdate = a.DateUpdate,
+                dateDue = a.DateDue,
+                description = a.Description,
+                images = _context.Images.Where(d => d.MotelId == a.Id).Select(t => new { id = t.Id, imageMotel = t.ImageMotel}).ToList(),
+                typeservice = a.Typeservice,
+                user = _context.Users.Where(c => c.Id == a.UserId).Select(f => new { hovaten = f.HovaTen, image = f.UserImage }).FirstOrDefault()
+            })
+            .ToList();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
+        }
+
         // GET: api/Motels/GetMotelByType/name
         [HttpGet]
         [Route("GetMotelByType/{name}")]
