@@ -61,7 +61,7 @@ class _SearchState extends State<Search> {
                 list_image.elementAt(0)['imageMotel'],
               ],);
             if(p.imageUser == null){
-              p.imageUser = "https://binhminhdigital.com/StoreData/PageData/3429/Tim-hieu-ve-ban-quyen-hinh-anh%20(3).jpg" ;
+              p.imageUser = "https://i.pinimg.com/236x/16/b2/e2/16b2e2579118bf6fba3b56523583117f.jpg" ;
             }
             p.images = new List<String>();
             for(int j=0;j<list_image.length;j++){
@@ -283,7 +283,7 @@ class _SearchState extends State<Search> {
                           Container(
                               child:Column(
                                   children:[
-                                    buildProperty(properties[i], i)]
+                                    buildProperty(properties[i], i,properties[i].typeService)]
                               )
                           ),
                         ]
@@ -303,7 +303,7 @@ class _SearchState extends State<Search> {
                           Container(
                               child:Column(
                                   children:[
-                                    buildProperty(properties[i], i)]
+                                    buildProperty(properties[i], i,properties[i].typeService)]
                               )
                           ),
                           Container(
@@ -311,7 +311,7 @@ class _SearchState extends State<Search> {
                                   children:[
                                     Padding(
                                       padding: EdgeInsets.symmetric(horizontal:12, vertical: 6),
-                                      child: buildProperty(properties[i+1], i+1),
+                                      child: buildProperty(properties[i+1], i+1,properties[i+1].typeService),
 
                                     )]
                               )
@@ -330,7 +330,7 @@ class _SearchState extends State<Search> {
 
   }
 
-  Widget buildProperty(Property property, int index){
+  Widget buildProperty(Property property, int index, String variable){
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -385,7 +385,8 @@ class _SearchState extends State<Search> {
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.yellow[700],
+                                        // color: Colors.yellow[700],
+                                        color: variable == "Tin Hot" ? Colors.redAccent[700] :  variable == "Tin VIP 3" ? Colors.amber : variable == "Tin VIP 2" ? Colors.blueAccent : variable == "Tin VIP 1" ? Colors.red : Colors.green, // last black color will become default color
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(5),
                                         ),
