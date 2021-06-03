@@ -111,7 +111,7 @@ export class ThongTinHinhAnhComponent implements OnInit {
     return newObject;
   }
 
-  public next(){
+  public step5(){
     if(this.image.length){
       
       // var images : Array<Object> = [];
@@ -164,15 +164,16 @@ export class ThongTinHinhAnhComponent implements OnInit {
   public step2(){
     this.router.navigateByUrl('/user/thong-tin-nha-tro');
   }
-
-
   public step3(){
     this.router.navigateByUrl('/user/thong-tin-chi-tiet-nha-tro');
   }
-  public step4(){
-    this.router.navigateByUrl('/user/thong-tin-hinh-anh');
+  
+  public step6(){
+    var data = localStorage.getItem(StorageService.motelStorage);
+      if(data != undefined){
+        this.router.navigateByUrl('/user/thanh-toan-dong');
+      }
   }
-
 
   public openDialog(): void {
     const dialogRef = this.dialog.open(DialogThongBaoComponent, {

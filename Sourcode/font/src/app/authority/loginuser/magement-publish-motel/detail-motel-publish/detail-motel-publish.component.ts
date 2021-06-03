@@ -20,6 +20,7 @@ import { Street } from 'src/app/model/Street';
 import { DictrictService } from 'src/app/services/dictrict.service';
 import { StreetService } from 'src/app/services/street.service';
 import { ActivatedRoute } from '@angular/router';
+import { Direct } from 'src/app/model/Direct';
 
 export interface Data{
   id:number;
@@ -59,17 +60,18 @@ export class DetailMotelPublishComponent implements OnInit {
   typePriceShowMotels: Data[] = [];
   typePriceMotel;
 
-  directs:Array<Data> = [
-    {id: 0, text:'Đông'},
-    {id: 1, text:'Tây'},
-    {id: 2, text:'Nam'},
-    {id: 3, text:'Bắc'},
-    {id: 4, text:'Đông Bắc'},
-    {id: 5, text:'Đông Nam'},
-    {id: 6, text:'Tây Bắc'},
-    {id: 7, text:'Tây Nam'},
-  ];
-  directsShow: Data[] = [];
+  // directs:Array<Data> = [
+  //   {id: 0, text:'Đông'},
+  //   {id: 1, text:'Tây'},
+  //   {id: 2, text:'Nam'},
+  //   {id: 3, text:'Bắc'},
+  //   {id: 4, text:'Đông Bắc'},
+  //   {id: 5, text:'Đông Nam'},
+  //   {id: 6, text:'Tây Bắc'},
+  //   {id: 7, text:'Tây Nam'},
+  // ];
+
+  directsShow: Direct[] = [];
   direct;
 
   liveTypes:LiveType[] = [];
@@ -113,7 +115,8 @@ export class DetailMotelPublishComponent implements OnInit {
     this.getCities();
     this.getLiveType();
     this.getTypePrice();
-    this.getDirect();
+    // this.getDirect();
+    this.getDirectData();
 
     this.address = this.motelById.address;
     this.price = this.motelById.price;
@@ -139,6 +142,17 @@ export class DetailMotelPublishComponent implements OnInit {
 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.phoneMotel = this.motelById.phone;
+  }
+
+  async getDirectData(){
+    var data = await this.motelService.getDirect() as Direct[];
+    var index = data.findIndex(a => a.directName === this.motelById.detail.director);
+    this.directsShow.push(data[index]);
+    data.splice(index,1);
+    for(let i=0; i<data.length;i++){
+      this.directsShow.push(data[i]);
+    }
+    this.direct = this.directsShow[0].directName.toString();
   }
 
   async getDataMotelById(id){
@@ -192,38 +206,27 @@ export class DetailMotelPublishComponent implements OnInit {
     }
   }
 
-  public getDirect(){
-    for(let i=0 ;i<this.directs.length; i++){
-      if(this.motelById.detail.director == this.directs[i].text){
-        this.directsShow.push(this.directs[i])
-        break;
-      }
-    }
-    for(let i=0 ;i<this.directs.length; i++){
-      if(this.motelById.detail.director != this.directs[i].text){
-        this.directsShow.push(this.directs[i])
-      }
-    }
-  }
+  // public getDirect(){
+  //   for(let i=0 ;i<this.directs.length; i++){
+  //     if(this.motelById.detail.director == this.directs[i].directName){
+  //       this.directsShow.push(this.directs[i])
+  //       break;
+  //     }
+  //   }
+  //   for(let i=0 ;i<this.directs.length; i++){
+  //     if(this.motelById.detail.director != this.directs[i].directName){
+  //       this.directsShow.push(this.directs[i])
+  //     }
+  //   }
+  // }
 
   public async getLiveType(){
-    const result = await this.motelService.getLiveTypes() as LiveType[];
-    /*this.motelService.getLiveTypes().subscribe(getlivetype => {
-      this.liveTypes = getlivetype
-      for(let i=0;i<getlivetype.length;i++){
-        if(this.motelById.detail.liveTypeId == getlivetype[i].id)
-        {
-          this.arrayTrue.push(true);
-        }
-        else{
-          this.arrayTrue.push(false);
-        }
-      }
-    })*/
-    this.liveTypes = result
-    for(let i=0;i<result.length;i++){
-      if(this.motelById.detail.liveTypeId == result[i].id)
-      {
+    var result = await this.motelService.getLiveTypes() as LiveType[];
+    result.splice(0,1);
+    var index = result.findIndex(a => a.id === this.motelById.detail.liveTypeId);
+    this.liveTypes = result.slice();
+    for(let i=0; i< result.length;i++){
+      if(i == index){
         this.arrayTrue.push(true);
       }
       else{

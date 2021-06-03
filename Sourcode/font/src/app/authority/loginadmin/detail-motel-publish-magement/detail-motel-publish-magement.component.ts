@@ -24,7 +24,7 @@ export class DetailMotelPublishMagementComponent implements OnInit {
   image0 = "";
   constructor(public provinceService:ProvincesService,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private route: Router,public dangtinService:MotelService ,private authenticationService: AuthenticationService) { 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-    
+    this.init();
 
   }
 
@@ -39,6 +39,44 @@ export class DetailMotelPublishMagementComponent implements OnInit {
       imageone.imageMotel = this.motel.images[i].imageMotel
       this.motelImage.push(imageone);
       
+    }
+  }
+
+  init(){
+    this.motel = {
+      id:null,
+      title: "",
+      price: null,
+      priceType:"",
+      dateUpdate:null,
+      dateDue:null,
+      status:"",
+      verify:null,
+      address:"",
+      description:"",
+      phone:"",
+      time:"",
+      typemotel:"",
+      areaZone:"",
+      areaZoneType:"",
+      cityId: "",
+      city: null,
+      district:null,
+      districtId:"",
+      street:null,
+      streetId:"",
+      liveTypeId: "",
+      liveType:null,
+      userId: null,
+      user: null,
+      typeservice:"",
+      images: null,
+      bill: null,
+      detail:null,
+      provinceId: "",
+      province: null,
+      latitude: "",
+      longitude: "",
     }
   }
 

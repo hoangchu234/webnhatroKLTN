@@ -50,11 +50,13 @@ export class ThongTinCoBanComponent implements OnInit {
   checkFirstTime = true;
   isWarning = false;
 
+  check = false;
   //currentAccount:Account;
   constructor(public typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,private authenticationService: AuthenticationService,public dialog: MatDialog,private router: Router,private cityService: CitiesService, private provinceService: ProvincesService,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     if(JSON.parse(localStorage.getItem(StorageService.motelStorage))){
       this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
+      this.check = true;
     }
 
     this.getNewTypes();
@@ -76,7 +78,7 @@ export class ThongTinCoBanComponent implements OnInit {
   async privous(){
     this.phoneMotel = this.motelprevous.phone;
     this.addressMotel = this.motelprevous.address;
-     
+
     //type
     this.newTypes.splice(0,this.newTypes.length);
     await this.getNewTypes();
@@ -238,21 +240,18 @@ export class ThongTinCoBanComponent implements OnInit {
     this.getProvinceById(result[1].id)
   }
 
-  async getViTri(){
-    var data = this.city.name + ", " + this.province.name + ", " + this.district.name + ", " + this.street.name
-    var get = await this.motelService.getAPI(data) as any[]
-    if(get.length !=0 ){
-      return get
+  public async step2(){
+    let motel = new Motel(); 
+    motel.latitude = "";
+    motel.longitude = "";
+    if(this.motelprevous.price != undefined)
+    {
+      motel = this.motelprevous;
+      motel.latitude = this.motelprevous.latitude;
+      motel.longitude = this.motelprevous.longitude;
     }
-    else{
-      get = await this.motelService.getAPI(this.addressMotel) as any[]
-    }
-    return get
-  }
-
-  public async next(){
+    
     if( this.typeMotel && this.city.id && this.province.id && this.addressMotel && this.phoneMotel){
-      let motel = new Motel(); 
       motel.typemotel = this.typeMotel;
       motel.cityId = this.city.id;
       motel.provinceId = this.province.id;
@@ -265,11 +264,6 @@ export class ThongTinCoBanComponent implements OnInit {
         motel.streetId = this.street.id;
       }
       
-      var data = await this.getViTri()
-      motel.latitude = data[0].latitude
-      motel.longitude = data[0].longitude
-
-
       motel.address = this.addressMotel;
       motel.phone = this.phoneMotel;
       localStorage.setItem(StorageService.motelStorage, JSON.stringify(motel));
@@ -280,24 +274,51 @@ export class ThongTinCoBanComponent implements OnInit {
     else{
       this.openDialog();
     }
-    
-  }
-  public step1(){
-    this.router.navigateByUrl('/user/thong-tin-vi-tri');
-  }
-  public step2(){
-    this.router.navigateByUrl('/user/thong-tin-nha-tro');
-  }
-  public step3(){
-    this.router.navigateByUrl('/user/thong-tin-chi-tiet-nha-tro');
-  }
-  public step4(){
-    this.router.navigateByUrl('/user/thong-tin-hinh-anh');
   }
 
-  public prevous(){
-    this.router.navigateByUrl('/user/thong-tin-vi-tri');
+  // public step1(){
+  //   this.router.navigateByUrl('/user/thong-tin-vi-tri');
+  // }
+
+  public step3(){
+    if(this.check == true){
+      var data = this.motelprevous.detail;
+      if(data != undefined){
+        this.router.navigateByUrl('/user/thong-tin-chi-tiet-nha-tro');
+      }
+    }
+    
   }
+  public step4(){
+    if(this.check == true){
+      var data = this.motelprevous;
+      if(data != undefined){
+        this.router.navigateByUrl('/user/thong-tin-hinh-anh');
+      }
+    }
+  }
+
+  public step5(){
+    if(this.check == true){
+      var data = localStorage.getItem(StorageService.ImageStorage);;
+      if(data != undefined){
+        this.router.navigateByUrl('/user/goi-thanh-toan');
+      }
+    }
+  }
+
+  public step6(){
+    if(this.check == true){
+      var data = this.motelprevous.bill;
+      if(data != undefined){
+        this.router.navigateByUrl('/user/thanh-toan-dong');
+      }
+    }
+  }
+
+  // public prevous(){
+  //   this.router.navigateByUrl('/user/thong-tin-vi-tri');
+  // }
 
   public openDialog(): void {
      const dialogRef = this.dialog.open(DialogThongBaoComponent, {

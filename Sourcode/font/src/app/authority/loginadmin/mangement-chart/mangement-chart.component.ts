@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartOptions, ChartDataSets } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, Color } from 'ng2-charts';
+import { environment } from 'src/environments/environment';
 import { Motel } from '../../../model/Motel';
 import { MotelService } from '../../../services/motel.service';
 
@@ -36,7 +37,7 @@ export class MangementChartComponent implements OnInit {
   countVIP20: Number = 0;
   countVIP10: Number = 0;
   countThuong: Number = 0;
-  motelURL = "https://localhost:44324/api/Motels";
+  motelURL = environment.urlAPI + "/api/Motels";
   public dataset: Motel[]
   public pieChartLabels:string[];
   public pieChartData:number[];

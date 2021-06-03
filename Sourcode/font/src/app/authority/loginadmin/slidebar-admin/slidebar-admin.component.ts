@@ -21,6 +21,7 @@ export class SlidebarAdminComponent implements OnInit {
   employee:Employee;
   job:string;
 
+  check = false;
   constructor(private employeeService:EmployeesService,
     private location:Location,
     private router: Router,
@@ -43,6 +44,11 @@ export class SlidebarAdminComponent implements OnInit {
     roles = await this.authenticationService.getRole() as any[];
     var index = roles.findIndex(a => a.id === this.authenticationService.currentAccountValue.roleId);
     this.job = roles[index].roleName;
+  }
+
+  clickHidden(){
+    if(this.check == true) this.check = false;
+    else if(this.check == false) this.check = true;
   }
 
   get isAdmin() {

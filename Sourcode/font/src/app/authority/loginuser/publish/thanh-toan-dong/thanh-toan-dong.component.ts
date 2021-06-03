@@ -70,7 +70,19 @@ export class ThanhToanDongComponent implements OnInit {
 
   }
 
-  public prevous(){
+  public step1(){
+    this.router.navigateByUrl('/user/thong-tin-vi-tri');
+  }
+  public step2(){
+    this.router.navigateByUrl('/user/thong-tin-nha-tro');
+  }
+  public step3(){
+    this.router.navigateByUrl('/user/thong-tin-chi-tiet-nha-tro');
+  }
+  public step4(){
+    this.router.navigateByUrl('/user/thong-tin-hinh-anh');
+  }
+  public step5(){
     this.router.navigateByUrl('/user/goi-thanh-toan');
   }
   
@@ -83,7 +95,14 @@ export class ThanhToanDongComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => { 
-      this.router.navigateByUrl('/user/thong-tin-vi-tri');
+      if(localStorage.getItem(StorageService.totalMoneyStorage) == undefined && 
+      localStorage.getItem(StorageService.ImageStorage) == undefined && 
+      localStorage.getItem(StorageService.loadImageStorage) == undefined && 
+      localStorage.getItem(StorageService.motelStorage) == undefined && 
+      localStorage.getItem(StorageService.TypeMotelStorage) == undefined){
+        this.router.navigateByUrl('/user/thong-tin-vi-tri');
+      }
+      
     });
   }
 }

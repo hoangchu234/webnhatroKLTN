@@ -343,10 +343,50 @@ export class MotelService {
     }  
   }
 
+  public getDirect = async () => {
+    try {
+        const count = await fetch(`${this.urlAPI}/api/Motels/GetDataDirect`);
+        return await count.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
+  }
+
+  public getNew = async () => {
+    try {
+        const count = await fetch(`${this.urlAPI}/api/Motels/GetDataNew`);
+        return await count.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
+  }
+
+  public getTime = async () => {
+    try {
+        const count = await fetch(`${this.urlAPI}/api/Motels/GetDataTime`);
+        return await count.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
+  }
+
+  public getChangeTime = async (id: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Motels/GetDataChangeTime"}/${id}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   public getAPI = async (query: string) => {
     try {
       const params = {
-        access_key: 'ef5baff03057088f3625e1963c89ccbf',
+        access_key: 'd03ccb4bf5c1ffa8d13f5eec4a83a7f0',
         query: query
       }
       const url = "http://api.positionstack.com/v1/forward";

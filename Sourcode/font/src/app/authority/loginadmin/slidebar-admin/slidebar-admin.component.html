@@ -20,7 +20,21 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item">
+
+    <li class="nav-item" *ngIf="isAdmin">
+      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic" (click)="clickHidden()">
+        <span class="menu-title">Quản lý website</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+      </a>
+      <div class="collapse" id="ui-basic" [hidden] = "!check">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" [routerLink]="['/admin/quan-ly-duyet-tin']">Quản lý duyệt tin</a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item"  *ngIf="isNotAdmin">
       <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
         <span class="menu-title">Quản lý website</span>
         <i class="menu-arrow"></i>
@@ -28,24 +42,18 @@
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li *ngIf="isAdmin" class="nav-item"> <a class="nav-link" [routerLink]="['/admin/quan-ly-duyet-tin']">Quản lý duyệt tin</a></li>
-          <li *ngIf="isNotAdmin" class="nav-item"> <a class="nav-link" [routerLink]="['/admin/nhan-vien-quan-ly-duyet-tin']">Quản lý duyệt tin</a></li>
+          <li  class="nav-item"> <a class="nav-link" [routerLink]="['/admin/nhan-vien-quan-ly-duyet-tin']">Quản lý duyệt tin</a></li>
         </ul>
       </div>
     </li>
-    <li class="nav-item">
-      <a *ngIf="isAdmin" class="nav-link" data-toggle="collapse" [routerLink]="['/admin/quan-ly-nhan-vien']" aria-expanded="false" aria-controls="general-pages">
-        <span class="menu-title">Quản lý nhân viên</span>
 
+    <li class="nav-item" *ngIf="isAdmin">
+      <a class="nav-link" [routerLink]="['/admin/quan-ly-nhan-vien']">
+        <span class="menu-title">Quản lý nhân viên</span>
         <i class="mdi mdi-medical-bag menu-icon"></i>
       </a>
-      <!--<div class="collapse" id="general-pages">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Quản lý hoạt động </a></li>
-          <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Quản lý thông tin </a></li>
-        </ul>
-      </div>-->
     </li>
+
     <li class="nav-item">
       <a *ngIf="isNotAdmin" class="nav-link" [routerLink]="['/admin/quan-ly-nap-tien']">
         <span class="menu-title">Quản lý bill</span>

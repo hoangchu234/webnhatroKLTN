@@ -78,28 +78,12 @@ namespace Websitedangtintimkiemnhatro
             });
             app.UseCors("CorsPolicy");
 
-            //app.UseCors(options => options.WithOrigins("http://localhost:4200", "http://localhost:49938")
-            //app.UseCors(options => options.WithOrigins("*")
-            //                        .AllowAnyMethod()
-            //                        .AllowAnyHeader());
-
-            //app.UseCors(options => options.WithOrigins("http://localhost:4200")
-            //            .AllowAnyMethod()
-            //            .AllowAnyHeader()
-            //            .AllowCredentials());
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
 
             app.UseAuthorization();
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //    endpoints.MapHub<BroadcastHub>("/notify");
-            //});
 
             app.UseEndpoints(endpoints =>
             {

@@ -204,14 +204,13 @@ export class PaypalComponent implements OnInit {
         this.saveNewMotel.userId = this.authenticationService.currentAccountValue.user.id;
         this.saveNewMotel.status = "Tin đang ẩn";
 
-        const city = await this.getDataCititesById(this.saveNewMotel.cityId);
-        const provicnce = await this.getDataProvinceById(this.saveNewMotel.provinceId);
-        const district = await this.getDataDistrictById(this.saveNewMotel.districtId);
-        const street = await this.getDataStreetById(this.saveNewMotel.streetId);
-        const data = street.name + ", " + district.name + ", " + provicnce.name + ", " + city.name;
-        const a = await this.motelService.getAPI(data);
-        this.saveNewMotel.latitude = a[0].latitude;
-        this.saveNewMotel.longitude = a[0].longitude;
+        // const city = await this.getDataCititesById(this.saveNewMotel.cityId);
+        // const provicnce = await this.getDataProvinceById(this.saveNewMotel.provinceId);
+        // const district = await this.getDataDistrictById(this.saveNewMotel.districtId);
+        // const street = await this.getDataStreetById(this.saveNewMotel.streetId);
+        // const data = street.name + ", " + district.name + ", " + provicnce.name + ", " + city.name;
+        // const a = await this.motelService.getAPI(data);
+
         //this.motelnew.typeservice = this.new;
         //this.motelnew.time = this.datatime;
 
@@ -269,97 +268,7 @@ export class PaypalComponent implements OnInit {
   };
 
 
-  /*public tinhTien(){
-    var time = this.time.split(" ");
-    this.bill.numberDatePublish = Number(time[0]);
-    this.bill.motelId = this.data.id;
-    if(this.data.typeservice == "Tin Hot"){
-      if(time[1].toString() == "Ngày"){
-        this.price = 50000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[0].text;
-      }
-      if(time[1].toString() == "Tuần"){
-        this.price = 315000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[1].text;
-      }
-      if(time[1].toString() == "Tháng"){
-        this.price = 120000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[2].text;
-      }
-    }
-    if(this.data.typeservice == "Tin VIP 3"){
-      if(time[1].toString() == "Ngày"){
-        this.price = 30000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[0].text;
-      }
-      if(time[1].toString() == "Tuần"){
-        this.price = 190000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[1].text;
-      }
-      if(time[1].toString() == "Tháng"){
-        this.price = 800000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[2].text;
-      }
-    }
-    if(this.data.typeservice == "Tin VIP 2"){
-      if(time[1].toString() == "Ngày"){
-        this.price = 20000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[0].text;
-      }
-      if(time[1].toString() == "Tuần"){
-        this.price = 133000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[1].text;
-      }
-      if(time[1].toString() == "Tháng"){
-        this.price = 540000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[2].text;
-      }
-    }
-    if(this.data.typeservice == "Tin VIP 1"){
-      if(time[1].toString() == "Ngày"){
-        this.price = 10000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[0].text;
-      }
-      if(time[1].toString() == "Tuần"){
-        this.price = 63000
-
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[1].text;
-      }
-      if(time[1].toString() == "Tháng"){
-        this.price = 240000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[2].text;
-      }
-    }
-    if(this.data.typeservice == "Tin thường"){
-      if(time[1].toString() == "Ngày"){
-        this.price = 2000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[0].text;
-      }
-      if(time[1].toString() == "Tuần"){
-        this.price = 12000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[1].text;
-      }
-      if(time[1].toString() == "Tháng"){
-        this.price = 48000
-        this.bill.payMoney = Number(time[0])*this.price;
-        this.bill.timeChoice = this.times[2].text;
-      }
-    }
-  }*/
+  
 
 }
 

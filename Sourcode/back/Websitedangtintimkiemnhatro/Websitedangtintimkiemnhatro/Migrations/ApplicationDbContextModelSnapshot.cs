@@ -139,6 +139,28 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.ToTable("BuyMoneys");
                 });
 
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.ChangeTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ChangeTimeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TimeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TimeId");
+
+                    b.ToTable("ChangeTimes");
+                });
+
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.City", b =>
                 {
                     b.Property<int>("Id")
@@ -191,6 +213,26 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Conversation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("UserIdOne")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserIdTwo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Conversations");
+                });
+
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Detail", b =>
                 {
                     b.Property<int>("Id")
@@ -228,6 +270,23 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.HasIndex("TypeofnewId");
 
                     b.ToTable("Details");
+                });
+
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Direct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DirectName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Directs");
                 });
 
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.District", b =>
@@ -437,6 +496,42 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.ToTable("LiveTypes");
                 });
 
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Messeger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ConversationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("JustSee")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messegers");
+                });
+
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Motel", b =>
                 {
                     b.Property<int>("Id")
@@ -528,6 +623,23 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Motels");
+                });
+
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.New", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NewName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Post", b =>
@@ -733,6 +845,23 @@ namespace Websitedangtintimkiemnhatro.Migrations
                     b.ToTable("Streets");
                 });
 
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Time", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("TimeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Times");
+                });
+
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Typeofnew", b =>
                 {
                     b.Property<int>("Id")
@@ -824,6 +953,15 @@ namespace Websitedangtintimkiemnhatro.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.ChangeTime", b =>
+                {
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.Time", "Time")
+                        .WithMany("ChangeTimes")
+                        .HasForeignKey("TimeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Comment", b =>
                 {
                     b.HasOne("Websitedangtintimkiemnhatro.Models.Comment", "ParentComment")
@@ -912,6 +1050,21 @@ namespace Websitedangtintimkiemnhatro.Migrations
                         .WithMany("LikeCommentPosts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Websitedangtintimkiemnhatro.Models.Messeger", b =>
+                {
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.Conversation", "Conversation")
+                        .WithMany("Messegers")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Websitedangtintimkiemnhatro.Models.User", "User")
+                        .WithMany("Messegers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

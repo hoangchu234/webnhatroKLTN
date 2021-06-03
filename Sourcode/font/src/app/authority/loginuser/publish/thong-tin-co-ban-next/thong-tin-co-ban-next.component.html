@@ -11,9 +11,11 @@
     </div>
     <div>
       <button class="button"(click)="step1()">Bước 1</button>
-      <button class="button" (click)="step2()" style="background-color: aqua;">Bước 2</button>
+      <button class="button" style="background-color: aqua;">Bước 2</button>
       <button class="button" (click)="step3()">Bước 3</button>
       <button class="button"(click)="step4()">Bước 4</button>
+      <button class="button"(click)="step5()">Bước 5</button>
+      <button class="button"(click)="step6()">Bước 6</button>
     </div> 
     <div style="margin-top: 10px;" >
       <div class="container-fluid">
@@ -39,7 +41,7 @@
               <label class="col-sm-12" style="margin-top: 5px;" for="exampleFormControlSelect1"><b>Hướng nhà</b></label>
               <div class="col-sm-12" style="margin-top: 13px ;">
               <select (change)="onChangeDirect($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
-                <option *ngFor='let direct of directs' [value]="direct.id">{{direct.text}}</option>
+                <option *ngFor='let direct of directs' [value]="direct.id">{{direct.directName}}</option>
               </select>
               </div>
             </div>
@@ -68,7 +70,7 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-warning"  href=# aria-hidden="true" style="width: 98%;height: 50px;font-size: 20px;margin-left: -5px;margin-top: 15px;" (click)='next()'>Tiếp tục<i style="margin-left: 20px;font-size: 20px;" class="fa fa-angle-right"></i></button>
+          <button class="btn btn-warning"  href=# aria-hidden="true" style="width: 98%;height: 50px;font-size: 20px;margin-left: -5px;margin-top: 15px;" (click)='step3()'>Tiếp tục<i style="margin-left: 20px;font-size: 20px;" class="fa fa-angle-right"></i></button>
 
         </div>
       </div>

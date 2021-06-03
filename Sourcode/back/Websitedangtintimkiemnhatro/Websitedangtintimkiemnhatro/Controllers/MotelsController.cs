@@ -28,7 +28,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [ActionName("GetMotels")]
         public async Task<ActionResult<IEnumerable<Motel>>> GetMotels()
         {
-            return await _context.Motels.Include(e => e.Detail).Include(e => e.User).Include(e => e.Images).Where(a => a.Status == "Tin đang hiển thị").ToListAsync();  
+            return await _context.Motels.Include(e => e.Detail).Include(e => e.User).Include(e => e.Images).Where(a => a.Status == "Tin đang hiển thị").ToListAsync();
         }
         [HttpGet]
         [ActionName("GetMotelsAsync")]
@@ -39,9 +39,45 @@ namespace Websitedangtintimkiemnhatro.Controllers
             motels.Motels = _context.Motels.Include(e => e.Detail).Include(e => e.City).Include(e => e.Images).ToList();
             motels.Details = _context.Details.Include(a => a.Typeofnew).Select(c => new Detail { Id = c.Id, NumberBath = c.NumberBath, NumberLiving = c.NumberLiving }).ToList();
             motels.Cities = _context.Citys.Include(a => a.Provinces).Select(c => new City { Id = c.Id, Name = c.Name }).ToList();
-            motels.Images = _context.Images.Select(c => new Image { Id = c.Id,ImageMotel = c.ImageMotel }).ToList();
+            motels.Images = _context.Images.Select(c => new Image { Id = c.Id, ImageMotel = c.ImageMotel }).ToList();
 
             return motels;
+        }
+
+        // GET: api/Motels/GetDataDirect
+        [HttpGet]
+        [Route("GetDataDirect")]
+        public async Task<ActionResult<IEnumerable<Direct>>> GetDataDirect()
+        {
+            var directs = _context.Directs.ToList();
+            return directs;
+        }
+
+        // GET: api/Motels/GetDataNew
+        [HttpGet]
+        [Route("GetDataNew")]
+        public async Task<ActionResult<IEnumerable<New>>> GetDataNew()
+        {
+            var news = _context.News.ToList();
+            return news;
+        }
+
+        // GET: api/Motels/GetDataTime
+        [HttpGet]
+        [Route("GetDataTime")]
+        public async Task<ActionResult<IEnumerable<Time>>> GetDataTime()
+        {
+            var times = _context.Times.ToList();
+            return times;
+        }
+
+        // GET: api/Motels/GetDataChangeTime
+        [HttpGet]
+        [Route("GetDataChangeTime/{id}")]
+        public async Task<ActionResult<IEnumerable<ChangeTime>>> GetDataChangeTime(int id)
+        {
+            var changeTimes = _context.ChangeTimes.Where(a => a.TimeId == id).ToList();
+            return changeTimes;
         }
 
         // GET: api/Motels
@@ -235,7 +271,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 int day = int.Parse(xet[0]) * 7;
                 motel.DateDue = daydue.AddDays(day);
             }
-            
+
             motel.DateUpdate = DateTime.Now;
             motel.Verify = false;
             _context.Motels.Add(motel);
@@ -305,7 +341,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
             DateTime now = DateTime.Now;
 
-            for(int i=0; i< motels.Count; i++)
+            for (int i = 0; i < motels.Count; i++)
             {
                 int result = DateTime.Compare(now, motels[i].DateDue);
                 if (result == 1 && motels[i].Status == "Tin đang hiển thị")
@@ -360,7 +396,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 models = models.Where(a => a.StreetId == street).ToList();
             }
 
-            if(price != 0)
+            if (price != 0)
             {
                 var priceSearch = _context.PriceSearchs.Where(a => a.Id == price).FirstOrDefault();
                 if (priceSearch.NumberOne.Equals("Dưới"))
@@ -434,10 +470,11 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 dateUpdate = a.DateUpdate,
                 dateDue = a.DateDue,
                 description = a.Description,
-                images = _context.Images.Where(d => d.MotelId == a.Id).Select(t => new { id = t.Id, imageMotel = t.ImageMotel}).ToList(),
+                images = _context.Images.Where(d => d.MotelId == a.Id).Select(t => new { id = t.Id, imageMotel = t.ImageMotel }).ToList(),
                 typeservice = a.Typeservice,
                 user = _context.Users.Where(c => c.Id == a.UserId).Select(f => new { hovaten = f.HovaTen, image = f.UserImage }).FirstOrDefault()
             })
+            .OrderByDescending(a => a.typeservice == "Tin Hot" || a.typeservice == "Tin VIP 3" || a.typeservice == "Tin VIP 2" || a.typeservice == "Tin VIP 1" || a.typeservice == "Tin thường")
             .ToList();
 
             if (result == null)
@@ -569,10 +606,10 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("CountPriceDuoi1Trieu")]
         public async Task<ActionResult> GetMotelCountPriceDuoi1Trieu()
         {
-      
+
             var list = await _context.Motels.ToListAsync();
             double count = 0;
-            for(int  i =0;i <list.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].PriceType.Equals("triệu/tháng") && float.Parse(list[i].Price) < 1.0000)
                 {
@@ -721,9 +758,9 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 hovaten = listuser[i].HovaTen;
                 for (int j = 0; j < list.Count; j++)
                 {
-                    
+
                     if (listuser[i].Id == list[i].UserId)
-                    {                      
+                    {
                         count++;
                     }
                 }

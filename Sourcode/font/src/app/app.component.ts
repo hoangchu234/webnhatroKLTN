@@ -20,28 +20,12 @@ export class AppComponent implements OnInit{
   //currentAccount: Account;
 
   constructor(
-    private signalRService:SignalRService,
-    private router: Router,
-    private motelService: MotelService,
     private authenticationService: AuthenticationService) {
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
 
     }
     
   ngOnInit(): void {
-    this.signalRService.startConnection();
-
-    // const connection = new signalR.HubConnectionBuilder()  
-    //   .configureLogging(signalR.LogLevel.Information)  
-    //   .withUrl(environment.urlAPI + '/notify')  
-    //   .build();  
-  
-    // connection.start().then(function () {  
-    //   console.log('SignalR Connected!');  
-    // }).catch(function (err) {  
-    //   return console.error(err.toString());  
-    // });  
-
   }
 
 

@@ -36,8 +36,10 @@ export class LoginuserComponent implements OnInit {
   
   public onLogout = () => {
     this.authenticationService.logout();
-    this.router.navigate(['/home']);
+    window.location.reload()
     this.hoVaTen = '';
+    this.router.navigate(['/home']);
+    
   }
   
   check(){

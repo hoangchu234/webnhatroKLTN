@@ -7,6 +7,7 @@ import { Detail } from '../../../../model/Detail';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogThongBaoComponent } from '../dialog-thong-bao/dialog-thong-bao.component';
 import { StorageService } from 'src/app/storage.service';
+import { Direct } from 'src/app/model/Direct';
 
 export interface Data{
   id:number;
@@ -26,17 +27,18 @@ export class ThongTinCoBanNextComponent implements OnInit {
   priceMotel: Float32Array;
   areaMotel: string;
 
-  directs:Array<Data> = [
-    {id: 0, text:'Không xác định'},
-    {id: 1, text:'Đông'},
-    {id: 2, text:'Tây'},
-    {id: 3, text:'Nam'},
-    {id: 4, text:'Bắc'},
-    {id: 5, text:'Đông Bắc'},
-    {id: 6, text:'Đông Nam'},
-    {id: 7, text:'Tây Bắc'},
-    {id: 8, text:'Tây Nam'},
-  ];
+  directs: Direct[] = [];
+  // directs:Array<Data> = [
+  //   {id: 0, text:'Không xác định'},
+  //   {id: 1, text:'Đông'},
+  //   {id: 2, text:'Tây'},
+  //   {id: 3, text:'Nam'},
+  //   {id: 4, text:'Bắc'},
+  //   {id: 5, text:'Đông Bắc'},
+  //   {id: 6, text:'Đông Nam'},
+  //   {id: 7, text:'Tây Bắc'},
+  //   {id: 8, text:'Tây Nam'},
+  // ];
   direct: string;
 
   title: string;
@@ -47,7 +49,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
     {id: 1, text:'triệu/tháng'},
   ];
   typePriceMotel: string;
-  
+
   constructor(public dialog: MatDialog,private router: Router,public motelService:MotelService) {
     this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     if(this.motelprevous.price != undefined){
@@ -55,12 +57,47 @@ export class ThongTinCoBanNextComponent implements OnInit {
       this.areaMotel = this.motelprevous.areaZone;
       this.title = this.motelprevous.title;
       this.description = this.motelprevous.description;
+      if(this.motelprevous.priceType == "triệu/tháng"){
+        this.typePriceMotels = this.typePriceMotels.splice(0, this.typePriceMotels.length);
+        var data:Array<Data> = [
+          {id: 0, text:'triệu/tháng'},
+          {id: 1, text:'đồng/tháng'},
+        ];
+        this.typePriceMotels = data.slice();
+        this.typePriceMotel = this.motelprevous.priceType;
+      }
     }
-   }
+    else{
+      this.typePriceMotel = "đồng/tháng";
+    }
+  }
 
   ngOnInit(): void {
-    this.typePriceMotel = "đồng/tháng"
-    this.direct = this.directs[0].text.toString();
+    if(this.motelprevous.detail != undefined){
+      this.getDirectPrevous(this.motelprevous.detail.director);
+    }
+    else{
+      this.getDirect();
+    }
+  }
+
+  async getDirect(){
+    this.directs = await this.motelService.getDirect() as Direct[];
+    this.direct = this.directs[0].directName.toString();
+  }
+
+  async getDirectPrevous(name){
+    var data = await this.motelService.getDirect() as Direct[];
+    var index = data.findIndex(a => a.directName === name);
+    var dataFirst = data[index];
+    data.splice(index, 1);
+    this.directs.push(dataFirst);
+    for(let i=0;i<data.length;i++){
+      this.directs.push(data[i]);
+    }
+    
+    this.direct = this.directs[0].directName.toString();
+    
   }
 
   public onChangeTypePriceMote(event){
@@ -72,12 +109,11 @@ export class ThongTinCoBanNextComponent implements OnInit {
   public onChangeDirect(event)
   {
     let value = event.target.value;
-    var name = this.directs[value].text.toString();
+    var name = this.directs[value].directName.toString();
     this.direct = name;
   }
 
- 
-  public next(){
+  public step3(){
     if(this.priceMotel && this.areaMotel && this.typePriceMotel && this.title && this.description){
       let motelnew = new Motel();
       motelnew = JSON.parse(localStorage.getItem(StorageService.motelStorage));
@@ -99,19 +135,30 @@ export class ThongTinCoBanNextComponent implements OnInit {
     }
    
   }
+
   public step1(){
     this.router.navigateByUrl('/user/thong-tin-vi-tri');
   }
-  public step2(){
-    this.router.navigateByUrl('/user/thong-tin-nha-tro');
-  }
 
-
-  public step3(){
-    this.router.navigateByUrl('/user/thong-tin-chi-tiet-nha-tro');
-  }
   public step4(){
-    this.router.navigateByUrl('/user/thong-tin-hinh-anh');
+    var data = this.motelprevous.detail;
+    if(data != undefined){
+      this.router.navigateByUrl('/user/thong-tin-hinh-anh');
+    }
+  }
+
+  public step5(){
+    var data = localStorage.getItem(StorageService.ImageStorage);;
+      if(data != undefined){
+        this.router.navigateByUrl('/user/goi-thanh-toan');
+      }
+  }
+
+  public step6(){
+    var data = this.motelprevous.bill;
+      if(data != undefined){
+        this.router.navigateByUrl('/user/thanh-toan-dong');
+      }
   }
 
   public openDialog(): void {

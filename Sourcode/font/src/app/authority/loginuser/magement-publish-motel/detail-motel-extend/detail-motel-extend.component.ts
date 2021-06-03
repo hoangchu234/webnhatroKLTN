@@ -26,6 +26,10 @@ import { Bill } from 'src/app/model/Bill';
 import { ExtendPaypalComponent } from './extend-paypal/extend-paypal.component';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/storage.service';
+import { Direct } from 'src/app/model/Direct';
+import { New } from 'src/app/model/New';
+import { Time } from 'src/app/model/Time';
+import { ChangeTime } from 'src/app/model/ChangeTime';
 
 export interface Data{
   id:number;
@@ -65,17 +69,19 @@ export class DetailMotelExtendComponent implements OnInit {
   typePriceShowMotels: Data[] = [];
   typePriceMotel;
 
-  directs:Array<Data> = [
-    {id: 0, text:'Đông'},
-    {id: 1, text:'Tây'},
-    {id: 2, text:'Nam'},
-    {id: 3, text:'Bắc'},
-    {id: 4, text:'Đông Bắc'},
-    {id: 5, text:'Đông Nam'},
-    {id: 6, text:'Tây Bắc'},
-    {id: 7, text:'Tây Nam'},
-  ];
-  directsShow: Data[] = [];
+  // directs:Array<Data> = [
+  //   {id: 0, text:'Đông'},
+  //   {id: 1, text:'Tây'},
+  //   {id: 2, text:'Nam'},
+  //   {id: 3, text:'Bắc'},
+  //   {id: 4, text:'Đông Bắc'},
+  //   {id: 5, text:'Đông Nam'},
+  //   {id: 6, text:'Tây Bắc'},
+  //   {id: 7, text:'Tây Nam'},
+  // ];
+  directs: Array<Direct> = [];
+  
+  directsShow: Direct[] = [];
   direct;
 
   liveTypes:LiveType[] = [];
@@ -107,74 +113,77 @@ export class DetailMotelExtendComponent implements OnInit {
   decription:string = "";
 
   servicePrice: Serviceprice[] = [];
-  public news:Array<Data> = [
-    {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
-    {id: 1, text:'Tin VIP 3'}, // 
-    {id: 2, text:'Tin VIP 2'},
-    {id: 3, text:'Tin VIP 1'},
-    {id: 4, text:'Tin thường'},
-  ];
+  news:Array<New> = [];
+  times:Array<Time> = [];
   
-  public times:Array<Data> = [
-    {id: 0, text:'Đăng theo ngày'}, 
-    {id: 1, text:'Đăng theo tuần'}, 
-    {id: 2, text:'Đăng theo tháng'},
-  ];
+  // public news:Array<Data> = [
+  //   {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
+  //   {id: 1, text:'Tin VIP 3'}, // 
+  //   {id: 2, text:'Tin VIP 2'},
+  //   {id: 3, text:'Tin VIP 1'},
+  //   {id: 4, text:'Tin thường'},
+  // ];
+  
+  // public times:Array<Data> = [
+  //   {id: 0, text:'Đăng theo ngày'}, 
+  //   {id: 1, text:'Đăng theo tuần'}, 
+  //   {id: 2, text:'Đăng theo tháng'},
+  // ];
 
   time: string;
 
-  public months:Array<Data> = [
-    {id: 0, text:'1 Tháng'}, 
-    {id: 1, text:'2 Tháng'}, 
-    {id: 2, text:'3 Tháng'}, 
-    {id: 3, text:'4 Tháng'}, 
-    {id: 4, text:'5 Tháng'}, 
-    {id: 5, text:'6 Tháng'}, 
-    {id: 6, text:'7 Tháng'}, 
-    {id: 7, text:'8 Tháng'}, 
-    {id: 8, text:'9 Tháng'}, 
-    {id: 9, text:'10 Tháng'}, 
-    {id: 10, text:'11 Tháng'}, 
-    {id: 11, text:'12 Tháng'}, 
-  ];
+  // public months:Array<Data> = [
+  //   {id: 0, text:'1 Tháng'}, 
+  //   {id: 1, text:'2 Tháng'}, 
+  //   {id: 2, text:'3 Tháng'}, 
+  //   {id: 3, text:'4 Tháng'}, 
+  //   {id: 4, text:'5 Tháng'}, 
+  //   {id: 5, text:'6 Tháng'}, 
+  //   {id: 6, text:'7 Tháng'}, 
+  //   {id: 7, text:'8 Tháng'}, 
+  //   {id: 8, text:'9 Tháng'}, 
+  //   {id: 9, text:'10 Tháng'}, 
+  //   {id: 10, text:'11 Tháng'}, 
+  //   {id: 11, text:'12 Tháng'}, 
+  // ];
 
-  public days:Array<Data> = [
-    {id: 0, text:'6 Ngày'}, 
-    {id: 1, text:'7 Ngày'}, 
-    {id: 2, text:'8 Ngày'}, 
-    {id: 3, text:'9 Ngày'}, 
-    {id: 4, text:'10 Ngày'}, 
-    {id: 5, text:'11 Ngày'}, 
-    {id: 6, text:'12 Ngày'}, 
-    {id: 7, text:'13 Ngày'}, 
-    {id: 8, text:'14 Ngày'}, 
-    {id: 9, text:'15 Ngày'}, 
-    {id: 10, text:'16 Ngày'}, 
-    {id: 11, text:'17 Ngày'}, 
-  ];
+  // public days:Array<Data> = [
+  //   {id: 0, text:'6 Ngày'}, 
+  //   {id: 1, text:'7 Ngày'}, 
+  //   {id: 2, text:'8 Ngày'}, 
+  //   {id: 3, text:'9 Ngày'}, 
+  //   {id: 4, text:'10 Ngày'}, 
+  //   {id: 5, text:'11 Ngày'}, 
+  //   {id: 6, text:'12 Ngày'}, 
+  //   {id: 7, text:'13 Ngày'}, 
+  //   {id: 8, text:'14 Ngày'}, 
+  //   {id: 9, text:'15 Ngày'}, 
+  //   {id: 10, text:'16 Ngày'}, 
+  //   {id: 11, text:'17 Ngày'}, 
+  // ];
 
-  public weeks:Array<Data> = [
-    {id: 0, text:'1 Tuần'}, 
-    {id: 1, text:'2 Tuần'}, 
-    {id: 2, text:'3 Tuần'}, 
-    {id: 3, text:'4 Tuần'}, 
-    {id: 4, text:'5 Tuần'}, 
-    {id: 5, text:'6 Tuần'}, 
-    {id: 6, text:'7 Tuần'}, 
-    {id: 7, text:'8 Tuần'}, 
-    {id: 8, text:'9 Tuần'}, 
-    {id: 9, text:'10 Tuần'}, 
-  ];
+  // public weeks:Array<Data> = [
+  //   {id: 0, text:'1 Tuần'}, 
+  //   {id: 1, text:'2 Tuần'}, 
+  //   {id: 2, text:'3 Tuần'}, 
+  //   {id: 3, text:'4 Tuần'}, 
+  //   {id: 4, text:'5 Tuần'}, 
+  //   {id: 5, text:'6 Tuần'}, 
+  //   {id: 6, text:'7 Tuần'}, 
+  //   {id: 7, text:'8 Tuần'}, 
+  //   {id: 8, text:'9 Tuần'}, 
+  //   {id: 9, text:'10 Tuần'}, 
+  // ];
 
   setValueName: string = "Số ngày";
-  setArrayChoices: Array<Data> = [];
+  setArrayChoices: Array<ChangeTime> = [];
 
   new: string;
   timePublish:string;
   //Xét tính tiền
   totalprice:number = 0;
   type:string[] = [];
-  priceBill:number;
+  priceBill:string = "";
   motelById: Motel;
 
   constructor(private router: ActivatedRoute,private billService:BillService,private priceService: ServicePriceService,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
@@ -189,7 +198,7 @@ export class DetailMotelExtendComponent implements OnInit {
     this.getCities();
     this.getLiveType();
     this.getTypePrice();
-    this.getDirect();
+    this.getDirectData();
 
     this.address = this.motelById.address;
     this.price = this.motelById.price;
@@ -218,13 +227,44 @@ export class DetailMotelExtendComponent implements OnInit {
 
 
     //Xét bill
-    this.setArrayChoices = this.days;
-    this.new = 'Tin Hot';
-    this.time = 'Đăng theo ngày';
-    this.timePublish = '6 Ngày'
+    // this.setArrayChoices = this.days;
+    // this.new = 'Tin Hot';
+    // this.time = 'Đăng theo ngày';
+    // this.timePublish = '6 Ngày'
+    this.getDataNew();
+    this.getDataTime();
     this.getServicePrices();
 
     this.tinhTien();
+  }
+
+  
+  async getDataNew(){
+    this.news = await this.motelService.getNew() as New[];
+    this.new = this.news[0].newName;
+  }
+
+  async getDataTime(){
+    this.times = await this.motelService.getTime() as Time[];
+    this.time = this.times[0].timeName;
+    await this.getDataChangeTime(this.times[0].id);
+    this.timePublish = this.setArrayChoices[0].changeTimeName;
+    this.tinhTien();
+  }
+
+  async getDataChangeTime(typeTime: number){
+    this.setArrayChoices = await this.motelService.getChangeTime(typeTime) as ChangeTime[];
+  }
+
+  async getDirectData(){
+    var data = await this.motelService.getDirect() as Direct[];
+    var index = data.findIndex(a => a.directName === this.motelById.detail.director);
+    this.directsShow.push(data[index]);
+    data.splice(index,1);
+    for(let i=0; i<data.length;i++){
+      this.directsShow.push(data[i]);
+    }
+    this.direct = this.directsShow[0].directName.toString();
   }
 
   async getDataMotelById(id){
@@ -278,26 +318,27 @@ export class DetailMotelExtendComponent implements OnInit {
     }
   }
 
-  public getDirect(){
-    for(let i=0 ;i<this.directs.length; i++){
-      if(this.motelById.detail.director == this.directs[i].text){
-        this.directsShow.push(this.directs[i])
-        break;
-      }
-    }
-    for(let i=0 ;i<this.directs.length; i++){
-      if(this.motelById.detail.director != this.directs[i].text){
-        this.directsShow.push(this.directs[i])
-      }
-    }
-  }
+  // public getDirect(){
+  //   for(let i=0 ;i<this.directs.length; i++){
+  //     if(this.motelById.detail.director == this.directs[i].directName){
+  //       this.directsShow.push(this.directs[i])
+  //       break;
+  //     }
+  //   }
+  //   for(let i=0 ;i<this.directs.length; i++){
+  //     if(this.motelById.detail.director != this.directs[i].directName){
+  //       this.directsShow.push(this.directs[i])
+  //     }
+  //   }
+  // }
 
   public async getLiveType(){
-    const result = await this.motelService.getLiveTypes() as LiveType[];
-    this.liveTypes = result
-    for(let i=0;i<result.length;i++){
-      if(this.motelById.detail.liveTypeId == result[i].id)
-      {
+    var result = await this.motelService.getLiveTypes() as LiveType[];
+    result.splice(0,1);
+    var index = result.findIndex(a => a.id === this.motelById.detail.liveTypeId);
+    this.liveTypes = result.slice();
+    for(let i=0; i< result.length;i++){
+      if(i == index){
         this.arrayTrue.push(true);
       }
       else{
@@ -564,141 +605,136 @@ export class DetailMotelExtendComponent implements OnInit {
     this.servicePrice = await this.priceService.getServiceprices() as Serviceprice[];
   }
 
-
   public onChangeSetValueName(event){
     let value = event.target.value;
-    var name = this.setArrayChoices[value].text.toString();
-    this.timePublish = name;
+    var name = this.setArrayChoices.find(a => a.id == value);
+    this.timePublish = name.changeTimeName;
     this.tinhTien();
   }
 
-  public onChangetime(event){
-    try{
-      let value = event.target.value;
-      var name = this.times[value].text.toString();
-      this.time = name;
-  
-      if(Number(value) == 0){
-        this.setValueName = "Số ngày";
-        this.setArrayChoices = this.days;
-      }
-      else if(Number(value) == 1){
-        this.setValueName = "Số tuần";
-        this.setArrayChoices = this.weeks;
-      }
-      else {
-        this.setValueName = "Số tháng";
-        this.setArrayChoices = this.months;
-      }
-    }
-    catch(error){
-      this.setValueName = "Số tháng";
-      this.setArrayChoices = this.months;
-    }  
+  public async onChangetime(event){
+    let value = event.target.value;
+    await this.getDataChangeTime(value);   
+    this.timePublish = this.setArrayChoices[0].changeTimeName;
+    var name = this.times.find(a => a.id == value);
+    this.time = name.timeName;  
     this.tinhTien();
   }
 
   public onChangeNewMotel(event)
   {
-    try{
-      let value = event.target.value;
-      var name = this.news[value].text.toString();
-      this.new = name;
-      this.tinhTien();
-    }
-    catch (error){
-     
-    }
-
+    let value = event.target.value;
+    var name = this.news.find(a => a.id == value);
+    this.new = name.newName;
+    this.tinhTien();
   }
 
-  public tinhTien(){
-    console.log(this.timePublish.split(" "));
-    if(this.new == "Tin Hot"){
-      if(this.time == "Đăng theo ngày"){
-        this.priceBill = 50000
-        this.type = this.timePublish.split(" ");
+  // public tinhTien(){
+  //   console.log(this.timePublish.split(" "));
+  //   if(this.new == "Tin Hot"){
+  //     if(this.time == "Đăng theo ngày"){
+  //       this.priceBill = 50000
+  //       this.type = this.timePublish.split(" ");
 
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tuần"){
-        this.priceBill = 315000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tháng"){
-        this.priceBill = 120000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tuần"){
+  //       this.priceBill = 315000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tháng"){
+  //       this.priceBill = 120000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //   }
+  //   if(this.new == "Tin VIP 3"){
+  //     if(this.time == "Đăng theo ngày"){
+  //       this.priceBill = 30000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tuần"){
+  //       this.priceBill = 190000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tháng"){
+  //       this.priceBill = 800000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //   }
+  //   if(this.new == "Tin VIP 2"){
+  //     if(this.time == "Đăng theo ngày"){
+  //       this.priceBill = 20000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tuần"){
+  //       this.priceBill = 133000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tháng"){
+  //       this.priceBill = 540000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //   }
+  //   if(this.new == "Tin VIP 1"){
+  //     if(this.time == "Đăng theo ngày"){
+  //       this.priceBill = 10000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tuần"){
+  //       this.priceBill = 63000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tháng"){
+  //       this.priceBill = 240000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //   }
+  //   if(this.new == "Tin thường"){
+  //     if(this.time == "Đăng theo ngày"){
+  //       this.priceBill = 2000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tuần"){
+  //       this.priceBill = 12000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //     if(this.time == "Đăng theo tháng"){
+  //       this.priceBill = 48000
+  //       this.type = this.timePublish.split(" ");
+  //       this.totalprice = Number(this.type[0])*this.priceBill;
+  //     }
+  //   }
+  // }
+
+  public tinhTien(){
+    var data = this.servicePrice.find(a => a.typeofnew == this.new);
+    if(this.time == "Đăng theo ngày"){
+      this.priceBill = data.priceDate.split(" ")[0];
+      this.type = this.timePublish.split(" ");
+      this.totalprice = (Number(this.type[0]))*(Number(this.price)*1000);
     }
-    if(this.new == "Tin VIP 3"){
-      if(this.time == "Đăng theo ngày"){
-        this.priceBill = 30000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tuần"){
-        this.priceBill = 190000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tháng"){
-        this.priceBill = 800000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
+    else if(this.time == "Đăng theo tuần"){
+      this.priceBill = data.priceWeek.split(" ")[0];
+      this.type = this.timePublish.split(" ");
+      this.totalprice = (Number(this.type[0]))*(Number(this.price)*1000);
     }
-    if(this.new == "Tin VIP 2"){
-      if(this.time == "Đăng theo ngày"){
-        this.priceBill = 20000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tuần"){
-        this.priceBill = 133000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tháng"){
-        this.priceBill = 540000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-    }
-    if(this.new == "Tin VIP 1"){
-      if(this.time == "Đăng theo ngày"){
-        this.priceBill = 10000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tuần"){
-        this.priceBill = 63000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tháng"){
-        this.priceBill = 240000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-    }
-    if(this.new == "Tin thường"){
-      if(this.time == "Đăng theo ngày"){
-        this.priceBill = 2000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tuần"){
-        this.priceBill = 12000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
-      if(this.time == "Đăng theo tháng"){
-        this.priceBill = 48000
-        this.type = this.timePublish.split(" ");
-        this.totalprice = Number(this.type[0])*this.priceBill;
-      }
+    else if(this.time == "Đăng theo tháng"){
+      this.priceBill = data.priceMonth.split(" ")[0];
+      this.type = this.timePublish.split(" ");
+      this.totalprice = (Number(this.type[0]))*(Number(this.price)*1000);
     }
   }
 

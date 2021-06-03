@@ -115,7 +115,7 @@
                   <label class="col-sm-4" for="exampleFormControlSelect1" style="margin-top:5px">Hướng nhà</label>
                   <div class="col-sm-8">
                     <select (change)="onChangeDirect($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
-                        <option *ngFor='let direct of directsShow' [value]="direct.text">{{direct.text}}</option>
+                        <option *ngFor='let direct of directsShow' [value]="direct.id">{{direct.directName}}</option>
                       </select>
                   </div>
                 </div>

@@ -9,25 +9,25 @@ namespace Websitedangtintimkiemnhatro.Hubs
 {
     public class SignalrHub : Hub
     {
-        private int Users;
+        //private int Users;
 
-        public async Task BroadcastNumberOfUsers(int nbUser)
+        public async Task BroadcastNumberOfUsers(Messeger msg)
         {
-            await Clients.All.SendAsync("OnUserConnected", nbUser);
+            await Clients.All.SendAsync("MessageReceived", msg);
         }
 
-        public override async Task OnConnectedAsync()
-        {
-            Users++;
-            await BroadcastNumberOfUsers(Users);
-            await base.OnConnectedAsync();
-        }
+        //public override async Task OnConnectedAsync()
+        //{
+        //    Users++;
+        //    await BroadcastNumberOfUsers(Users);
+        //    await base.OnConnectedAsync();
+        //}
 
-        public override async Task OnDisconnectedAsync(Exception exception)
-        {
-            Users--;
-            await BroadcastNumberOfUsers(Users);
-            await base.OnDisconnectedAsync(exception);
-        }
+        //public override async Task OnDisconnectedAsync(Exception exception)
+        //{
+        //    Users--;
+        //    await BroadcastNumberOfUsers(Users);
+        //    await base.OnDisconnectedAsync(exception);
+        //}
     }
 }

@@ -371,7 +371,7 @@
                                         <i>Sunday</i>
                                         <figure>
                                             <span>"Celebrity looks Beautiful in that outfit! We should see each"</span>
-                                            <img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
+                                            <img class="img1" src="../../assets/forum/images1/resources/admin.jpg" alt="">
                                         </figure>
                                     </div>
                                 </a>
@@ -729,7 +729,7 @@
             </ul>
             <div class="user-img1">
                 <h5>Jack Carter</h5>
-                <img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
+                <img class="img1" src="../../assets/forum/images1/resources/admin.jpg" alt="">
                 <span class="status f-online"></span>
                 <div class="user-setting">
                     <span class="seting-title">Chat setting <a href="#" title="">see all</a></span>
@@ -806,7 +806,7 @@
                             <ul class="nav nav-tabs nav-tabs--vertical msg-pepl-list ">
                                 <li class="nav-item unread">
                                     <a class="active" href="#link1" data-toggle="tab">
-                                        <figure><img src="images/resources/friend-avatar3.jpg" alt="">
+                                        <figure><img src="../../assets/forum/images1/resources/friend-avatar3.jpg" alt="">
                                             <span class="status f-online"></span>
                                         </figure>
                                         <div class="user-name">
@@ -829,7 +829,7 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a class="" href="#link2" data-toggle="tab">
-                                        <figure><img src="images/resources/admin.jpg" alt="">
+                                        <figure><img src="../../assets//forum/images1/resources/admin.jpg" alt="">
                                             <span class="status f-away"></span>
                                         </figure>
                                         <div class="user-name">
@@ -854,7 +854,7 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a class="" href="#link3" data-toggle="tab">
-                                        <figure><img src="images/resources/friend-avatar4.jpg" alt="">
+                                        <figure><img src="../../assets/forum/images1/resources/friend-avatar4.jpg" alt="">
                                             <span class="status f-online"></span>
                                         </figure>
                                         <div class="user-name">
@@ -879,7 +879,7 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a class="" href="#link4" data-toggle="tab">
-                                        <figure><img src="images/resources/friend-avatar5.jpg" alt="">
+                                        <figure><img src="../../assets/forum/images1/resources/friend-avatar5.jpg" alt="">
                                             <span class="status f-offline"></span>
                                         </figure>
                                         <div class="user-name">
@@ -904,7 +904,7 @@
                                 </li>
                                 <li class="nav-item unread ">
                                     <a class="" href="#link5" data-toggle="tab">
-                                        <figure><img src="images/resources/friend-avatar6.jpg" alt="">
+                                        <figure><img src="../../assets/forum/images1/resources/friend-avatar6.jpg" alt="">
                                             <span class="status f-online"></span>
                                         </figure>
                                         <div class="user-name">
@@ -929,7 +929,7 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a class="" href="#link6" data-toggle="tab">
-                                        <figure><img src="images/resources/friend-avatar7.jpg" alt="">
+                                        <figure><img src="../../assets/forum//images1/resources/friend-avatar7.jpg" alt="">
                                             <span class="status f-offline"></span>
                                         </figure>
                                         <div class="user-name">
@@ -954,7 +954,7 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a class="" href="#link7" data-toggle="tab">
-                                        <figure><img src="images/resources/friend-avatar8.jpg" alt="">
+                                        <figure><img src="../../assets/forum/images1/resources/friend-avatar8.jpg" alt="">
                                             <span class="status f-online"></span>
                                         </figure>
                                         <div class="user-name">
@@ -1004,7 +1004,7 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a class="" href="#link9" data-toggle="tab">
-                                        <figure><img src="images/resources/friend-avatar9.jpg" alt="">
+                                        <figure><img src="../../assets/forum/images1/resources/friend-avatar9.jpg" alt="">
                                             <span class="status f-online"></span>
                                         </figure>
                                         <div class="user-name">
@@ -1029,7 +1029,7 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a class="" href="#link10" data-toggle="tab">
-                                        <figure><img src="images/resources/friend-avatar8.jpg" alt="">
+                                        <figure><img src="../../assets/forum/images1/resources/friend-avatar8.jpg" alt="">
                                             <span class="status f-offline"></span>
                                         </figure>
                                         <div class="user-name">
@@ -1061,7 +1061,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar3.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/friend-avatar3.jpg" alt="">
                                                 <span class="status f-online"></span>
                                             </figure>
                                             <div>
@@ -1093,32 +1093,30 @@
                                 </div>
                                 <div class="col-lg-8 col-md-8">
                                     <div class="mesge-area">
-                                        <ul class="conversations">
-                                            <li>
+                                        <ul class="conversations" *ngFor="let msg of messages"> 
+                                            <!-- <li>
                                                 <figure><img class="img1" src="assets/forum/images1/resources/user1.jpg" alt=""></figure>
                                                 <div class="text-box">
                                                     <p>HI, i have faced a problem with your software. are you available now</p>
                                                     <span><i class="ti-check"></i><i class="ti-check"></i> 2:32PM</span>
                                                 </div>
-                                            </li>
-                                            <li class="me">
-                                                <figure><img class="img1" src="assets/forum/images1/resources/user2.jpg" alt=""></figure>
+                                            </li> -->
+                                            <li class="me" *ngIf="msg.type == 'received'">
+                                                <figure><img class="img1" src="../../assets/forum/images1/resources/user2.jpg" alt=""></figure>
                                                 <div class="text-box">
-                                                    <p>HI, i have checked about your query, there is no any problem like that...</p>
-                                                    <span><i class="ti-check"></i><i class="ti-check"></i> 2:35PM</span>
+                                                    <p> {{msg.message}} </p>
+                                                    <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
                                                 </div>
                                             </li>
-                                            <li class="you">
-                                                <figure><img class="img1" src="assets/forum/images1/resources/user1.jpg" alt=""></figure>
+                                            <li class="you" *ngIf="msg.type == 'sent'">
+                                                <figure><img class="img1" src="../../assets/forum/images1/resources/user1.jpg" alt=""></figure>
                                                 <div class="text-box">
                                                     <p>
-                                                        thank you for your quick reply, i am sending you a screenshot
-                                                        <img class="img1" src="assets/forum/images1/resources/screenshot-messenger.jpg" alt="">
-                                                        <em>Size: 106kb <ins>download Complete</ins></em>
+                                                        {{msg.message}}   
                                                     </p>
-                                                    <span><i class="ti-check"></i><i class="ti-check"></i> 2:36PM</span>
+                                                    <span><i class="ti-check"></i><i class="ti-check"></i> {{msg.date | date:'medium'}}</span>
                                                 </div>
-                                            </li>
+                                            <!-- </li>
                                             <li class="me">
                                                 <figure><img class="img1" src="assets/forum/images1/resources/user2.jpg" alt=""></figure>
                                                 <div class="text-box">
@@ -1145,7 +1143,7 @@
                                                         <span class="dot"></span>
                                                     </div>
                                                 </div>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                     <div class="message-writing-box">
@@ -1242,7 +1240,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/admin.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/admin.jpg" alt="">
                                                 <span class="status f-away"></span>
                                             </figure>
                                             <div>
@@ -1284,8 +1282,8 @@
                                     <div class="message-writing-box">
                                         <form method="post">
                                             <div class="text-area">
-                                                <input type="text" placeholder="write your message here..">
-                                                <button type="submit" style="background-color: white;border: none;"><i class="fa fa-paper-plane-o"></i></button>
+                                                <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="write your message here..">
+                                                <button type="submit" style="background-color: white;border: none;"><i class="fa fa-paper-plane-o" (click)="sendMessage()"></i></button>
                                             </div>
                                             <div class="emojies">
                                                 <i><img class="img1" src="assets/forum/images1/smiles/happy-3.png" alt=""></i>
@@ -1374,7 +1372,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar4.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/friend-avatar4.jpg" alt="">
                                                 <span class="status f-online"></span>
                                             </figure>
                                             <div>
@@ -1508,7 +1506,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar5.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/friend-avatar5.jpg" alt="">
                                                 <span class="status f-offline"></span>
                                             </figure>
                                             <div>
@@ -1772,7 +1770,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar7.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/friend-avatar7.jpg" alt="">
                                                 <span class="status f-offline"></span>
                                             </figure>
                                             <div>
@@ -1904,7 +1902,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar8.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/friend-avatar8.jpg" alt="">
                                                 <span class="status f-online"></span>
                                             </figure>
                                             <div>
@@ -2036,7 +2034,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar6.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/friend-avatar6.jpg" alt="">
                                                 <span class="status f-away"></span>
                                             </figure>
                                             <div>
@@ -2168,7 +2166,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar9.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/friend-avatar9.jpg" alt="">
                                                 <span class="status f-online"></span>
                                             </figure>
                                             <div>
@@ -2300,7 +2298,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img class="img1" src="assets/forum/images1/resources/friend-avatar8.jpg" alt="">
+                                            <figure><img class="img1" src="../../assets/forum/images1/resources/friend-avatar8.jpg" alt="">
                                                 <span class="status f-offline"></span>
                                             </figure>
                                             <div>
@@ -2463,3 +2461,4 @@
 
 <script src="assets/forum/js1/main.min.js"></script>
 <script src="assets/forum/js1/script.js"></script>
+

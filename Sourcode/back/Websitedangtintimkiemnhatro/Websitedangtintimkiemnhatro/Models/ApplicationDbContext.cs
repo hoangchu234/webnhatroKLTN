@@ -38,8 +38,48 @@ namespace Websitedangtintimkiemnhatro.Models
         public DbSet<LikeCommentPost> LikeCommentPosts { get; set; }
         public DbSet<InformComment> InformComments { get; set; }
         public DbSet<ReportPost> ReportPosts { get; set; }
+        public DbSet<Messeger> Messegers { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Direct> Directs { get; set; }
+        public DbSet<New> News { get; set; }
+        public DbSet<Time> Times { get; set; }
+        public DbSet<ChangeTime> ChangeTimes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<New>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+            });
+
+            modelBuilder.Entity<Time>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+            });
+
+            modelBuilder.Entity<ChangeTime>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.HasOne(e => e.Time).WithMany(d => d.ChangeTimes).HasForeignKey(d => d.TimeId).OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Direct>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+            });
+
+            modelBuilder.Entity<Conversation>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+            });
+
+            modelBuilder.Entity<Messeger>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.HasOne(e => e.User).WithMany(d => d.Messegers).HasForeignKey(d => d.UserId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.Conversation).WithMany(d => d.Messegers).HasForeignKey(d => d.ConversationId).OnDelete(DeleteBehavior.Restrict);
+            });
+
             modelBuilder.Entity<ReportPost>(entity =>
             {
                 entity.Property(e => e.Id).UseIdentityColumn();

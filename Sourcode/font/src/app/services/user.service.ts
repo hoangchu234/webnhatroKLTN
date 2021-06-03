@@ -53,7 +53,7 @@ export class UserService {
 
   public adduser(newcuser: User): Observable<User>{
     return this.http.post<User>(this.urlAPI + "/api/Users/Normal", newcuser, httpOptions).pipe(
-      tap((user: User) => console.log(`inserted User = ${JSON.stringify(user)}`)),
+      tap((user: User) => JSON.stringify(user)),
       catchError(error => of(new User()))
     );
   }
@@ -88,14 +88,14 @@ export class UserService {
 
   public updateAccount(account: Account): Observable<any>{
     return this.http.put(`${this.urlAPI + "/api/Accounts"}/${account.id}`, account, httpOptions).pipe(
-      tap(updateAccount => console.log(`selectLikeUser = ${JSON.stringify(updateAccount)}`)),
+      tap(updateAccount => JSON.stringify(updateAccount)),
       catchError(error => of(new Account()))
     );
   }
 
   public updateUser(user: User): Observable<any>{
     return this.http.put(`${this.urlAPI + "/api/Users"}/${user.id}`, user, httpOptions).pipe(
-      tap(updateUser =>  console.log(`selectLikeUser = ${JSON.stringify(updateUser)}`)),
+      tap(updateUser =>  JSON.stringify(updateUser)),
       catchError(error => of(new User()))
     );
   }

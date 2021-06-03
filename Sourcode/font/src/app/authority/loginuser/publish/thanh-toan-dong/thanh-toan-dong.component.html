@@ -3,15 +3,25 @@
   <div style="padding-top:15px;"><span style="margin-left: 10px;">Motel <div class="fa  fa-chevron-right" style="margin-right: 15px;"></div> <b style="margin-right: 10px;">Trang thanh toán</b> <div class="fa  fa-chevron-right"style="margin-right: 15px;"></div> <b>Thông tin hình ảnh</b></span></div>
 
 </div>
-<div class="container-fluid" style="padding-top:10px;margin-bottom: 20px;margin-top: 40px;">
+<!-- <div class="container-fluid" style="padding-top:10px;margin-bottom: 20px;margin-top: 40px;">
   <i class="fa fa-angle-left" (click)="prevous()" aria-hidden="true" style="margin-right:20px;margin-bottom: 10px;"></i>Quay trở lại
   <div class="col-md-12" style="height: 4px; background-color: green;"></div>
-</div>
+</div> -->
 
 <div class="container-fluid" style="width:900px;">
   <form style="width:100%" class="row">
   <div class="row" >
     <div class="font" style="font-size: 30px;margin: 10px;font-weight: bold;">Thông tin thanh toán</div>
+
+    <div>
+      <button class="button" (click)="step1()" >Bước 1</button>
+      <button class="button" (click)="step2()">Bước 2</button>
+      <button class="button"(click)="step3()">Bước 3</button>
+      <button class="button"(click)="step4()">Bước 4</button>
+      <button class="button" (click)="step5()">Bước 5</button>
+      <button class="button" style="background-color: aqua;" >Bước 6</button>
+    </div> 
+
     <div class="col-md-12 row" style="border-top: 1px solid black;border-bottom: 1px solid black;padding:30px;">
       <div *ngIf="checkImage"  class="col-md-12" style="background-image: url({{currentAccount.user.userImage}});width: 100%;height: 300px;margin-left:0px;border-radius: 5px;"></div>
       <div *ngIf="!checkImage" class="col-md-12" style="background-image: url(../../assets/images/gallery_1.jpg);width: 100%;height: 300px;margin-left:0px;border-radius: 5px;"></div>
