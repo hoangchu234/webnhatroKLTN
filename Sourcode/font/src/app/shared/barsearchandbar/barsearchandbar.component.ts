@@ -46,12 +46,14 @@ export class BarsearchandbarComponent implements OnInit {
   newType = "";
   // Danh sách pricesearch và tên pricesearch
   priceSearchs: PriceSearch[] = [];
-  priceSearch;
+  priceSearch = "";
   
   //load tên trên thanh tophead
   nametophead;
   name;
   
+  searchText = "";
+  check = false;
   myControl = new FormControl();
   options: List[] = [];
   filteredOptions: Observable<List[]>;
@@ -301,17 +303,19 @@ export class BarsearchandbarComponent implements OnInit {
       }
     }
     if(price != null){//2-Trieu-3-Trieu
-      const priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
-      var str = price.replace("-","");
-      str = str.replace("-", "");
-      var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.numberTwo + a.typePriceTwo) === str);
-
-      if(indexPrice == -1){
-        str = str.replace("-", "");
-        indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.typePriceOne + a.numberTwo + a.typePriceTwo) === str);
-      }
+      var str = price.split("-");
+      var priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
+      // if(str.length == 3){
+      //   var indexPrice = priceSearch.findIndex(a => a.numberOne == str[0]);
+      // }
+      // else if(str.length == 4){
+      //   indexPrice = priceSearch.findIndex(a => this.returnDataPriceSearch(a) === price);
+      // }
      
-      this.priceSearch = this.returnDataPriceSearch(priceSearch.find(a => a.id == indexPrice+1));
+      var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne) === str[0]);
+      var dataFind = priceSearch[indexPrice];
+      this.priceSearch = this.returnDataPriceSearch(dataFind);
+      
     }
 
     this.getProvinceByID(this.city.id);
@@ -366,11 +370,12 @@ export class BarsearchandbarComponent implements OnInit {
   public onChoicePriceSearch(priceSearch) {
     //this.priceSearch.number = price.number;
     if(priceSearch.typePriceOne == null){
-      this.priceSearch = priceSearch.numberOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
+      this.priceSearch = priceSearch.numberOne  + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
     }
     else{
-      this.priceSearch = priceSearch.numberOne + " " + priceSearch.typePriceOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
+      this.priceSearch = priceSearch.numberOne + " " + priceSearch.typePriceOne  + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
     }
+  
   }
   
   returnDataPriceSearch(priceSearch){
@@ -517,85 +522,17 @@ export class BarsearchandbarComponent implements OnInit {
     this.priceSearchs.push(priceZero);
      
     for(let i =0;i<result.length;i++){
-      result[i].numberTwo = "- " + result[i].numberTwo;
+      result[i].numberTwo = " - " + result[i].numberTwo;
       this.priceSearchs.push(result[i])
     }
 
-    /*this.priceSearchServer.getprices().subscribe(getprice =>{
-      //this.priceSearchs = getprice
-      var priceZero = new PriceSearch();
-      var number = 0;
-      priceZero.id = 0;
-      priceZero.number = "Tất cả";
-      this.priceSearchs.push(priceZero);
-     
-      for(let i =0;i<getprice.length;i++){
-        this.priceSearchs.push(getprice[i])
-      }
-    })*/
     
   }
 
-  /*public onClick() {
 
-    /*if(this.priceSearch.number == "Tất cả"){
-      this.priceSearch.id = 0;
-    }
-    localStorage.setItem('priceid', this.priceSearch.id.toString());
-
-    this.activerouter.data.subscribe(data => {
-      this.name = data.kind;
-    })
-
-    this.newTypeSearch.emit(this.newType);
-    if(this.newType === "Phòng trọ, nhà trọ" && this.name != "cho-thue-nha-tro"){
-      //window.location.reload();
-      this.router.navigateByUrl('/home/cho-thue-nha-tro');
-    }
-    else if(this.newType === "Nhà thuê nguyên căn" && this.name != "nha-cho-thue"){
-      //window.location.reload();
-      this.router.navigateByUrl('/home/nha-cho-thue');
-    }
-    else if(this.newType === "Cho thuê căn hộ" && this.name != "cho-thue-can-ho"){
-      //window.location.reload();
-      this.router.navigateByUrl('/home/cho-thue-can-ho');
-    }
-    else if(this.newType === "Tìm người ở ghép" && this.name != "tim-nguoi-o-ghep-cap"){
-      //window.location.reload();
-      this.router.navigateByUrl('/home/tim-nguoi-o-ghep-cap');
-    }
-    else if(this.newType === "Cho thuê mặt bằng" && this.name != "cho-thue-mat-bang"){
-      //window.location.reload();
-      this.router.navigateByUrl('/home/cho-thue-mat-bang');
-    }
-    //////
-    else if(this.name == "cho-thue-nha-tro"){
-      window.location.reload();
-      this.router.navigateByUrl('/home/cho-thue-nha-tro');
-    }
-    else if(this.name == "nha-cho-thue"){
-      window.location.reload();
-      this.router.navigateByUrl('/home/nha-cho-thue');
-    }
-    else if(this.name == "cho-thue-can-ho"){
-      window.location.reload();
-      this.router.navigateByUrl('/home/cho-thue-can-ho');
-    }
-    else if(this.name == "tim-nguoi-o-ghep-cap"){
-      window.location.reload();
-      this.router.navigateByUrl('/home/tim-nguoi-o-ghep-cap');
-    }
-    else if(this.name == "cho-thue-mat-bang"){
-      window.location.reload();
-      this.router.navigateByUrl('/home/cho-thue-mat-bang');
-    }
-    //////
-    else {
-      //window.location.reload();
-      this.router.navigateByUrl('/home/cho-thue-nha-tro');
-    }
-  }*/
-
+  onKeyUp(x) { // appending the updated value to the variable
+    this.check = true;
+  }
 
   public async enterSearch(){
     this.options = await this.cityService.getSearchs() as List[];
@@ -605,6 +542,16 @@ export class BarsearchandbarComponent implements OnInit {
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filter(name) : this.options.slice(0,7))
       );
+      if(this.check == true){
+        this.filteredOptions.subscribe((data)=>{
+          if(data.length != 0){
+            this.searchText = data[0].name;
+          }
+          else{
+            this.searchText = "";
+          }
+        })
+      }
   }
 
   private _filter(name: string): List[] {
@@ -619,12 +566,12 @@ export class BarsearchandbarComponent implements OnInit {
   async onSearch(){
     const districts = await this.dictrictService.getDistricts() as District[];
     const streets = await this.streetService.getStreets() as Street[]
-    var city = "", province = "", district = "", street = "", price = "";
+    var city = "", province = "", district = "", street = "", price = "", direct = "", area = "";
     if(this.city.name == "Tỉnh thành phố" || this.city.name == "Tất cả"){
       city = "";
     }
     else{
-      city = RemoveVietnameseTones.removeVietnameseTones(this.city.name);
+      city = '/' + RemoveVietnameseTones.removeVietnameseTones(this.city.name);
     }
     if(this.province.name == "Quận Huyện" || this.province.name == "Tất cả"){
       province = "";
@@ -645,15 +592,15 @@ export class BarsearchandbarComponent implements OnInit {
       street = '/' + RemoveVietnameseTones.removeVietnameseTones(this.street.name);
     }
 
-    if(this.priceSearch == "Chọn mức giá" || this.priceSearch == "Tất cả"){
+    if(RemoveVietnameseTones.removeVietnameseTones(this.priceSearch) == RemoveVietnameseTones.removeVietnameseTones("Tất cả")){
       price = "";
     }
     else{
-      price = RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
+      price = '/' + RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
     }
 
-    if(this.myControl.value){
-      let str = this.myControl.value.name.toString().split(", ");
+    if(this.searchText != ""){
+      let str = this.searchText.toString().split(", ");
       if(str.length == 1){
         city = RemoveVietnameseTones.removeVietnameseTones(str[0]);
       }
@@ -685,14 +632,17 @@ export class BarsearchandbarComponent implements OnInit {
       }
     }
 
+    var type = '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
     if(this.newType == "Tất cả"){
       const result = await this.typeservice.getTypes() as NewType[];
-      console.log(result)
-      this.newType = result[1].name;
+      // this.newType = result[1].name;
+      type = '/' + RemoveVietnameseTones.removeVietnameseTones(result[1].name);
     }
-    var link = '/home' + '/' + city + province + district + street + '/' + price  + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
     
-    //this.route.navigate( [link]);
+    var link = '/home' + city + province + district + street + price + type + direct + area;
+
+    // var link = '/home' + '/' + city + province + district + street + '/' + price  + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
+    
     this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.route.navigate([link]);
       

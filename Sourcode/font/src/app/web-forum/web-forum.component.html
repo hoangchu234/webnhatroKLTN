@@ -428,7 +428,7 @@
                                                         <div class="more">
                                                             <div class="more-post-optns"><i class="fa fa-ellipsis-v"></i>
                                                                 <ul>
-                                                                    <li (click)="createPost(postData.id)"><i class="fa fa-pencil-square-o"></i>Sửa bài đăng</li>
+                                                                    <li *ngIf="id == postData.user.id" (click)="createPost(postData.id)"><i class="fa fa-pencil-square-o"></i>Sửa bài đăng</li>
                                                                     <!-- <li><i class="fa fa-trash-o"></i>Delete Post</li> -->
                                                                     <li class="bad-report" (click)="checkReport(postData.id)" ><i class="fa fa-flag"></i>Báo cáo vi phạm</li>
                                                                 </ul>
@@ -449,7 +449,10 @@
                                                         <div class="we-video-info">
                                                             <ul>
                                                                 <li>
-                                                                    <div title="Like/Dislike"><i class="fa fa-heart" (click)="livePost(postData.id)"></i> <span>{{displayLikePost(postData.id)}}</span></div>
+                                                                    <span class="comment" title="Comments">
+                                                                        <i class="fa fa-heart" (click)="livePost(postData.id)"></i> 
+                                                                        <ins>{{displayLikePost(postData.id)}}</ins>
+                                                                    </span>
                                                                 </li>
                                                                 <li>
                                                                     <span class="comment" title="Comments">

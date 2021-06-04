@@ -84,18 +84,20 @@ const routes: Routes = [
       { path: '',          component: HomeComponent },
       { path: 'chi-tiet/:name/:id',          component: DetailMotelComponent },
 
+      // { path: ':city/:province/:district/:street/:price/:type',          component: SearchMotelComponent },
+      // { path: ':city/:province/:district/:street/:type',          component: SearchMotelComponent },
+      // { path: ':city/:province/:district/:type',          component: SearchMotelComponent },
+      // { path: ':city/:province/:type',          component: SearchMotelComponent},
+      // { path: ':city/:type',          component: SearchMotelComponent},
+      // { path: ':type',          component: SearchMotelComponent},
+
+      { path: ':city/:province/:district/:street/:price/:type/:direct/:area',          component: SearchMotelComponent },
       { path: ':city/:province/:district/:street/:price/:type',          component: SearchMotelComponent },
       { path: ':city/:province/:district/:street/:type',          component: SearchMotelComponent },
       { path: ':city/:province/:district/:type',          component: SearchMotelComponent },
       { path: ':city/:province/:type',          component: SearchMotelComponent},
       { path: ':city/:type',          component: SearchMotelComponent},
-      { path: ':type',          component: SearchMotelComponent},
-
-      //{ path: 'cho-thue-nha-tro',          component: SearchMotelComponent, data:{kind: 'cho-thue-nha-tro'} },
-      //{ path: 'nha-cho-thue',          component: SearchMotelComponent , data:{kind: 'nha-cho-thue'}},
-      //{ path: 'cho-thue-can-ho',          component: SearchMotelComponent , data:{kind: 'cho-thue-can-ho'}},
-      //{ path: 'cho-thue-mat-bang',          component: SearchMotelComponent , data:{kind: 'cho-thue-mat-bang'}},
-      //{ path: 'tim-nguoi-o-ghep-cap',          component: SearchMotelComponent , data:{kind: 'tim-nguoi-o-ghep-cap'}},    
+      { path: ':type',          component: SearchMotelComponent},    
     ]
   },
   

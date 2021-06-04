@@ -190,9 +190,11 @@ export class AuthenticationService {
     }
 
     public logout = () => {
-        //localStorage.removeItem('phone');
-        //localStorage.removeItem('password');
-        //localStorage.removeItem('currentAccount');
+        localStorage.removeItem(StorageService.totalMoneyStorage); 
+        localStorage.removeItem(StorageService.ImageStorage); 
+        localStorage.removeItem(StorageService.loadImageStorage)
+        localStorage.removeItem(StorageService.motelStorage)
+        localStorage.removeItem(StorageService.TypeMotelStorage)
         if (this.remember)
         {
            localStorage.removeItem(this.account_storage);

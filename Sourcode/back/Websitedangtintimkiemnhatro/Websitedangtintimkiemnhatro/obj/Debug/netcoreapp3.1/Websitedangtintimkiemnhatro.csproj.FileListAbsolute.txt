@@ -813,7 +813,6 @@ D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhat
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.SignalR.Protocols.MessagePack.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Twilio.dll
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Microsoft.AspNet.Identity.Core.dll
-D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csprojAssemblyReference.cache
 C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Sourcode\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Sourcode\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Sourcode\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.exe

@@ -12,6 +12,7 @@ import { Account } from  '../model/Account';
 import { UserService } from '../services/user.service'
 import { data } from 'jquery';
 import { City } from '../model/City';
+import { RemoveVietnameseTones } from '../removeVietnameseTones.service';
 
 declare var jQuery: any;
 
@@ -23,7 +24,7 @@ declare var jQuery: any;
 export class SearchMotelComponent implements OnInit {
 
   counttypes: CountNewTypeViewModel[] = []; // mảng các loại nhà trọ
-
+  newTypes: NewType [] = [];
   //Phân trang tổng số trang
   totalRecord: Number;
   page:Number = 1;
@@ -50,19 +51,34 @@ export class SearchMotelComponent implements OnInit {
     private motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
    
-    this.getCountTypes();
+    
     
    }
 
 
-   async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {
+    await this.getCountTypes();
+    await this.getNewTypes();
+    
+  }
 
+  public async getNewTypes(){
+    this.newTypes = await this.typeservice.getTypeExcepts() as NewType[];
   }
 
   public onNewType(message:string){
     this.datasearch = message;
   }
 
+  onChoceTypes(types: NewType){
+    var type = '/' + RemoveVietnameseTones.removeVietnameseTones(types.name);
+    var link = '/home' + type;
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate([link]);
+      
+    }); 
+  }
+  
   /*
   public getMotelDecreasePrice(){
     this.motels = this.motels.sort((a,b) => Number(b.price) - Number(a.price))

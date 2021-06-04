@@ -90,9 +90,11 @@ export class DataMotelComponent implements OnInit {
   @Input() citySearch;
 
   linkURL = this.route.url;
-
+  areas: AreaSearch[] = [];
+  str: string = ""
   constructor(private priceSearchServer:PriceSearchService,private provinceService: ProvincesService,public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService,private areaSearchService:AreaSearchService,private userService:UserService,private authenticationService: AuthenticationService,public dialog: MatDialog,private typeservice:TypeofnewService,private route: Router,private router: ActivatedRoute,private motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+    this.getArea();
     this.getDataAreaZone();
     this.getMotelByURL();
     /*
@@ -112,11 +114,10 @@ export class DataMotelComponent implements OnInit {
    }
 
 
-   async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {
    
     this.isUser();
 
-    
     /*const name = this.router.snapshot.paramMap.get("name");
     const type = this.router.snapshot.paramMap.get("type");
     const city = this.router.snapshot.paramMap.get("city");
@@ -156,14 +157,7 @@ export class DataMotelComponent implements OnInit {
   }
 
 
-  // public onCity(message:string){
-  //   this.motels = this.motelsearch.filter(a => a.city.name == message);
-  // }
-
   public async getTypes(){
-    /*this.typeservice.getTypes().subscribe(gettypes => {
-      this.newTypes = gettypes;
-    })*/
     return await this.typeservice.getTypes() as NewType [];
 
   }
@@ -204,6 +198,11 @@ export class DataMotelComponent implements OnInit {
 
   public handlePageChange(event) {
     this.page = event;
+  }
+
+  async getArea(){
+    this.areas = await this.areaSearchService.getAreaSearch() as AreaSearch[];
+    // this.area = this.directs[0].directName.toString();
   }
 
   //Load data
@@ -264,98 +263,82 @@ export class DataMotelComponent implements OnInit {
     }
     
   }
-
-  public deleteData(){
-    localStorage.removeItem(StorageService.AreaSearchStorage);
-    localStorage.removeItem(StorageService.DirectSearchStorage);
-    localStorage.removeItem(StorageService.AreaSearchTickStorage);
-    localStorage.removeItem(StorageService.DirectSearchTickStorage);
-  }
   
   public openDialog(): void {
     const dialogRef = this.dialog.open(DialogSearchMotelComponent, {
       direction: "ltr",
-      width: '400px'
+      width: '400px',
+      data: "aaa"
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      // this.motelsearch = this.motels.slice();
-      // if(localStorage.getItem(StorageService.AreaSearchStorage)){
-      //   this.motelsearch = this.motelsearch.filter(a => a.detail. == localStorage.getItem('directName'))
-      //   this.totalRecord = this.motels.length;
-      //   console.log("directName")
-      //  }
-    /*
-      //1
-      if(localStorage.getItem('areaName') == null && localStorage.getItem('directName') ){
-       this.motels = this.motelLoc.filter(a => a.detail.director == localStorage.getItem('directName'))
-       this.totalRecord = this.motels.length;
-       console.log("directName")
+    dialogRef.afterClosed().subscribe((result) => {
+      this.str = result.data;
+      var a = this.str.split('@');
+      if(a[0] == " "){
+        var direct = "";
       }
-      if(localStorage.getItem('areaName') && localStorage.getItem('directName') == null ){
-        var area = this.area.find(a => a.name == localStorage.getItem('areaName'))
-        this.getMotelByAreaSearch(area.id);
-        console.log("areaName")
+      else{
+        direct = a[0];
       }
-       
-      if(localStorage.getItem('areaName') && localStorage.getItem('directName')){
-        var area = this.area.find(a => a.name == localStorage.getItem('areaName'))
-        this.getMotelByAreaSearch(area.id);
-        this.motels = this.motelLoc.filter(a => a.detail.director == localStorage.getItem('directName'))
-        this.totalRecord = this.motels.length;
-        console.log("areaName,directName")
+      if(a[1] == " "){
+        var area = "";
       }
-
-
-      //0
-      if(localStorage.getItem('areaName') == null && localStorage.getItem('directName') == null){
-        this.motels = this.motelsearch;
-        this.motelLoc = this.motels;
-        this.totalRecord = this.motels.length;
-        console.log("_________")
-      }*/
-
+      else{
+        area = a[1];
+      }
+      this.url(direct, area);
+      // this.AreaDataSearch();
+      // this.DirectDataSearch();
     });
   }
 
-  /*public getMotelByAreaSearch(id){
-    if(Number(id) == 1){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) < 20)
-      this.totalRecord = this.motels.length;
+  url(directName, areaId){
+    var city = "/" + this.router.snapshot.paramMap.get("city");
+    var type = "/" + this.router.snapshot.paramMap.get("type");
+    var province = "/" + this.router.snapshot.paramMap.get("province");
+    var street = "/" + this.router.snapshot.paramMap.get("street");
+    var price = "/" + this.router.snapshot.paramMap.get("price");
+    var district = "/" + this.router.snapshot.paramMap.get("district");
+    var direct = ""
+    var area = ""
+    if(city == "/null"){
+      city = "";
     }
-    else if(Number(id) == 2){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) >= 20 && Number(a.areaZone) < 30)
-      this.totalRecord = this.motels.length;
+    if(type == "/null"){
+      type = "";
     }
-    else if(Number(id) == 3){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) >= 30 && Number(a.areaZone) < 50)
-      this.totalRecord = this.motels.length;
+    if(province == "/null"){
+      province = "";
     }
-    else if(Number(id) == 4){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) >= 50 && Number(a.areaZone) < 60)
-      this.totalRecord = this.motels.length;
+    if(street == "/null"){
+      street = "";
     }
-    else if(Number(id) == 5){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) >= 60 && Number(a.areaZone) < 70)
-      this.totalRecord = this.motels.length;
+    if(price == "/null"){
+      price = "";
     }
-    else if(Number(id) == 6){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) >= 70 && Number(a.areaZone) < 80)
-      this.totalRecord = this.motels.length;
+    if(district == "/null"){
+      district = "";
     }
-    else if(Number(id) == 7){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) >= 80 && Number(a.areaZone) < 90)
-      this.totalRecord = this.motels.length;
+    if(directName == ""){
+      direct = "";
     }
-    else if(Number(id) == 8){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) >= 90 && Number(a.areaZone) < 100)
-      this.totalRecord = this.motels.length;
+    else{
+      direct = "/" + RemoveVietnameseTones.removeVietnameseTones(directName);
     }
-    else if(Number(id) == 9){
-      this.motels = this.motelLoc.filter(a => Number(a.areaZone) > 100)
-      this.totalRecord = this.motels.length;
+    if(areaId == ""){
+      area = "";
     }
-  }*/
+    else{
+      area = "/" + areaId;
+    }
+    
+    var link = '/home' + city + province + district + street + price + type + direct + area;
+    console.log(link)
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate([link]);
+      
+    });
+  }
 
   public async getCities(){
     return await this.cityService.getCitys() as City[];
@@ -392,6 +375,8 @@ export class DataMotelComponent implements OnInit {
     var street = this.router.snapshot.paramMap.get("street");
     var price = this.router.snapshot.paramMap.get("price");
     var district = this.router.snapshot.paramMap.get("district");
+    var direct = this.router.snapshot.paramMap.get("direct");
+    var area = this.router.snapshot.paramMap.get("area");
 
     var idType: number = 0;
     var idCity: number = 0;
@@ -457,31 +442,17 @@ export class DataMotelComponent implements OnInit {
     }
     if(price != null){
       const priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
-      /*indexPrice = priceSearch.findIndex(a => {
-        if(a.typePriceOne == null){
-          var listPrice = a.numberOne + " - " + a.numberTwo + " " + a.typePriceTwo;
-          if(listPrice == price){
-            indexPrice = Number(a.id);
-          }
-        }
-        else{
-          var listPrice = a.numberOne + " " + a.typePriceOne + " - " + a.numberTwo + " " + a.typePriceTwo;
-          if(listPrice == price){
-            indexPrice = Number(a.id);
-          }
-        }
-      });  */
-
       //2-Trieu-3-Trieu
       //Duoi-1-Trieu
-      var str = price.replace("-","");
-      str = str.replace("-", "");
-      var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.numberTwo + a.typePriceTwo) === str);
+      var str = price.split("-");
+      // var str = price.replace("-","");
+      // str = str.replace("-", "");
+      var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne) === str[0]);
 
-      if(indexPrice == -1){
-        str = str.replace("-", "");
-        indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.typePriceOne + a.numberTwo + a.typePriceTwo) === str);
-      }
+      // if(indexPrice == -1){
+      //   str = str.replace("-", "");
+      //   indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.typePriceOne + a.numberTwo + a.typePriceTwo) === str);
+      // }
       indexPrice = indexPrice + 1;
       idPrice = indexPrice;
     }
@@ -495,9 +466,27 @@ export class DataMotelComponent implements OnInit {
     if(this.motels.length){
       this.motels.splice(0, this.motels.length);
     }
-    this.motels = this.motelsearch.slice();
+    var dataMotelFilter = this.motelsearch.slice();
+    if(direct != null){
+      dataMotelFilter = this.motelsearch.filter(a => RemoveVietnameseTones.removeVietnameseTones(a.detail.director) === direct);
+    }
+    if(area != null){
+      var id = this.areas.find(a => a.id === area);
+      if(area == "2"){
+        dataMotelFilter = this.motelsearch.filter(a => Number(a.areaZone) < Number(id.numberTwo));
+      }
+      else if(area == "10"){
+        dataMotelFilter = this.motelsearch.filter(a => Number(a.areaZone) > Number(id.numberTwo));
+      }
+      else if(area != "1"){
+        dataMotelFilter = this.motelsearch.filter(a => (Number(a.areaZone) > Number(id.numberOne)) && (Number(a.areaZone) < Number(id.numberTwo)));
+      }
+    }
+
+    // this.motels = this.motelsearch.slice();
+    // this.totalRecord = this.motels.length;
+    this.motels = dataMotelFilter.slice();
     this.totalRecord = this.motels.length;
-   
   }
 
   /*

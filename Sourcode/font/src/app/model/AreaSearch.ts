@@ -1,4 +1,6 @@
 export class AreaSearch {
     id: string;
-    name: string;
+    numberOne: string;
+    numberTwo: string;
+    type: string;
 }

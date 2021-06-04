@@ -49,9 +49,11 @@ export class DetailPostForumComponent implements OnInit {
   countNotifyNotSee = 0;
   postUser = "";
   image = "";
+  id = 0;
   constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     this.image = "../../assets/forum/images1/resources/friend-avatar2.jpg";
     if(this.authenticationService.currentAccountValue){
+      this.id = this.authenticationService.currentAccountValue.user.id;
       this.dataUser = this.authenticationService.currentAccountValue.user;
     }
     else{

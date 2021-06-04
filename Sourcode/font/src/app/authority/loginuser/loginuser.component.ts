@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Account } from  '../../model/Account';
+import { User } from 'src/app/model/User';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-loginuser',
@@ -13,27 +15,30 @@ export class LoginuserComponent implements OnInit {
   //currentAccount: Account;
   image = "";
   // checkImage = false;
-  constructor(private router: Router,
+  constructor(private router: Router,private userService: UserService,
     private authenticationService: AuthenticationService) { 
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
       
-      if(this.authenticationService.currentAccountValue){
-        this.hoVaTen = this.authenticationService.currentAccountValue.user.hovaTen;
-        if(this.authenticationService.currentAccountValue.user.userImage != null){
-          this.image = this.authenticationService.currentAccountValue.user.userImage;
-        }
-        else{
-          this.image = "../../../assets/images/blog_3.jpg";
-        }
-       
-        
-      }
     }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    if(this.authenticationService.currentAccountValue){
+      this.hoVaTen = this.authenticationService.currentAccountValue.user.hovaTen;
+      var user = await this.getUserById(this.authenticationService.currentAccountValue.user.id);
+      if(user.userImage != null){
+        this.image = user.userImage;
+      }
+      else{
+        this.image = "../../../assets/images/blog_3.jpg";
+      }
+    }
+    
   }
 
-  
+  async getUserById(id){
+    return await this.userService.getUserFromId(id) as User;
+  }
+
   public onLogout = () => {
     this.authenticationService.logout();
     window.location.reload()

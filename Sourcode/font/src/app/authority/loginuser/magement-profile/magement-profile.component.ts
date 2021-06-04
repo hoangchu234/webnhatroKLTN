@@ -154,6 +154,12 @@ export class MagementProfileComponent implements OnInit {
      {
        var id = Number(this.authenticationService.currentAccountValue.user.id);
        this.user = await this.userService.getUserFromId(id) as User;
+       if(this.user.userImage != null){
+        this.image = this.user.userImage;
+       }
+       else{
+        this.image = "../../../assets/images/blog_3.jpg";
+       }
      }
    });
  }

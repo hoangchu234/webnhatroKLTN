@@ -4,7 +4,7 @@
       <nav class="nav"  >
         <div class="search-field d-none d-md-block p-2 link-secondary" style="margin-top:-10px;margin-left: -15px;" >
           <form class="d-flex align-items-center h-100" action="#">
-            <input type="text" placeholder="Tìm kiếm địa điểm, khu vực" matInput [formControl]="myControl"  [matAutocomplete]="auto" value="" class="search-bar" id="search-suggestion" autocomplete="off">
+            <input type="text" placeholder="Tìm kiếm địa điểm, khu vực" matInput [formControl]="myControl"(keyup)="onKeyUp($event)"  [matAutocomplete]="auto" value="" class="search-bar" id="search-suggestion" autocomplete="off">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                 {{option.name}}
@@ -67,8 +67,8 @@
           <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Giá <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" style="margin-top: 5px;">{{priceSearch}}</div> </div>
 
           <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
-              <div *ngFor='let priceSearch of priceSearchs'>
-                  <a class="dropdown-item" (click)="onChoicePriceSearch(priceSearch)" [value]="priceSearch.id">{{priceSearch.numberOne}} {{priceSearch.typePriceOne}} {{priceSearch.numberTwo}} {{priceSearch.typePriceTwo}}</a>
+              <div *ngFor='let priceSearchs of priceSearchs'>
+                  <a class="dropdown-item" (click)="onChoicePriceSearch(priceSearchs)" [value]="priceSearchs.id">{{priceSearchs.numberOne}} {{priceSearchs.typePriceOne}} {{priceSearchs.numberTwo}} {{priceSearchs.typePriceTwo}}</a>
               </div>
           </div>
         </div>

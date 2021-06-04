@@ -641,8 +641,9 @@ export class DetailMotelPublishComponent implements OnInit {
     if(this.street == undefined){
 
     }
+    this.motelUpdate.status = "Tin đang ẩn";
     this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
-      console.log(data);
+      // console.log(data);
     });
   }
 

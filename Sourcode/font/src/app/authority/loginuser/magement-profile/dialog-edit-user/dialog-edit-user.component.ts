@@ -16,9 +16,8 @@ export class DialogEditUserComponent implements OnInit {
 
  // Load hình và đổi hình
  public image: File;
- loadImage: string;
 
- imageUser;
+ imageUser: string = "";
  constructor(
    private userService:UserService,
    private storage: AngularFireStorage,
@@ -36,15 +35,14 @@ export class DialogEditUserComponent implements OnInit {
    const reader = new FileReader();
    reader.readAsDataURL(event.target.files.item(0));
    reader.onload = (event: any) => {
-     this.loadImage = event.target.result
+     this.imageUser = event.target.result
    }   
    this.image = files.item(0);
-
+   
  }
 
 
  public saveImage = async () => {
-
    if(this.image){
     var nameUserImage = "userimages"
     var filePath = `${nameUserImage}/${this.image.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;

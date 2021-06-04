@@ -10,6 +10,8 @@ import { Location } from '@angular/common'
 import { TypeofnewService } from 'src/app/services/newstype.service';
 import { NewType } from 'src/app/model/NewType';
 import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
+import { User } from 'src/app/model/User';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -40,24 +42,42 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private typeservice:TypeofnewService,
     private motelService: MotelService,
+    private userService: UserService,
     private authenticationService: AuthenticationService) { 
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-      if(this.authenticationService.currentAccountValue){
-        if(this.authenticationService.currentAccountValue.user){
-          this.getReply();
-          this.checkLogin = true;
-        }
-        if(this.authenticationService.currentAccountValue.user.userImage != null){
-          this.userImage = this.authenticationService.currentAccountValue.user.userImage;
-        }
-        if(this.authenticationService.currentAccountValue.user.userImage == null){
-          this.userImage = "../../../assets/images/blog_3.jpg"
-        }
-      }      
+      // if(this.authenticationService.currentAccountValue){
+      //   if(this.authenticationService.currentAccountValue.user){
+      //     this.getReply();
+      //     this.checkLogin = true;
+      //   }
+      //   if(this.authenticationService.currentAccountValue.user.userImage != null){
+      //     this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+      //   }
+      //   if(this.authenticationService.currentAccountValue.user.userImage == null){
+      //     this.userImage = "../../../assets/images/blog_3.jpg"
+      //   }
+      // }      
     }
 
   async ngOnInit(): Promise<void> { 
     this.types = await this.getTypes();
+    if(this.authenticationService.currentAccountValue){
+      if(this.authenticationService.currentAccountValue.user){
+        this.getReply();
+        this.checkLogin = true;
+      }
+      var user = await this.getUserById(this.authenticationService.currentAccountValue.user.id);
+      if(user.userImage != null){
+        this.userImage = user.userImage;
+      }
+      else{
+        this.userImage = "../../../assets/images/blog_3.jpg";
+      }
+    }
+  }
+  
+  async getUserById(id){
+    return await this.userService.getUserFromId(id) as User;
   }
   
   onClickNarbarURL(id){

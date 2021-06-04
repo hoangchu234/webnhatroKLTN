@@ -18,9 +18,9 @@
         <div class="col-md-3 font">
           <div style="background-image: url(../../assets/images/image_4.jpg) ;height: 400px;width: 100%;"></div>
           <div style="border: 1px solid gray;margin-top:20px ;border-radius: 5px;" >
-            <div class="font" style="margin-top:20px;margin-left: 20px;margin-right: 20px;"><b>Loại bất động sản </b></div>
+            <div class="font" style="margin-top:20px;margin-left: 20px;margin-right: 20px;"><b>Loại bất nhà trọ</b></div>
             <ul style="padding:20px;padding-top: 10px;" class="font" >
-              <li *ngFor='let type of counttypes; let i=index' [value]="type.id" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">{{type.typeofnews}}({{type.count}})</span></div></li>
+              <li *ngFor="let newTypes of newTypes; let i=index" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" [value]="newTypes.id" style="margin-left: 30px;font-size: 20xp;font-weight: initial;" (click)="onChoceTypes(newTypes)">{{newTypes.name}} ({{counttypes[i].count}})</span></div></li>
             </ul>
           </div>
           <!--<div style="border: 1px solid gray;margin-top:20px ;border-radius: 5px;" >

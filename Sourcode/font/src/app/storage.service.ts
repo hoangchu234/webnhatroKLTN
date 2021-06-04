@@ -11,8 +11,8 @@ export class StorageService
     public static totalMoneyStorage: string = 'totalMoneny';
     public static AreaSearchStorage: string = 'area';
     public static DirectSearchStorage: string = 'direct';
-    public static AreaSearchTickStorage: string = 'areaTick';
-    public static DirectSearchTickStorage: string = 'directTick';
+    // public static AreaSearchTickStorage: string = 'areaTick';
+    // public static DirectSearchTickStorage: string = 'directTick';
 
     constructor() { }
     

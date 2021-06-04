@@ -8,7 +8,7 @@
             </div>
             <div style="margin-top:20px;padding: 5px;">Số diện thoại mới</div>
             <div style="height: 30px;padding: 5px;">
-              <input matInput  style="width: 100%;padding: 5px;border: 1px solid black;" [(ngModel)]="phone" ngDefaultControl name="Phone">
+              <input id="mobile" matInput  style="width: 100%;padding: 5px;border: 1px solid black;" [(ngModel)]="phone" ngDefaultControl name="Phone">
             </div>
             <div id="recaptcha-container" style="margin-top: 15px;"></div>
             <div>
@@ -25,3 +25,22 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('body').on('click','.checkmobile', function() {
+      var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+      var mobile = $('#mobile').val();
+      if(mobile !==''){
+          if (vnf_regex.test(mobile) == false) 
+          {
+              alert('Số điện thoại của bạn không đúng định dạng!');
+          }else{
+              alert('Số điện thoại của bạn hợp lệ!');
+          }
+      }else{
+          alert('Bạn chưa điền số điện thoại!');
+      }
+      });
+  });
+  </script>

@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Twilio.Clients;
 using Websitedangtintimkiemnhatro.Hubs;
 using Websitedangtintimkiemnhatro.Models;
-using Websitedangtintimkiemnhatro.Services;
 
 namespace Websitedangtintimkiemnhatro
 {
@@ -50,7 +49,7 @@ namespace Websitedangtintimkiemnhatro
 
             //services.AddHttpClient<ITwilioRestClient, CustomTwilioClient>(client =>
             //    client.DefaultRequestHeaders.Add("X-Custom-Header", "HttpClientFactory-Sample"));
-            services.AddHttpClient<ITwilioRestClient, CustomTwilioClient>();
+            //services.AddHttpClient<ITwilioRestClient, CustomTwilioClient>();
 
             
 

@@ -57,10 +57,10 @@
                                   <i class="input-group-text border-0 mdi mdi-magnify" style="color: black; background-color: white;"></i>
                                 </div>
                                 <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
-                                 class="form-control bg-transparent border-0" placeholder="Tìm kiếm theo tiêu đề" style="padding-right: 20px;">
+                                 class="form-control bg-transparent border-0" placeholder="Tìm kiếm theo tiêu đề" (keyup)="onKeyUp($event)" style="padding-right: 20px;">
                                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                    {{option.name}}
+                                  <mat-option *ngFor="let option of filteredOptions | async;let i=index" [value]="option">
+                                    <div >{{option.name}}</div>
                                   </mat-option>
                                 </mat-autocomplete>
                               </div>
@@ -129,142 +129,6 @@
                       </div>
                     </div>
                   </div>
-                  <!--<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="col-md-12" >
-                      <div class="row">
-                        <div class="col-md-12" style="margin-left:15px">
-                          <div class="search-field d-none d-md-block" >
-                            <form class="d-flex align-items-center h-100" action="#">
-                              <div class="input-group" style="color: black;background-color: white;border-radius: 2px;">
-                                <div class="input-group-prepend bg-transparent">
-                                  <i class="input-group-text border-0 mdi mdi-magnify" style="color: black; background-color: white;"></i>
-                                </div>
-                                <input type="text" class="form-control bg-transparent border-0" placeholder="Tìm kiếm">
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      <div class="col-md-12 col-sm-12 row" style="margin-top: 10px;margin-left:5px">
-                          <div class="btn-group col-md-8 col-sm-4" >
-                            <nav class=" navbar-expand-lg navbar-light" style="float: right; ">
-                              <div class="collapse navbar-collapse" id="navbarNav">
-                                <ul class="navbar-nav">
-                                  <li class="nav-item active" style="margin: 10px;">
-                                    <a href="#" class="font" (click)="getCitys()" style="color:white;text-decoration: none;width: 200px;margin-bottom: 10px;" data-toggle="dropdown">Thành phố<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin-left: 30px;"></span> </a>
-                                    <div class="dropdown-menu scrollable-menu" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Another action</a>
-                                      <a class="dropdown-item" href="#">Something else</a>
-                                      <a class="dropdown-item" href="#">Separated link</a>
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Another action</a>
-                                      <a class="dropdown-item" href="#">Something else</a>
-                                      <a class="dropdown-item" href="#">Separated link</a>
-                                    </div>
-                                  </li>
-                                  <li class="nav-item active" style="margin: 10px;">
-                                    <a href="#" class="font" (click)="getCitys()" style="color:white;text-decoration: none;width: 200px;margin-bottom: 10px;" data-toggle="dropdown">Tỉnh thành<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin-left: 30px;"></span> </a>
-                              <div class="dropdown-menu scrollable-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 10px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Action2222</a>
-                                <a class="dropdown-item" href="#">Action</a>
-
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                              </div>
-                                  </li>
-                                  <li class="nav-item active" style="margin: 10px;">
-                                    <a href="#" class="font" (click)="getCitys()" style="color:white;text-decoration: none;width: 200px;margin-bottom: 10px;" data-toggle="dropdown">Tim kiếm nâng cao<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin-left: 30px;"></span> </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </nav>
-                          </div>
-                          <div class="col-md-2 col-sm-4">
-                          </div>
-                          <div class="col-md-2 col-sm-4" style="float: right;"  >
-                            <button type="button" class="btn btn-primary" style="background-color: red; color: white;"><div style="float: left;margin-top:0px;margin-right: 5px;"class="fa fa-search" ></div><span style="text-align: center;">Tìm kiếm</span></button>
-                          </div>
-                      </div>
-
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                    <div class="col-md-12" >
-                      <div class="row">
-                        <div class="col-md-12" style="margin-left:15px">
-                          <div class="search-field d-none d-md-block" >
-                            <form class="d-flex align-items-center h-100" action="#">
-                              <div class="input-group" style="color: black;background-color: white;border-radius: 2px;">
-                                <div class="input-group-prepend bg-transparent">
-                                  <i class="input-group-text border-0 mdi mdi-magnify" style="color: black; background-color: white;"></i>
-                                </div>
-                                <input type="text" class="form-control bg-transparent border-0" placeholder="Tìm kiếm">
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      <div class="col-md-12 col-sm-12 row" style="margin-top: 10px;margin-left:5px">
-                          <div class="btn-group col-md-8 col-sm-4" >
-                            <nav class=" navbar-expand-lg navbar-light" style="float: right; ">
-                              <div class="collapse navbar-collapse" id="navbarNav">
-                                <ul class="navbar-nav">
-                                  <li class="nav-item active" style="margin: 10px;">
-                                    <a href="#" class="font" (click)="getCitys()" style="color:white;text-decoration: none;width: 200px;margin-bottom: 10px;" data-toggle="dropdown">Thành phố<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin-left: 30px;"></span> </a>
-                                    <div class="dropdown-menu scrollable-menu" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Another action</a>
-                                      <a class="dropdown-item" href="#">Something else</a>
-                                      <a class="dropdown-item" href="#">Separated link</a>
-                                      <a class="dropdown-item" href="#">Action</a>
-                                      <a class="dropdown-item" href="#">Another action</a>
-                                      <a class="dropdown-item" href="#">Something else</a>
-                                      <a class="dropdown-item" href="#">Separated link</a>
-                                    </div>
-                                  </li>
-                                  <li class="nav-item active" style="margin: 10px;">
-                                    <a href="#" class="font" (click)="getCitys()" style="color:white;text-decoration: none;width: 200px;margin-bottom: 10px;" data-toggle="dropdown">Tỉnh thành<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin-left: 30px;"></span> </a>
-                              <div class="dropdown-menu scrollable-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 10px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Action2222</a>
-                                <a class="dropdown-item" href="#">Action</a>
-
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                              </div>
-                                  </li>
-                                  <li class="nav-item active" style="margin: 10px;">
-                                    <a href="#" class="font" (click)="getCitys()" style="color:white;text-decoration: none;width: 200px;margin-bottom: 10px;" data-toggle="dropdown">Tim kiếm nâng cao<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin-left: 30px;"></span> </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </nav>
-                          </div>
-                          <div class="col-md-2 col-sm-4">
-                          </div>
-                          <div class="col-md-2 col-sm-4" style="float: right;"  >
-                            <button type="button" class="btn btn-primary" style="background-color: red; color: white;"><div style="float: left;margin-top:0px;margin-right: 5px;"class="fa fa-search" ></div><span style="text-align: center;">Tìm kiếm</span></button>
-                          </div>
-                      </div>
-
-                      </div>
-                    </div>
-                  </div>-->
                 </div>
               </div>
             </div>
@@ -287,7 +151,7 @@
           <div class="col-md-6">
             <div style="background-image: url(https://cloud.mogi.vn/review/districts/ho-chi-minh-home.jpg);height: 160px;width: 550px; border-radius: 20px;padding-top: 10px;">
             <div style="padding:0px 20px 15px 15px ;">
-            <a style="color:black;font-size:15px;margin-top: 5px;" >Khám phá 150 khu vực ở</a>
+            <a style="color:black;font-size:15px;margin-top: 5px;" >Khám phá khu vực ở</a>
             <h4 class="font" style="color: black;">TPHCM</h4></div>
             <p style="color: white;float:right;padding-top: 35px;padding-right: 20px;">Xem thêm <i (click)="onClickSeeMoreHCM()" class="fa fa-chevron-right"></i></p>
             </div>
@@ -295,7 +159,7 @@
           <div class="col-md-6">
             <div style="background-image: url(https://cloud.mogi.vn/review/districts/ho-chi-minh-home.jpg);height: 160px;width: 550px; border-radius: 20px;padding-top: 10px;">
               <div style="padding:0px 20px 15px 15px ;">
-                <a style="color:black;font-size:15px;margin-top: 5px;" >Khám phá 150 khu vực ở</a>
+                <a style="color:black;font-size:15px;margin-top: 5px;" >Khám phá khu vực ở</a>
                 <h4 class="font" style="color: black;">Hà Nội</h4></div>
               <p style="color: white;float:right;padding-top: 35px;padding-right: 20px;">Xem thêm <i (click)="onClickSeeMoreHN()" class="fa fa-chevron-right"></i></p>
             </div>
@@ -349,19 +213,7 @@
                           <p style="float: right;color: green;margin-right: 10px"><span  class="fa fa-phone"></span><b style="color: black;margin-left: 10px;padding-top: 10px;margin-right: 15px;"><p class="test3" style="margin-left: 20px;margin-top: -24px;">{{motel.phone}}</p></b></p>
                           </div>
                         </div>
-                        <!-- <div class="offer_reviews" style="float: right;">
-                          <div class="offers_price" style="font-size: 32px;">{{motel.price}} {{motel.priceType}}</div>
-                          <br>
-                          <div  style="float: right;">
-                          <div class="offer_reviews_content" style="margin-top:20px">
-                            <div class="offer_reviews_title">very good</div>
-                            <div class="offer_reviews_subtitle">100 reviews</div>
-                          </div>
-                          <div class="offer_reviews_rating text-center" style="margin-top:20px">8.1</div>
-                        </div>
-                          <br>
-                          <div class="button book_button" style="margin-top: 130px;float: right;"><a style="color: white;" (click)="linkRouter(motel.title, motel.id)" >Xem chi tiết<span></span><span></span><span></span></a></div>
-                        </div> -->
+                    
                       </div>
                     </div>
                     </div>
@@ -376,33 +228,16 @@
                     <li *ngFor='let type of counttypes; let i=index' [value]="type.id" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">{{type.typeofnews}}({{type.count}})</span></div></li>
                   </ul> -->
                 <div style="border: 1px solid gray;margin-top:20px ;border-radius: 5px;" >
-                  <div style="margin-top:20px;margin-left: 20px;margin-right: 20px;"><b>Nhà tại khu vực</b></div>
+                  <div style="margin-top:20px;margin-left: 20px;margin-right: 20px;"><b>Loại nhà trọ</b></div>
                   <ul style="padding:20px;padding-top: 10px;">
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Căn hộ(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Phòng trọ(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Văn phòng(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà xưởng(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">nhà(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span  class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Căn hộ(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Phòng trọ(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Văn phòng(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà xưởng(54.392)</span></div></li>
+                    <li class="font" *ngFor="let newTypes of newTypes; let i=index" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" [value]="newTypes.id" style="margin-left: 30px;font-size: 20xp;font-weight: initial;" (click)="onChoceTypes(newTypes)">{{newTypes.name}} ({{counttypes[i].count}})</span></div></li>
+                    <!-- <li class="font" *ngFor='let type of counttypes; let i=index' [value]="type.id" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;" (click)="onClickNewType($event); getMotelSearch()">{{type.typeofnews}} ({{type.count}})</span></div></li> -->
                   </ul>
                 </div>
                 <div style="border: 1px solid gray;margin-top:20px ;border-radius: 5px;" >
-                  <div style="margin-top:20px;margin-left: 20px;margin-right: 20px;"><b>Nhà tại khu vực</b></div>
+                  <div style="margin-top:20px;margin-left: 20px;margin-right: 20px;"><b>Các mức giá</b></div>
                   <ul style="padding:20px;padding-top: 10px;">
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Căn hộ(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Phòng trọ(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Văn phòng(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà xưởng(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">nhà(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span  class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Căn hộ(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Phòng trọ(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Văn phòng(54.392)</span></div></li>
-                    <li class="font" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" style="margin-left: 30px;font-size: 20xp;font-weight: initial;">Nhà xưởng(54.392)</span></div></li>
+                    <li class="font" *ngFor="let priceSearchs of priceSearchs" style="color: black;margin-bottom: 5px;"><div class="fa fa-chevron-circle-right"><span class="font" [value]="priceSearchs.id" style="margin-left: 30px;font-size: 20xp;font-weight: initial;" (click)="onChocePrices(priceSearchs)">{{priceSearchs.numberOne}} {{priceSearchs.typePriceOne}} - {{priceSearchs.numberTwo}} {{priceSearchs.typePriceTwo}}</span></div></li>
                   </ul>
                 </div>
                 </div>

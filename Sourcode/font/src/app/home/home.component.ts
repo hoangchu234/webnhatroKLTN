@@ -15,12 +15,13 @@ import { PriceSearch } from '../model/PriceSearch';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { filter, map, startWith } from 'rxjs/operators';
+import { filter, map, startWith, tap } from 'rxjs/operators';
 import { StreetService } from '../services/street.service';
 import { DictrictService } from '../services/dictrict.service';
 import { District } from '../model/District';
 import { Street } from '../model/Street';
 import { ViewportScroller } from '@angular/common';
+import { CountNewTypeViewModel } from '../model/CountNewTypeViewModel';
 
 
 @Component({
@@ -30,6 +31,7 @@ import { ViewportScroller } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
 
+  counttypes: CountNewTypeViewModel[] = []; // mảng các loại nhà trọ
   // Danh sách city và tên city
   cities: City [] = [];
   city  = new City();
@@ -46,7 +48,8 @@ export class HomeComponent implements OnInit {
   motelhighlights: Motel[] = [];
   motelnews: Motel[] = [];
 
- 
+  searchText = "";
+  check = false;
   myControl = new FormControl();
   options: List[] = [];
   filteredOptions: Observable<List[]>;
@@ -56,16 +59,11 @@ export class HomeComponent implements OnInit {
     private cityService: CitiesService, private provinceService: ProvincesService, 
     private typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,
     viewportScroller: ViewportScroller) { 
-
+      
   }
 
-  ngOnInit(){
-    //localStorage.removeItem('city');
-    //localStorage.removeItem('province');
-    //localStorage.removeItem('district');
-    //localStorage.removeItem('street');
-    //localStorage.removeItem('searchtext');
-    //localStorage.removeItem('priceid');
+  async ngOnInit(){
+    await this.getCountTypes();
 
     this.getPrices();
     this.getNewTypes();
@@ -73,13 +71,13 @@ export class HomeComponent implements OnInit {
     
     this.getHighlightsMotel();
     this.getNewsMotel();
-
+    await this.enterSearch();   
     this.city.name = "Toàn quốc";
     this.province.name = "Tỉnh thành";
     this.priceSearch = "Chọn mức giá";
     this.newType = "Phòng trọ, nhà trọ";
 
-    this.enterSearch();
+    
   }
 
   /*sendEmail() {
@@ -90,6 +88,12 @@ export class HomeComponent implements OnInit {
     console.log(email);
     this.motelService.postEmail(email).subscribe(email => this.emailsend == email);
   }*/
+  async getCountTypes(){
+    const result = await this.typeservice.getCountTypes() as any;
+    for(let i = 1;i< result.length; i++){
+      this.counttypes.push(result[i])
+    }
+  }
 
   linkRouter(name, id) {
     //this.router.navigate( [{name: name, id: id}]);
@@ -145,12 +149,9 @@ export class HomeComponent implements OnInit {
   }
 
   public async getCitys(){
-    this.cities = await this.cityService.getCitys() as City[];
-    /*this.cityService.getCitys().subscribe(getcity => {
-      for(let i=1;i<getcity.length;i++){
-        this.cities.push(getcity[i])
-      }
-    })*/
+    var data = await this.cityService.getCitys() as City[];
+    data.splice(0,1);
+    this.cities = data.slice();
   }
 
   public async getPrices(){
@@ -161,46 +162,47 @@ export class HomeComponent implements OnInit {
   }
 
   public async getNewTypes(){
-    /*this.typeservice.getTypeExcepts().subscribe(gettypes => {
-      this.newTypes = gettypes;
-    })*/
     this.newTypes = await this.typeservice.getTypeExcepts() as NewType[];
   }
 
   public async getHighlightsMotel () {
     this.motelhighlights = await this.motelService.getHighlightsMotels() as Motel[];
-    /*this.motelService.getHighlightsMotels().subscribe(gettypes => {
-      this.motelhighlights = gettypes
-    })*/
+  }
+
+  linkRoute(link){
+    // console.log(link)
+    this.router.navigate( [link]);
+  }
+
+  onChoceTypes(types: NewType){
+    var type = '/' + RemoveVietnameseTones.removeVietnameseTones(types.name);
+    var link = '/home' + type;
+    this.linkRoute(link);
+  }
+
+  onChocePrices(priceSearch: PriceSearch){
+    if(priceSearch.typePriceOne == null){
+      this.priceSearch = priceSearch.numberOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
+    }
+    else{
+      this.priceSearch = priceSearch.numberOne + " " + priceSearch.typePriceOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
+    }
+    var price = '/' + RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
+    var type = '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
+    var link = '/home' + price + type;
+    this.linkRoute(link);
   }
 
   public async getMotelSearch () {
 
     const districts = await this.dictrictService.getDistricts() as District[];
     const streets = await this.streetService.getStreets() as Street[]
-    //:city/:province/:district/:street/:price/:type
-    /*var link = '/home' + '/' + RemoveVietnameseTones.removeVietnameseTones(this.city.name) + '/' + RemoveVietnameseTones.removeVietnameseTones(this.province.name) + '/' + this.priceSearch  + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
-    if(this.city.name == "Toàn quốc"){
-      this.city = new City();
-      this.city = this.cities[0];
-      link = '/home' + '/' + RemoveVietnameseTones.removeVietnameseTones(this.province.name) + '/' + this.priceSearch + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
-    }
-    if(this.province.name == "Tỉnh thành"){
-      this.province = new Province();
-      this.province.name = "";
-      link = '/home'  + '/' + RemoveVietnameseTones.removeVietnameseTones(this.city.name) + '/' + this.priceSearch + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
-    }
-    if(this.priceSearch == "Chọn mức giá"){
-      this.priceSearch = "";
-      link = '/home' + '/' + RemoveVietnameseTones.removeVietnameseTones(this.city.name) + '/' + RemoveVietnameseTones.removeVietnameseTones(this.province.name) + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
-    }*/
-    
-    var city = "", province = "", district = "", street = "", price = "";
+    var city = "", province = "", district = "", street = "", price = "", direct = "", area = "";
     if(this.city.name == "Toàn quốc"){
       city = "";
     }
     else{
-      city = RemoveVietnameseTones.removeVietnameseTones(this.city.name);
+      city = '/' + RemoveVietnameseTones.removeVietnameseTones(this.city.name);
     }
     if(this.province.name == "Tỉnh thành"){
       province = "";
@@ -213,11 +215,11 @@ export class HomeComponent implements OnInit {
       price = "";
     }
     else{
-      price = RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
+      price = '/' + RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
     }
-
-    if(this.myControl.value){
-      let str = this.myControl.value.name.toString().split(", ");
+    
+    if(this.searchText != ""){
+      let str = this.searchText.toString().split(", ");
       if(str.length == 1){
         city = RemoveVietnameseTones.removeVietnameseTones(str[0]);
       }
@@ -248,68 +250,51 @@ export class HomeComponent implements OnInit {
         }
       }
     }
-    var link = '/home' + '/' + city + province + district + street + '/' + price  + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
+    var type = '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
+    var link = '/home' + city + province + district + street + price  + type + direct + area;
+    // console.log(link)
+    // this.router.navigate( [link]);
+    this.linkRoute(link);
 
-    this.router.navigate( [link]);
-
-    /*localStorage.setItem('city', this.city.name);
-    localStorage.setItem('province', this.province.id);
-    if(this.searchtext == undefined){
-      localStorage.setItem('searchtext', "NULL");
-    }
-    else{
-      localStorage.setItem('searchtext', this.searchtext);
-    }*/
-
-    //this.routerNewType();
   }
 
-  /*public routerNewType(){
-    if(this.newType === "Phòng trọ, nhà trọ"){
-      this.router.navigateByUrl('/home/cho-thue-nha-tro');
-    }
-    else if(this.newType === "Nhà thuê nguyên căn"){
-      this.router.navigateByUrl('/home/nha-cho-thue');
-    }
-    else if(this.newType === "Cho thuê căn hộ"){
-      this.router.navigateByUrl('/home/cho-thue-can-ho');
-    }
-    else if(this.newType === "Tìm người ở ghép"){
-      this.router.navigateByUrl('/home/tim-nguoi-o-ghep-cap');
-    }
-    else if(this.newType === "Cho thuê mặt bằng"){
-      this.router.navigateByUrl('/home/cho-thue-mat-bang');
-    }
-    else {
-      this.router.navigateByUrl('/home/cho-thue-nha-tro');
-    }
-  }*/
-
   public async getNewsMotel () {
-    /*this.motelService.getNowsMotels().subscribe(gettypes => {
-      this.motelnews = gettypes;
-    });*/
     this.motelnews = await this.motelService.getNowsMotels() as Motel[];
   }
 
-  public async enterSearch(){
+  async enterSearch(){
     this.options = await this.cityService.getSearchs() as List[];
     if(this.options.length){
       this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.options.slice(0,7))
+        map(name => name ? this._filter(name) : this.options.slice(0,6))
       );
+      if(this.check == true){
+        this.filteredOptions.subscribe((data)=>{
+          if(data.length != 0){
+            this.searchText = data[0].name;
+          }
+          else{
+            this.searchText = "";
+          }
+        })
+      }
+
     }
   }
-
+  
   private _filter(name: string): List[] {
     const filterValue = name.toLowerCase();
-    return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).slice(0,7);
+    return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).slice(0,6);
   }
 
   displayFn(list: List): string {
     return list && list.name ? list.name : '';
+  }
+
+  onKeyUp(x) { // appending the updated value to the variable
+    this.check = true;
   }
 }

@@ -43,6 +43,9 @@ export class AreaCityHomeComponent implements OnInit {
     {id: 16, text:'../../assets/images/image/quan17.jpg'},
     {id: 17, text:'../../assets/images/image/quan18.jpg'},
     {id: 18, text:'../../assets/images/image/quan19.jpg'},
+    {id: 19, text:'../../assets/images/image/quan20.jpg'},
+    {id: 20, text:'../../assets/images/image/quan21.jpg'},
+    {id: 21, text:'../../assets/images/image/quan22.jpg'},
   ];
 
   imageHNs:Array<Data> = [
@@ -87,7 +90,7 @@ export class AreaCityHomeComponent implements OnInit {
   }
 
   public onClickProvince (name)  {
-    var city = "", province = "", district = "", street = "", price = "";
+    var city = "", province = "";
 
     if(this.checkHCM){
       city = this.nameURL;

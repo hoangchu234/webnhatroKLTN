@@ -2,12 +2,13 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6" style="text-align:center;">
-          <div  *ngIf="imageUser else elseImageUserDefferent">
+          <!-- <div  *ngIf="imageUser else elseImageUserDefferent">
             <img  [src]="imageUser" alt="profile" style="width:150px;height:150px">
           </div>
           <ng-template #elseImageUserDefferent>   
             <img *ngIf="loadImage!= null" [src]="loadImage" alt="profile" style="width:150px;height:150px">
-          </ng-template>
+          </ng-template> -->
+          <img  [src]="imageUser" alt="profile" style="width:150px;height:150px">
         </div>
       <div class="col-md-3"></div>
       <div class="col-md-3"></div>

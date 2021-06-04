@@ -18,8 +18,18 @@
 <div class="container-fluid"  [hidden]="wasDirect" [hidden]="wasArea">
   <div class="row">
     <div class="col-md-12" style="width:100%;text-align: center;background-color: rgb(160, 160, 160);height: 40px;padding: 10px;">Bộ lọc</div>
-    <button class="btn btn-light col-md-12" style="width:100%;text-align: left;" >Diện tích<i (click)="onChoiceArea()"  class="fa fa-chevron-right" style="float: right;"></i><i *ngIf="tickArea" class="fa fa-check-circle-o" style="float: right;color: green;"></i></button>
-    <button class="btn btn-light col-md-12" style="width:100%;text-align: left;border-top:1px solid black" >Hướng<i (click)="onChoiceDirect()"  class="fa fa-chevron-right" style="float: right;"></i><i *ngIf="tickDirect" class="fa fa-check-circle-o" style="float: right;color: green;"></i></button>
+    <button class="btn btn-light col-md-12" style="width:100%;text-align: left;" >
+      Diện tích
+      <i (click)="onChoiceArea()"  class="fa fa-chevron-right" style="float: right;"></i>
+      <i *ngIf="tickArea" class="fa fa-check-circle-o" style="float: right;color: green;"></i>
+      {{area}}
+    </button>
+    <button class="btn btn-light col-md-12" style="width:100%;text-align: left;border-top:1px solid black" >
+      Hướng
+      <i (click)="onChoiceDirect()"  class="fa fa-chevron-right" style="float: right;"></i>
+      <i *ngIf="tickDirect" class="fa fa-check-circle-o" style="float: right;color: green;" ></i>
+      {{direct}}
+    </button>
   </div>
   <div class="row" style="margin-top: 20px;">
     <button (click)="deleteData()" class="col-md-5 btn btn-light" style="padding: 5px;background-color: rgb(198, 145, 214);height:35px;"><b>Xóa bộ lọc</b></button>
@@ -27,5 +37,8 @@
   </div>
 </div>
 
-<app-dialog-search-motel-area *ngIf="wasArea" [areaTypeSearch]="openDetailSearch"  [areaData]="areaSearch" (areanotify)='onNotify($event)' (areatick)='onTickArea($event)'></app-dialog-search-motel-area>
-<app-dialog-search-motel-direct *ngIf="wasDirect" [directTypeSearch]="openDetailSearch"  [directData]="directSearch" (directnotify)='onNotify($event)' (directtick)='onTickDirect($event)'></app-dialog-search-motel-direct>
+<app-dialog-search-motel-area *ngIf="wasArea" [areaTypeSearch]="openDetailSearch" [areaChooce]="areaId" (areanotify)='openAreaOrDirect($event)' (areatick)='onTickArea($event)'></app-dialog-search-motel-area>
+<app-dialog-search-motel-direct *ngIf="wasDirect" [directTypeSearch]="openDetailSearch" [directChooce]="direct" (directnotify)='openAreaOrDirect($event)' (directtick)='onTickDirect($event)'></app-dialog-search-motel-direct>
+
+<!-- <app-dialog-search-motel-area *ngIf="wasArea"  [areaData]="directs"  [areaTypeSearch]="openDetailSearch" (areanotify)='onNotify($event)' (areatick)='onTickArea($event)'></app-dialog-search-motel-area>
+<app-dialog-search-motel-direct *ngIf="wasDirect" [directData]="areas" [directTypeSearch]="openDetailSearch"   (directnotify)='onNotify($event)' (directtick)='onTickDirect($event)'></app-dialog-search-motel-direct> -->

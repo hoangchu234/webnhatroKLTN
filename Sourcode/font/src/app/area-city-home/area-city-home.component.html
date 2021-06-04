@@ -67,6 +67,17 @@
           </div>
       </div>
     </div>
+    <div style="margin-top: 30px;margin-bottom: 5px;">
+        <div class="row">
+          <div *ngFor= 'let provinces of provinces; let i=index'>
+              <div class="col-4" style="width:320px;height: 200px;"  *ngIf="i < 21 && i >=18">
+                  <div style="height: 190px;width: 310px;background-color: royalblue;background-image: url({{imageHCMs[i].text}});border-radius: 10px;padding-top: 90px;text-align: center;">
+                  <b style="color:white;font-size: 25px;" (click)="onClickProvince(provinces.name)">{{provinces.name}}</b>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
 </div>
 
 <div class="container" *ngIf="checkHN" style="margin-left: 260px;">

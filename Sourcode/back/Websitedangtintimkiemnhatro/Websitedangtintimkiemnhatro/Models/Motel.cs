@@ -11,7 +11,6 @@ namespace Websitedangtintimkiemnhatro.Models
     {
         [Key]
         public int Id { get; set; }
-        public string TypeLive { get; set; }
         public string Title { get; set; }
         public string Price { get; set; }
         public string PriceType { get; set; }

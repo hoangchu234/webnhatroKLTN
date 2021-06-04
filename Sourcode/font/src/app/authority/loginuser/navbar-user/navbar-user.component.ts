@@ -7,6 +7,8 @@ import { Reply } from 'src/app/model/Reply';
 import { MotelService } from 'src/app/services/motel.service';
 import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
 import { NewType } from 'src/app/model/NewType';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-navbar-user',
@@ -35,24 +37,40 @@ export class NavbarUserComponent implements OnInit {
     private replyService:ReplyService,
     private router: Router,
     private motelService: MotelService,
+    private userService: UserService,
     private authenticationService: AuthenticationService) { 
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
+      // if(this.authenticationService.currentAccountValue){
+        
+      //   if(this.authenticationService.currentAccountValue.user.userImage != null){
+      //     this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+      //   }
+      //   if(this.authenticationService.currentAccountValue.user.userImage == null){
+      //     this.userImage = "../../../assets/images/blog_3.jpg"
+      //   }
+      // }
+      
+    }
+
+    async ngOnInit(): Promise<void> {
       if(this.authenticationService.currentAccountValue){
         this.getReply();
         this.checkLogin = true;
-        if(this.authenticationService.currentAccountValue.user.userImage != null){
-          this.userImage = this.authenticationService.currentAccountValue.user.userImage;
+        var user = await this.getUserById(this.authenticationService.currentAccountValue.user.id);
+        if(user.userImage != null){
+          this.userImage = user.userImage;
         }
-        if(this.authenticationService.currentAccountValue.user.userImage == null){
-          this.userImage = "../../../assets/images/blog_3.jpg"
+        else{
+          this.userImage = "../../../assets/images/blog_3.jpg";
         }
       }
       
     }
-
-  ngOnInit(): void { 
-  }
   
+  async getUserById(id){
+    return await this.userService.getUserFromId(id) as User;
+  }
+
   onClickURL(link){
     window.location.replace(link);
     //this.router.navigate([link]);

@@ -52,11 +52,13 @@ export class WebForumComponent implements OnInit {
   notifys: Array<INotifyComment> = [];
   countNotifyNotSee = 0;
   image = "";
+  id = 0;
   constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     this.getPosts();
     this.image = "../../assets/forum/images1/resources/friend-avatar2.jpg";
     if(this.authenticationService.currentAccountValue){
       this.dataUser = this.authenticationService.currentAccountValue.user;
+      this.id = this.authenticationService.currentAccountValue.user.id;
       if(this.dataUser.userImage == null){
         this.dataUser.userImage = "../../assets/forum/images1/resources/friend-avatar2.jpg";
       }
