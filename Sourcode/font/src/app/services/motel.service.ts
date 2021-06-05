@@ -400,11 +400,13 @@ export class MotelService {
   getRecommendation = async (id) => {
     try 
     {
-      const url = "http://127.0.0.1:5000/";
+
+      // const url = "http://127.0.0.1:5000/";
+      const url = environment.urlPython;
       const formData: FormData = new FormData();
       formData.append('id',id);
-      formData.append('linktitle',"http://localhost:61101/api/Motels/GetDataTitlePython/");
-      formData.append('linkdata',"http://localhost:61101/api/Motels/GetDataPython/");
+      formData.append('linktitle', this.urlAPI + "/api/Motels/GetDataTitlePython/");
+      formData.append('linkdata', this.urlAPI + "/api/Motels/GetDataPython/");
       return await this.http.post(url, formData).toPromise();
     }
     catch (e) {

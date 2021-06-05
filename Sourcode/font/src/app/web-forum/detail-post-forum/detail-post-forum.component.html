@@ -523,7 +523,7 @@
                                                                             <textarea placeholder="Trả lời bài post" name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
                                                                         </div>
                                                                         <div class=" add-smiles">
-                                                                            <span type="submit" (click)="saveChildComment(dataPost.id,item.id)" class="fa fa-arrow-circle-right"></span>
+                                                                            <span type="submit" (click)="saveChildComment(dataPost.id,item.id, item.user.id)" class="fa fa-arrow-circle-right"></span>
                                                                           </div>
                                                                     </form>	
                                                                 </div>
@@ -547,7 +547,7 @@
                                                                     <textarea placeholder="Trả lời bài post"  name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
                                                                 </div>
                                                                 <div class=" add-smiles">
-                                                                    <span type="submit" type="submit" (click)="saveComment(dataPost.id)" class="fa fa-arrow-circle-right"></span>
+                                                                    <span type="submit" type="submit" (click)="saveComment(dataPost.id, dataPost.user.id)" class="fa fa-arrow-circle-right"></span>
                                                                   </div>
                                                             </form>	
                                                         </div>

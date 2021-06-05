@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-12" >
-          <form  #form="ngForm" (ngSubmit)="onSubmit()">
+          <form  #form="ngForm" (ngSubmit)="onSubmit()" [hidden] = "!checkRecapt">
             <div style="margin-top:20px;padding: 5px;">Số diện thoại cũ</div>
             <div style="height: 30px;padding: 5px;">
               <input style="width: 100%;padding: 5px;border: 1px solid black;"  name="phoneuser" [(ngModel)]="data.account.phone" ngDefaultControl readonly>
@@ -14,33 +14,16 @@
             <div>
               <button style="padding: 10px;margin-top:10px;margin-left: 5px;"  type="submit" >Lấy mã xác thực</button>
             </div>
+          </form>
+
+          <div [hidden] = "checkRecapt"> 
             <div  style="margin-top:20px;padding: 5px;">Nhập mã xác thực</div>
             <div style="height: 30px;padding: 5px;">
               <input style="width: 100%;padding: 5px;border: 1px solid black;" name="phone_number"  [(ngModel)]="phone_number" ngDefaultControl>
             </div>
-          </form>
-
-          <button style="margin-top: 20px;text-align: center;margin-left: 80px;" class="btn btn-warning" (click)="onChangePhone()" [mat-dialog-close]="data" type="button" >Cập nhật thông tin</button>
+          </div>
+          <button [hidden] = "checkRecapt" style="margin-top: 20px;text-align: center;margin-left: 80px;" class="btn btn-warning" (click)="onChangePhone()" [mat-dialog-close]="data" type="button" >Cập nhật thông tin</button>
 
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-      $('body').on('click','.checkmobile', function() {
-      var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-      var mobile = $('#mobile').val();
-      if(mobile !==''){
-          if (vnf_regex.test(mobile) == false) 
-          {
-              alert('Số điện thoại của bạn không đúng định dạng!');
-          }else{
-              alert('Số điện thoại của bạn hợp lệ!');
-          }
-      }else{
-          alert('Bạn chưa điền số điện thoại!');
-      }
-      });
-  });
-  </script>

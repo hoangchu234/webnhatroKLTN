@@ -24,7 +24,7 @@ export class DialogEditPhoneComponent implements OnInit {
 
   // Lưu xác thực xác định khi xend code
   comfirm :firebase.auth.ConfirmationResult;
-
+  checkRecapt = true;
   constructor(private userService: UserService,public dialogRef: MatDialogRef<DialogEditPhoneComponent>,@Inject(MAT_DIALOG_DATA) public data: User,private authenticationService: AuthenticationService,
       private router: Router,
       private service: RegisterService) {
@@ -49,33 +49,69 @@ export class DialogEditPhoneComponent implements OnInit {
     this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
   }
 
-  public onSubmit() {
-    const appVerifier = this.recaptchaVerifier;
-    var p = this.phone;
-    var phoneNumber = "+84" + p.substring(0, p.length);    
-    console.log(phoneNumber);
-    var testVerificationCode = "123456";
-    firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        this.comfirm = confirmationResult;
-      })
-      .catch((err) => {
-        console.log('sms not sent', err);
-      });
-  };
+  validationPhone(mobile){
+    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    if(mobile !==''){
+        if (vnf_regex.test(mobile) == false) 
+        {
+          // alert('Số điện thoại của bạn không đúng định dạng!');
+          return -2;
+        }
+        else{
+          return -1;
+          // alert('Số điện thoại của bạn hợp lệ!');
+        }
+    }
+    else{
+      // alert('Bạn chưa điền số điện thoại!');
+      return 0;
+    }
+  }
 
+  public onSubmit() {
+    var p = this.phone;
+    var phoneNumber = "+84" + p.substring(0, p.length);
+    if(this.validationPhone(phoneNumber) == -2){
+      alert('Số điện thoại của bạn không đúng định dạng!');
+    }
+    else if(this.validationPhone(phoneNumber) == -2){
+      alert('Số điện thoại của bạn hợp lệ!');
+    }
+    else if(this.validationPhone(phoneNumber) == -2){
+      alert('Bạn chưa điền số điện thoại!');
+    }
+    else{
+      const appVerifier = this.recaptchaVerifier;
+      var testVerificationCode = "123456";
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          this.comfirm = confirmationResult;
+          this.checkRecapt = false;
+        })
+        .catch((err) => {
+          console.log('sms not sent', err);
+        });
+    }
+  }
+
+
+  getData(){
+    this.data.account.phone = this.phone;
+  }
 
   public Xacthuc = async () => {
     try {
       const verification = this.phone_number;
-      console.log(this.phone_number);
+      // console.log(this.phone_number);
+      
       if (verification != null) {
-        console.log(verification);
+        // console.log(verification);
         this.comfirm.confirm(verification).then(async () =>{
-        
-          alert('Success');
+          await this.getData();
+          // alert('Success');
         }).catch(err =>{
-          alert(err);
+          // alert(err);
+          alert('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
         })
       } else {
         alert('No verification code entered');
@@ -86,7 +122,7 @@ export class DialogEditPhoneComponent implements OnInit {
     }
   };
 
-  public onChangePhone(): void {
-    this.data.account.phone = this.phone;
+  public async onChangePhone(): Promise<void> {
+    await this.Xacthuc();
   }
 }

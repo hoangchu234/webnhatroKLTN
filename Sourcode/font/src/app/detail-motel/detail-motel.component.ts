@@ -11,6 +11,7 @@ import { ProvincesService } from '../services/provinces.service';
 import { Image } from '../model/Image';
 import { User } from '../model/User';
 import { IRecommendation } from '../model/interface/IRecommendation';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-detail-motel',
@@ -28,7 +29,7 @@ export class DetailMotelComponent implements OnInit {
   provincename; //tên province
   phone:string = ""
 
-  constructor(private route: Router,private provinceService:ProvincesService,public dialog: MatDialog,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private motelService:MotelService) {
+  constructor(private clipboardService: ClipboardService,private route: Router,private provinceService:ProvincesService,public dialog: MatDialog,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private motelService:MotelService) {
     this.getMotelById();
    }
 
@@ -90,7 +91,7 @@ export class DetailMotelComponent implements OnInit {
     // this.provincename = name.name;
     const id = this.router.snapshot.paramMap.get("id");
     var data = await this.motelService.getRecommendation(Number(id)) as IRecommendation[];
-    this.motelrecommendation = data.slice()
+    this.motelrecommendation = data.slice();
     if(data.length != 0){
       for(let i=0; i <data.length; i++){
         var image = await this.motelService.getmotelReommendation(Number(data[i].Id)) as Image;
@@ -102,6 +103,24 @@ export class DetailMotelComponent implements OnInit {
 
   checkRecommendation(){
     if(this.motelrecommendation.length !=0){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  checkRecommendationLengthOne(id){
+    if(id >= 0 && id < 5){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  checkRecommendationLengthTwo(id){
+    if(id >= 5 && id < 10){
       return true;
     }
     else{
@@ -130,5 +149,11 @@ export class DetailMotelComponent implements OnInit {
   public getHTML(html: string): SafeHtml
   {
     return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  copyContent() {
+    var link = window.location.href;
+    this.clipboardService.copyFromContent(link);
+    alert("Đã sao chép link chia sẽ")
   }
 }

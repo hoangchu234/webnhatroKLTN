@@ -176,12 +176,13 @@ export class MagementProfileComponent implements OnInit {
       data: this.dialogUser
     });
 
-    dialogRef.afterClosed().subscribe((result: User) => {
-      if (result)
+    dialogRef.afterClosed().subscribe(async (result: User) => {
+      var id = Number(this.authenticationService.currentAccountValue.user.id);
+      var user = await this.userService.getUserFromId(id) as User;
+      console.log(user.account);
+      console.log(result)
+      if (result.account.phone != user.account.phone)
       {
-      //  console.log('The dialog was closed');
-      //  console.log(result);
-
        var account = new Account();
        account.id = result.account.id;
        account.isActive = result.account.isActive;
@@ -192,12 +193,12 @@ export class MagementProfileComponent implements OnInit {
        account.phone = result.account.phone;
 
        this.userService.updateAccount(account).subscribe(update => {
+         console.log(update)
           alert("Lưu thành công")
-        
-      });
-      
-       
-
+        });
+      }
+      else{
+        alert("Số điện thoại đã được dùng")
       }
         
     });

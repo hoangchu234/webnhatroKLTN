@@ -244,7 +244,7 @@ export class ThongTinCoBanComponent implements OnInit {
     let motel = new Motel(); 
     motel.latitude = "";
     motel.longitude = "";
-    if(this.motelprevous.price != undefined)
+    if(this.motelprevous != undefined)
     {
       motel = this.motelprevous;
       motel.latitude = this.motelprevous.latitude;

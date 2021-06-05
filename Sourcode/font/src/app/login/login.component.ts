@@ -132,7 +132,7 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl('home');
             alert('Success');
           }).catch(err =>{
-            alert(err);
+            alert('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
           })
         } else {
           alert('No verification code entered');
@@ -155,17 +155,47 @@ export class LoginComponent implements OnInit {
       const appVerifier = this.recaptchaVerifier;
       var p = this.phone;
       var phoneNumber = "+84" + p.substring(0, p.length);    
-      var testVerificationCode = "123456";
-      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          this.user = "Xac Thuc";
-          this.comfirm = confirmationResult;
-        })
-        .catch((err) => {
-          console.log('sms not sent', err);
-        });
+      if(this.validationPhone(phoneNumber) == -2){
+        alert('Số điện thoại của bạn không đúng định dạng!');
+      }
+      else if(this.validationPhone(phoneNumber) == -2){
+        alert('Số điện thoại của bạn hợp lệ!');
+      }
+      else if(this.validationPhone(phoneNumber) == -2){
+        alert('Bạn chưa điền số điện thoại!');
+      }
+      else{
+        var testVerificationCode = "123456";
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then((confirmationResult) => {
+            this.user = "Xac Thuc";
+            this.comfirm = confirmationResult;
+          })
+          .catch((err) => {
+            console.log('sms not sent', err);
+          });
+      }
+     
     }
    
   };
 
+  validationPhone(mobile){
+    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    if(mobile !==''){
+        if (vnf_regex.test(mobile) == false) 
+        {
+          // alert('Số điện thoại của bạn không đúng định dạng!');
+          return -2;
+        }
+        else{
+          return -1;
+          // alert('Số điện thoại của bạn hợp lệ!');
+        }
+    }
+    else{
+      // alert('Bạn chưa điền số điện thoại!');
+      return 0;
+    }
+  }
 }

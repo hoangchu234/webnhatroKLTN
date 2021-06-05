@@ -470,12 +470,12 @@ export class WebForumComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Lưu comment parent
-  saveComment(postId){
-    if(this.comment.commentUser){
+  saveComment(postId, userIdPost){
+    if(this.comment.commentUser != undefined){
       this.comment.postId = postId;
       // this.comment.userId = "26";
       this.comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
-      this.postService.postComment(this.comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
+      this.postService.postComment(this.comment,Number(userIdPost)).subscribe(async data => {
         //this.showComments.splice(0, this.showComments.length);
         //this.countComment.splice(0, this.countComment.length);
         //this.getPosts();
@@ -508,13 +508,13 @@ export class WebForumComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // lưu comment child
-  saveChildComment(postId,idComment){
+  saveChildComment(postId,idComment,idUserComment){
     if(this.comment.commentUser){
       this.comment.postId = postId;
       // this.comment.userId = "26";
       this.comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
       this.comment.parentCommentId = idComment;
-      this.postService.postComment(this.comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
+      this.postService.postComment(this.comment,Number(idUserComment)).subscribe(async data => {
         var indexPost = this.posts.findIndex(a => a.id == postId)
         var indexComment = this.posts[indexPost].comments.findIndex(a => a.id == idComment);
         data.childComments.length = 0;

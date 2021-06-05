@@ -222,14 +222,15 @@ export class DetailPostForumComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Lưu comment parent
-  saveComment(postId){
+  saveComment(postId, idUserPost){
     if(this.commentUser){
       var comment = new Comment;
       comment.postId = postId;
+      comment.commentUser = this.commentUser;
       // this.comment.postId = postId;
       // this.comment.userId = "26";
       comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
-      this.postService.postComment(comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
+      this.postService.postComment(comment,Number(idUserPost)).subscribe(async data => {
        
         data.childComments.length = 0;
         if(data.user.userImage == null)
@@ -300,14 +301,15 @@ export class DetailPostForumComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // lưu comment child
-  saveChildComment(postId,idComment){
-    if(this.commentUser){
+  saveChildComment(postId,idComment, idUserComment){
+    if(this.commentUser != ""){
       var comment = new Comment;
       comment.postId = postId;
+      comment.commentUser = this.commentUser ;
       // this.comment.userId = "26";
       comment.userId  = this.authenticationService.currentAccountValue.user.id.toString();
       comment.parentCommentId = idComment;
-      this.postService.postComment(comment,Number(this.authenticationService.currentAccountValue.user.id)).subscribe(async data => {
+      this.postService.postComment(comment,Number(idUserComment)).subscribe(async data => {
         var indexComment = this.comments.findIndex(a => a.id === idComment);
         data.childComments.length = 0;
         if(data.user.userImage == null)
@@ -321,7 +323,6 @@ export class DetailPostForumComponent implements OnInit {
         var indexParent = this.showChildCommentArray.findIndex(a => a.idPost === postId)
         this.showChildCommentArray[indexParent].childCommentCheck.push(this.pushArrayShowCommentChild(data.id,data.parentCommentId));
         this.countLikeComment(this.comments);
-
         this.commentUser = "";
       })
       alert("Thành công");

@@ -14,6 +14,7 @@ export const environment = {
     measurementId: "G-N91ZYC8X9M"
   },
   urlAPI : 'http://localhost:5001',
+  urlPython: 'http://127.0.0.1:3000/'
 };
 
 /*

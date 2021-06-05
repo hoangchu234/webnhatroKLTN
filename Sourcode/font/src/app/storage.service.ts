@@ -9,8 +9,8 @@ export class StorageService
     public static ImageStorage: string = 'saveImageMotel';
     public static loadImageStorage: string = 'loadImageMotel';
     public static totalMoneyStorage: string = 'totalMoneny';
-    public static AreaSearchStorage: string = 'area';
-    public static DirectSearchStorage: string = 'direct';
+    // public static AreaSearchStorage: string = 'area';
+    // public static DirectSearchStorage: string = 'direct';
     // public static AreaSearchTickStorage: string = 'areaTick';
     // public static DirectSearchTickStorage: string = 'directTick';
 
