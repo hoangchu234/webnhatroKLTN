@@ -15,5 +15,13 @@ export class StorageService
     // public static DirectSearchTickStorage: string = 'directTick';
 
     constructor() { }
+
+    public static removeLocalPubish(){
+        localStorage.removeItem(StorageService.totalMoneyStorage); 
+        localStorage.removeItem(StorageService.ImageStorage); 
+        localStorage.removeItem(StorageService.loadImageStorage)
+        localStorage.removeItem(StorageService.motelStorage)
+        localStorage.removeItem(StorageService.TypeMotelStorage)
+    }
     
 }

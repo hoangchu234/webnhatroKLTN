@@ -413,4 +413,14 @@ export class MotelService {
       console.log(e);
     }
   }
+
+  public getStatus = async () => {
+    try {
+        const count = await fetch(`${this.urlAPI}/api/Motels/GetStatus`);
+        return await count.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
+  }
 }

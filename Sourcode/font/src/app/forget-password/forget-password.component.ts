@@ -10,25 +10,19 @@ import { EmployeesService } from '../services/employees.service';
 import { ToastService } from '../services/toast.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-forget-password',
+  templateUrl: './forget-password.component.html',
+  styleUrls: ['./forget-password.component.css']
 })
-export class LoginComponent implements OnInit {
-  public phone:string = "";
-  public password:string = "";
+export class ForgetPasswordComponent implements OnInit {
 
-  //Normal register
-  public name:string;
-  public confirmPassword:string;
+  phone:string = "";
+  password:string = "";
   public recaptchaVerifier: firebase.auth.RecaptchaVerifier;
 
-  public phone_number:string;
-  public user: any;
+  phone_number:string = "";
+  user: any;
   public comfirm :firebase.auth.ConfirmationResult;
-
-  resultaccount:Account[];
-  remember: boolean = false;
 
   showError: boolean = true;
   constructor(private toast: ToastService,
@@ -61,106 +55,37 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  forgetPasswordLink(){
-    this.router.navigateByUrl('forgetPassword');
-  }
-
-  clickChange(){
-    this.showError = true;
-  }
-
-  public login = async () => {  
-    if(this.phone == "" || this.password == ""){
-      this.showError = false;
-    }
-    else{
-      try 
-      {
-        var accounta = new Account();
-        accounta.phone = this.phone;
-        accounta.password = this.password;
-        const result = await this.authenticationService.loginPhone(accounta);
-        if(result != false){
-          var account = result as Account;
-          if(account.isActive == false){
-            // alert('Đăng nhập thất bại');
-            this.toast.toastError("Đăng nhập thất bại");
-          }
-          else{
-            if(account){
-              this.authenticationService.saveAccount(account, this.remember);
-              if(Number(account.roleId) == 1){
-                var link = '/home'
-                window.location.replace(link);
-                //this.router.navigateByUrl('home');
-              }
-              else{
-                var link = '/admin'
-                window.location.replace(link);
-                //this.router.navigateByUrl('admin');
-              }
-            }
-            else{
-              this.toast.toastError("Đăng nhập thất bại");
-
-            }
-          }
-        }
-        else{
-          this.toast.toastError("Đăng nhập thất bại");
-
-        }
-      } 
-      catch(e) 
-      {
-        // console.log(e);
-        this.toast.toastInfo('Tài khoản không tồn tại!');
-        // alert('Tài khoản không tồn tại!');
-      }
-    }
-   
-   
-  }
-
   public createNewAccount = async () => {
-    if(this.confirmPassword == this.password){
-      try {
-        const verification = this.phone_number;
-        if (verification != null) {
-          this.comfirm.confirm(verification).then(async () =>{
-            // this.name,this.phone,this.password.
-            let account = new Account();
-            let user = new User();
-            account.password = this.password;
-            account.phone = this.phone;
-            user.hovaTen = this.name;
-            account.user = user;
-            const result = await this.service.addAccount(account) as Account;
-            if(result.id != undefined){
-              this.router.navigateByUrl('home');
-            }
-            // alert('Success');
-          }).catch(err =>{
-            this.toast.toastInfo('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
-            // alert('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
-          })
-        } else {
-          this.toast.toastError("Không nhận được mã code");
-          // alert('No verification code entered');
-        }
-      }
-      catch (e) {
-        this.toast.toastError("Không thục thi thành công");
-        // alert('Add failed');
+    try {
+      const verification = this.phone_number;
+      if (verification != null) {
+        this.comfirm.confirm(verification).then(async () =>{
+          // this.name,this.phone,this.password.
+          let account = new Account();
+          account.password = this.password;
+          account.phone = this.phone;
+          const result = await this.service.forgetPassword(account) as Account;
+          if(result.id != undefined){
+            this.router.navigateByUrl('home');
+          }
+          // alert('Success');
+        }).catch(err =>{
+          this.toast.toastInfo('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
+          // alert('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
+        })
+      } else {
+        this.toast.toastError("Không nhận được mã code");
+        // alert('No verification code entered');
       }
     }
-    else{
-
+    catch (e) {
+      this.toast.toastError("Không thục thi thành công");
+      // alert('Add failed');
     }
   };
 
   async onSubmit() {    
-    if(this.name == "" || this.password == "" || this.phone == "" || this.confirmPassword == ""){
+    if(this.password == "" || this.phone == ""){
       this.showError = false;
     }
     else{
@@ -179,8 +104,8 @@ export class LoginComponent implements OnInit {
           // alert('Bạn chưa điền số điện thoại!');
         }
         else{
-          var checkPhone = await this.service.checkPhone(this.phone);
-          if(checkPhone == "Số điện thoại chưa được dùng"){
+          var checkPhone = await this.service.checkPhoneForget(this.phone);
+          if(checkPhone == "Số điện thoại tồn tại"){
             const appVerifier = this.recaptchaVerifier;
             var p = this.phone;  
             var phoneNumber = "+84" + p.substring(0, p.length);
@@ -195,8 +120,8 @@ export class LoginComponent implements OnInit {
                 this.toast.toastError("Đã xảy ra lỗi");
               });
           }
-          else if(checkPhone == "Số điện thoại đã được dùng"){
-            this.toast.toastInfo('Số điện thoại đã được dùng');
+          else if(checkPhone == "Số điện thoại không tồn tại"){
+            this.toast.toastInfo('Số điện thoại không tồn tại');
           }
          
         }
@@ -226,4 +151,5 @@ export class LoginComponent implements OnInit {
       return 0;
     }
   }
+
 }

@@ -122,6 +122,9 @@ import { DialogReportComponent } from './web-forum/dialog-report/dialog-report.c
 import { ManagementForumComponent } from './authority/loginadmin/management-forum/management-forum.component';
 
 
+import { ToastrModule } from 'ngx-toastr';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -183,6 +186,7 @@ import { ManagementForumComponent } from './authority/loginadmin/management-foru
     DetailMotelPublishMagementComponent,
     DialogReportComponent,
     ManagementForumComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -211,6 +215,7 @@ import { ManagementForumComponent } from './authority/loginadmin/management-foru
     CKEditorModule,
     ChartsModule,
     ClipboardModule,
+    ToastrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features

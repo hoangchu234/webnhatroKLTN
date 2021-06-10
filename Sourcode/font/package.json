@@ -36,6 +36,7 @@
     "ngx-owl-carousel": "^2.0.7",
     "ngx-pagination": "^5.0.0",
     "ngx-paypal": "^6.2.0",
+    "ngx-toastr": "^14.0.0",
     "owl.carousel": "^2.3.4",
     "rxjs": "~6.6.0",
     "rxjs-compat": "^6.6.3",

@@ -7,6 +7,7 @@ import { User } from '../../model/User';
 import { Account } from '../../model/Account';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import firebase from 'firebase';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-sociallogin',
@@ -100,7 +101,7 @@ export class SocialloginComponent implements OnInit {
   public checkmail;
   remember: boolean = false;
 
-  constructor(private authenticationService: AuthenticationService,private router: Router,private service: RegisterService,private userService:UserService,private serviceregister: RegisterService) {
+  constructor(private toast: ToastService,private authenticationService: AuthenticationService,private router: Router,private service: RegisterService,private userService:UserService,private serviceregister: RegisterService) {
     const firebaseConfig = {
       apiKey: "AIzaSyAA7gAsuYi-IeYgqUEcl6bojuu4wtjjmh8",
       authDomain: "nhatrofirebase-f21b1.firebaseapp.com",
@@ -144,7 +145,8 @@ export class SocialloginComponent implements OnInit {
       if(resultaccount != false){
         var accountLogin = resultaccount as Account;
         if(accountLogin.isActive == false){
-          alert('Đăng nhập thất bại');
+          this.toast.toastError('Đăng nhập thất bại');
+          // alert('Đăng nhập thất bại');
         }
         else{
           if(accountLogin){
@@ -161,18 +163,23 @@ export class SocialloginComponent implements OnInit {
             }
           }
           else{
-            alert('Đăng nhập thất bại');
+            this.toast.toastError('Đăng nhập thất bại');
+
+            // alert('Đăng nhập thất bại');
 
           }
         }
       }
       else{
-        alert('Đăng nhập thất bại');
+        // alert('Đăng nhập thất bại');
+        this.toast.toastError('Đăng nhập thất bại');
 
       }
     }
     catch (e) {
-      alert('Đăng nhập thất bại');
+      // alert('Đăng nhập thất bại');
+      this.toast.toastError('Đăng nhập thất bại');
+
     }
   };
 
@@ -185,7 +192,9 @@ export class SocialloginComponent implements OnInit {
       if(result != false){
         var account = result as Account;
         if(account.isActive == false){
-          alert('Đăng nhập thất bại');
+          // alert('Đăng nhập thất bại');
+          this.toast.toastError('Đăng nhập thất bại');
+
         }
         else{
           if(account){
@@ -202,20 +211,24 @@ export class SocialloginComponent implements OnInit {
             }
           }
           else{
-            alert('Đăng nhập thất bại');
+            // alert('Đăng nhập thất bại');
+            this.toast.toastError('Đăng nhập thất bại');
 
           }
         }
       }
       else{
-        alert('Đăng nhập thất bại');
+        // alert('Đăng nhập thất bại');
+        this.toast.toastError('Đăng nhập thất bại');
 
       }
     } 
     catch(e) 
     {
       console.log(e)
-      alert('Tài khoản không tồn tại!');
+      this.toast.toastError('Tài khoản không tồn tại!');
+
+      // alert('Tài khoản không tồn tại!');
     }
   }
 

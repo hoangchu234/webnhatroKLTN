@@ -10,6 +10,7 @@ import { DialogEditPhoneComponent } from './dialog-edit-phone/dialog-edit-phone.
 import { DialogEditPasswordComponent } from './dialog-edit-password/dialog-edit-password.component';
 import { MotelService } from 'src/app/services/motel.service';
 import { Motel } from 'src/app/model/Motel';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-magement-profile',
@@ -41,7 +42,7 @@ export class MagementProfileComponent implements OnInit {
  image = "../../../assets/images/blog_3.jpg";
 //  account = this.authenticationService.currentAccountValue;
 
- constructor(private motelService: MotelService,public dialog: MatDialog,private router: Router,private authenticationService: AuthenticationService,private userService: UserService) {
+ constructor(private toast: ToastService,private motelService: MotelService,public dialog: MatDialog,private router: Router,private authenticationService: AuthenticationService,private userService: UserService) {
    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
    
   }
@@ -194,11 +195,13 @@ export class MagementProfileComponent implements OnInit {
 
        this.userService.updateAccount(account).subscribe(update => {
          console.log(update)
-          alert("Lưu thành công")
+         this.toast.toastSuccess('Lưu thành công');
+          // alert("Lưu thành công")
         });
       }
       else{
-        alert("Số điện thoại đã được dùng")
+        // alert("Số điện thoại đã được dùng")
+        this.toast.toastInfo('Số điện thoại đã được dùng');
       }
         
     });
@@ -229,7 +232,8 @@ export class MagementProfileComponent implements OnInit {
        account.password = result.account.password;
        this.userService.updateAccount(account).subscribe(update => {
          if(update){
-           alert("Lưu thành công")
+          //  alert("Lưu thành công")
+          this.toast.toastSuccess('Lưu thành công');
          }
        });
       }

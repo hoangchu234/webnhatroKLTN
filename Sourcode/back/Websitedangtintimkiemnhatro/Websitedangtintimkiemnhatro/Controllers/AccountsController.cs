@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Websitedangtintimkiemnhatro.Models;
+using BC = BCrypt.Net.BCrypt;
 
 namespace Websitedangtintimkiemnhatro.Controllers
 {
@@ -42,6 +43,50 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return account;
         }
 
+        // GET: api/Accounts/CheckPhoneNumber
+        [HttpGet]
+        [Route("CheckPhoneNumber/{phone}")]
+        public async Task<ActionResult<Object>> CheckPhoneNumber(string phone)
+        {
+            var account = await _context.Accounts.Where(a => String.Compare(a.Phone, phone) == 0).FirstOrDefaultAsync();
+            if (account == null)
+            {
+                return Content("Số điện thoại chưa được dùng");
+            }
+            return Content("Số điện thoại đã được dùng");
+
+        }
+
+        // GET: api/Accounts/CheckPhoneNumber
+        [HttpGet]
+        [Route("CheckPhoneNumberForget/{phone}")]
+        public async Task<ActionResult<Object>> CheckPhoneNumberForget(string phone)
+        {
+            var account = await _context.Accounts.Where(a => String.Compare(a.Phone, phone) == 0).FirstOrDefaultAsync();
+            if (account == null)
+            {
+                return Content("Số điện thoại không tồn tại");
+            }
+            return Content("Số điện thoại tồn tại");
+
+        }
+
+        // GET: api/Accounts/CheckPasswordEdit
+        [HttpPost]
+        [Route("CheckPasswordEdit/{id}")]
+        public async Task<ActionResult<Object>> CheckPasswordEdit(int id, Account account)
+        {
+            var accountFind = await _context.Accounts.Where(a => a.Id == id).FirstOrDefaultAsync();
+            bool verified = BC.Verify(account.Password, accountFind.Password);
+
+            if (!verified)
+            {
+                return Content("Không tồn tại password này");
+            }
+            return Content("Tồn tại");
+
+        }
+
         // PUT: api/Accounts/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAccount(int id, Account account)
@@ -72,6 +117,38 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return CreatedAtAction("GetAccount", new { id = account.Id }, account);
         }
 
+        // PUT: api/Accounts/ForgetPassword
+        [HttpPut]
+        [Route("ForgetPassword")]
+        public async Task<IActionResult> ForgetPassword(Account account)
+        {
+            var accountFind = _context.Accounts.Where(a => a.Phone == account.Phone).FirstOrDefault();
+
+            // hash password
+            String passwordHash = BC.HashPassword(account.Password);
+            accountFind.Password = passwordHash;
+
+            _context.Entry(accountFind).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AccountExists(accountFind.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtAction("GetAccount", new { id = accountFind.Id }, accountFind);
+        }
+
         // POST: api/Accounts/Normal
         // string password
         [HttpPost]
@@ -81,6 +158,11 @@ namespace Websitedangtintimkiemnhatro.Controllers
             account.IsActive = true;
             account.RoleId = 1;
             account.IsHD = true;
+
+            // hash password
+            String passwordHash = BC.HashPassword(account.Password);
+            account.Password = passwordHash;
+
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
@@ -117,19 +199,19 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("Signin")]
         public async Task<ActionResult<Account>> SignIn(Account account)
         {
-            var accountdb = await _context.Accounts.ToListAsync();
+            var accountdb = await _context.Accounts.Where(a => a.Phone == account.Phone).FirstOrDefaultAsync();
 
-            foreach (Account a in accountdb)
+            bool verified = BC.Verify(account.Password, accountdb.Password);
+            if (!verified)
             {
-                if (a.Phone == account.Phone && a.Password == account.Password)
-                {
-                    string phone = a.Phone;
-                    var accountfind = _context.Accounts.Include(m => m.User).Include(m => m.Employee).Where(b => b.Phone == phone).FirstOrDefault();
-                    return accountfind;
-                }
-
+                return Content("false");
             }
-            return Content("false");
+            else
+            {
+                string phone = account.Phone;
+                var accountfind = _context.Accounts.Include(m => m.User).Include(m => m.Employee).Where(b => b.Phone == phone).FirstOrDefault();
+                return accountfind;
+            }
         }
 
         // POST: api/Accounts/Signinsocial
@@ -183,12 +265,12 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return _context.Accounts.Any(e => e.Id == id);
         }
 
-        public static string getLastNameCommaFirstName(String fullName)
-        {
-            List<string> names = fullName.Split(' ').ToList();
-            string firstName = names.First();
-            names.RemoveAt(0);
-            return String.Join(" ", names.ToArray()) + "," + firstName;
-        }
+        //public static string getLastNameCommaFirstName(String fullName)
+        //{
+        //    List<string> names = fullName.Split(' ').ToList();
+        //    string firstName = names.First();
+        //    names.RemoveAt(0);
+        //    return String.Join(" ", names.ToArray()) + "," + firstName;
+        //}
     }
 }

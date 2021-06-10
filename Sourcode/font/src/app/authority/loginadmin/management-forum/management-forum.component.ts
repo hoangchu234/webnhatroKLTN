@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/model/Post';
 import { ReportPost } from 'src/app/model/ReportPost';
 import { PostService } from 'src/app/services/post.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-management-forum',
@@ -14,7 +15,7 @@ export class ManagementForumComponent implements OnInit {
   //pagination
   totalRecord: Number;
   page:Number = 1;
-  constructor(public postService:PostService) { }
+  constructor(private toast: ToastService,public postService:PostService) { }
 
   ngOnInit(): void {
     this.getDataReport();
@@ -32,7 +33,9 @@ export class ManagementForumComponent implements OnInit {
   async hiddenPost(idPost){
     var post = await this.postService.getPostById(idPost) as Post;
     if(post.hiddenOrNotHidden == true){
-      alert("Bài viết này đã được ẩn");
+      // alert("Bài viết này đã được ẩn");
+      this.toast.toastSuccess('Bài viết này đã được ẩn');
+
     }
     else{
       var postUpdate:Post={
@@ -46,7 +49,9 @@ export class ManagementForumComponent implements OnInit {
         comments:null
       }
       this.postService.updatPostById(postUpdate).subscribe(a => {
-        alert("Ẩn bài thành công");
+        // alert("Ẩn bài thành công");
+        this.toast.toastSuccess('Ẩn bài thành công');
+
       });
     }
     

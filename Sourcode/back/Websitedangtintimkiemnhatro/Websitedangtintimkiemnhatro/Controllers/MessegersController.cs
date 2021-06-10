@@ -33,57 +33,19 @@ namespace Websitedangtintimkiemnhatro.Controllers
         }
 
         // GET: api/Messegers/5  
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Messeger>> GetMesseger(string id)
+        [HttpGet]
+        [Route("GetConservation/{idReciver}/{idSender}")]
+        public async Task<ActionResult<IEnumerable<Messeger>>> GetConservation(int idReciver, int idSender)
         {
-            var messeger = await _context.Messegers.FindAsync(id);
-
-            if (messeger == null)
+            var conservation = _context.Conversations.Where(a => a.UserIdOne == idReciver && a.UserIdTwo == idSender).FirstOrDefault();
+            var messegers = await _context.Messegers.Where(a => a.ConversationId == conservation.Id).ToListAsync();
+            if (messegers == null)
             {
                 return NotFound();
             }
 
-            return messeger;
+            return messegers;
         }
-
-        //// PUT: api/Messegers /5  
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754  
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutMesseger(int id, Messeger messeger)
-        //{
-        //    if (id != messeger.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(messeger).State = EntityState.Modified;
-
-        //    Notification notification = new Notification()
-        //    {
-        //        EmployeeName = employee.Name,
-        //        TranType = "Edit"
-        //    };
-        //    _context.Notification.Add(notification);
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //        await _hubContext.Clients.All.BroadcastMessage();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!EmployeeExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
 
         // POST: api/Messegers  
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754  

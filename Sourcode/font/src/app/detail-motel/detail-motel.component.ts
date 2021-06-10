@@ -12,6 +12,8 @@ import { Image } from '../model/Image';
 import { User } from '../model/User';
 import { IRecommendation } from '../model/interface/IRecommendation';
 import { ClipboardService } from 'ngx-clipboard';
+import { Status } from '../model/Status';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-detail-motel',
@@ -29,11 +31,14 @@ export class DetailMotelComponent implements OnInit {
   provincename; //tên province
   phone:string = ""
 
-  constructor(private clipboardService: ClipboardService,private route: Router,private provinceService:ProvincesService,public dialog: MatDialog,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private motelService:MotelService) {
-    this.getMotelById();
+  outOfOrder = false;
+  constructor(private toast: ToastService,private clipboardService: ClipboardService,private route: Router,private provinceService:ProvincesService,public dialog: MatDialog,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private motelService:MotelService) {
+    
    }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.getMotelById();
+    await this.getRecommend();
   }
 
   async getDataMotelById(id){
@@ -48,43 +53,21 @@ export class DetailMotelComponent implements OnInit {
     this.imageMotel.shift();
     this.user = this.motel.user.hovaTen;
     this.phone = this.motel.phone;
-    // for(let i=0;i<this.motel.images.length;i++)
-    // {
-    //   var imageone = new Image();
-    //   if(i !=0){
-    //     imageone.imageMotel = this.motel.images[i].imageMotel;
-    //     this.motelImage.push(imageone);
-    //   }
-      
-    // }      
-    // this.countimage = this.motel.images.length;
-
-    this.getRecommend();  
-
-    /*this.motelService.getMotelFromId(Number(id)).subscribe(getdetailmotel => {
-      this.motel = getdetailmotel
-      console.log(getdetailmotel)
-      for(let i=0;i<getdetailmotel.images.length;i++)
-      {
-        var imageone = new Image();
-        if(i !=0){
-          imageone.imageMotel = getdetailmotel.images[i].imageMotel;
-          this.motelImage.push(imageone);
-        }
-        
-      }
-      console.log(this.motelImage)
-      
-      this.countimage = this.motel.images.length;
-      this.getProvinces();  
-    })*/
+    if(this.motel.status == "3"){
+      this.outOfOrder = true;
+    }
   }
 
   public linkRouter(name, id) {
     //this.router.navigate( [{name: name, id: id}]);
-    this.route.navigate( ['/home/chi-tiet',name,id]);
+    // this.route.navigate( ['/home/chi-tiet',name,id]);
+    var link = '/home/chi-tiet/' + name + '/' + id
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate([link]);
+      
+    }); 
   }
-
+  
   public async getRecommend(){
     // const result = await this.provinceService.getProvinces() as Province[];
     // var name = result.find(a => a.id == this.motel.provinceId);
@@ -138,7 +121,8 @@ export class DetailMotelComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: Motel) => {
       if (result)
       {
-        alert('The dialog was closed');
+        // this.toast.toastInfo('Tài khoản không tồn tại!');
+        // alert('The dialog was closed');
         //if (!this.isEdit) this.createNewExam(result);
         //else this.updateExam(result);
       }
@@ -154,6 +138,7 @@ export class DetailMotelComponent implements OnInit {
   copyContent() {
     var link = window.location.href;
     this.clipboardService.copyFromContent(link);
-    alert("Đã sao chép link chia sẽ")
+    // alert("Đã sao chép link chia sẽ")
+    this.toast.toastInfo('Đã sao chép link chia sẽ');
   }
 }

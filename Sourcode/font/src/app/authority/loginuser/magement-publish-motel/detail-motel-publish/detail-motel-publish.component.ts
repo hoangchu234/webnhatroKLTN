@@ -21,6 +21,7 @@ import { DictrictService } from 'src/app/services/dictrict.service';
 import { StreetService } from 'src/app/services/street.service';
 import { ActivatedRoute } from '@angular/router';
 import { Direct } from 'src/app/model/Direct';
+import { ToastService } from 'src/app/services/toast.service';
 
 export interface Data{
   id:number;
@@ -104,7 +105,7 @@ export class DetailMotelPublishComponent implements OnInit {
 
   checkSaveImage = false;
   motelById: Motel;
-  constructor(private router: ActivatedRoute,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
+  constructor(private toast: ToastService,private router: ActivatedRoute,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -511,7 +512,9 @@ export class DetailMotelPublishComponent implements OnInit {
                 this.updateMotel();
                 this.deleteImageOld();
                 this.addImageNew();
-                alert("Sửa thành công")
+                // alert("Sửa thành công")
+                this.toast.toastSuccess('Sửa thành công');
+
                 // this.dialogRef.close();
                 window.location.reload();
               }
@@ -525,7 +528,9 @@ export class DetailMotelPublishComponent implements OnInit {
 
       this.updateMotel();
       this.deleteImageOld();
-      alert("Sửa thành công")
+      // alert("Sửa thành công")
+      this.toast.toastSuccess('Sửa thành công');
+
       // this.dialogRef.close();
       window.location.reload();
     }
@@ -544,7 +549,9 @@ export class DetailMotelPublishComponent implements OnInit {
                 console.log("1 0")
                 this.updateMotel();
                 this.addImageNew();
-                alert("Sửa thành công")
+                // alert("Sửa thành công")
+                this.toast.toastSuccess('Sửa thành công');
+
                 // this.dialogRef.close();
                 window.location.reload();
               }
@@ -582,7 +589,9 @@ export class DetailMotelPublishComponent implements OnInit {
       this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
         console.log(data);
       });
-      alert("Sửa thành công")
+      // alert("Sửa thành công")
+      this.toast.toastSuccess('Sửa thành công');
+
       // this.dialogRef.close();
       window.location.reload();
     }

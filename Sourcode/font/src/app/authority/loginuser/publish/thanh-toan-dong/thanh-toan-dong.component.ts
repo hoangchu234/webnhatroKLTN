@@ -38,6 +38,9 @@ export class ThanhToanDongComponent implements OnInit {
   loadDataCity:string = "";
   loadDataProvince:string = "";
   hasSave = false;
+  loadImageFromPC: string [] = [];
+  firstImage = "";
+
   constructor(public dialog: MatDialog,private cityService: CitiesService, private provinceService: ProvincesService,private typeservice:TypeofnewService,private priceService: ServicePriceService,private router: Router,private authenticationService: AuthenticationService,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
   
     this.currentAccount = this.authenticationService.currentAccountValue;
@@ -52,7 +55,7 @@ export class ThanhToanDongComponent implements OnInit {
   
 
   ngOnInit(): void {
-    
+    this.getImage();
   }
 
   public async loadData(){
@@ -68,6 +71,13 @@ export class ThanhToanDongComponent implements OnInit {
     this.loadDataType = getnewtypemotel.name;
 
 
+  }
+
+  getImage(){
+    var data = JSON.parse(localStorage.getItem(StorageService.loadImageStorage));
+    this.loadImageFromPC = data.slice();
+    this.firstImage = this.loadImageFromPC[0];
+    this.loadImageFromPC.shift();
   }
 
   public step1(){

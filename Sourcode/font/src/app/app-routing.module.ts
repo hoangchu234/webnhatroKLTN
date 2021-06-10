@@ -43,6 +43,7 @@ import { DetailMotelPublishComponent } from './authority/loginuser/magement-publ
 import { DetailMotelExtendComponent } from './authority/loginuser/magement-publish-motel/detail-motel-extend/detail-motel-extend.component';
 import { DetailMotelPublishMagementComponent } from './authority/loginadmin/detail-motel-publish-magement/detail-motel-publish-magement.component';
 import { ManagementForumComponent } from './authority/loginadmin/management-forum/management-forum.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 const routes: Routes = [
   {
@@ -105,6 +106,7 @@ const routes: Routes = [
   { path: 'tro-giup',          component: HelpComponent } ,
   { path: 'area/:name',          component: AreaCityHomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'forgetPassword', component: ForgetPasswordComponent },
   { 
     path: 'forum', component:WebForumComponent,
   },

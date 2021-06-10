@@ -7,6 +7,7 @@ import { RegisterService } from 'src/app/services/register.service';
 import firebase from 'firebase';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-dialog-edit-phone',
@@ -25,7 +26,7 @@ export class DialogEditPhoneComponent implements OnInit {
   // Lưu xác thực xác định khi xend code
   comfirm :firebase.auth.ConfirmationResult;
   checkRecapt = true;
-  constructor(private userService: UserService,public dialogRef: MatDialogRef<DialogEditPhoneComponent>,@Inject(MAT_DIALOG_DATA) public data: User,private authenticationService: AuthenticationService,
+  constructor(private toast: ToastService,private userService: UserService,public dialogRef: MatDialogRef<DialogEditPhoneComponent>,@Inject(MAT_DIALOG_DATA) public data: User,private authenticationService: AuthenticationService,
       private router: Router,
       private service: RegisterService) {
         const firebaseConfig = {
@@ -68,29 +69,42 @@ export class DialogEditPhoneComponent implements OnInit {
     }
   }
 
-  public onSubmit() {
-    var p = this.phone;
-    var phoneNumber = "+84" + p.substring(0, p.length);
-    if(this.validationPhone(phoneNumber) == -2){
-      alert('Số điện thoại của bạn không đúng định dạng!');
+  public async onSubmit() {
+    if(this.validationPhone(this.phone) == -2){
+      this.toast.toastInfo('Số điện thoại của bạn không đúng định dạng!');
+      // alert('Số điện thoại của bạn không đúng định dạng!');
     }
-    else if(this.validationPhone(phoneNumber) == -2){
-      alert('Số điện thoại của bạn hợp lệ!');
+    else if(this.validationPhone(this.phone) == -2){
+      // alert('Số điện thoại của bạn hợp lệ!');
+      this.toast.toastInfo('Số điện thoại của bạn hợp lệ!');
+
     }
-    else if(this.validationPhone(phoneNumber) == -2){
-      alert('Bạn chưa điền số điện thoại!');
+    else if(this.validationPhone(this.phone) == -2){
+      // alert('Bạn chưa điền số điện thoại!');
+      this.toast.toastInfo('Bạn chưa điền số điện thoại!');
+
     }
     else{
-      const appVerifier = this.recaptchaVerifier;
-      var testVerificationCode = "123456";
-      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          this.comfirm = confirmationResult;
-          this.checkRecapt = false;
-        })
-        .catch((err) => {
-          console.log('sms not sent', err);
-        });
+      var checkPhone = await this.service.checkPhone(this.phone);
+      if(checkPhone == "Số điện thoại chưa được dùng"){
+        var p = this.phone;
+        var phoneNumber = "+84" + p.substring(0, p.length);
+        const appVerifier = this.recaptchaVerifier;
+        var testVerificationCode = "123456";
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+          .then((confirmationResult) => {
+            this.comfirm = confirmationResult;
+            this.checkRecapt = false;
+          })
+          .catch((err) => {
+            this.toast.toastError('Tin nhắn chưa được gửi');
+          });
+      }
+      else if(checkPhone == "Số điện thoại đã được dùng"){
+        this.toast.toastInfo('Số điện thoại đã được dùng');
+      }
+          
+     
     }
   }
 
@@ -111,14 +125,19 @@ export class DialogEditPhoneComponent implements OnInit {
           // alert('Success');
         }).catch(err =>{
           // alert(err);
-          alert('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
+          this.toast.toastError("Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới");
+          // alert('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
         })
       } else {
-        alert('No verification code entered');
+        this.toast.toastError("Mã code không đúng");
+
+        // alert('No verification code entered');
       }
     }
     catch (e) {
-      alert('Add failed');
+      this.toast.toastError("Lỗi");
+
+      // alert('Add failed');
     }
   };
 

@@ -30,6 +30,7 @@ import { Direct } from 'src/app/model/Direct';
 import { New } from 'src/app/model/New';
 import { Time } from 'src/app/model/Time';
 import { ChangeTime } from 'src/app/model/ChangeTime';
+import { ToastService } from 'src/app/services/toast.service';
 
 export interface Data{
   id:number;
@@ -186,7 +187,7 @@ export class DetailMotelExtendComponent implements OnInit {
   priceBill:string = "";
   motelById: Motel;
 
-  constructor(private router: ActivatedRoute,private billService:BillService,private priceService: ServicePriceService,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
+  constructor(private toast: ToastService,private router: ActivatedRoute,private billService:BillService,private priceService: ServicePriceService,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
     
   }
 
@@ -762,8 +763,8 @@ export class DetailMotelExtendComponent implements OnInit {
                 this.deleteImageOld();
                 this.addImageNew();
                 this.addBill();
-                alert("Sửa thành công")
-                
+                // alert("Sửa thành công")
+                this.toast.toastSuccess('Sửa thành công');
                 window.location.reload();
               }
             })
@@ -777,8 +778,9 @@ export class DetailMotelExtendComponent implements OnInit {
       this.updateMotel();
       this.deleteImageOld();
       this.addBill();
-      alert("Sửa thành công")
-     
+      // alert("Sửa thành công")
+      this.toast.toastSuccess('Sửa thành công');
+
       window.location.reload();
     }
 
@@ -797,8 +799,9 @@ export class DetailMotelExtendComponent implements OnInit {
                 this.updateMotel();
                 this.addImageNew();
                 this.addBill();
-                alert("Sửa thành công")
-                
+                // alert("Sửa thành công")
+                this.toast.toastSuccess('Sửa thành công');
+
                 window.location.reload();
               }
             })
@@ -835,7 +838,8 @@ export class DetailMotelExtendComponent implements OnInit {
       this.motelService.updateExtendMotel(this.motelUpdate).subscribe(data => {
         this.addBill();
       });
-      alert("Sửa thành công")
+      // alert("Sửa thành công")
+      this.toast.toastSuccess('Sửa thành công');
 
     
       window.location.reload();

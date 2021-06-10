@@ -18,6 +18,7 @@ import { ICommentParent } from '../model/interface/ICommentParent';
 import { INotifyComment } from '../model/interface/INotifyComment';
 import { ReportPost } from '../model/ReportPost';
 import { DialogReportComponent } from './dialog-report/dialog-report.component';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-web-forum',
@@ -53,7 +54,7 @@ export class WebForumComponent implements OnInit {
   countNotifyNotSee = 0;
   image = "";
   id = 0;
-  constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
+  constructor(private toast: ToastService,private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     this.getPosts();
     this.image = "../../assets/forum/images1/resources/friend-avatar2.jpg";
     if(this.authenticationService.currentAccountValue){
@@ -535,7 +536,9 @@ export class WebForumComponent implements OnInit {
         this.countLikeComment(this.dataComment);
         // this.getCountCommentPost(data.id);
       })
-      alert("Thành công");
+      // alert("Thành công");
+      this.toast.toastSuccess('Thành công');
+
     }
   }
 
@@ -588,7 +591,9 @@ export class WebForumComponent implements OnInit {
         });
         var index = this.posts.findIndex(a => a.id === idPost);
         this.posts[index].postUser = result;
-        alert("Sửa bài thành công")
+        // alert("Sửa bài thành công")
+        this.toast.toastSuccess('Sửa bài thành công');
+
       }
     });
   }
@@ -617,7 +622,9 @@ export class WebForumComponent implements OnInit {
           this.showChildCommentArray.push(this.pushArrayShowCommentParent(data.id,arrayChildCommentCheck));
           this.countLikePost(this.posts);
           this.getCountCommentPostFirst(data.id);
-          alert("Đăng bài thành công")
+          // alert("Đăng bài thành công")
+          this.toast.toastSuccess('Đăng bài thành công');
+
         });
       }
     });
@@ -907,7 +914,9 @@ export class WebForumComponent implements OnInit {
   copyContent() {
     var link = window.location.href;
     this.clipboardService.copyFromContent(link);
-    alert("Đã sao chép link chia sẽ")
+    // alert("Đã sao chép link chia sẽ")
+    this.toast.toastInfo('Đã sao chép link chia sẽ');
+
   }
 
   ////Display value like comment

@@ -17,6 +17,7 @@ import { DialogInformComponent } from 'src/app/dialog-inform/dialog-inform.compo
 import { INotifyComment } from 'src/app/model/interface/INotifyComment';
 import { DialogReportComponent } from '../dialog-report/dialog-report.component';
 import { DialogPostComponent } from '../dialog-post/dialog-post.component';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-detail-post-forum',
@@ -50,7 +51,7 @@ export class DetailPostForumComponent implements OnInit {
   postUser = "";
   image = "";
   id = 0;
-  constructor(private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
+  constructor(private toast: ToastService,private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
     this.image = "../../assets/forum/images1/resources/friend-avatar2.jpg";
     if(this.authenticationService.currentAccountValue){
       this.id = this.authenticationService.currentAccountValue.user.id;
@@ -132,7 +133,9 @@ export class DetailPostForumComponent implements OnInit {
 
         });
         this.dataPost.postUser = result;
-        alert("Sửa bài thành công")
+        // alert("Sửa bài thành công")
+        this.toast.toastSuccess('Sửa bài thành công');
+
       }
     });
   }
@@ -279,7 +282,9 @@ export class DetailPostForumComponent implements OnInit {
   copyContent() {
     var link = window.location.href;
     this.clipboardService.copyFromContent(link);
-    alert("Đã sao chép link chia sẽ")
+    // alert("Đã sao chép link chia sẽ")
+    this.toast.toastInfo('Đã sao chép link chia sẽ');
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,7 +330,8 @@ export class DetailPostForumComponent implements OnInit {
         this.countLikeComment(this.comments);
         this.commentUser = "";
       })
-      alert("Thành công");
+      this.toast.toastInfo('Thành công');
+      // alert("Thành công");
     }
   }
 

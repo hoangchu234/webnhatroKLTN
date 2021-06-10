@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReportPost } from 'src/app/model/ReportPost';
 import { PostService } from 'src/app/services/post.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-dialog-report',
@@ -15,7 +16,7 @@ export class DialogReportComponent implements OnInit {
   not = false;
   language = false;
   write = "";
-  constructor(public dialogRef: MatDialogRef<DialogReportComponent>, @Inject(MAT_DIALOG_DATA) public data: string,public postService:PostService) { }
+  constructor(private toast: ToastService,public dialogRef: MatDialogRef<DialogReportComponent>, @Inject(MAT_DIALOG_DATA) public data: string,public postService:PostService) { }
 
   ngOnInit(): void {
   }
@@ -64,7 +65,8 @@ export class DialogReportComponent implements OnInit {
     }
 
     this.postService.postReportPost(report).subscribe();
-    alert("Báo cáo của bạn đã được gửi")
+    // alert("Báo cáo của bạn đã được gửi")
+    this.toast.toastInfo('Báo cáo của bạn đã được gửi');
     this.dialogRef.close();
   }
 

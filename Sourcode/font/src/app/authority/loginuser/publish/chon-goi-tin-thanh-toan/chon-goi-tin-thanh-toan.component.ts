@@ -13,6 +13,9 @@ import { StorageService } from 'src/app/storage.service';
 import { New } from 'src/app/model/New';
 import { Time } from 'src/app/model/Time';
 import { ChangeTime } from 'src/app/model/ChangeTime';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { User } from 'src/app/model/User';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-chon-goi-tin-thanh-toan',
@@ -99,12 +102,28 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
   price:string = "";
 
 
-  constructor(private priceService: ServicePriceService,private router: Router,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
+  check = false;
+  constructor(private userService: UserService,private authenticationService: AuthenticationService,private priceService: ServicePriceService,private router: Router,private _sanitizer: DomSanitizer,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
 
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.prevous();
+    var data = await this.getCheckFree();
+    if(data == 0) this.check = false;
+    else this.check = true;
+  }
+
+  async getCheckFree(){
+    var id = Number(this.authenticationService.currentAccountValue.user.id);
+    var data = await this.userService.getUserFromId(id) as User;
+    if(Number(data.pubishFree)==0)
+    {
+      return 0;
+    }
+    else{
+      return 1;
+    }
   }
 
   async getDataNew(){

@@ -22,6 +22,8 @@ import { District } from '../model/District';
 import { Street } from '../model/Street';
 import { ViewportScroller } from '@angular/common';
 import { CountNewTypeViewModel } from '../model/CountNewTypeViewModel';
+import { StorageService } from '../storage.service';
+import { ToastService } from '../services/toast.service';
 
 
 @Component({
@@ -54,12 +56,12 @@ export class HomeComponent implements OnInit {
   options: List[] = [];
   filteredOptions: Observable<List[]>;
 
-  constructor(private priceSearchServer:PriceSearchService,
+  constructor( private toast: ToastService,private priceSearchServer:PriceSearchService,
     private http: HttpClient,private router: Router,private motelService: MotelService,
     private cityService: CitiesService, private provinceService: ProvincesService, 
     private typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,
     viewportScroller: ViewportScroller) { 
-      
+      StorageService.removeLocalPubish();
   }
 
   async ngOnInit(){
@@ -129,7 +131,8 @@ export class HomeComponent implements OnInit {
 
   public async getProvinces(){
     if(this.city.name == ""){
-      alert("Chọn thành phố trước");
+      this.toast.toastInfo('Chọn thành phố trước');
+      // alert("Chọn thành phố trước");
     }
     else{
         var id = this.cities.find(m => m.name == this.city.name);

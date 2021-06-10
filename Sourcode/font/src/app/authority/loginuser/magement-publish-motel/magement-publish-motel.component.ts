@@ -9,6 +9,7 @@ import { Subject} from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PaypalComponent } from '../publish/paypal/paypal.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Status } from 'src/app/model/Status';
 
 export interface Type{
   id:number;
@@ -25,15 +26,16 @@ export class MagementPublishMotelComponent implements OnInit {
   nametophead = "Quản lý đăng tin"
   // Danh sách loại motel
   newTypes: NewType [];
-  newType = "";
+  newType: NewType = {id: "", name: "", details: null};
   // Danh sách trạng thái motel
-  statuss:Array<Type> = [
-    {id: 0, text:'Tất cả'},
-    {id: 1, text:'Tin đang hiển thị'}, 
-    {id: 2, text:'Tin hết hạn'}, 
-    {id: 3, text:'Tin đang ẩn'},
-  ];
-  status: string= "";
+  statuss:Array<Status> = []
+  // statuss:Array<Type> = [
+  //   {id: 0, text:'Tất cả'},
+  //   {id: 1, text:'Tin đang hiển thị'}, 
+  //   {id: 2, text:'Tin hết hạn'}, 
+  //   {id: 3, text:'Tin đang ẩn'},
+  // ];
+  status: Status = {id: "", name:""};
   // Danh sách motel user đã đăng
   motels: Motel[];
   searchmotels: Motel[];
@@ -49,14 +51,26 @@ export class MagementPublishMotelComponent implements OnInit {
   checkStatusExtend : Array<boolean> = [];
   constructor(private router: Router,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-    this.getMotels();
-    this.getNewTypes();
+    
+    
   }
 
-  ngOnInit(): void {
-    this.newType = "Tất cả";
-    this.status = "Tất cả"
-    
+  async ngOnInit(): Promise<void> {
+    await this.getData();
+    await this.getNewTypes();
+    await this.getMotels();
+  }
+
+  async getData(){
+    var data = await this.motelService.getStatus() as Status[];
+    var fisrtData = new Status();
+    fisrtData.id = "0";
+    fisrtData.name = "Tất cả"
+    this.statuss.push(fisrtData);
+    for(let i=0;i<data.length;i++){
+      this.statuss.push(data[i]);
+    }
+    this.status = this.statuss[0];
   }
 
   public linkRouterChiTiet(name, id) {
@@ -77,35 +91,30 @@ export class MagementPublishMotelComponent implements OnInit {
   public onClickSearchNewType(event: any){
     let value = event.target.value;
     var type = this.newTypes.find(a => a.id == value);
-    this.newType = type.name;
-    console.log(this.status + " "+ this.newType);
-    if((this.status == "Tất cả" && this.newType != "Tất cả") || this.status == "Tất cả" && this.newType != "Tất cả"){
-      this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType);
+    this.newType = type;
+    if((this.status.name == "Tất cả" && this.newType.name != "Tất cả") || this.status.name == "Tất cả" && this.newType.name != "Tất cả"){
+      this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType.name);
     }
-    else if(this.newType == "Tất cả" && this.status == "Tất cả"){
+    else if(this.newType.name == "Tất cả" && this.status.name == "Tất cả"){
       this.motels = this.searchmotels;
     }
-    else if(this.status != "Tất cả" && this.newType == "Tất cả"){
-      this.motels = this.searchmotels.filter(motel => motel.status == this.status);
+    else if(this.status.name != "Tất cả" && this.newType.name == "Tất cả"){
+      this.motels = this.searchmotels.filter(motel => motel.status == this.status.id);
     }
     else{
-      this.motels = this.searchmotels.filter(motel => motel.status == this.status && motel.detail.typeofnew.name == this.newType);
+      this.motels = this.searchmotels.filter(motel => motel.status == this.status.id && motel.detail.typeofnew.name == this.newType.name);
     }
   }
 
-  public async getNewTypes(){
-    /*this.typeservice.getTypes().subscribe(gettypes => {
-      this.newTypes = gettypes;
-    })*/
+  async getNewTypes(){
     this.newTypes = await this.typeservice.getTypes() as NewType [];
-
-
+    this.newType = this.newTypes[0];
   }
 
   public async getMotels(){
     this.motels = await this.motelService.getmotelbyuser(this.authenticationService.currentAccountValue.user.id) as any;
       for(let i=0;i<this.motels.length;i++){
-        if(this.motels[i].status == "Tin đã hết hạn"){
+        if(this.motels[i].status == "3"){
           this.checkStatus.push(false);
 
         }
@@ -115,67 +124,25 @@ export class MagementPublishMotelComponent implements OnInit {
       }
       this.searchmotels = this.motels
       this.totalRecord = this.motels.length;
-    /*this.motelService.getmotelbyuser(this.authenticationService.currentAccountValue.user.id).subscribe(getmotel => {
-      this.motels = getmotel
-      for(let i=0;i<getmotel.length;i++){
-        if(getmotel[i].status == "Tin đã hết hạn"){
-          this.checkStatus.push(false);
-
-        }
-        else{
-          this.checkStatus.push(true);
-        }
-      }
-      this.searchmotels = getmotel
-      this.totalRecord = this.motels.length;
-    })*/
   }
 
   public onChangeStatus(event: any)
   {
     let value = event.target.value;
-    var name = this.statuss[value].text.toString();
+    var index = this.statuss.findIndex(a => a.id === value);
+    var name = this.statuss[index];
     this.status = name;
-    console.log(this.status + " "+ this.newType);
-    if((this.newType == "Tất cả" && this.status != "Tất cả") || (this.status != "Tất cả" && this.newType == "Tất cả")){
-      this.motels = this.searchmotels.filter(motel => motel.status == this.status);
+    if((this.newType.name == "Tất cả" && this.status.name != "Tất cả") || (this.status.name != "Tất cả" && this.newType.name == "Tất cả")){
+      this.motels = this.searchmotels.filter(motel => motel.status == name.id);
     }
-    else if(this.status == "Tất cả" && this.newType == "Tất cả"){
+    else if(this.status.name == "Tất cả" && this.newType.name == "Tất cả"){
       this.motels = this.searchmotels;
     }
-    else if(this.status == "Tất cả" && this.newType != "Tất cả"){
-      this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType);
+    else if(this.status.name == "Tất cả" && this.newType.name != "Tất cả"){
+      this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType.name);
     }
     else{
-      this.motels = this.searchmotels.filter(motel => motel.status == this.status && motel.detail.typeofnew.name == this.newType);
+      this.motels = this.searchmotels.filter(motel => motel.status == name.id && motel.detail.typeofnew.name == this.newType.name);
     }
   }
-
-
-
-  // public openDialogUser(motel:Motel): void {
-  //   const dialogRef = this.dialog.open(DialogEditMotelComponent, {
-  //     width: '1000px',
-  //     height:'1000px',
-  //     data: motel
-  //    });
- 
-  //    dialogRef.afterClosed().subscribe((result: Motel) => {
-      
-         
-  //    });  
-  //  }
-
-  // public openDialogExtend(motel:Motel): void {
-  //   const dialogRef = this.dialog.open(DialogExtendMotelsComponent, {
-  //    width: '1000px',
-  //    height:'1000px',
-  //    data: motel
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result: Motel) => {
-  
-        
-  //   });
-  // }
 }

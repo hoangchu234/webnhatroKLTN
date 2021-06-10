@@ -78,13 +78,6 @@ export class AuthenticationService {
         else  sessionStorage.setItem(this.account_storage, JSON.stringify(temp));
     }
 
-    // public loginPhone(account: Account): Observable<Account>{
-    //     return this.http.post<Account>(this.urlAPI + "/api/Accounts/Signin", account, httpOptions).pipe(
-    //       tap((account: Account) => account),
-    //       catchError(error => of(new Account()))
-    //     );
-    // }
-
     loginPhone = async (account: Account) => {
         try {
           const url = `${this.urlAPI + "/api/Accounts/Signin"}`;
@@ -95,89 +88,10 @@ export class AuthenticationService {
         }
       }
 
-    // public loginPhone = (account: Account) => {
-    //     var path = `${this.urlAPI}/api/Accounts/Signin`;
-    //     return this.http.post<any>(path, account, httpOptions).toPromise() as any;
-    // }
-
-    // loginPhone = async (account: Account) => {
-    //     try {
-    //         var path = this.urlAPI + "/api/Accounts/Signin";
-    //         return await this.http.post(path, account).toPromise();
-    //     }
-    //     catch (e) {
-    //         console.log(e);
-    //     }
-    //   }
-
     public loginFacebook = (account: Account) => {
         var path = `${this.urlAPI}/api/Accounts/Signinsocial`;
         return this.http.post<any>(path, account, httpOptions).toPromise() as any;
     }
-
-    /*public login = (password:string, phone:string) => {
-            const loginUrl = `${this.urlAPI}/api/Accounts/Signin`;
-            return this.http.post<any>(loginUrl, { password, phone })
-                            .pipe(
-                            map((account) => {
-                                if (account != null){
-                                    const newAccount = {} as Account;
-                                    newAccount.id = account.id;
-                                    newAccount.username = account.username;
-                                    newAccount.password = account.password;
-                                    newAccount.roleId = account.roleId;
-                                    newAccount.isActive = account.isActive;
-                                    newAccount.role = account.role;
-                                    if(Number(account.roleId) == Number(1)){
-                                        newAccount.user = account.user;
-                                    }
-                                    else{
-                                        newAccount.isHD = "1";
-                                        newAccount.employee = account.employee;
-                                    }                 
-                                    //localStorage.setItem('currentAccount', JSON.stringify(newAccount));
-                                    //this.currentAccountSubject.next(newAccount);
-                                    return account;
-                                } 
-                                else {
-                                    return null;
-                                }
-                            })
-        );
-    }*/
-
-//    public loginSocial = (email: string) => {
-//             const loginUrl = `${this.urlAPI}/api/Accounts/Signinsocial`;
-//             return this.http.post<any>(loginUrl, { email })
-//             .pipe(
-//             map((account) => {
-//             // console.log(user);
-//             if (account != null){
-//                 const newAccount = {} as Account;
-//                 newAccount.id = account.id;
-//                 newAccount.username = account.username;
-//                 newAccount.password = account.password;
-//                 newAccount.roleId = account.roleId;
-//                 newAccount.isActive = account.isActive;
-//                 newAccount.role = account.role;
-//                 if(Number(account.roleId) == Number(1)){
-//                     newAccount.user = account.user;
-//                 }
-//                 else{
-//                     newAccount.isHD = "1";
-//                     newAccount.employee = account.employee;
-//                 }                 
-//                 console.log(account);
-//                 localStorage.setItem('currentAccount', JSON.stringify(newAccount));
-//                 this.currentAccountSubject.next(newAccount);
-//                 return account;
-//             } 
-//             else {
-//                 return null;
-//             }
-//         })
-//         );
-//     }
   
     loginSocial = async (user:User) => {
         try {

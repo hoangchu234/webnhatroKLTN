@@ -10,6 +10,7 @@ import { UserService } from '../../../services/user.service'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProvincesService } from 'src/app/services/provinces.service';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-detail-motel-publish-magement',
@@ -22,7 +23,7 @@ export class DetailMotelPublishMagementComponent implements OnInit {
   motel: Motel;
   motelImage: Image[] = [];
   image0 = "";
-  constructor(public provinceService:ProvincesService,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private route: Router,public dangtinService:MotelService ,private authenticationService: AuthenticationService) { 
+  constructor(private toast: ToastService,public provinceService:ProvincesService,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private route: Router,public dangtinService:MotelService ,private authenticationService: AuthenticationService) { 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     this.init();
 
@@ -101,7 +102,8 @@ export class DetailMotelPublishMagementComponent implements OnInit {
 
   public onDuyetTin(motel: Motel){
     if((this.motel.verify == true && Number(this.authenticationService.currentAccountValue.roleId) == 2) || Number(this.authenticationService.currentAccountValue.roleId) == 4){
-      alert("Đã xác thực nhà trọ này");
+      // alert("Đã xác thực nhà trọ này");
+      this.toast.toastError('Đã xác thực nhà trọ này');
     }
     else{
       var motelupdate = new Motel();
@@ -111,8 +113,9 @@ export class DetailMotelPublishMagementComponent implements OnInit {
       this.dangtinService.updateNVMotel(motelupdate).subscribe(update => {
         console.log(update)
       })
-    
-      alert("Xác thực thành công")
+      this.toast.toastSuccess('Xác thực thành công');
+
+      // alert("Xác thực thành công")
     }
    
   }

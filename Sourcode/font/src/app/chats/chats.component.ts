@@ -14,14 +14,21 @@ export class ChatsComponent implements OnInit {
   uniqueID: string = new Date().getTime().toString();  
   messages = new Array<Messeger>();  
   message = new Messeger();  
+  messageDatas: Messeger[] = [];  
 
   constructor(private signalRService:SignalRService,private _ngZone: NgZone) { 
-    this.subscribeToEvents(); 
+    
   }
 
   ngOnInit(): void {
     this.signalRService.startConnection(); 
-    this.signalRService.registerOnServerEvents();
+    // this.hubConnection.on('MessageReceived', (data: any) => {  
+      
+    // });  
+  }
+
+  async getConservationData(idReciver: number, idSender: number) {  
+    this.messageDatas = await this.signalRService.getConservation(idReciver,idSender) as Messeger[];
   }
 
   sendMessage(): void {  
@@ -36,16 +43,16 @@ export class ChatsComponent implements OnInit {
       this.txtMessage = '';  
     }  
   }  
-  private subscribeToEvents(): void {  
+  // private subscribeToEvents(): void {  
   
-    this.signalRService.messageReceived.subscribe((message: Messeger) => {  
-      this._ngZone.run(() => {  
-        // if (message.clientuniqueid !== this.uniqueID) {  
-        //   message.type = "received";  
-        //   this.messages.push(message);  
-        // }  
-      });  
-    });  
-  }  
+  //   this.signalRService.messageReceived.subscribe((message: Messeger) => {  
+  //     this._ngZone.run(() => {  
+  //       // if (message.clientuniqueid !== this.uniqueID) {  
+  //       //   message.type = "received";  
+  //       //   this.messages.push(message);  
+  //       // }  
+  //     });  
+  //   });  
+  // }  
 
 }

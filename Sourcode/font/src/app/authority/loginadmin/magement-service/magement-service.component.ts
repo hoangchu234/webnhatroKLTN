@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Serviceprice } from '../../../model/Serviceprice';
 import { HttpClient } from '@angular/common/http';
 import { Bill } from '../../../model/Bill';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-magement-service',
@@ -23,7 +24,7 @@ export class MagementServiceComponent implements OnInit {
   priceUpTop = "";
   priceWeek = "";
   
-  constructor(private http: HttpClient,private router: Router,private priceSearchService: ServicePriceService) { }
+  constructor(private toast: ToastService,private http: HttpClient,private router: Router,private priceSearchService: ServicePriceService) { }
 
   ngOnInit(): void {
 
@@ -83,7 +84,8 @@ export class MagementServiceComponent implements OnInit {
     console.log(bill);
     this.priceSearchService.updateServiceprice(bill).subscribe(update => {
       //console.log(update);
-      alert("Sửa thành công")
+      // alert("Sửa thành công")
+      this.toast.toastSuccess('Sửa thành công');
       window.location.reload();
     })
   }

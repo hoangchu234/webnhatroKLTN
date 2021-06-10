@@ -44,9 +44,14 @@ namespace Websitedangtintimkiemnhatro.Models
         public DbSet<New> News { get; set; }
         public DbSet<Time> Times { get; set; }
         public DbSet<ChangeTime> ChangeTimes { get; set; }
-
+        public DbSet<Status> Statuss { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Status>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+            });
+
             modelBuilder.Entity<New>(entity =>
             {
                 entity.Property(e => e.Id).UseIdentityColumn();

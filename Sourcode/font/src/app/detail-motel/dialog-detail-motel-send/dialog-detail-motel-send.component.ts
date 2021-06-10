@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ReplyService } from '../../services/reply.service';
 import { Reply } from '../../model/Reply';
 import { Motel } from '../../model/Motel';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-dialog-detail-motel-send',
@@ -17,6 +18,7 @@ export class DialogDetailMotelSendComponent implements OnInit {
   decription:string;
 
   constructor(
+    private toast: ToastService,
     public replyService:ReplyService,
     public dialogRef: MatDialogRef<DialogDetailMotelSendComponent>,@Inject(MAT_DIALOG_DATA) public data: Motel) {}
 
@@ -38,7 +40,9 @@ export class DialogDetailMotelSendComponent implements OnInit {
     reply.userId = this.data.userId;
     this.replyService.addReply(reply).subscribe(data => {
       if(data){
-        alert("Gửi thành công")
+        this.toast.toastSuccess('Gửi thành công');
+
+        // alert("Gửi thành công")
         this.onNoClick();
       }
     });

@@ -24,6 +24,7 @@ import { CitiesService } from 'src/app/services/cities.service';
 import { DictrictService } from 'src/app/services/dictrict.service';
 import { StreetService } from 'src/app/services/street.service';
 import { ProvincesService } from 'src/app/services/provinces.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 export interface Type{
   id:number;
@@ -64,7 +65,7 @@ export class PaypalComponent implements OnInit {
   //Load data
   loadDataToSee: Motel;
  
-  constructor(private provinceService:ProvincesService,public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService,private authenticationService: AuthenticationService,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: boolean,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
+  constructor(private toast: ToastService,private provinceService:ProvincesService,public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService,private authenticationService: AuthenticationService,private router: Router,public dialogRef: MatDialogRef<PaypalComponent>,@Inject(MAT_DIALOG_DATA) public data: boolean,public dangtinService:MotelService,private billService:BillService,private storage: AngularFireStorage,private http:HttpClient,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.money = Number(localStorage.getItem(StorageService.totalMoneyStorage)); 
     this.loadDataToSee = JSON.parse(localStorage.getItem(StorageService.motelStorage));
@@ -202,7 +203,7 @@ export class PaypalComponent implements OnInit {
       if(this.imagesURLFirebare.length){
         this.saveNewMotel.detail.typeofnewId = this.newTypeMotel.id;  
         this.saveNewMotel.userId = this.authenticationService.currentAccountValue.user.id;
-        this.saveNewMotel.status = "Tin đang ẩn";
+        this.saveNewMotel.status = "2";
 
         // const city = await this.getDataCititesById(this.saveNewMotel.cityId);
         // const provicnce = await this.getDataProvinceById(this.saveNewMotel.provinceId);
@@ -232,21 +233,28 @@ export class PaypalComponent implements OnInit {
         });
         this.data = true;
 
-        localStorage.removeItem(StorageService.totalMoneyStorage); 
-        localStorage.removeItem(StorageService.ImageStorage); 
-        localStorage.removeItem(StorageService.loadImageStorage)
-        localStorage.removeItem(StorageService.motelStorage)
-        localStorage.removeItem(StorageService.TypeMotelStorage)
-        
-        alert('Đăng tin thành công');
+        // localStorage.removeItem(StorageService.totalMoneyStorage); 
+        // localStorage.removeItem(StorageService.ImageStorage); 
+        // localStorage.removeItem(StorageService.loadImageStorage)
+        // localStorage.removeItem(StorageService.motelStorage)
+        // localStorage.removeItem(StorageService.TypeMotelStorage)
+        StorageService.removeLocalPubish();
+
+        // alert('Đăng tin thành công');
+        this.toast.toastSuccess('Đăng tin thành công');
+
         this.dialogRef.close();
       }
       else{
-        alert('Đăng tin thất bại');
+        this.toast.toastError('Đăng tin thất bại');
+
+        // alert('Đăng tin thất bại');
       }
     }
     catch (e) {
-      alert('Đăng tin thất bại');
+      this.toast.toastError('Đăng tin thất bại');
+
+      // alert('Đăng tin thất bại');
       console.log(e)
     }
   }

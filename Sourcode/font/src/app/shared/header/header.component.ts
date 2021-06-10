@@ -12,6 +12,7 @@ import { NewType } from 'src/app/model/NewType';
 import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-header',
@@ -38,6 +39,7 @@ export class HeaderComponent implements OnInit {
   types: NewType[] = [];
 
   constructor(private activeRoute: ActivatedRoute,
+    public dialog: MatDialog,
     private replyService:ReplyService,
     private router: Router,
     private typeservice:TypeofnewService,
@@ -75,7 +77,7 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
-  
+
   async getUserById(id){
     return await this.userService.getUserFromId(id) as User;
   }
