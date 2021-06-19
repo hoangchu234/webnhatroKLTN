@@ -46,8 +46,8 @@ export class DetailPostForumComponent implements OnInit {
   likePostData: number = 0;
   likeCommentData: Array<ILike> = [];
 
-  notifys: Array<INotifyComment> = [];
-  countNotifyNotSee = 0;
+  // notifys: Array<INotifyComment> = [];
+  // countNotifyNotSee = 0;
   postUser = "";
   image = "";
   id = 0;
@@ -91,15 +91,15 @@ export class DetailPostForumComponent implements OnInit {
     this.totalComment = await this.postService.totalComment() as number;
     this.likePostData = await this.postService.getLikePost(Number(id)) as number;
 
-    if(this.checkLogin()){
-      this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
-      for(let i=0; i< this.notifys.length;i++){
-        if(this.notifys[i].imageUser == null){
-          this.notifys[i].imageUser = this.image;
-        }
-      }
-      this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
-    }
+    // if(this.checkLogin()){
+    //   this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
+    //   for(let i=0; i< this.notifys.length;i++){
+    //     if(this.notifys[i].imageUser == null){
+    //       this.notifys[i].imageUser = this.image;
+    //     }
+    //   }
+    //   this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
+    // }
   }
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -163,17 +163,18 @@ export class DetailPostForumComponent implements OnInit {
     });
   }
   
-  ///////////////////////////////////////////////////////////////////////////////////////////////
-  async onClickDetailPostINotify(data){
-    if(data.justSee == false){
-      data.justSee = true;
-      var update = {id: data.id,idUserReceiced: data.idUserReceiced,justSee: data.justSee,commentId: data.idComment};
-      const result = await this.postService.updateCommentNotifyByOneUser(update,data.id)
-    }
-    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.route.navigate(['/forum',data.postUser,data.idPost]);
-    }); 
-  }
+  // ///////////////////////////////////////////////////////////////////////////////////////////////
+  // async onClickDetailPostINotify(data){
+  //   if(data.justSee == false){
+  //     data.justSee = true;
+  //     var update = {id: data.id,idUserReceiced: data.idUserReceiced,justSee: data.justSee,commentId: data.idComment};
+  //     const result = await this.postService.updateCommentNotifyByOneUser(update,data.id)
+  //   }
+  //   this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+  //     this.route.navigate(['/forum',data.postUser,data.idPost]);
+  //   }); 
+  // }
+  
   ///////////////////////////////////////////////////////////////////////////////////////////////
   onClickDetailPost(name,id){
     this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {

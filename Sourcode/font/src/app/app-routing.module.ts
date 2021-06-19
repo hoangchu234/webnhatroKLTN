@@ -44,6 +44,7 @@ import { DetailMotelExtendComponent } from './authority/loginuser/magement-publi
 import { DetailMotelPublishMagementComponent } from './authority/loginadmin/detail-motel-publish-magement/detail-motel-publish-magement.component';
 import { ManagementForumComponent } from './authority/loginadmin/management-forum/management-forum.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { MapComponent } from './map/map.component';
 
 const routes: Routes = [
   {
@@ -75,7 +76,7 @@ const routes: Routes = [
       { path: 'tin-da-dang',          component: TindadangComponent },
       { path: 'lich-su-giao-dich',          component: MagementTransactionHistoryComponent },
       { path: 'chi-tiet/:name/:id',          component: DetailMotelPublishComponent },
-      { path: 'gia-han-tin/:name/:id',          component: DetailMotelExtendComponent }
+      { path: 'gia-han-tin/:name/:id',          component: DetailMotelExtendComponent },
     ]
   },
 
@@ -84,14 +85,6 @@ const routes: Routes = [
     children:[
       { path: '',          component: HomeComponent },
       { path: 'chi-tiet/:name/:id',          component: DetailMotelComponent },
-
-      // { path: ':city/:province/:district/:street/:price/:type',          component: SearchMotelComponent },
-      // { path: ':city/:province/:district/:street/:type',          component: SearchMotelComponent },
-      // { path: ':city/:province/:district/:type',          component: SearchMotelComponent },
-      // { path: ':city/:province/:type',          component: SearchMotelComponent},
-      // { path: ':city/:type',          component: SearchMotelComponent},
-      // { path: ':type',          component: SearchMotelComponent},
-
       { path: ':city/:province/:district/:street/:price/:type/:direct/:area',          component: SearchMotelComponent },
       { path: ':city/:province/:district/:street/:price/:type',          component: SearchMotelComponent },
       { path: ':city/:province/:district/:street/:type',          component: SearchMotelComponent },
@@ -101,17 +94,17 @@ const routes: Routes = [
       { path: ':type',          component: SearchMotelComponent},    
     ]
   },
-  
+
   { path: 'bang-gia-dich-vu',          component: TableServicePriceComponent },
   { path: 'tro-giup',          component: HelpComponent } ,
   { path: 'area/:name',          component: AreaCityHomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgetPassword', component: ForgetPasswordComponent },
-  { 
-    path: 'forum', component:WebForumComponent,
-  },
+  { path: 'chat/:id', component:ChatsComponent },
+  { path: 'forum', component:WebForumComponent},
+  { path: 'map', component:MapComponent},
   { path: 'forum/:name/:id',          component: DetailPostForumComponent }, 
-  { path: 'chat', component:ChatsComponent },
+
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 

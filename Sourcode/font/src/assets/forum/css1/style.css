@@ -15597,9 +15597,9 @@ a.shopping-cart > i {
     padding-right: 20px;
     position: relative;
     width: 100%;
-	max-height: 488px;
+	/* max-height: 488px;
 	height: 488px;
-	min-height: 488px;
+	min-height: 488px; */
 
 }
 .conversations > li {

@@ -14,6 +14,8 @@ import { IRecommendation } from '../model/interface/IRecommendation';
 import { ClipboardService } from 'ngx-clipboard';
 import { Status } from '../model/Status';
 import { ToastService } from '../services/toast.service';
+import { AuthenticationService } from '../services/authentication.service';
+import { DialogInformComponent } from '../dialog-inform/dialog-inform.component';
 
 @Component({
   selector: 'app-detail-motel',
@@ -32,7 +34,7 @@ export class DetailMotelComponent implements OnInit {
   phone:string = ""
 
   outOfOrder = false;
-  constructor(private toast: ToastService,private clipboardService: ClipboardService,private route: Router,private provinceService:ProvincesService,public dialog: MatDialog,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private motelService:MotelService) {
+  constructor(private authenticationService: AuthenticationService,private toast: ToastService,private clipboardService: ClipboardService,private route: Router,private provinceService:ProvincesService,public dialog: MatDialog,private userService:UserService,private sanitizer: DomSanitizer,private router: ActivatedRoute,private motelService:MotelService) {
     
    }
 
@@ -111,6 +113,26 @@ export class DetailMotelComponent implements OnInit {
     }
   }
 
+  linkChat(){
+    if(this.authenticationService.currentAccountValue){
+      var id = this.motel.userId;
+      this.route.navigate( ['/chat',id]);
+    }
+    else{
+      this.openDialogInform();
+    }
+  }
+  public openDialogInform(): void {
+    const dialogRef = this.dialog.open(DialogInformComponent, {
+      direction: "ltr",
+      width: '400px',
+      height: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    });
+  }
+  
   public openDialog(): void {
     const dialogRef = this.dialog.open(DialogDetailMotelSendComponent, {
       direction: "ltr",

@@ -13,5 +13,7 @@ namespace Websitedangtintimkiemnhatro.Models
         public int UserIdOne { get; set; }
         public int UserIdTwo { get; set; }
         public ICollection<Messeger> Messegers { get; set; }
+        public Notification Notification { get; set; }
+
     }
 }

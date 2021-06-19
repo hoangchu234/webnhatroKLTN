@@ -17,50 +17,96 @@ namespace Websitedangtintimkiemnhatro.Controllers
     public class NotificationsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHubContext<SignalrHub> _hubContext;
+        private readonly IHubContext<BroadcastHub, IHubClient> _hubContext;
 
-        public NotificationsController(ApplicationDbContext context, IHubContext<SignalrHub> hubContext)
+        public NotificationsController(ApplicationDbContext context, IHubContext<BroadcastHub, IHubClient> hubContext)
         {
             _context = context;
             _hubContext = hubContext;
         }
 
-        // GET: api/Notifications/notificationcount  
+        // GET: api/Notifications/GetNotificationCount  
         [HttpGet]
-        [Route("notificationcount/{id}")]
+        [Route("GetNotificationCount/{id}")]
         public async Task<ActionResult<NotificationCountResult>> GetNotificationCount(int id)
         {
-            var count =  (from not in _context.Messegers
-                         join a in _context.Conversations
-                         on not.ConversationId equals a.Id
-                         where not.JustSee == true && a.UserIdTwo == id
-                         select not).CountAsync();
+            var nofti = _context.Notifications.Where(a => a.UserReceiver == id && a.SeeReceiver == false).ToList();
+        
             NotificationCountResult result = new NotificationCountResult
             {
-                Count = await count
+                Count = nofti.Count
             };
             return result;
         }
 
-        // GET: api/Notifications/notificationresult  
-        [Route("notificationresult/{id}")]
+        // GET: api/Notifications/GetNotificationMessage  
+        [Route("GetNotificationMessage/{id}")]
         [HttpGet]
-        public async Task<ActionResult<List<NotificationResult>>> GetNotificationMessage(int id)
+        public async Task<ActionResult<IEnumerable<NotificationResult>>> GetNotificationMessage(string id)
         {
-            var results = from message in _context.Messegers
-                          join user in _context.Users
-                          on message.UserId equals user.Id
-                          join a in _context.Conversations
-                          on message.ConversationId equals a.Id
-                          where message.JustSee == true && a.UserIdTwo == id
-                          orderby message.Id descending
-                          select new NotificationResult
-                          {
-                              Messeger = message.Message,
-                              Sender = message.User.HovaTen,
-                              Date = message.Date
-                          };
-            return await results.ToListAsync();
+            var nofti = _context.Notifications.Where(a => a.UserReceiver.ToString() == id).ToList();
+
+            var nofti2 = _context.Notifications.Where(a => a.UserSender.ToString() == id).ToList();
+
+            List<NotificationResult> final = new List<NotificationResult>();
+
+            if (nofti != null)
+            {
+                DateTime aDateTime = DateTime.Now;
+                var data1 = nofti.Select(a => new NotificationResult
+                {
+                    Id = a.Id,
+                    UserId = _context.Messegers.Where(b => b.ConversationId == a.ConversationId).OrderByDescending(c => c.Date).FirstOrDefault().UserId,
+                    MessegerId = _context.Messegers.Where(b => b.ConversationId == a.ConversationId).OrderByDescending(c => c.Date).FirstOrDefault().Id,
+                    Messeger = _context.Messegers.Where(b => b.ConversationId == a.ConversationId).OrderByDescending(c => c.Date).FirstOrDefault().Message,
+                    Sender = _context.Users.Where(b => b.Id == a.UserSender).FirstOrDefault().HovaTen,
+                    Date = aDateTime.Subtract(_context.Messegers.Where(b => b.ConversationId == a.ConversationId).OrderByDescending(c => c.Date).FirstOrDefault().Date).Days,
+                    Image = _context.Users.Where(b => b.Id == a.UserSender).FirstOrDefault().UserImage,
+                    JustSee = a.SeeReceiver
+                }).ToList();
+                final.AddRange(data1);
+            }
+
+            if (nofti2 != null)
+            {
+                DateTime aDateTime = DateTime.Now;
+                var data2 = nofti2.Select(a => new NotificationResult
+                {
+                    Id = a.Id,
+                    UserId = _context.Messegers.Where(b => b.ConversationId == a.ConversationId).OrderByDescending(c => c.Date).FirstOrDefault().UserId,
+                    MessegerId = _context.Messegers.Where(b => b.ConversationId == a.ConversationId).OrderByDescending(c => c.Date).FirstOrDefault().Id,
+                    Messeger = _context.Messegers.Where(b => b.ConversationId == a.ConversationId).OrderByDescending(c => c.Date).FirstOrDefault().Message,
+                    Sender = _context.Users.Where(b => b.Id == a.UserReceiver).FirstOrDefault().HovaTen,
+                    Date = aDateTime.Subtract(_context.Messegers.Where(b => b.ConversationId == a.ConversationId).OrderByDescending(c => c.Date).FirstOrDefault().Date).Days,
+                    Image = _context.Users.Where(b => b.Id == a.UserReceiver).FirstOrDefault().UserImage,
+                    JustSee = a.SeeSender
+                }).ToList();
+                final.AddRange(data2);
+            }
+
+            return final;
+        }
+
+        // PUT: api/Notifications/PutNotification  
+        [HttpPut]
+        [Route("PutNotification/{id}")]
+        public async Task<IActionResult> PutNotification(int id, NotificationResult notification)
+        {
+            var nofti = _context.Notifications.Where(a => a.UserReceiver == id && a.Id == notification.Id).FirstOrDefault();
+            nofti.SeeReceiver = true;
+            _context.Entry(nofti).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.BroadcastMessage();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return NoContent();
         }
     }
 }

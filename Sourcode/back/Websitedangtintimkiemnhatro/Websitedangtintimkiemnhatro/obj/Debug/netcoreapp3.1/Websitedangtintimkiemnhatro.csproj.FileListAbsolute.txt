@@ -989,5 +989,5 @@ C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Sourcode\back\Websitedangtintimkie
 C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Sourcode\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.dll
 C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Sourcode\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.pdb
 C:\Users\hoang\OneDrive\Desktop\webnhatroKLTN\Sourcode\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.genruntimeconfig.cache
-D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csprojAssemblyReference.cache
 D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
+D:\HK2-2020-2021\KLTN\back\Websitedangtintimkiemnhatro\Websitedangtintimkiemnhatro\obj\Debug\netcoreapp3.1\Websitedangtintimkiemnhatro.csprojAssemblyReference.cache

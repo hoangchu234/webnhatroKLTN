@@ -87,7 +87,7 @@ namespace Websitedangtintimkiemnhatro
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<SignalrHub>("/signalr");
+                endpoints.MapHub<BroadcastHub>("/signalr");
             });
         }
     }

@@ -45,8 +45,21 @@ namespace Websitedangtintimkiemnhatro.Models
         public DbSet<Time> Times { get; set; }
         public DbSet<ChangeTime> ChangeTimes { get; set; }
         public DbSet<Status> Statuss { get; set; }
+        public DbSet<Distance> Distances { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+            });
+
+            modelBuilder.Entity<Distance>(entity =>
+            {
+                entity.Property(e => e.Id).UseIdentityColumn();
+            });
+
             modelBuilder.Entity<Status>(entity =>
             {
                 entity.Property(e => e.Id).UseIdentityColumn();
@@ -76,6 +89,7 @@ namespace Websitedangtintimkiemnhatro.Models
             modelBuilder.Entity<Conversation>(entity =>
             {
                 entity.Property(e => e.Id).UseIdentityColumn();
+                entity.HasOne(a => a.Notification).WithOne(u => u.Conversation).HasForeignKey<Notification>(u => u.ConversationId).OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Messeger>(entity =>

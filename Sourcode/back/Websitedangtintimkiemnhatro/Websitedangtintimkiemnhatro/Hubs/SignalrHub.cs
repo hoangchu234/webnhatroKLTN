@@ -11,10 +11,10 @@ namespace Websitedangtintimkiemnhatro.Hubs
     {
         //private int Users;
 
-        public async Task BroadcastNumberOfUsers(Messeger msg)
-        {
-            await Clients.All.SendAsync("MessageReceived", msg);
-        }
+        //public async Task BroadcastNumberOfUsers(Messeger msg)
+        //{
+        //    await Clients.All.SendAsync("BroadcastMessage", msg);
+        //}
 
         //public override async Task OnConnectedAsync()
         //{

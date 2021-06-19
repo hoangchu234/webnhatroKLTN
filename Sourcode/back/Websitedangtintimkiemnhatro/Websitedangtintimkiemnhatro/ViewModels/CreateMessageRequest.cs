@@ -10,6 +10,5 @@ namespace Websitedangtintimkiemnhatro.ViewModels
         public int SenderId { get; set; }
         public int ReceiverId { get; set; }
         public string Content { get; set; }
-        public string Type { get; set; }
     }
 }

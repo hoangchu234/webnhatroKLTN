@@ -22,6 +22,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
   <!---->
 
+
   <link href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
   <link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
@@ -39,6 +40,100 @@
   <link rel="stylesheet" href="assets/forum/css1/responsive.css">
   <link rel="stylesheet" href="assets/forum/fonts1">
 
+
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <!-- Add Google API Key -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkft_VrXpKQ3SLh2jDlIlDYlxW6UpaYnM"></script>
+  
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+
+  <script>
+      
+      function initialize() {
+          
+          var mapProp = {
+              center: new google.maps.LatLng(10.823099, 106.629662),
+              zoom: 10,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+          var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(10.823099, 106.629662),
+              animation: google.maps.Animation.BOUNCE
+          });
+
+          marker.setMap(map);
+
+          google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+            const infowindow = new google.maps.InfoWindow({
+            content: "<p>Marker Location:" + marker.getPosition() + "</p>",
+            });
+      }
+
+      
+      function googleGeocoder() {
+          geocoder = new google.maps.Geocoder();
+          var mapProp = {
+              center: new google.maps.LatLng(10.823099, 106.629662),
+              zoom: 15,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+          var address = document.getElementById('address').value;
+          geocoder.geocode({ 'address': address }, function (results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                  map.setCenter(results[0].geometry.location);
+                  var marker = new google.maps.Marker({
+                      map: map,
+                      position: results[0].geometry.location,
+                  });
+                  console.log("" + marker.getPosition() + "")
+                  
+              } 
+              else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+              }
+          });
+
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+
+  <script>
+      $(document).ready(function () {
+          $("#submitResize").click(function () {
+              $("#googleMap").css('width', $("#width").val());
+              $("#googleMap").css('height', $("#height").val());
+          });
+          $("#search").click(function () {
+              googleGeocoder();
+          });
+      });
+  </script>
+
+
+  <script>
+      $(document).ready(function () {
+          $("#submitResize").click(function () {
+              $("#googleMap").css('width', $("#width").val());
+              $("#googleMap").css('height', $("#height").val());
+          });
+          $("#search").click(function () {
+              googleGeocoder();
+          });
+      });
+  </script>
 
 
   <!--login-->
@@ -128,29 +223,5 @@
 
       })
     </script>
-    <!-- <script>
-        jQuery(document).ready(function($) {
-            
-            $('#us3').locationpicker({
-              location: {
-                latitude: -8.681013,
-                longitude: 115.23506410000005
-              },
-              radius: 0,
-              inputBinding: {
-                latitudeInput: $('#us3-lat'),
-                longitudeInput: $('#us3-lon'),
-                radiusInput: $('#us3-radius'),
-                locationNameInput: $('#us3-address')
-              },
-              enableAutocomplete: true,
-              onchanged: function (currentLocation, radius, isMarkerDropped) {
-                // Uncomment line below to show alert on each Location Changed event
-                //alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-              }
-            });
-
-        });	
-    </script> -->
   </body>
 </html>

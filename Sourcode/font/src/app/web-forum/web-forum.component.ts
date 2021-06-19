@@ -50,8 +50,6 @@ export class WebForumComponent implements OnInit {
   dataRecently: Array<IRecentlyPost> = [];
   dataUser:User;
 
-  notifys: Array<INotifyComment> = [];
-  countNotifyNotSee = 0;
   image = "";
   id = 0;
   constructor(private toast: ToastService,private router: ActivatedRoute,private route: Router,private clipboardService: ClipboardService,public postService:PostService,public dialog: MatDialog,private authenticationService: AuthenticationService) { 
@@ -91,15 +89,6 @@ export class WebForumComponent implements OnInit {
     this.dataRecently = await this.postService.getRecentlyPost() as IRecentlyPost[];
     this.getCountParentComment();
 
-    if(this.checkLogin()){
-      this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
-      for(let i=0; i< this.notifys.length;i++){
-        if(this.notifys[i].imageUser == null){
-          this.notifys[i].imageUser = this.image;
-        }
-      }
-      this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
-    }
   }
 
   
@@ -174,19 +163,6 @@ export class WebForumComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: Post) => {
      
     });
-  }
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////
-  async onClickDetailPostINotify(data){
-    if(data.justSee == false){
-      data.justSee = true;
-      var update = {id: data.id,idUserReceiced: data.idUserReceiced,justSee: data.justSee,commentId: data.idComment};
-      const result = await this.postService.updateCommentNotifyByOneUser(update,data.id)
-    }
-    this.route.navigate(['/forum',data.postUser,data.idPost]);
-    // this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    //   this.route.navigate(['/forum',data.postUser,data.idPost]);
-    // }); 
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////

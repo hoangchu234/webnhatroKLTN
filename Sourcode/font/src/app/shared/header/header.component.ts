@@ -13,6 +13,11 @@ import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SignalRService } from 'src/app/services/signal-r.service';
+import * as signalR from '@aspnet/signalr';
+import { NotificationResult } from 'src/app/model/viewmodel/NotificationResult';
+import { INotifyComment } from 'src/app/model/interface/INotifyComment';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-header',
@@ -38,27 +43,24 @@ export class HeaderComponent implements OnInit {
   checkreply = false;
   types: NewType[] = [];
 
+  listNote: NotificationResult[] = [];
+  countNote = 0
+
+  private hubConnection: signalR.HubConnection;
+  
+  countNotifyNotSee = 0;
+  notifys: Array<INotifyComment> = [];
+
   constructor(private activeRoute: ActivatedRoute,
     public dialog: MatDialog,
+    private signalRService:SignalRService,
     private replyService:ReplyService,
     private router: Router,
     private typeservice:TypeofnewService,
     private motelService: MotelService,
     private userService: UserService,
-    private authenticationService: AuthenticationService) { 
-      //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-      // if(this.authenticationService.currentAccountValue){
-      //   if(this.authenticationService.currentAccountValue.user){
-      //     this.getReply();
-      //     this.checkLogin = true;
-      //   }
-      //   if(this.authenticationService.currentAccountValue.user.userImage != null){
-      //     this.userImage = this.authenticationService.currentAccountValue.user.userImage;
-      //   }
-      //   if(this.authenticationService.currentAccountValue.user.userImage == null){
-      //     this.userImage = "../../../assets/images/blog_3.jpg"
-      //   }
-      // }      
+    public postService:PostService,
+    private authenticationService: AuthenticationService) {     
     }
 
   async ngOnInit(): Promise<void> { 
@@ -76,6 +78,93 @@ export class HeaderComponent implements OnInit {
         this.userImage = "../../../assets/images/blog_3.jpg";
       }
     }
+
+    await this.signalR();
+  }
+
+  async signalR(){
+    if(this.checkHasLogin()){
+      var userId = this.authenticationService.currentAccountValue.user.id;
+      await this.getDataMessage(userId);    
+      await this.getDataMessageCount(userId);
+
+      await this.getDataForumNotification();
+
+      this.hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl(`http://localhost:5001/signalr`)
+        .build();
+
+      this.hubConnection
+        .start()
+        .then(() => {
+          console.log('Connection started!')
+        })
+        .then()
+        .catch(error => {
+          console.log('Can not start connection with error: ' + error);
+        })
+    
+      this.hubConnection.on("BroadcastMessage", async () => {  
+        //message
+        await this.getDataMessage(userId);    
+        await this.getDataMessageCount(userId);
+        //forum
+        await this.getDataForumNotification();
+        console.log("run")
+      });
+
+    }
+  }
+
+  async getDataForumNotification(){
+    this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
+    // for(let i=0; i< this.notifys.length;i++){
+    //   if(this.notifys[i].imageUser == null){
+    //     this.notifys[i].imageUser = "";
+    //   }
+    // }
+    this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
+  }
+
+  checkHasLogin(){
+    if(this.authenticationService.checkLogin()){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  async getDataMessage(id){
+    this.listNote = await this.signalRService.getNotificationMessage(id) as NotificationResult[];
+  }
+
+  async getDataMessageCount(id){
+    var data = await this.signalRService.getNotificationCount(id) as any;
+    this.countNote = data.count;
+  }
+
+  onClickURLChat(id){
+    var link = '/chat' + '/' + id;
+    window.location.replace(link);
+  }
+  
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  async onClickDetailPostINotify(data){
+    if(data.justSee == false){
+      data.justSee = true;
+      var update = {id: data.id,idUserReceiced: data.idUserReceiced,justSee: data.justSee,commentId: data.idComment};
+      const result = await this.postService.updateCommentNotifyByOneUser(update,data.id);
+      if(result){
+        var link = '/forum' + '/' + data.postUser + '/' + data.idPost;
+        window.location.replace(link);
+      }
+    }
+    
+    // this.router.navigate(['/forum',data.postUser,data.idPost]);
+    // this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    //   this.route.navigate(['/forum',data.postUser,data.idPost]);
+    // }); 
   }
 
   async getUserById(id){
@@ -94,7 +183,6 @@ export class HeaderComponent implements OnInit {
   onClickURL(link){
     window.location.replace(link);
     //this.router.navigate([link]);
-
   }
 
   public async getTypes(){

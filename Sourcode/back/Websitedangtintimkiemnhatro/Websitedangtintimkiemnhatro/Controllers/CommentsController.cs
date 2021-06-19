@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Websitedangtintimkiemnhatro.Hubs;
 using Websitedangtintimkiemnhatro.Models;
 using Websitedangtintimkiemnhatro.ViewModels;
 
@@ -15,10 +17,13 @@ namespace Websitedangtintimkiemnhatro.Controllers
     public class CommentsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHubContext<BroadcastHub, IHubClient> _hubContext;
 
-        public CommentsController(ApplicationDbContext context)
+        public CommentsController(ApplicationDbContext context, IHubContext<BroadcastHub, IHubClient> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
+
         }
 
         // GET: api/Comments
@@ -225,12 +230,12 @@ namespace Websitedangtintimkiemnhatro.Controllers
             {
                 return BadRequest();
             }
-            inform.JustSee = true;
             _context.Entry(inform).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.BroadcastMessage();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -271,6 +276,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 infromComment.CommentId = comment.Id;
                 _context.InformComments.Add(infromComment);
                 await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.BroadcastMessage();
             }
             catch (DbUpdateException)
             {

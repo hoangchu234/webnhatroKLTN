@@ -84,64 +84,6 @@ export class BarsearchandbarComponent implements OnInit {
 
     }
 
-    
-
-/*
-    if(Number(localStorage.getItem('priceid')) == 0){
-      this.priceSearch.number = "Tất cả";
-    }
-
-    if(Number(localStorage.getItem('priceid')) == 1){
-      this.priceSearch.number = "Dưới 1 triệu";
-    }
-    if(Number(localStorage.getItem('priceid')) == 2){
-      this.priceSearch.number = "1 triệu - 2 triệu";
-    }
-    if(Number(localStorage.getItem('priceid')) == 3){
-      this.priceSearch.number = "2 triệu - 3 triệu";
-    }
-    if(Number(localStorage.getItem('priceid')) == 4){
-      this.priceSearch.number = "3 triệu - 5 triệu";
-    }
-    if(Number(localStorage.getItem('priceid')) == 5){
-      this.priceSearch.number = "5 triệu - 7 triệu";
-    }
-    if(Number(localStorage.getItem('priceid')) == 6){
-      this.priceSearch.number = "7 triệu - 10 triệu";
-    }
-    if(Number(localStorage.getItem('priceid')) == 7){
-      this.priceSearch.number = "7 triệu - 10 triệu";
-    }
-    if(Number(localStorage.getItem('priceid')) == 8){
-      this.priceSearch.number = "10 triệu - 15 triệu";
-    }*/
-    
-    /*this.activerouter.data.subscribe(data => {
-      this.name = data.kind;
-    })
-    if(this.name == "cho-thue-nha-tro"){
-      this.nametophead = "Cho thuê phòng trọ, nhà trọ số 1 Việt Nam";
-      this.newType = "Phòng trọ, nhà trọ"
-    }
-    if(this.name == "nha-cho-thue"){
-      this.nametophead = "Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất 2020";
-      this.newType = "Nhà thuê nguyên căn"
-
-    }
-    if(this.name == "cho-thue-can-ho"){
-      this.nametophead = "Cho Thuê Căn Hộ Chung Cư Mini, Căn Hộ Dịch Vụ, Giá Rẻ - Mới Nhất 2020";
-      this.newType = "Cho thuê căn hộ"
-
-    }
-    if(this.name == "cho-thue-mat-bang"){
-      this.nametophead = "Cho Thuê Mặt Bằng, Cho Thuê Văn Phòng, Cửa Hàng, Kiot";
-
-      this.newType = "Cho thuê mặt bằng"
-    }
-    if(this.name == "tim-nguoi-o-ghep-cap"){
-      this.nametophead = "Tìm Người Ở Ghép, Tìm Nam Ở Ghép, Tìm Nữ Ở Ghép";
-      this.newType = "Tìm người ở ghép"
-    }*/
   }
 
  
@@ -176,61 +118,7 @@ export class BarsearchandbarComponent implements OnInit {
     this.street.id = "0";
     this.newType = "Phòng trọ, nhà trọ";
     this.priceSearch = "Tất cả";
-    
-    //this.priceSearch.number = "Giá thuê"
-    
-    /*if(localStorage.getItem('city') != null && localStorage.getItem('city') != "Tất cả"){
-      
-      /*this.cityService.getCityFromId(Number(localStorage.getItem('city'))).subscribe(data => {
-        this.city = data;
-        if(data.name == ""){
-          this.city.name = "Tất cả"
-        }
-        this.getCities();
-      })
-      
-    }
-    if( localStorage.getItem('province') != null && localStorage.getItem('province') != "Tất cả"){
-      /*this.provinceService.getProvinceById(Number(localStorage.getItem('province'))).subscribe(data => {
-        this.province = data;
-        if(data.name == ""){
-          this.province.name = "Tất cả"
-        }
-        this.getProvinceByID(localStorage.getItem('city'))
-      })
-    }
-    if(localStorage.getItem('street') != null && localStorage.getItem('street') != "Tất cả"){
-      /*this.streetService.getStreetFromId(Number(localStorage.getItem('street'))).subscribe(data => {
-        this.street = data;
-        if(data.name == ""){
-          this.street.name = "Tất cả"
-        }
-        this.getStreetById(localStorage.getItem('province'))
-      })
-    }
-    if(localStorage.getItem('district') != null && localStorage.getItem('district') != "Tất cả"){
-      /*this.dictrictService.getDistrictFromId(Number(localStorage.getItem('district'))).subscribe(data => {
-        this.district = data;
-        if(data.name == ""){
-          this.district.name = "Tất cả"
-        }
-        this.getDistricteById(localStorage.getItem('province'))
-      })
-    }
 
-    else{
-      this.city.name = "Tỉnh thành phố";
-      this.city.id = "0";
-      this.province.name = "Quận Huyện";
-      this.province.id = "0";
-      this.district.name = "Phường Xã";
-      this.district.id = "0";
-      this.street.name = "Đường Phố";
-      this.street.id = "0";
-      this.newType = "Phòng trọ, nhà cho thuê"
-      //this.priceSearch.number = "Giá thuê"
-      this.priceSearch.id = 0;
-    }*/
 
   }
 
@@ -304,18 +192,27 @@ export class BarsearchandbarComponent implements OnInit {
     }
     if(price != null){//2-Trieu-3-Trieu
       var str = price.split("-");
-      var priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
-      // if(str.length == 3){
-      //   var indexPrice = priceSearch.findIndex(a => a.numberOne == str[0]);
-      // }
-      // else if(str.length == 4){
-      //   indexPrice = priceSearch.findIndex(a => this.returnDataPriceSearch(a) === price);
-      // }
+      var priceSearch: PriceSearch[] = [];
+      priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
+
      
       var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne) === str[0]);
-      var dataFind = priceSearch[indexPrice];
-      this.priceSearch = this.returnDataPriceSearch(dataFind);
       
+      var dataFind: PriceSearch = {
+        id:priceSearch[indexPrice].id, 
+        numberOne:priceSearch[indexPrice].numberOne, 
+        typePriceOne:priceSearch[indexPrice].typePriceOne, 
+        numberTwo:priceSearch[indexPrice].numberTwo, 
+        typePriceTwo:priceSearch[indexPrice].typePriceTwo
+      }
+      
+      if(dataFind.typePriceOne == null){
+        this.priceSearch = dataFind.numberOne  + " - " + dataFind.numberTwo + " " + dataFind.typePriceTwo;
+      }
+      else{
+        this.priceSearch = dataFind.numberOne + " " + dataFind.typePriceOne  + " - " + dataFind.numberTwo + " " + dataFind.typePriceTwo;
+      }
+
     }
 
     this.getProvinceByID(this.city.id);
@@ -377,34 +274,10 @@ export class BarsearchandbarComponent implements OnInit {
     }
   
   }
-  
-  returnDataPriceSearch(priceSearch){
-    var returnData;
-    if(priceSearch.typePriceOne == null){
-      returnData = priceSearch.numberOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
-    }
-    else{
-      returnData = priceSearch.numberOne + " " + priceSearch.typePriceOne  + " - " + priceSearch.numberTwo + " " + priceSearch.typePriceTwo;
-    }
-    return returnData;
-  }
+
 
   public async getStreetById(ID){
     this.streets = new Array<Street>();
-        /*const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
-          let street = new Street();
-          var number = 0;
-          street.id = number.toString();
-          street.name = "Tất cả";
-          this.streets.push(street);
-          
-          for (let i = 0; i < data.length; i++) {
-            let street = new Street();
-            street.id = data[i].id;
-            street.name = data[i].name;
-            this.streets.push(street);
-          }
-      })*/
       const list = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
         let street = new Street();
         var number = 0;
@@ -435,22 +308,6 @@ export class BarsearchandbarComponent implements OnInit {
       for (let i = 0; i < list.length; i++) {        
         this.districts.push(list[i]);
       }
-        /*const list = this.dictrictService.getDistrictByProvince(Number(ID)).subscribe((data) => {
-          var districtNew : District [] = [];
-          this.districts = districtNew;
-          
-          var districtZero = new District();
-          var number = 0;
-          districtZero.id = number.toString();
-          districtZero.name = "Tất cả";
-          districtZero.provinceid = number.toString();
-          this.districts.push(districtZero);
-
-          for (let i = 0; i < data.length; i++) {        
-            this.districts.push(data[i]);
-          }
-
-      })*/
   }
 
   public async getProvinceByID(ID){
@@ -470,23 +327,6 @@ export class BarsearchandbarComponent implements OnInit {
         this.provinces.push(result[i])
       }
 
-    /*this.provinceService.getProvincesByCity(Number(ID)).subscribe( data => {
-      //this.provinces = data
-
-      var provinceNew : Province[] = [];
-      this.provinces = provinceNew;
-
-      var provinceZero = new Province();
-      var number = 0;
-      provinceZero.id = number.toString();
-      provinceZero.name = "Tất cả";
-      provinceZero.cityid = number.toString();
-      this.provinces.push(provinceZero);
-
-      for(let i=0;i<data.length;i++){
-        this.provinces.push(data[i])
-      }
-    })*/
   }
 
   public async getCities(){

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Websitedangtintimkiemnhatro.Hubs;
 using Websitedangtintimkiemnhatro.Models;
 using Websitedangtintimkiemnhatro.ViewModels;
 
@@ -15,6 +17,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
     public class PostsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        
 
         public PostsController(ApplicationDbContext context)
         {

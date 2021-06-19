@@ -423,4 +423,14 @@ export class MotelService {
        console.log(error);
     }  
   }
+
+  public getDistance = async () => {
+    try {
+        const count = await fetch(`${this.urlAPI}/api/Motels/GetDataDistance`);
+        return await count.json();
+    }
+    catch (error) {
+       console.log(error);
+    }  
+  }
 }

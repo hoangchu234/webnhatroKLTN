@@ -44,6 +44,16 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return motels;
         }
 
+        // GET: api/Motels/GetDataDistance
+        [HttpGet]
+        [Route("GetDataDistance")]
+        public async Task<ActionResult<IEnumerable<Distance>>> GetDataDistance()
+        {
+            var distances = _context.Distances.ToList();
+            return distances;
+        }
+
+
         // GET: api/Motels/GetDataDirect
         [HttpGet]
         [Route("GetDataDirect")]
@@ -417,6 +427,90 @@ namespace Websitedangtintimkiemnhatro.Controllers
                     var numbertwo = float.Parse(priceSearch.NumberTwo) * 1.0000;
                     models = models.Where(a => a.PriceType.Equals("triệu/tháng") && (float.Parse(a.Price) > numberone && float.Parse(a.Price) <= numbertwo)).ToList();
                 }
+            }
+
+            var data = models.OrderBy(a => Int32.Parse(a.Status)).ToList();
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            return data;
+        }
+
+        //:city/:province/:district/:street/:price/:type
+        // GET: api/Motels/GetMotelByOrderAddDistance
+        [HttpGet]
+        [Route("GetMotelByOrderAddDistance/{city}/{province}/{district}/{street}/{price}/{type}/{distance}/{log}/{lat}")]
+        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelByOrderAddDistance(int city, int province, int district, int street, int price, int type, int distance, string log, string lat)
+        {
+            var models = await _context.Motels
+                .Include(m => m.Detail)
+                .Include(m => m.Images)
+                .Where(a => (a.Status == "1" && a.Verify == true) || (a.Status == "3" && a.Verify == true))
+                .OrderByDescending(a => a.Detail.TypeofnewId)
+                .ToListAsync();
+            if (type != 1)
+            {
+                models = models.Where(a => a.Detail.TypeofnewId == type).ToList();
+            }
+            if (city != 0)
+            {
+                models = models.Where(a => a.CityId == city).ToList();
+            }
+            if (province != 0)
+            {
+                models = models.Where(a => a.ProvinceId == province).ToList();
+            }
+            if (district != 0)
+            {
+                models = models.Where(a => a.DistrictId == district).ToList();
+            }
+            if (street != 0)
+            {
+                models = models.Where(a => a.StreetId == street).ToList();
+            }
+
+            if (price != 0)
+            {
+                var priceSearch = _context.PriceSearchs.Where(a => a.Id == price).FirstOrDefault();
+                if (priceSearch.NumberOne.Equals("Dưới"))
+                {
+                    models = models.Where(a => (a.PriceType.Equals("triệu/tháng") && float.Parse(a.Price) < 1.0000) || a.PriceType.Equals("đồng/tháng") && float.Parse(a.Price) < 999).ToList();
+                }
+                else if (priceSearch.NumberOne.Equals("Trên"))
+                {
+                    models = models.Where(a => a.PriceType.Equals("triệu/tháng") && float.Parse(a.Price) >= 15.0000).ToList();
+                }
+                else
+                {
+                    var numberone = float.Parse(priceSearch.NumberOne) * 1.0000;
+                    var numbertwo = float.Parse(priceSearch.NumberTwo) * 1.0000;
+                    models = models.Where(a => a.PriceType.Equals("triệu/tháng") && (float.Parse(a.Price) > numberone && float.Parse(a.Price) <= numbertwo)).ToList();
+                }
+            }
+
+            if (distance != 0)
+            {
+                //List<Motel> lists = new List<Motel>();
+                var distances = _context.Distances.FirstOrDefault(a => a.Id == distance);
+                double check = 0;
+                if(distances.Name == "m")
+                {
+                    check = distances.Number / 1000;
+                }
+                else
+                {
+                    check = distances.Number;
+                }
+                //foreach (Motel element in models)
+                //{
+                //    if (distanceBetween2Points(Double.Parse(lat), Double.Parse(log), Double.Parse(element.Latitude), Double.Parse(element.Longitude)) <= check)
+                //    {
+                //        lists.Add(element);
+                //    }
+                //}
+                models = models.Where(a => distanceBetween2Points(Double.Parse(lat), Double.Parse(log), Double.Parse(a.Latitude), Double.Parse(a.Longitude)) <= check).ToList();
             }
 
             var data = models.OrderBy(a => Int32.Parse(a.Status)).ToList();

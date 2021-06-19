@@ -65,139 +65,94 @@
                     <!-- <li class="nav-item active" style="margin-left: 20px;">
                       <a class="nav-link"><i style="font-size: 20px;margin-top: 5px;" class="fa  fa-heart-o"></i></a>
                     </li> -->
-                    <li class="nav-item active" style="margin-left: 20px;" >
-                      <a class="nav-link"><i class="fa  fa-bell-o " style="font-size: 20px;margin-top: 6px; "></i></a>
+                    <li *ngIf="isUser" class="nav-item active" style="margin-top:0px ;">
+                      <div class="top-area">
+                          <ul class="setting-area " style="line-height: 0px;margin-top: -10px;font-size: 20px;">
+                              <li >
+                                  <a href="#" title="Notification" data-ripple="">
+                                      <i class="fa fa-bell"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
+                                  </a>
+                                  <div class="dropdowns">
+                                      <span>{{countNotifyNotSee}} comment mới <a href="#" title=""></a></span>
+                                      <ul class="drops-menu">
+                                          <li *ngFor="let data of notifys">
+                                            <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="!data.justSee" style="background-color: whitesmoke;">
+                                              <figure>
+                                                  <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="../../assets/forum/images1/resources/friend-avatar2.jpg">
+                                                  <span class="status f-online"></span>
+                                              </figure>
+                                              <div class="mesg-meta">
+                                                  <h6>{{data.username}}</h6>
+                                                  <span>{{data.userComment}}</span>
+                                                  <i>{{data.day}} ngày trước</i>
+                                              </div>
+                                            </a>
+              
+                                            <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="data.justSee">
+                                              <figure>
+                                                  <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="../../assets/forum/images1/resources/friend-avatar2.jpg">
+                                                  <span class="status f-online"></span>
+                                              </figure>
+                                              <div class="mesg-meta">
+                                                  <h6>{{data.username}}</h6>
+                                                  <span>{{data.userComment}}</span>
+                                                  <i>{{data.day}} ngày trước</i>
+                                              </div>
+                                            </a>
+                                          </li>
+                                      </ul>
+                                      <!-- <a href="notifications.html" title="" class="more-mesg">View All</a> -->
+                                  </div>
+                              </li>
+                          </ul>
+                          </div>
                     </li>
-                    <!-- <li class="nav-item active" style="margin-left: 20px;" [hidden]="username">
-                      <a class="nav-link"><i class="fa  fa-bell-o " style="font-size: 20px;margin-top: 6px; "></i></a>
-                    </li> -->
-                    <!-- <li class="nav-item active" style="margin-left: 20px;"  *ngIf="isUser">
-                      <div class="nav-item nav-profile dropdown" style="visibility: visible;">
-                        <a class="nav-link " id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false" style="margin-top: -4px;" >
-                          <button mat-icon-button *ngIf="countReply > 0" style=" margin-top: 0px;color: black;">
-                            
-                            <i class="fa  fa-bell-o " style="font-size: 20px; "></i>
-                            <span class="badge" >{{countReply}}</span>
-                          </button>
-                          <button mat-icon-button *ngIf="countReply == 0" style=" margin-top: 0px;color: black;">
-                            <span _ngcontent-ddk-c94="" class="availability-status online"></span>
-                            <i class="fa  fa-bell-o " style="font-size: 20px;"></i>
-                          </button>
-                        </a>
-                     
-                      <div class="dropdown-menu navbar-dropdown scrollable-menu" aria-labelledby="profileDropdown" style="font-size: 20px;margin-left: -160px;width: 300px;">
-                        <b  class="dropdown-item" >Tin nhắn</b>
-                          <div class="dropdown-divider"></div>
-                          <div>
-                            <div >
-                            <a class="dropdown-item ">
-                              <div class="container">
-                                <div class="row">
-                                  <div class="col-md-4" style="border-radius: 100px;">
-                                    <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
-                                  </div>
-                                  <div  class="col-md-8" style="padding-top: 10px;">
-                                    Chu Minh Hoàng
-                                    <div>0867490321</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </a>
-                            </div>
-                          </div>
-                          <div>
-                            <div >
-                            <a class="dropdown-item ">
-                              <div class="container">
-                                <div class="row">
-                                  <div class="col-md-4" style="border-radius: 100px;">
-                                    <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
-                                  </div>
-                                  <div  class="col-md-8" style="padding-top: 10px;">
-                                    Chu Minh Hoàng
-                                    <div>0867490321</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </a>
-                            </div>
-                          </div>
-                          <div>
-                            <div >
-                            <a class="dropdown-item ">
-                              <div class="container">
-                                <div class="row">
-                                  <div class="col-md-4" style="border-radius: 100px;">
-                                    <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
-                                  </div>
-                                  <div  class="col-md-8" style="padding-top: 10px;">
-                                    Chu Minh Hoàng
-                                    <div>0867490321</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </a>
-                            </div>
-                          </div>
-                          <div>
-                            <div >
-                            <a class="dropdown-item ">
-                              <div class="container">
-                                <div class="row">
-                                  <div class="col-md-4" style="border-radius: 100px;">
-                                    <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
-                                  </div>
-                                  <div  class="col-md-8" style="padding-top: 10px;">
-                                    Chu Minh Hoàng
-                                    <div>0867490321</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </a>
-                            </div>
-                          </div>
+                    <li *ngIf="isUser" class="nav-item active" style="margin-top:0px ;">
+                      <div class="top-area">
+                          <ul class="setting-area " style="line-height: 0px;margin-top: -10px;font-size: 20px;">
+                              <li>
+                                  <a title="Messages" data-ripple=""><i class="fa fa-commenting"></i><em class="bg-blue">{{countNote}}</em></a>
+                                  <div class="dropdowns">
+                                      <span>{{countNote}} Tin nhắn mới <a title=""></a></span>
+                                      <ul class="drops-menu" >
+                                          <li *ngFor="let data of listNote" (click)="onClickURLChat(data.userId)">
+                                              <a class="show-mesg" title="" *ngIf="!data.justSee" style="background-color: whitesmoke;">
+                                                  <figure>
+                                                      <img class="img1" style="height: 40px; width: 50px;" [src]="data.image" alt="../../../assets/forum/images1/resources/thumb-1.jpg">
+                                                      <span class="status f-online"></span>
+                                                  </figure>
+                                                  <div class="mesg-meta">
+                                                      <h6>{{data.sender}}</h6>
+                                                      <span><i class="ti-check"></i> {{data.messeger}}</span>
+                                                      <i>{{data.date}} ngày trước</i>
+                                                  </div>
+                                              </a>
 
-                          <div>
-                            <div >
-                            <a class="dropdown-item ">
-                              <div class="container">
-                                <div class="row">
-                                  <div class="col-md-12" style="border-radius: 100px;height: 60px;text-align: center;padding-top: 15px;">
-                                    Không có tin nhắn nào !
+                                              <a class="show-mesg" title="" *ngIf="data.justSee" >
+                                                <figure>
+                                                    <img class="img1" style="height: 40px; width: 50px;" [src]="data.image" alt="../../../assets/forum/images1/resources/thumb-1.jpg">
+                                                    <span class="status f-online"></span>
+                                                </figure>
+                                                <div class="mesg-meta">
+                                                    <h6>{{data.sender}}</h6>
+                                                    <span><i class="ti-check"></i> {{data.messeger}}</span>
+                                                    <i>{{data.date}} ngày trước</i>
+                                                </div>
+                                            </a>
+                                          </li>
+                                      </ul>
+                                      <!-- <a href="chat-messenger.html" title="" class="more-mesg">View All</a> -->
                                   </div>
-                                </div>
-                              </div>
-                            </a>
-                            </div>
+                              </li>
+                          </ul>
                           </div>
-
-                          <div *ngIf="checkreply">
-                            <div *ngFor="let reply of reply">
-                            <a class="dropdown-item " *ngIf="!reply.isSee">
-                              <div class="container">
-                                <div class="row">
-                                  <div class="col-md-4">
-                                    <i class="mdi mdi-account mr-2 text-success " style="font-size:40px"></i>
-                                  </div>
-                                  <div (click)="onClick(reply.id)" class="col-md-8">{{reply.name}}
-                                    <div>{{reply.phone}}</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </a>
-                            </div>
-                          </div>
-                          <div *ngIf="!checkreply">
-                            <b>Bạn không có tin nhắn nào</b>
-                          </div>
-                        <div class="dropdown-divider"></div>
-                      </div>
-                    </div>
-                    </li> -->
+                    </li>
+                   
                     <li class="nav-item active" style="margin-top:0px ;">
                       <button *ngIf="!checkLogin" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" [routerLink]="['/login']"><b>Đăng tin</b></button>
                       <button *ngIf="checkLogin" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" [routerLink]="['/user/thong-tin-vi-tri']"><b>Đăng tin</b></button>
                     </li>
+
                   </ul>
                 </div>
               </nav>
