@@ -1030,5 +1030,68 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
             return result;
         }
+
+        // GET: api/Distance
+        [HttpGet]
+        [Route("GetDataDistance/{id}")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetDataDistance(int id)
+        {
+            var motels = await _context.Motels
+                .Include(m => m.Detail)
+                .Where(a => a.Status == "1" && a.Verify == true).ToListAsync();
+
+            var distance = _context.Distances.Where(a => a.Id == id).FirstOrDefault();
+            var disearch = distance.Number;
+            if(distance.Name == "m")
+            {
+                disearch = distance.Number / 1000;
+            }
+            List<Motel> t = new List<Motel>();
+            foreach (Motel element in motels)
+            {
+                //t.Add(distanceBetween2Points(Double.Parse(motel.Latitude), Double.Parse(motel.Longitude), Double.Parse(element.Latitude), Double.Parse(element.Longitude)).ToString());
+                if (distanceBetween2Points(Double.Parse(motel.Latitude), Double.Parse(motel.Longitude), Double.Parse(element.Latitude), Double.Parse(element.Longitude)) <= disearch)
+                {
+                    t.Add(element);
+                }
+            }
+
+            var result = t.Select(c => new
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Price = c.Price,
+                PriceType = c.PriceType,
+                DateUpdate = c.DateUpdate,
+                DateDue = c.DateDue,
+                Time = c.Time,
+                Status = c.Status,
+                Verify = c.Verify,
+                Address = c.Address,
+                Description = c.Description,
+                Phone = c.Phone,
+                Typemotel = c.Typemotel,
+                AreaZone = c.AreaZone,
+                AreaZoneType = c.AreaZoneType,
+                Typeservice = c.Typeservice,
+                Bathroom = c.Detail.NumberBath,
+                Livingroom = c.Detail.NumberLiving,
+                Latitude = c.Latitude,
+                Longitude = c.Longitude,
+                City = _context.Citys.Where(a => a.Id == c.CityId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                Province = _context.Provinces.Where(a => a.Id == c.ProvinceId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                District = _context.Districts.Where(a => a.Id == c.DistrictId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                Street = _context.Streets.Where(a => a.Id == c.StreetId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                User = _context.Users.Where(a => a.Id == c.UserId).Select(a => new { Id = a.Id, HovaTen = a.HovaTen }).FirstOrDefault(),
+            })
+            .OrderByDescending(a => a.DateUpdate).ToList();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
+        }
     }
 }

@@ -125,6 +125,7 @@ import { ManagementForumComponent } from './authority/loginadmin/management-foru
 import { ToastrModule } from 'ngx-toastr';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { MapComponent } from './map/map.component';
+import { MapShowComponent } from './map-show/map-show.component';
 
 @NgModule({
   declarations: [
@@ -189,6 +190,7 @@ import { MapComponent } from './map/map.component';
     ManagementForumComponent,
     ForgetPasswordComponent,
     MapComponent,
+    MapShowComponent,
   ],
   imports: [
     BrowserModule,

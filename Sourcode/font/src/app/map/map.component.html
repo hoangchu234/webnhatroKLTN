@@ -59,7 +59,7 @@
                   </div>
                   <div class="search-field d-none d-md-block p-2 link-secondary" style="margin-top:-10px;margin-left: -15px;" >
                     <form class="d-flex align-items-center h-100" action="#">
-                      <input type="text" placeholder="Nhập địa chỉ" >
+                      <input type="text" placeholder="Nhập địa chỉ" name="search"  [(ngModel)]="search">
                     </form>
                   </div>
                   <div class="btn-group p-2 link-secondary select-control select-cate " >
@@ -72,150 +72,165 @@
             </div>
           </div>
         <div class="col-md-9">
-
-            <div id="map" >
-            </div>
+            <app-map-show [long]="long" [lat]="lat" [name]="name"></app-map-show>
         </div>
         <div class="col-md-3" style="margin-left: -25px;margin-top: 5px;">
             <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;margin-bottom: 10px;">
-                <div  style="width:400px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;margin-top:10px">Khoảng cách <span class="fa fa-angle-down" style="color:#00deb6; font-size: 13px;"></span></div> <div class="custom-value hasvalue" style="margin-top: 5px;" >{{distance}}</div> </div>
-                
+                <div  style="width:400px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;margin-top:10px">Khoảng cách <span class="fa fa-angle-down" style="color:#00deb6; font-size: 13px;"></span></div> <div class="custom-value hasvalue" style="margin-top: 5px;" >{{distance}}</div> </div>              
                 <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                     <div *ngFor='let data of distances'>
                         <a class="dropdown-item" (click)="onChoiceDistance(data)" [value]="data.id">{{data.number}} {{data.name}}</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" style="height: 110px;margin-bottom: 5px;">
+            <div *ngFor= "let motel of motels | paginate: { itemsPerPage: 10, currentPage: page } ">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[0].text">
                 <div class="row" >
                     <div class="col-lg-5" >
                       <div style="height: 110px;width: 100%;">
                         <!-- Image by https://unsplash.com/@kensuarez -->
-                        <div class="offers_image_background"  [style.background-image]="'url(https://hoanguthanhnhan.com/wp-content/uploads/2020/08/trien-de-chieu-vang-nang-4.jpg)'"></div>
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
                         <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
                       </div>
                     </div>
-  
                     <div class="col-lg-7" style="padding-top: 5px;" >
-                      
-                        <div style="font-size: 13px;">Giỏ hàng 6/2021 - tặng 500 ngàn phí chuyển sang nhà mới - Liên hệ (zalo)</div>
+                        <div style="font-size: 13px;color: red;font-size: 18px;" >{{motel.title}}</div>
                         <div>
                           <div class="row" style="margin-top:5px" >
                             <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >6.5 triệu</span>  </p>
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
                             </div>
                             <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;"><b></b><span >53 m2</span>  </p>
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
                               
                             </div>
                           </div>
                         </div>
                         <div style="font-size: 9px;margin-top: -10px;" >
-                        đường quách văn tuấn đường quách văn tuấn đường quách văn tuấn
+                          {{motel.address}}
                         </div>
-                      
-                  
                     </div>
                   </div>
-            </div>
-            <div class="col-md-12" style="height: 110px;margin-bottom: 5px;">
-                <div class="row" >
-                    <div class="col-lg-5" >
-                      <div style="height: 110px;width: 100%;">
-                        <!-- Image by https://unsplash.com/@kensuarez -->
-                        <div class="offers_image_background"  [style.background-image]="'url(https://hoanguthanhnhan.com/wp-content/uploads/2020/08/trien-de-chieu-vang-nang-4.jpg)'"></div>
-                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
-                      </div>
-                    </div>
-  
-                    <div class="col-lg-7" style="padding-top: 5px;" >
-                      
-                        <div style="font-size: 13px;">Giỏ hàng 6/2021 - tặng 500 ngàn phí chuyển sang nhà mới - Liên hệ (zalo)</div>
-                        <div>
-                          <div class="row" style="margin-top:5px" >
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >6.5 triệu</span>  </p>
-                            </div>
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;"><b></b><span >53 m2</span>  </p>
-                              
-                            </div>
-                          </div>
-                        </div>
-                        <div style="font-size: 9px;margin-top: -10px;" >
-                        đường quách văn tuấn đường quách văn tuấn đường quách văn tuấn
-                        </div>
-                      
-                  
-                    </div>
-                  </div>
-            </div>
-            <div class="col-md-12" style="height: 110px;margin-bottom: 5px;">
-                <div class="row" >
-                    <div class="col-lg-5" >
-                      <div style="height: 110px;width: 100%;">
-                        <!-- Image by https://unsplash.com/@kensuarez -->
-                        <div class="offers_image_background"  [style.background-image]="'url(https://hoanguthanhnhan.com/wp-content/uploads/2020/08/trien-de-chieu-vang-nang-4.jpg)'"></div>
-                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
-                      </div>
-                    </div>
-  
-                    <div class="col-lg-7" style="padding-top: 5px;" >
-                      
-                        <div style="font-size: 13px;">Giỏ hàng 6/2021 - tặng 500 ngàn phí chuyển sang nhà mới - Liên hệ (zalo)</div>
-                        <div>
-                          <div class="row" style="margin-top:5px" >
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >6.5 triệu</span>  </p>
-                            </div>
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;"><b></b><span >53 m2</span>  </p>
-                              
-                            </div>
-                          </div>
-                        </div>
-                        <div style="font-size: 9px;margin-top: -10px;" >
-                        đường quách văn tuấn đường quách văn tuấn đường quách văn tuấn
-                        </div>
-                      
-                  
-                    </div>
-                  </div>
-            </div>
-            <div class="col-md-12" style="height: 110px;margin-bottom: 5px;">
-                <div class="row" >
-                    <div class="col-lg-5" >
-                      <div style="height: 110px;width: 100%;">
-                        <!-- Image by https://unsplash.com/@kensuarez -->
-                        <div class="offers_image_background"  [style.background-image]="'url(https://hoanguthanhnhan.com/wp-content/uploads/2020/08/trien-de-chieu-vang-nang-4.jpg)'"></div>
-                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
-                      </div>
-                    </div>
-  
-                    <div class="col-lg-7" style="padding-top: 5px;" >
-                      
-                        <div style="font-size: 13px;">Giỏ hàng 6/2021 - tặng 500 ngàn phí chuyển sang nhà mới - Liên hệ (zalo)</div>
-                        <div>
-                          <div class="row" style="margin-top:5px" >
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >6.5 triệu</span>  </p>
-                            </div>
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;"><b></b><span >53 m2</span>  </p>
-                              
-                            </div>
-                          </div>
-                        </div>
-                        <div style="font-size: 9px;margin-top: -10px;" >
-                        đường quách văn tuấn đường quách văn tuấn đường quách văn tuấn
-                        </div>
-                      
-                  
-                    </div>
-                  </div>
-            </div>
+              </div>
 
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[1].text">
+                <div class="row" >
+                    <div class="col-lg-5" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding-top: 5px;" >
+                        <div style="font-size: 13px;color: red;font-size: 18px;" >{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                            </div>
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
 
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[2].text">
+                <div class="row" >
+                    <div class="col-lg-5" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding-top: 5px;" >
+                        <div style="font-size: 13px;color: orange;font-size: 18px;" >{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                            </div>
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[3].text">
+                <div class="row" >
+                    <div class="col-lg-5" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding-top: 5px;" >
+                        <div style="font-size: 13px;color: rgb(0, 217, 255);font-size: 18px;" >{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                            </div>
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[4].text">
+                <div class="row" >
+                    <div class="col-lg-5" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding-top: 5px;" >
+                        <div style="font-size: 13px;color: green;font-size: 18px;" >{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                            </div>
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+            </div>
+            <pagination-controls  (pageChange)="page = $event" style="margin-left:150px;"><i class="ti-arrow-up"></i></pagination-controls>
         </div>
     </div>
 </div>

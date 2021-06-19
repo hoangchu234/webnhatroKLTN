@@ -102,7 +102,15 @@ const routes: Routes = [
   { path: 'forgetPassword', component: ForgetPasswordComponent },
   { path: 'chat/:id', component:ChatsComponent },
   { path: 'forum', component:WebForumComponent},
-  { path: 'map', component:MapComponent},
+
+  { path: 'map/:city/:province/:district/:street/:price/:type/:direct/:area',          component: MapComponent },
+  { path: 'map/:city/:province/:district/:street/:price/:type',          component: MapComponent },
+  { path: 'map/:city/:province/:district/:street/:type',          component: MapComponent },
+  { path: 'map/:city/:province/:district/:type',          component: MapComponent },
+  { path: 'map/:city/:province/:type',          component: MapComponent},
+  { path: 'map/:city/:type',          component: MapComponent},
+  { path: 'map/:type',          component: MapComponent},
+
   { path: 'forum/:name/:id',          component: DetailPostForumComponent }, 
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
