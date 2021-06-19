@@ -309,4 +309,10 @@ export class MapComponent implements OnInit {
   public onChoiceDistance(distance:Distance) {
     this.distance = distance.number + " " + distance.name;
   }
+
+  onSearch(){
+    var searchtext = "Chung cư k300"
+    var linkData = this.motelService.getLocation(searchtext) as any;
+    console.log(linkData);
+  }
 }

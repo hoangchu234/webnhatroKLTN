@@ -433,4 +433,22 @@ export class MotelService {
        console.log(error);
     }  
   }
+
+  getLocation = async (searchText :string) => {
+    try 
+    {
+      const urlVietMap = environment.urlVietMap;
+      const formData: FormData = new FormData();
+      var version = 'api-version=1.1';
+      var key = 'apikey='+ environment.keyVietMap;
+      var text = 'text=' + searchText;
+      const url = urlVietMap + version + "&" + key + "&" + text;
+      console.log(url)
+      "api-version=1.1&apikey=8f1ec1ae46c3a1ea966640cf0077f1ea8b6950a3030d9d47&text=Phường 12,Quận Tân Bình,Thành phố Hồ Chí Minh, Chung cư k300"
+      return await this.http.get(url).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 }
