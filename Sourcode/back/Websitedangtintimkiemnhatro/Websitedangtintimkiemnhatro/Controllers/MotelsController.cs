@@ -1033,8 +1033,8 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
         // GET: api/Distance
         [HttpGet]
-        [Route("GetDataDistance/{id}")]
-        public async Task<ActionResult<IEnumerable<Object>>> GetDataDistance(int id)
+        [Route("GetDataDistance/{id}/{log}/{lat}")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetDataDistance(int id,string log, string lat)
         {
             var motels = await _context.Motels
                 .Include(m => m.Detail)
@@ -1049,8 +1049,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
             List<Motel> t = new List<Motel>();
             foreach (Motel element in motels)
             {
-                //t.Add(distanceBetween2Points(Double.Parse(motel.Latitude), Double.Parse(motel.Longitude), Double.Parse(element.Latitude), Double.Parse(element.Longitude)).ToString());
-                if (distanceBetween2Points(Double.Parse(motel.Latitude), Double.Parse(motel.Longitude), Double.Parse(element.Latitude), Double.Parse(element.Longitude)) <= disearch)
+                if (distanceBetween2Points(Double.Parse(lat), Double.Parse(log), Double.Parse(element.Latitude), Double.Parse(element.Longitude)) <= disearch)
                 {
                     t.Add(element);
                 }
@@ -1058,33 +1057,33 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
             var result = t.Select(c => new
             {
-                Id = c.Id,
-                Title = c.Title,
-                Price = c.Price,
-                PriceType = c.PriceType,
-                DateUpdate = c.DateUpdate,
-                DateDue = c.DateDue,
-                Time = c.Time,
-                Status = c.Status,
-                Verify = c.Verify,
-                Address = c.Address,
-                Description = c.Description,
-                Phone = c.Phone,
-                Typemotel = c.Typemotel,
-                AreaZone = c.AreaZone,
-                AreaZoneType = c.AreaZoneType,
-                Typeservice = c.Typeservice,
-                Bathroom = c.Detail.NumberBath,
-                Livingroom = c.Detail.NumberLiving,
-                Latitude = c.Latitude,
-                Longitude = c.Longitude,
-                City = _context.Citys.Where(a => a.Id == c.CityId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
-                Province = _context.Provinces.Where(a => a.Id == c.ProvinceId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
-                District = _context.Districts.Where(a => a.Id == c.DistrictId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
-                Street = _context.Streets.Where(a => a.Id == c.StreetId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
-                User = _context.Users.Where(a => a.Id == c.UserId).Select(a => new { Id = a.Id, HovaTen = a.HovaTen }).FirstOrDefault(),
+                id = c.Id,
+                title = c.Title,
+                price = c.Price,
+                priceType = c.PriceType,
+                dateUpdate = c.DateUpdate,
+                dateDue = c.DateDue,
+                time = c.Time,
+                status = c.Status,
+                verify = c.Verify,
+                address = c.Address,
+                description = c.Description,
+                phone = c.Phone,
+                typemotel = c.Typemotel,
+                areaZone = c.AreaZone,
+                areaZoneType = c.AreaZoneType,
+                typeservice = c.Typeservice,
+                bathroom = c.Detail.NumberBath,
+                livingroom = c.Detail.NumberLiving,
+                latitude = c.Latitude,
+                longitude = c.Longitude,
+                city = _context.Citys.Where(a => a.Id == c.CityId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                province = _context.Provinces.Where(a => a.Id == c.ProvinceId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                district = _context.Districts.Where(a => a.Id == c.DistrictId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                street = _context.Streets.Where(a => a.Id == c.StreetId).Select(a => new { Id = a.Id, Name = a.Name }).FirstOrDefault(),
+                user = _context.Users.Where(a => a.Id == c.UserId).Select(a => new { Id = a.Id, HovaTen = a.HovaTen }).FirstOrDefault(),
             })
-            .OrderByDescending(a => a.DateUpdate).ToList();
+            .OrderByDescending(a => a.dateUpdate).ToList();
 
             if (result == null)
             {

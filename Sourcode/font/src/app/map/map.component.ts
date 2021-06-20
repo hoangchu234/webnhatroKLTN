@@ -61,6 +61,7 @@ export class MapComponent implements OnInit {
 
   distances: Distance[] = [];
   distance = "";
+  distanceId = "";
 
   search = "";
 
@@ -338,10 +339,13 @@ export class MapComponent implements OnInit {
   public async getDistance(){
     this.distances = await this.motelService.getDistance() as Distance[];
     this.distance = this.distances[0].number + " " + this.distances[0].name;
+    this.distanceId = this.distances[0].id.toString();
+
   }
 
   public onChoiceDistance(distance:Distance) {
     this.distance = distance.number + " " + distance.name;
+    this.distanceId = distance.id.toString();
   }
 
   async onSearch(){
@@ -560,6 +564,20 @@ export class MapComponent implements OnInit {
     this.motels = this.motelsearch.slice();
     this.totalRecord = this.motels.length;
 
+  }
+
+  async getDataMotelDistance(){
+    const result =  await this.motelService.getMotelDistance() as any;
+    this.loadDataHot(result);
+    this.loadData1(result);
+    this.loadData2(result);
+    this.loadData3(result);    
+    this.loadDataThuong(result);
+    if(this.motels.length){
+      this.motels.splice(0, this.motels.length);
+    }  
+    this.motels = this.motelsearch.slice();
+    this.totalRecord = this.motels.length;
   }
 
   async setData(){

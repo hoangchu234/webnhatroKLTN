@@ -451,4 +451,14 @@ export class MotelService {
       // console.log(e);
     }
   }
+
+  public getMotelDistance = async (id: number, log: string, lat: string) => {
+    try {
+      const url = `${this.urlAPI + "/api/Motels/GetDataDistance"}/${id}/${log}/${lat}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 }
