@@ -57,9 +57,9 @@
                         </div>
                     </div>
                   </div>
-                  <div class="search-field d-none d-md-block p-2 link-secondary" style="margin-top:-10px;margin-left: -15px;" >
+                  <div class="search-field d-none d-md-block p-2 link-secondary" style="margin-top:-10px;" >
                     <form class="d-flex align-items-center h-100" action="#">
-                      <input type="text" placeholder="Nhập địa chỉ" name="search"  [(ngModel)]="search">
+                      <input type="text" style="height: 60%;" placeholder="Nhập địa chỉ" name="search"  [(ngModel)]="search">
                     </form>
                   </div>
                   <div class="btn-group p-2 link-secondary select-control select-cate " >
@@ -72,35 +72,37 @@
             </div>
           </div>
         <div class="col-md-9">
-            <app-map-show [long]="long" [lat]="lat" [name]="name"></app-map-show>
+          <div id="map" style="z-index: 1;" >
+          </div>
+            <!-- <app-map-show [long]="long" [lat]="lat" [name]="name" (youLong)='onLong($event)' (youLat)='onLat($event)'></app-map-show> -->
         </div>
         <div class="col-md-3" style="margin-left: -25px;margin-top: 5px;">
-            <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;margin-bottom: 10px;">
-                <div  style="width:400px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;margin-top:10px">Khoảng cách <span class="fa fa-angle-down" style="color:#00deb6; font-size: 13px;"></span></div> <div class="custom-value hasvalue" style="margin-top: 5px;" >{{distance}}</div> </div>              
+            <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 80px;border: 1px;margin-bottom: 5px;background-color: antiquewhite;text-align: center;">
+                <div  style="width:200px;height: 40px;padding-top: 10px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;">Khoảng cách <span class="custom-value hasvalue" style="margin-top: 5px;" >{{distance}}</span> <span class="fa fa-angle-down" style="color:#00deb6; font-size: 10px;margin-left: 3px;"></span></div>  </div>              
                 <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                     <div *ngFor='let data of distances'>
                         <a class="dropdown-item" (click)="onChoiceDistance(data)" [value]="data.id">{{data.number}} {{data.name}}</a>
                     </div>
                 </div>
             </div>
-            <div *ngFor= "let motel of motels | paginate: { itemsPerPage: 10, currentPage: page } ">
+            <div *ngFor= "let motel of motels | paginate: { itemsPerPage: 4, currentPage: page } ">
               <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[0].text">
                 <div class="row" >
-                    <div class="col-lg-5" >
+                    <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
                         <!-- Image by https://unsplash.com/@kensuarez -->
                         <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
                         <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
                       </div>
                     </div>
-                    <div class="col-lg-7" style="padding-top: 5px;" >
-                        <div style="font-size: 13px;color: red;font-size: 18px;" >{{motel.title}}</div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: red;" >{{motel.title}}</div>
                         <div>
                           <div class="row" style="margin-top:5px" >
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                            <div class="col-md-8">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                               <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
                               
                             </div>
@@ -113,25 +115,24 @@
                   </div>
               </div>
 
-              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[1].text">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;box-shadow: #000000;" *ngIf="motel.typeservice == news[1].text">
                 <div class="row" >
-                    <div class="col-lg-5" >
+                    <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
                         <!-- Image by https://unsplash.com/@kensuarez -->
                         <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
                         <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
                       </div>
                     </div>
-                    <div class="col-lg-7" style="padding-top: 5px;" >
-                        <div style="font-size: 13px;color: red;font-size: 18px;" >{{motel.title}}</div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: red;" >{{motel.title}}</div>
                         <div>
                           <div class="row" style="margin-top:5px" >
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                            <div class="col-md-8">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                               <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
-                              
                             </div>
                           </div>
                         </div>
@@ -142,23 +143,23 @@
                   </div>
               </div>
 
-              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[2].text">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;box-shadow: #00deb6;" *ngIf="motel.typeservice == news[2].text">
                 <div class="row" >
-                    <div class="col-lg-5" >
+                    <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
                         <!-- Image by https://unsplash.com/@kensuarez -->
                         <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
                         <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
                       </div>
                     </div>
-                    <div class="col-lg-7" style="padding-top: 5px;" >
-                        <div style="font-size: 13px;color: orange;font-size: 18px;" >{{motel.title}}</div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: orange;" >{{motel.title}}</div>
                         <div>
                           <div class="row" style="margin-top:5px" >
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                            <div class="col-md-8">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                               <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
                               
                             </div>
@@ -173,21 +174,21 @@
 
               <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[3].text">
                 <div class="row" >
-                    <div class="col-lg-5" >
+                    <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
                         <!-- Image by https://unsplash.com/@kensuarez -->
                         <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
                         <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
                       </div>
                     </div>
-                    <div class="col-lg-7" style="padding-top: 5px;" >
-                        <div style="font-size: 13px;color: rgb(0, 217, 255);font-size: 18px;" >{{motel.title}}</div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: rgb(0, 217, 255);" >{{motel.title}}</div>
                         <div>
                           <div class="row" style="margin-top:5px" >
-                            <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                            <div class="col-md-8">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                               <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
                               
                             </div>
@@ -202,19 +203,19 @@
 
               <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[4].text">
                 <div class="row" >
-                    <div class="col-lg-5" >
+                    <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
                         <!-- Image by https://unsplash.com/@kensuarez -->
                         <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
                         <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
                       </div>
                     </div>
-                    <div class="col-lg-7" style="padding-top: 5px;" >
-                        <div style="font-size: 13px;color: green;font-size: 18px;" >{{motel.title}}</div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: green;" >{{motel.title}}</div>
                         <div>
                           <div class="row" style="margin-top:5px" >
                             <div class="col-md-6">
-                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} {{motel.priceType}}</span>  </p>
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
                             </div>
                             <div class="col-md-6">
                               <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>

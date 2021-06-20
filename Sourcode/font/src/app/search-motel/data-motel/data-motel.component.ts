@@ -197,7 +197,7 @@ export class DataMotelComponent implements OnInit {
   }
   public linkMap() {
     //this.router.navigate( [{name: name, id: id}]);
-    this.route.navigate( ['/map']);
+    this.route.navigate( ['/map/Ho-Chi-Minh/Phong-tro-nha-tro']);
   }
 
   public handlePageChange(event) {

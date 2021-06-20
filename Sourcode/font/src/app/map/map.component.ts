@@ -18,6 +18,7 @@ import { ProvincesService } from '../services/provinces.service';
 import { StreetService } from '../services/street.service';
 
 declare const L: any;
+declare const L2: any;
 
 export interface Type{
   id:number;
@@ -65,8 +66,8 @@ export class MapComponent implements OnInit {
 
   search = "";
 
-  long = 106.66449163903896;
-  lat = 10.802034899283724;
+  long = 106.66456239976246;
+  lat = 10.802007379610322;
   name = "Công viên hoàng văn thụ";
 
   motelsearch: Motel[] = [];
@@ -76,6 +77,11 @@ export class MapComponent implements OnInit {
   totalRecord;
   page:Number = 1;
 
+  youLong = "";
+  youLat = "";
+
+  mymap: any;
+  marker: any;
   constructor(public streetService:StreetService,public dictrictService:DictrictService,private priceSearchServer:PriceSearchService,private router:ActivatedRoute,private route: Router,public activerouter:ActivatedRoute,private motelService: MotelService,private cityService: CitiesService, private provinceService: ProvincesService, private typeservice:TypeofnewService) {
     this.getPrices();
     this.getCities();
@@ -85,69 +91,113 @@ export class MapComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.runMap();
     this.firstTime();
     await this.setData();
   }
 
-  // runMap(){
-  //   if (!navigator.geolocation) {
-  //     console.log('location is not supported');
-  //   }
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     const coords = position.coords;
-  //     const latLong = [this.lat, this.long];
-  //     console.log(
-  //       `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-  //     );
-  //     let mymap = L.map('map').setView(latLong, 13);
+  buildMap(lat,lon,name)  {
+    if (this.mymap != undefined) { this.mymap.remove(); } 
+    this.mymap = L.map('map').setView([lon,lat], 13);
 
-  //     L.tileLayer(
-  //       'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VicmF0MDA3IiwiYSI6ImNrYjNyMjJxYjBibnIyem55d2NhcTdzM2IifQ.-NnMzrAAlykYciP4RP9zYQ',
-  //       {
-  //         attribution:
-  //           'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-  //         maxZoom: 18,
-  //         id: 'mapbox/streets-v11',
-  //         tileSize: 512,
-  //         zoomOffset: -1,
-  //         accessToken: 'your.mapbox.access.token',
-  //       }
-  //     ).addTo(mymap);
+    L.tileLayer(
+      'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VicmF0MDA3IiwiYSI6ImNrYjNyMjJxYjBibnIyem55d2NhcTdzM2IifQ.-NnMzrAAlykYciP4RP9zYQ',
+      {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'your.mapbox.access.token',
+      }
+    ).addTo(this.mymap );
+    
+    L.marker([lon,lat]).addTo(this.mymap)
+        .bindPopup(name)
+        .openPopup();
+    
+  }
 
-  //     let marker = L.marker(latLong).addTo(mymap);
+  runMap(){
+    if (!navigator.geolocation) {
+      console.log('location is not supported');
+    }
+    navigator.geolocation.getCurrentPosition((position) => {
+      const coords = position.coords;
+      console.log(position.coords.latitude+","+position.coords.longitude);
+      console.log(this.lat+","+ this.long);
 
-  //     marker.bindPopup('<b>Hi</b>').openPopup();
+      // this.youLat = position.coords.latitude;
+      this.youLat = position.coords.latitude.toString()
+      this.youLong = position.coords.longitude.toString()
 
-  //     let popup = L.popup()
-  //       .setLatLng(latLong)
-  //       .setContent(this.name)
-  //       .openOn(mymap);
-  //   });
-  //   this.watchPosition();
-  // }
 
-  // watchPosition() {
-  //   let desLat = 0;
-  //   let desLon = 0;
-  //   let id = navigator.geolocation.watchPosition(
-  //     (position) => {
-  //       console.log(
-  //         `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-  //       );
-  //       if (position.coords.latitude === desLat) {
-  //         navigator.geolocation.clearWatch(id);
-  //       }
-  //     },
-  //     (err) => {
-  //       console.log(err);
-  //     },
-  //     {
-  //       enableHighAccuracy: true,
-  //       timeout: 9000,
-  //       maximumAge: 0,
-  //     }
-  //   );
-  // }
+      const latlong1 =[position.coords.latitude,position.coords.longitude];//vị trí hiện tại
+      const latLong = [this.lat, this.long];
+      console.log(
+        `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+      );
+      
+      
+      this.mymap = L.map('map').setView(latLong, 13);
+      L.tileLayer(
+        'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VicmF0MDA3IiwiYSI6ImNrYjNyMjJxYjBibnIyem55d2NhcTdzM2IifQ.-NnMzrAAlykYciP4RP9zYQ',
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'your.mapbox.access.token',
+        }
+      ).addTo(this.mymap );
+
+      this.marker = L.marker(latLong).addTo(this.mymap );
+
+      this.marker.bindPopup('<b>Hi</b>').openPopup();
+      this.marker.bindPopup('<b>Hi</b>').openPopup();
+
+      let popup = L.popup()
+        .setLatLng(latLong)
+        .setContent(this.name)
+        .openOn(this.mymap );
+    });
+    this.watchPosition();
+  
+  }
+
+  watchPosition() {
+    let desLat = 0;
+    let desLon = 0;
+    let id = navigator.geolocation.watchPosition(
+      (position) => {
+        console.log(
+          `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+        );
+        if (position.coords.latitude === desLat) {
+          navigator.geolocation.clearWatch(id);
+        }
+      },
+      (err) => {
+        console.log(err);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 9000,
+        maximumAge: 0,
+      }
+    );
+  }
+
+  onLong(message: string): void {
+    this.youLong = message;
+  }
+
+  onLat(message: string): void {
+    this.youLat = message;
+  }
 
   public handlePageChange(event) {
     this.page = event;
@@ -346,6 +396,7 @@ export class MapComponent implements OnInit {
   public onChoiceDistance(distance:Distance) {
     this.distance = distance.number + " " + distance.name;
     this.distanceId = distance.id.toString();
+    this.getDataMotelDistance();
   }
 
   async onSearch(){
@@ -382,14 +433,15 @@ export class MapComponent implements OnInit {
     //   this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
     // }
 
-    var linkData = await this.motelService.getLocation("chung cư hoàng hoa thám ") as any;
-    console.log(linkData["data"]["features"])
+    var linkData = await this.motelService.getLocation("Trưởng đại học sư phạm kỹ thuật thành phố hồ chí minh") as any;
     if(linkData["data"]["features"].length !=0){
       this.name = linkData["data"]["features"][0]["properties"]["name"].toString();
       this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
       this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
-      console.log(this.lat + "," + this.long)
-      console.log(linkData["data"]["features"][0])
+      // console.log(this.lat + "," + this.long)
+      // console.log(linkData["data"]["features"][0])
+      this.buildMap( this.lat , this.long, this.name);
+
     }
 
     // this.runMap();
@@ -567,17 +619,32 @@ export class MapComponent implements OnInit {
   }
 
   async getDataMotelDistance(){
-    const result =  await this.motelService.getMotelDistance() as any;
-    this.loadDataHot(result);
-    this.loadData1(result);
-    this.loadData2(result);
-    this.loadData3(result);    
-    this.loadDataThuong(result);
-    if(this.motels.length){
-      this.motels.splice(0, this.motels.length);
-    }  
-    this.motels = this.motelsearch.slice();
-    this.totalRecord = this.motels.length;
+    if(this.youLong != "" && this.youLat != ""){
+      const result =  await this.motelService.getMotelDistance(Number(this.distanceId), this.youLong, this.youLat) as any;
+      this.loadDataHot(result);
+      this.loadData1(result);
+      this.loadData2(result);
+      this.loadData3(result);    
+      this.loadDataThuong(result);
+      if(this.motels.length){
+        this.motels.splice(0, this.motels.length);
+      }  
+      this.motels = this.motelsearch.slice();
+      this.totalRecord = this.motels.length;
+    }
+  }
+
+  async success(position) {
+    var	latitude = position.coords.latitude,
+      longitude = position.coords.longitude,
+      altitude = position.coords.altitude,
+      accuracy = position.coords.accuracy;
+  
+    // Hiển thị các thông số về vị trí hiện tại của bạn.
+    console.log(latitude);
+    console.log(longitude);
+    console.log(altitude);
+    console.log(accuracy);
   }
 
   async setData(){
@@ -603,7 +670,6 @@ export class MapComponent implements OnInit {
       }
       else{
         this.city = cities[indexCity];
-        this.search = this.search + this.city.name;
       }
     }
     
@@ -616,7 +682,6 @@ export class MapComponent implements OnInit {
       }
       else{
         this.province = provinceByCityId[indexProvince];
-        this.search = this.search + this.province.name;
       }
     }
     if(district != null){
@@ -628,7 +693,6 @@ export class MapComponent implements OnInit {
       }  
       else{
         this.district = districtByCityId[indexDistrict];
-        this.search = this.search + this.district.name;
       }
     }
     if(street != null){
@@ -640,7 +704,6 @@ export class MapComponent implements OnInit {
       }     
       else{
         this.street = streetByCityId[indexStreet];
-        this.search = this.search + this.street.name;
       }
     }
     if(price != null){//2-Trieu-3-Trieu
