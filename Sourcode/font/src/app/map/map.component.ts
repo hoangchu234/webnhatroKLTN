@@ -406,45 +406,38 @@ export class MapComponent implements OnInit {
     // console.log(this.street.name)
     // console.log(this.search)
     
-    // var city = "", province = "", district = "", street = "", search ="";
-    // if(this.city.name != "Tỉnh thành phố"){
-    //   city = this.city.name
-    // }
-    // if(this.province.name != "Quận Huyện"){
-    //   province = ", " + this.province.name 
-    // }
-    // if(this.district.name != "Phường Xã"){
-    //   district = ", " + this.district.name
-    // }
-    // if(this.street.name != "Đường Phố"){
-    //   street = ", " +this.street.name
-    // }
-    // if(this.search != ""){
-    //   search = ", " + this.search
-    // }
-    // var searchtext = city + province + district + street + search;
-    // if(searchtext == ""){
-
-    // }
-    // else{
-    //   var linkData = await this.motelService.getLocation(searchtext) as any;
-    //   // console.log(linkData["data"]["features"][0]["geometry"]["coordinates"]);
-    //   this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
-    //   this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
-    // }
-
-    var linkData = await this.motelService.getLocation("Trưởng đại học sư phạm kỹ thuật thành phố hồ chí minh") as any;
-    if(linkData["data"]["features"].length !=0){
-      this.name = linkData["data"]["features"][0]["properties"]["name"].toString();
-      this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
-      this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
-      // console.log(this.lat + "," + this.long)
-      // console.log(linkData["data"]["features"][0])
-      this.buildMap( this.lat , this.long, this.name);
+    var city = "", province = "", district = "", street = "", search ="";
+    if(this.city.name != "Tỉnh thành phố"){
+      city = this.city.name
+    }
+    if(this.province.name != "Quận Huyện"){
+      province = ", " + this.province.name 
+    }
+    if(this.district.name != "Phường Xã"){
+      district = ", " + this.district.name
+    }
+    if(this.street.name != "Đường Phố"){
+      street = ", " +this.street.name
+    }
+    if(this.search != ""){
+      search = ", " + this.search
+    }
+    var searchtext = city + province + district + street + search;
+    if(searchtext == ""){
 
     }
+    else{
+      var linkData = await this.motelService.getLocation(searchtext) as any;
+      if(linkData["data"]["features"].length !=0){
+        this.name = linkData["data"]["features"][0]["properties"]["name"].toString();
+        this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
+        this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
+        this.buildMap( this.lat , this.long, this.name);
+      }
+    }
 
-    // this.runMap();
+    
+    // }
   }
 
   //Load data
@@ -619,7 +612,11 @@ export class MapComponent implements OnInit {
   }
 
   async getDataMotelDistance(){
+    console.log(this.youLat + " " + this.youLong)
     if(this.youLong != "" && this.youLat != ""){
+      if(this.motelsearch.length){
+        this.motelsearch.splice(0, this.motelsearch.length);
+      }  
       const result =  await this.motelService.getMotelDistance(Number(this.distanceId), this.youLong, this.youLat) as any;
       this.loadDataHot(result);
       this.loadData1(result);
@@ -630,6 +627,7 @@ export class MapComponent implements OnInit {
         this.motels.splice(0, this.motels.length);
       }  
       this.motels = this.motelsearch.slice();
+      console.log(this.motels)
       this.totalRecord = this.motels.length;
     }
   }
@@ -655,7 +653,6 @@ export class MapComponent implements OnInit {
     var price = this.router.snapshot.paramMap.get("price");
     var district = this.router.snapshot.paramMap.get("district");
 
-    console.log(city + type )
     const types = await this.typeservice.getTypes() as NewType[];
     const cities = await this.cityService.getCitys() as City[];
 

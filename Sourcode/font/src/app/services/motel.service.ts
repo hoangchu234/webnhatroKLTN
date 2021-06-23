@@ -383,19 +383,19 @@ export class MotelService {
     }
   }
 
-  public getAPI = async (query: string) => {
-    try {
-      const params = {
-        access_key: 'd03ccb4bf5c1ffa8d13f5eec4a83a7f0',
-        query: query
-      }
-      const url = "http://api.positionstack.com/v1/forward";
-      return await this.http.get(url,{params}).toPromise();
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
+  // public getAPI = async (query: string) => {
+  //   try {
+  //     const params = {
+  //       access_key: 'd03ccb4bf5c1ffa8d13f5eec4a83a7f0',
+  //       query: query
+  //     }
+  //     const url = "http://api.positionstack.com/v1/forward";
+  //     return await this.http.get(url,{params}).toPromise();
+  //   }
+  //   catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   getRecommendation = async (id) => {
     try 

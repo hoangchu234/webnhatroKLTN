@@ -38,6 +38,9 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
   nameProvince = "";
   nameDistrict = "";
   nameStreet = "";
+
+  long = "";
+  lat = "";
   constructor(public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService, private provinceService: ProvincesService,private router: Router,public motelService:MotelService) {
     this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     if(this.motelprevous.detail.numberBath != undefined || this.motelprevous.detail.numberLiving != undefined){
@@ -77,15 +80,9 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
 
   async getViTri(cityname,provincename,districtname,streetname,addressMotel){
     var data = cityname + ", " + provincename + ", " + districtname + ", " + streetname;
-    
-    var get = await this.motelService.getAPI(data);
-    if(get["data"].length !=0 ){
-      return get["data"]
-    }
-    else{
-      get = await this.motelService.getAPI(addressMotel);
-      return get["data"];
-    }
+    var get = await this.motelService.getLocation(data);
+    this.lat = get["data"]["features"][0]["geometry"]["coordinates"][0];
+    this.long = get["data"]["features"][0]["geometry"]["coordinates"][1];
   }
 
   public async getLiveType(){
@@ -159,9 +156,9 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
     motelnew = JSON.parse(localStorage.getItem(StorageService.motelStorage));
 
     if(this.motelprevous.latitude == "" && this.motelprevous.longitude == ""){
-      var data = await this.getViTri(this.nameCity,this.nameProvince, this.nameDistrict,this.nameStreet,this.motelprevous.address);
-      this.longtude = data[0].longitude;
-      this.langtude = data[0].latitude;
+      await this.getViTri(this.nameCity,this.nameProvince, this.nameDistrict,this.nameStreet,this.motelprevous.address);
+      this.longtude = this.longtude;
+      this.langtude = this.lat;
     }
     else{
       this.longtude = this.motelprevous.longitude;

@@ -65,7 +65,6 @@ export class ChatsComponent implements OnInit {
       .catch(error => {
         console.log('Can not start connection with error: ' + error);
       })
-      // kết nối
   
     this.hubConnection.on("BroadcastMessage", async () => {  
       var check = await this.check(this.senderId, this.receiverId);
@@ -75,7 +74,7 @@ export class ChatsComponent implements OnInit {
       else if(check == "Receiver"){
         await this.getDataReceive(this.senderId, this.receiverId);
       }  
-    });// khi thay đổi update
+    });
   }
 
   async runData(){
