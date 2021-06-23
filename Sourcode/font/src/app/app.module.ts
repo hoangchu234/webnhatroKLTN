@@ -125,7 +125,7 @@ import { ManagementForumComponent } from './authority/loginadmin/management-foru
 import { ToastrModule } from 'ngx-toastr';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { MapComponent } from './map/map.component';
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AddEmployeeComponent } from '../app/authority/loginadmin/magement-employee/add-employee/add-employee.component';
 
 @NgModule({
   declarations: [
