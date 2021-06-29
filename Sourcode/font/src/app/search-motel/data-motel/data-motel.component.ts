@@ -274,39 +274,37 @@ export class DataMotelComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogSearchMotelComponent, {
       direction: "ltr",
       width: '400px',
-      data: "aaa"
+      data: ""
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.str = result.data;
-      var a = this.str.split('@');
-      if(a[0] == " "){
-        var direct = "";
-      }
-      else{
-        direct = a[0];
-      }
-      if(a[1] == " "){
-        var area = "";
-      }
-      else{
-        area = a[1];
-      }
-      this.url(direct, area);
+      // this.str = result.data;
+      // var a = this.str.split('@');
+      // if(a[0] == " "){
+      //   var direct = "";
+      // }
+      // else{
+      //   direct = a[0];
+      // }
+      // if(a[1] == " "){
+      //   var area = "";
+      // }
+      // else{
+      //   area = a[1];
+      // }
+      this.url();
       // this.AreaDataSearch();
       // this.DirectDataSearch();
     });
   }
 
-  url(directName, areaId){
+  url(){
     var city = "/" + this.router.snapshot.paramMap.get("city");
     var type = "/" + this.router.snapshot.paramMap.get("type");
     var province = "/" + this.router.snapshot.paramMap.get("province");
     var street = "/" + this.router.snapshot.paramMap.get("street");
     var price = "/" + this.router.snapshot.paramMap.get("price");
     var district = "/" + this.router.snapshot.paramMap.get("district");
-    var direct = ""
-    var area = ""
     if(city == "/null"){
       city = "";
     }
@@ -325,21 +323,8 @@ export class DataMotelComponent implements OnInit {
     if(district == "/null"){
       district = "";
     }
-    if(directName == ""){
-      direct = "";
-    }
-    else{
-      direct = "/" + RemoveVietnameseTones.removeVietnameseTones(directName);
-    }
-    if(areaId == ""){
-      area = "";
-    }
-    else{
-      area = "/" + areaId;
-    }
     
-    var link = '/home' + city + province + district + street + price + type + direct + area;
-    console.log(link)
+    var link = '/home' + city + province + district + street + price + type
     this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.route.navigate([link]);
       
@@ -348,9 +333,7 @@ export class DataMotelComponent implements OnInit {
 
   public async getCities(){
     return await this.cityService.getCitys() as City[];
-    /*this.cityService.getCitys().subscribe(getcity => {
-      this.cities = getcity;
-    })*/
+  
   }
 
   public async getStreetById(ID){
@@ -381,8 +364,6 @@ export class DataMotelComponent implements OnInit {
     var street = this.router.snapshot.paramMap.get("street");
     var price = this.router.snapshot.paramMap.get("price");
     var district = this.router.snapshot.paramMap.get("district");
-    var direct = this.router.snapshot.paramMap.get("direct");
-    var area = this.router.snapshot.paramMap.get("area");
 
     var idType: number = 0;
     var idCity: number = 0;
@@ -473,18 +454,18 @@ export class DataMotelComponent implements OnInit {
       this.motels.splice(0, this.motels.length);
     }
     var dataMotelFilter = this.motelsearch.slice();
-    if(direct != null){
-      dataMotelFilter = this.motelsearch.filter(a => RemoveVietnameseTones.removeVietnameseTones(a.detail.director) === direct);
+    if(localStorage.getItem(StorageService.DirectSearchStorage) != undefined){
+      dataMotelFilter = this.motelsearch.filter(a => RemoveVietnameseTones.removeVietnameseTones(a.detail.director) === localStorage.getItem(StorageService.DirectSearchStorage));
     }
-    if(area != null){
-      var id = this.areas.find(a => a.id === area);
-      if(area == "2"){
+    if(localStorage.getItem(StorageService.AreaSearchStorage) != undefined){
+      var id = this.areas.find(a => a.id == localStorage.getItem(StorageService.AreaSearchStorage));
+      if(localStorage.getItem(StorageService.AreaSearchStorage) == "2"){
         dataMotelFilter = this.motelsearch.filter(a => Number(a.areaZone) < Number(id.numberTwo));
       }
-      else if(area == "10"){
+      else if(localStorage.getItem(StorageService.AreaSearchStorage) == "10"){
         dataMotelFilter = this.motelsearch.filter(a => Number(a.areaZone) > Number(id.numberTwo));
       }
-      else if(area != "1"){
+      else if(localStorage.getItem(StorageService.AreaSearchStorage) != "1"){
         dataMotelFilter = this.motelsearch.filter(a => (Number(a.areaZone) > Number(id.numberOne)) && (Number(a.areaZone) < Number(id.numberTwo)));
       }
     }

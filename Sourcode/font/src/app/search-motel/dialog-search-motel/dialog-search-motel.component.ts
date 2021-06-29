@@ -39,30 +39,36 @@ export class DialogSearchMotelComponent implements OnInit {
     
     await this.getDirect();
     await this.getArea();
-    this.url();
+    await this.url();
   }
 
-  url(){
-    var direct = this.router.snapshot.paramMap.get("direct");
-    var area = this.router.snapshot.paramMap.get("area");
-    if(area != null){
-      var index = this.areas.findIndex(a => a.id === area);
-      if(this.areas[index].id == "1"){
-        var data = this.areas[index].numberOne;
+  async url(){
+
+    if(localStorage.getItem(StorageService.AreaSearchStorage) != undefined){
+      var AREA = await this.areaSearchService.getAreaSearch() as AreaSearch[];
+      var index = AREA.findIndex(a => Number(a.id) === Number(localStorage.getItem(StorageService.AreaSearchStorage)));
+      console.log(index)
+      if(AREA[index].id == "1"){
+        var data = AREA[index].numberOne;
         this.areaId = "";
       }
       else{
-        data = this.areas[index].numberOne + " " + this.areas[index].type + " - " + this.areas[index].numberTwo + " " + this.areas[index].type;
-        this.areaId = this.areas[index].id;
+        data = AREA[index].numberOne + " " + AREA[index].type + " - " + AREA[index].numberTwo + " " + AREA[index].type;
+        this.areaId = AREA[index].id;
       }
       this.area = data;
       this.tickArea = true;
     }
-    if(direct != null){
-      var index = this.directs.findIndex(a => a.id.toString() === direct);
-      this.direct = this.directs[index].directName;
+    if(localStorage.getItem(StorageService.DirectSearchStorage) != undefined){
+      var DIRECT = await this.motelService.getDirect() as Direct[];
+      var index = DIRECT.findIndex(a => a.directName.toString() === localStorage.getItem(StorageService.DirectSearchStorage));
+      this.direct = DIRECT[index].directName;
       this.tickDirect = true;
     }
+
+
+   
+   
   }
 
   public deleteData(){
@@ -120,12 +126,14 @@ export class DialogSearchMotelComponent implements OnInit {
     }
     else{
       direct = this.direct;
+      localStorage.setItem(StorageService.DirectSearchStorage, direct);
     }
     if(this.areaId == ""){
       var area = " ";
     }
     else{
       area = this.areaId;
+      localStorage.setItem(StorageService.AreaSearchStorage, area);
     }
     var data = direct + "@" + area
     this.dialogRef.close({ event: 'close', data: data});

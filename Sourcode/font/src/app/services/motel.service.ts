@@ -443,7 +443,6 @@ export class MotelService {
         text: searchText
       };
       const url = urlVietMap + '&api-version=1.1';
-      var datas;
       // "api-version=1.1&apikey=8f1ec1ae46c3a1ea966640cf0077f1ea8b6950a3030d9d47&text=Phường 12,Quận Tân Bình,Thành phố Hồ Chí Minh, Chung cư k300"
       return await this.http.get(url,{params}).toPromise();
     }
@@ -452,9 +451,9 @@ export class MotelService {
     }
   }
 
-  public getMotelDistance = async (id: number, log: string, lat: string) => {
+  public getMotelDistance = async (city: Number, province: Number, district: Number, street: Number, price: Number, type: Number, distance: string, log: string, lat: string) => {
     try {
-      const url = `${this.urlAPI + "/api/Motels/GetDataDistance"}/${id}/${log}/${lat}`;
+      const url = `${this.urlAPI + "/api/Motels/GetMotelByOrderAddDistance"}/${city}/${province}/${district}/${street}/${price}/${type}/${distance}/${log}/${lat}`;
       return await this.http.get(url).toPromise();
     }
     catch (error) {

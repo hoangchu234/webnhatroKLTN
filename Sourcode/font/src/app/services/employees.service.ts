@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable,of, from, BehaviorSubject } from 'rxjs';
 import { map ,tap, catchError} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Account } from '../model/Account';
 
 const httpOptions ={
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -68,10 +69,10 @@ export class EmployeesService {
     );
   }
 
-  public addemployee(newemployee: Employee): Observable<Employee>{
-    return this.http.post<Employee>(this.urlAPI + "/api/Employees", newemployee, httpOptions).pipe(
-      tap((employee: Employee) => employee),
-      catchError(error => of(new Employee()))
+  public addemployee(newemployee: Account): Observable<Account>{
+    return this.http.post<Account>(this.urlAPI + "/api/Employees", newemployee, httpOptions).pipe(
+      tap((employee: Account) => employee),
+      catchError(error => of(new Account()))
     );
   }
 

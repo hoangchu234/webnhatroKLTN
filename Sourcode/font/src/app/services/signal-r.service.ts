@@ -109,4 +109,24 @@ export class SignalRService {
       console.log(error);
     }
   }
+
+  public getUpdate = async (id: number, idNotifi: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Notifications/PutNotification"}/${id}/${idNotifi}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  public getUpdateClick = async (id: number, idConver: number) => {
+    try {
+      const url = `${this.urlAPI + "/api/Notifications/PutNotificationClick"}/${id}/${idConver}`;
+      return await this.http.get(url).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 }

@@ -78,7 +78,7 @@
                                           <li *ngFor="let data of notifys">
                                             <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="!data.justSee" style="background-color: whitesmoke;">
                                               <figure>
-                                                  <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="../../assets/forum/images1/resources/friend-avatar2.jpg">
+                                                  <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="">
                                                   <span class="status f-online"></span>
                                               </figure>
                                               <div class="mesg-meta">
@@ -90,7 +90,7 @@
               
                                             <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="data.justSee">
                                               <figure>
-                                                  <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="../../assets/forum/images1/resources/friend-avatar2.jpg">
+                                                  <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="">
                                                   <span class="status f-online"></span>
                                               </figure>
                                               <div class="mesg-meta">
@@ -115,10 +115,10 @@
                                   <div class="dropdowns">
                                       <span>{{countNote}} Tin nhắn mới <a title=""></a></span>
                                       <ul class="drops-menu" >
-                                          <li *ngFor="let data of listNote" (click)="onClickURLChat(data.userId)">
+                                          <li *ngFor="let data of listNote" (click)="onClickURLChat(data)">
                                               <a class="show-mesg" title="" *ngIf="!data.justSee" style="background-color: whitesmoke;">
                                                   <figure>
-                                                      <img class="img1" style="height: 40px; width: 50px;" [src]="data.image" alt="../../../assets/forum/images1/resources/thumb-1.jpg">
+                                                      <img class="img1" style="height: 40px; width: 50px;" [src]="data.image" alt="">
                                                       <span class="status f-online"></span>
                                                   </figure>
                                                   <div class="mesg-meta">
@@ -130,7 +130,7 @@
 
                                               <a class="show-mesg" title="" *ngIf="data.justSee" >
                                                 <figure>
-                                                    <img class="img1" style="height: 40px; width: 50px;" [src]="data.image" alt="../../../assets/forum/images1/resources/thumb-1.jpg">
+                                                    <img class="img1" style="height: 40px; width: 50px;" [src]="data.image" alt="">
                                                     <span class="status f-online"></span>
                                                 </figure>
                                                 <div class="mesg-meta">
