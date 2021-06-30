@@ -4,15 +4,21 @@
     <nav aria-label="breadcrumb" style=" float:left" >
       <ol class="breadcrumb" style="border: none;">
         <li class="breadcrumb-item"><a>Quản lý</a></li>
-        <button (click)="openDialog()">Add</button>
+        
         <li class="breadcrumb-item active" aria-current="page">Quản lý nhân viên</li>
       </ol>
     </nav>
   </div>
+
   <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800 font" style="margin-left: 35px;font-weight: bold;">QUẢN LÝ NHÂN VIÊN </h1>
   </div> -->
+
+  
   <div class="row" style="margin-top: 60px;">
+    <div class="col-md-12" style="margin-bottom:10px" >
+      <button type="button" style="width:150px;height: 40px;border: none;float: right;" (click)="openDialog()">Thêm nhân viên</button>
+    </div>
     <div class="col-md-9">
       
       <app-employee-detail [employee] = "selectEmployee"></app-employee-detail>
