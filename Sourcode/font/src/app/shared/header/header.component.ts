@@ -118,11 +118,11 @@ export class HeaderComponent implements OnInit {
 
   async getDataForumNotification(){
     this.notifys = await this.postService.getCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as INotifyComment[];
-    // for(let i=0; i< this.notifys.length;i++){
-    //   if(this.notifys[i].imageUser == null){
-    //     this.notifys[i].imageUser = "";
-    //   }
-    // }
+    for(let i=0; i< this.notifys.length;i++){
+      if(this.notifys[i].imageUser == null){
+        this.notifys[i].imageUser = "../../assets/forum/images1/resources/friend-avatar2.jpg";
+      }
+    }
     this.countNotifyNotSee = await this.postService.countCommentNotifyByOneUser(this.authenticationService.currentAccountValue.user.id.toString()) as number;
   }
 
@@ -137,6 +137,11 @@ export class HeaderComponent implements OnInit {
 
   async getDataMessage(id){
     this.listNote = await this.signalRService.getNotificationMessage(id) as NotificationResult[];
+    for(let i=0; i< this.listNote.length;i++){
+      if(this.listNote[i].image== null){
+        this.listNote[i].image = "../../../assets/forum/images1/resources/thumb-1.jpg";
+      }
+    }
   }
 
   async getDataMessageCount(id){
@@ -144,8 +149,9 @@ export class HeaderComponent implements OnInit {
     this.countNote = data.count;
   }
 
-  onClickURLChat(id){
-    var link = '/chat' + '/' + id;
+  onClickURLChat(data: NotificationResult){
+    var link = '/chat' + '/' + data.userId;
+    this.signalRService.getUpdate(Number(this.authenticationService.currentAccountValue.user.id), Number(data.id));
     window.location.replace(link);
   }
   

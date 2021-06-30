@@ -117,6 +117,7 @@ export class MapComponent implements OnInit {
         .bindPopup(name)
         .openPopup();
     
+    
   }
 
   runMap(){
@@ -388,43 +389,54 @@ export class MapComponent implements OnInit {
 
   public async getDistance(){
     this.distances = await this.motelService.getDistance() as Distance[];
-    this.distance = this.distances[0].number + " " + this.distances[0].name;
-    this.distanceId = this.distances[0].id.toString();
+    var dis: Distance = {
+      id: 0,
+      number:"", 
+      name:"Tất cả"
+    }
+    this.distances.unshift(dis);
+    this.distance = "Tất cả";
+    this.distanceId = "0";
 
   }
 
   public onChoiceDistance(distance:Distance) {
-    this.distance = distance.number + " " + distance.name;
-    this.distanceId = distance.id.toString();
-    this.getDataMotelDistance();
+    if(distance.id == 0){
+      this.distance = "Tất cả";
+      this.distanceId = "0";
+      this.getMotelByURL();
+    }
+    else{
+      this.distance = distance.number + " " + distance.name;
+      this.distanceId = distance.id.toString();
+      this.getDataMotelDistance();
+    }
+
+
   }
 
   async onSearch(){
-    // console.log(this.city.name)
-    // console.log(this.province.name)
-    // console.log(this.district.name)
-    // console.log(this.street.name)
-    // console.log(this.search)
-    
-    var city = "", province = "", district = "", street = "", search ="";
+
+    var searchtext = "";
+    if(this.search != ""){
+      searchtext = this.search
+    }
+
     if(this.city.name != "Tỉnh thành phố"){
-      city = this.city.name
+      searchtext = searchtext + " " + this.city.name
     }
     if(this.province.name != "Quận Huyện"){
-      province = ", " + this.province.name 
+      searchtext = searchtext + " " + this.province.name 
     }
     if(this.district.name != "Phường Xã"){
-      district = ", " + this.district.name
+      searchtext = searchtext + " " + this.district.name
     }
     if(this.street.name != "Đường Phố"){
-      street = ", " +this.street.name
+      searchtext = searchtext + " " + this.street.name
     }
-    if(this.search != ""){
-      search = ", " + this.search
-    }
-    var searchtext = city + province + district + street + search;
+    
     if(searchtext == ""){
-
+      await this.getDistance();
     }
     else{
       var linkData = await this.motelService.getLocation(searchtext) as any;
@@ -433,6 +445,7 @@ export class MapComponent implements OnInit {
         this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
         this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
         this.buildMap( this.lat , this.long, this.name);
+        this.getMotelByURL();
       }
     }
 
@@ -515,8 +528,6 @@ export class MapComponent implements OnInit {
     var street = this.router.snapshot.paramMap.get("street");
     var price = this.router.snapshot.paramMap.get("price");
     var district = this.router.snapshot.paramMap.get("district");
-    var direct = this.router.snapshot.paramMap.get("direct");
-    var area = this.router.snapshot.paramMap.get("area");
 
     var idType: number = 0;
     var idCity: number = 0;
@@ -585,14 +596,8 @@ export class MapComponent implements OnInit {
       //2-Trieu-3-Trieu
       //Duoi-1-Trieu
       var str = price.split("-");
-      // var str = price.replace("-","");
-      // str = str.replace("-", "");
       var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne) === str[0]);
 
-      // if(indexPrice == -1){
-      //   str = str.replace("-", "");
-      //   indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne + a.typePriceOne + a.numberTwo + a.typePriceTwo) === str);
-      // }
       indexPrice = indexPrice + 1;
       idPrice = indexPrice;
     }
@@ -612,12 +617,92 @@ export class MapComponent implements OnInit {
   }
 
   async getDataMotelDistance(){
-    console.log(this.youLat + " " + this.youLong)
     if(this.youLong != "" && this.youLat != ""){
+
+      var city = this.router.snapshot.paramMap.get("city");
+      var type = this.router.snapshot.paramMap.get("type");
+      var province = this.router.snapshot.paramMap.get("province");
+      var street = this.router.snapshot.paramMap.get("street");
+      var price = this.router.snapshot.paramMap.get("price");
+      var district = this.router.snapshot.paramMap.get("district");
+  
+      var idType: number = 0;
+      var idCity: number = 0;
+      var idProvince: number = 0;
+      var idDistrict: number = 0;
+      var idStreet: number = 0;
+      var idPrice: number = 0;
+  
+      const types = await this.getTypes();
+      const cities = await this.getDataCities();
+      // const provinces = await this.provinceService.getProvinces() as Province[];
+      // const districts = await this.dictrictService.getDistricts() as District[];
+      // const streets = await this.streetService.getStreets() as Street[];
+  
+      var indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type);
+      idType = indexType + 1;
+  
+      if(city != null){
+        var indexCity = cities.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === city);
+        if(indexCity == -1){
+          price = city;
+          indexCity = 0;
+        }
+        idCity = indexCity;
+      }
+      
+      if(province != null){
+        var provinceByCityId = await this.getDataProvinceByID(idCity);
+        var indexProvince = provinceByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
+        if(indexProvince == -1){
+          price = province;
+          indexProvince = 0;
+          idProvince = indexProvince;
+        }
+        else{
+          idProvince = Number(provinceByCityId[indexProvince].id);
+        }
+      }
+  
+      if(district != null){
+        var districtByCityId = await this.getDataDistricteById(idProvince);
+        var indexDistrict = districtByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district); 
+        if(indexDistrict == -1){
+          price = district;
+          indexDistrict = 0;
+          idDistrict = indexDistrict
+        }  
+        else{
+          idDistrict = Number(districtByCityId[indexDistrict].id);
+        }
+      }
+      if(street != null){
+        var streetByCityId = await this.getDataStreetById(idProvince);
+        var indexStreet = streetByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === street);   
+        if(indexStreet == -1){
+          price = street;
+          indexStreet = 0;
+          idStreet = indexStreet
+        }     
+        else{
+          idStreet = Number(streetByCityId[indexStreet].id);
+        }
+      }
+      if(price != null){
+        const priceSearch = await this.priceSearchServer.getprices() as PriceSearch[];
+        //2-Trieu-3-Trieu
+        //Duoi-1-Trieu
+        var str = price.split("-");
+        var indexPrice = priceSearch.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.numberOne) === str[0]);
+  
+        indexPrice = indexPrice + 1;
+        idPrice = indexPrice;
+      }
+
       if(this.motelsearch.length){
         this.motelsearch.splice(0, this.motelsearch.length);
       }  
-      const result =  await this.motelService.getMotelDistance(Number(this.distanceId), this.youLong, this.youLat) as any;
+      const result =  await this.motelService.getMotelDistance(idCity,idProvince,idDistrict,idStreet,idPrice,idType,this.distanceId, this.youLong, this.youLat) as any;
       this.loadDataHot(result);
       this.loadData1(result);
       this.loadData2(result);
@@ -627,7 +712,6 @@ export class MapComponent implements OnInit {
         this.motels.splice(0, this.motels.length);
       }  
       this.motels = this.motelsearch.slice();
-      console.log(this.motels)
       this.totalRecord = this.motels.length;
     }
   }

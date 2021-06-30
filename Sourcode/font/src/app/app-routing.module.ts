@@ -103,7 +103,6 @@ const routes: Routes = [
   { path: 'chat/:id', component:ChatsComponent },
   { path: 'forum', component:WebForumComponent},
 
-  { path: 'map/:city/:province/:district/:street/:price/:type/:direct/:area',          component: MapComponent },
   { path: 'map/:city/:province/:district/:street/:price/:type',          component: MapComponent },
   { path: 'map/:city/:province/:district/:street/:type',          component: MapComponent },
   { path: 'map/:city/:province/:district/:type',          component: MapComponent },

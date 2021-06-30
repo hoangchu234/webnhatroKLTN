@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeesService } from '../../../services/employees.service'
 import { Router } from '@angular/router';
 import { Employee } from '../../../model/Employee';
+import { MatDialog } from '@angular/material/dialog';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
 
 @Component({
   selector: 'app-magement-employee',
@@ -13,7 +15,7 @@ export class MagementEmployeeComponent implements OnInit {
   employees:Employee[] = [];
   selectEmployee:Employee;
   image = "";
-  constructor(private router: Router,private employeesService: EmployeesService) { 
+  constructor(public dialog: MatDialog,private router: Router,private employeesService: EmployeesService) { 
     this.image = "../../../assets/images/blog_3.jpg";
    }
 
@@ -41,4 +43,15 @@ export class MagementEmployeeComponent implements OnInit {
     this.selectEmployee = employee;
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddEmployeeComponent, {
+      direction: "ltr",
+      width: '400px',
+      data: ""
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+  
+    });
+  }
 }

@@ -140,8 +140,12 @@ export class BarsearchandbarComponent implements OnInit {
     const cities = await this.cityService.getCitys() as City[];
 
     var indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type)
-    const result = types[indexType];
-    this.newType = result.name;
+    // var result: NewType = {
+    //   id:types[indexType].id, 
+    //   name:types[indexType].name, 
+    //   details:types[indexType].details
+    // }
+    this.newType = types[indexType].name;
 
     if(city != null){
       var indexCity = cities.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === city); 

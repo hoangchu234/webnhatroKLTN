@@ -1,5 +1,5 @@
 export class Distance {
     id: number;
-    number: number;
+    number: string;
     name: string;
 }

@@ -39,6 +39,9 @@ export class ChatsComponent implements OnInit {
   
   listUserHasChat: ChatUserViewModel[] = [];
   fisrtUserHasChat: ChatUserViewModel = {idSender:"", idReceiver:"", hovaTen:"", image:"",messeger:"", date:null, click:"", active:""}
+  
+  sender = false;
+  receiver = false;
   constructor(private userService: UserService,private route: Router,private router: ActivatedRoute,private signalRService:SignalRService,private _ngZone: NgZone,private authenticationService: AuthenticationService) { 
     
   }
@@ -48,7 +51,7 @@ export class ChatsComponent implements OnInit {
 
     this.userNow = this.authenticationService.currentAccountValue.user;
     if(this.userNow.userImage == null){
-      this.userNow.userImage = "../../assets/forum/images1/resources/user2.jpg";
+      this.userNow.userImage = "../../assets/forum/images1/resources/thumb-1.jpg";
     }
     await this.getDataHasChat(this.userNow.id);
 
@@ -69,9 +72,13 @@ export class ChatsComponent implements OnInit {
     this.hubConnection.on("BroadcastMessage", async () => {  
       var check = await this.check(this.senderId, this.receiverId);
       if(check == "Sender"){
+        this.sender = true;
+        this.receiver = false;
         await this.getDataSend(this.senderId, this.receiverId);
       }
       else if(check == "Receiver"){
+        this.sender = false;
+        this.receiver = true;        
         await this.getDataReceive(this.senderId, this.receiverId);
       }  
     });
@@ -86,45 +93,67 @@ export class ChatsComponent implements OnInit {
 
     var check = await this.check(this.senderId, this.receiverId);
     if(check == "Sender"){
+      this.sender = true;
+      this.receiver = false;
       await this.getDataSend(this.senderId, this.receiverId);
     }
     else if(check == "Receiver"){
+      this.sender = false;
+      this.receiver = true;        
       await this.getDataReceive(this.senderId, this.receiverId);
-    }
+    }  
   }
 
   async getDataUserSend(id){
     this.userSender = await this.userService.getUserFromId(id) as User;
     if(this.userSender.userImage == null){
-      this.userSender.userImage = "../../assets/forum/images1/resources/user2.jpg";
+      this.userSender.userImage = "../../assets/forum/images1/resources/thumb-1.jpg";
     }
   }
 
   async getDataHasChat(idNow){
     this.listUserHasChat = await this.signalRService.getUserForChat(idNow) as ChatUserViewModel[];
-    this.fisrtUserHasChat = this.listUserHasChat[0];
+    var id = this.router.snapshot.paramMap.get("id");
+
+    var index = this.listUserHasChat.findIndex(a => Number(a.idReceiver) === Number(id));
+
+    this.fisrtUserHasChat = this.listUserHasChat[index];
     this.fisrtUserHasChat.active = "active";
 
     if(this.fisrtUserHasChat.image == null){
-      this.fisrtUserHasChat.image = "../../assets/forum/images1/resources/user2.jpg";
+      this.fisrtUserHasChat.image = "../../assets/forum/images1/resources/thumb-1.jpg";
     }
 
-    this.listUserHasChat.shift();
+    this.listUserHasChat.splice(index,1);
     for(let i=0;i<this.listUserHasChat.length;i++){
       if(this.listUserHasChat[i].image == null){
-        this.listUserHasChat[i].image = "../../assets/forum/images1/resources/user2.jpg";
+        this.listUserHasChat[i].image = "../../assets/forum/images1/resources/thumb-1.jpg";
       }
     }
   }
 
   async getDataSend(idSender: number, idReciver: number){
     this.conversation = await this.signalRService.getConservationSend(idSender,idReciver) as any;
+    var id = this.router.snapshot.paramMap.get("id");
+    var index = this.conversation.messegers.findIndex(a => a.userId.toString() == id);
+    var message = new Messeger;
+    message = this.conversation.messegers[index];
+    this.conversation.messegers.splice(index,1);
+    
     this.messageDatas = this.conversation.messegers;
+    this.messageDatas.unshift(message);
   }
 
   async getDataReceive(idSender: number, idReciver: number){
     this.conversation  = await this.signalRService.getConservationReceive(idSender,idReciver) as any;
+    var id = this.router.snapshot.paramMap.get("id");
+    var index = this.conversation.messegers.findIndex(a => a.userId.toString() == id);
+    var message = new Messeger;
+    message = this.conversation.messegers[index];
+    this.conversation.messegers.splice(index,1);
+    
     this.messageDatas = this.conversation.messegers;
+    this.messageDatas.unshift(message);
   }
 
   sendMessage(): void {  
@@ -133,6 +162,7 @@ export class ChatsComponent implements OnInit {
       save.senderId = Number(this.senderId);
       save.receiverId = this.receiverId;
       save.content = this.txtMessage;
+      
       this.signalRService.addMesseger(save).subscribe(data => {
         this.txtMessage = "";
       })
@@ -166,11 +196,19 @@ export class ChatsComponent implements OnInit {
 
     var check = await this.check(this.senderId, this.receiverId);
     if(check == "Sender"){
+      this.sender = true;
+      this.receiver = false;
       await this.getDataSend(this.senderId, this.receiverId);
+      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId) as any;
+      this.signalRService.getUpdateClick(Number(this.authenticationService.currentAccountValue.user.id),Number(this.conversation.id));
     }
     else if(check == "Receiver"){
+      this.sender = false;
+      this.receiver = true;        
       await this.getDataReceive(this.senderId, this.receiverId);
-    }
+      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId) as any;
+      this.signalRService.getUpdateClick(Number(this.authenticationService.currentAccountValue.user.id),Number(this.conversation.id));
+    }  
 
   }
 }
