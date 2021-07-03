@@ -31,16 +31,16 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
   btnDisabledLiving = true;
   motelprevous:Motel;
 
-  longtude = "";
-  langtude = "";
+  // longtude = "";
+  // langtude = "";
 
   nameCity = "";
   nameProvince = "";
   nameDistrict = "";
   nameStreet = "";
 
-  long = "";
-  lat = "";
+  // long = "";
+  // lat = "";
   constructor(public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService, private provinceService: ProvincesService,private router: Router,public motelService:MotelService) {
     this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     if(this.motelprevous.detail.numberBath != undefined || this.motelprevous.detail.numberLiving != undefined){
@@ -58,7 +58,7 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
     this.numberBath = "0";
     this.numberLiving = "0";
 
-    this.getlonglat();
+    // this.getlonglat();
   }
 
   async getNameCity(id){
@@ -78,12 +78,12 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
     return data.name;
   }
 
-  async getViTri(cityname,provincename,districtname,streetname,addressMotel){
-    var data = cityname + ", " + provincename + ", " + districtname + ", " + streetname;
-    var get = await this.motelService.getLocation(data);
-    this.lat = get["data"]["features"][0]["geometry"]["coordinates"][0];
-    this.long = get["data"]["features"][0]["geometry"]["coordinates"][1];
-  }
+  // async getViTri(cityname,provincename,districtname,streetname,addressMotel){
+  //   var data = cityname + ", " + provincename + ", " + districtname + ", " + streetname;
+  //   var get = await this.motelService.getLocation(data);
+  //   this.lat = get["data"]["features"][0]["geometry"]["coordinates"][0];
+  //   this.long = get["data"]["features"][0]["geometry"]["coordinates"][1];
+  // }
 
   public async getLiveType(){
     const result = await this.motelService.getLiveTypes() as LiveType[];
@@ -128,14 +128,6 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
       }
   }
 
-  // public step3(){
-  //   this.router.navigateByUrl('/user/thong-tin-chi-tiet-nha-tro');
-  // }
-
-  // public step4(){
-  //   this.router.navigateByUrl('/user/thong-tin-hinh-anh');
-  // }
-
   public increaseNumberLiving()
   {
     this.numberLiving = (Number(this.numberLiving) + 1).toString();
@@ -151,25 +143,25 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
     
   }
 
-  async getlonglat(){
-    let motelnew = new Motel();
-    motelnew = JSON.parse(localStorage.getItem(StorageService.motelStorage));
+  // async getlonglat(){
+  //   let motelnew = new Motel();
+  //   motelnew = JSON.parse(localStorage.getItem(StorageService.motelStorage));
 
-    if(this.motelprevous.latitude == "" && this.motelprevous.longitude == ""){
-      await this.getViTri(this.nameCity,this.nameProvince, this.nameDistrict,this.nameStreet,this.motelprevous.address);
-      this.longtude = this.longtude;
-      this.langtude = this.lat;
-    }
-    else{
-      this.longtude = this.motelprevous.longitude;
-      this.langtude = this.motelprevous.latitude;
-    }
-    motelnew.longitude = this.longtude;
-    motelnew.latitude = this.langtude;
+  //   if(this.motelprevous.latitude == "" && this.motelprevous.longitude == ""){
+  //     await this.getViTri(this.nameCity,this.nameProvince, this.nameDistrict,this.nameStreet,this.motelprevous.address);
+  //     this.longtude = this.longtude;
+  //     this.langtude = this.lat;
+  //   }
+  //   else{
+  //     this.longtude = this.motelprevous.longitude;
+  //     this.langtude = this.motelprevous.latitude;
+  //   }
+  //   motelnew.longitude = this.longtude;
+  //   motelnew.latitude = this.langtude;
 
-    localStorage.removeItem(StorageService.motelStorage)
-    localStorage.setItem(StorageService.motelStorage, JSON.stringify(motelnew));
-  }
+  //   localStorage.removeItem(StorageService.motelStorage)
+  //   localStorage.setItem(StorageService.motelStorage, JSON.stringify(motelnew));
+  // }
 
   public async step4(){
     let motelnew = new Motel();

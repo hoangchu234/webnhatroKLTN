@@ -20,12 +20,12 @@ export class AppComponent implements OnInit{
   //currentAccount: Account;
 
   constructor(
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService, private motelService: MotelService) {
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
 
     }
     
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
   }
 
 

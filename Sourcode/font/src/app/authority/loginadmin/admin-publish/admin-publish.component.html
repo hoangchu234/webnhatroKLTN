@@ -22,7 +22,7 @@
               <div class="font">Trạng thái tin</div>
               <div >
                 <select (change)="onChangeStatus($event)" class="form-control form-control-lg" style="color: black;width:150px;height:40px;margin-left: 20px; margin-top: -5px;">
-                  <option *ngFor='let status of statuss' [value]="status.id">{{status.name}}</option>
+                  <option *ngFor='let status of statuss' [value]="status.id">{{status.text}}</option>
                 </select>
 
               </div>

@@ -3,6 +3,11 @@ import { Account } from 'src/app/model/Account';
 import { Employee } from 'src/app/model/Employee';
 import { EmployeesService } from 'src/app/services/employees.service';
 
+export interface Type{
+  id:number;
+  text:string;
+} 
+
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
@@ -17,6 +22,12 @@ export class AddEmployeeComponent implements OnInit {
 
   gender: string;
   birthday: Date;
+
+  public genders:Array<Type> = [
+    {id: 0, text:'Nam'},
+    {id: 1, text:'Nữ'},  
+  ];
+  genderShow = "";
 
   constructor(private employeesService: EmployeesService) { }
 
@@ -35,5 +46,9 @@ export class AddEmployeeComponent implements OnInit {
     account.employee = employee;
 
     this.employeesService.addemployee(account).subscribe()
+  }
+
+  onClickGender (gen: Type)  {
+    this.genderShow = gen.text;
   }
 }

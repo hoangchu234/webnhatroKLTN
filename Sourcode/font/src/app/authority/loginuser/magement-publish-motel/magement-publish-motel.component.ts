@@ -47,8 +47,9 @@ export class MagementPublishMotelComponent implements OnInit {
   // Lấy data account từ localstogare
   //currentAccount: Account;
 
-  checkStatus : Array<boolean> = [];
-  checkStatusExtend : Array<boolean> = [];
+  // checkStatus : Array<boolean> = [];
+  // checkStatusExtend : Array<boolean> = [];
+
   constructor(private router: Router,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
     
@@ -90,7 +91,7 @@ export class MagementPublishMotelComponent implements OnInit {
 
   public onClickSearchNewType(event: any){
     let value = event.target.value;
-    var type = this.newTypes.find(a => a.id == value);
+    var type = this.newTypes.find(a => Number(a.id) == Number(value));
     this.newType = type;
     if((this.status.name == "Tất cả" && this.newType.name != "Tất cả") || this.status.name == "Tất cả" && this.newType.name != "Tất cả"){
       this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType.name);
@@ -111,17 +112,28 @@ export class MagementPublishMotelComponent implements OnInit {
     this.newType = this.newTypes[0];
   }
 
+  returnCheckEdit(data){
+    if(Number(data) == 3){
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+  returnCheckExtend(data){
+    if(Number(data) == 3){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
   public async getMotels(){
     this.motels = await this.motelService.getmotelbyuser(this.authenticationService.currentAccountValue.user.id) as any;
-      for(let i=0;i<this.motels.length;i++){
-        if(this.motels[i].status == "3"){
-          this.checkStatus.push(false);
-
-        }
-        else{
-          this.checkStatus.push(true);
-        }
-      }
       this.searchmotels = this.motels
       this.totalRecord = this.motels.length;
   }
@@ -129,7 +141,7 @@ export class MagementPublishMotelComponent implements OnInit {
   public onChangeStatus(event: any)
   {
     let value = event.target.value;
-    var index = this.statuss.findIndex(a => a.id === value);
+    var index = this.statuss.findIndex(a => Number(a.id) === Number(value));
     var name = this.statuss[index];
     this.status = name;
     if((this.newType.name == "Tất cả" && this.status.name != "Tất cả") || (this.status.name != "Tất cả" && this.newType.name == "Tất cả")){

@@ -14,12 +14,12 @@
             <input style="width: 100%;padding: 5px;border: 1px solid black;"  >
           </div>
           <div class="dropdown" style="height: 30px;padding: 5px;margin-top:18px;">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              giới tính
-            </button>
+            <a *ngIf="genderShow else elseDefferentGender" class="font" style="color:white;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">{{genderShow}}<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a>
+            <ng-template #elseDefferentGender><a class="font" style="color:white;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">Giới tính<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a></ng-template>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Nam</a>
-              <a class="dropdown-item" href="#">Nữ</a>
+              <div *ngFor="let gender of genders" >
+                <a class="dropdown-item" (click)="onClickGender(gender)"  [value]="gender.id">{{gender.text}}</a>
+              </div>
             </div>
           </div>
 

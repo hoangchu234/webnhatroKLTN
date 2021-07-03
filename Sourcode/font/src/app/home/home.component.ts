@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit(){
+    await this.motelService.getmoteloutofdate();
     await this.getCountTypes();
 
     this.getPrices();

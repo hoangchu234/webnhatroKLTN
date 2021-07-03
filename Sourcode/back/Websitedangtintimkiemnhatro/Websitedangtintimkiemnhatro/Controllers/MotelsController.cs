@@ -182,7 +182,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
             }
 
             motel.DateUpdate = DateTime.Now;
-            motel.Status = "Tin đang ẩn";
+            motel.Status = "2";
             motel.Verify = false;
 
             _context.Entry(motel).State = EntityState.Modified;
@@ -358,10 +358,10 @@ namespace Websitedangtintimkiemnhatro.Controllers
             for (int i = 0; i < motels.Count; i++)
             {
                 int result = DateTime.Compare(now, motels[i].DateDue);
-                if (result == 1 && motels[i].Status == "Tin đang hiển thị")
+                if (result == 1 && motels[i].Status == "1")
                 {
-                    motels[i].Status = "Tin đã hết hạn";
-                    motels[i].Verify = false;
+                    motels[i].Status = "3";
+                    motels[i].Verify = true;
                     _context.Entry(motels[i]).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
                 }

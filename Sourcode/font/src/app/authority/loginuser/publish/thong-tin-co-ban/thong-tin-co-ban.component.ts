@@ -17,6 +17,7 @@ import { StreetService } from 'src/app/services/street.service';
 import { StorageService } from '../../../../storage.service';
 import { NewType } from 'src/app/model/NewType';
 import { TypeofnewService } from 'src/app/services/newstype.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 
 @Component({
@@ -52,7 +53,12 @@ export class ThongTinCoBanComponent implements OnInit {
 
   check = false;
   //currentAccount:Account;
-  constructor(public typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,private authenticationService: AuthenticationService,public dialog: MatDialog,private router: Router,private cityService: CitiesService, private provinceService: ProvincesService,public motelService:MotelService) {
+
+  long = "";
+  lat = "";
+  prevous = false;
+
+  constructor(private toast: ToastService, public typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,private authenticationService: AuthenticationService,public dialog: MatDialog,private router: Router,private cityService: CitiesService, private provinceService: ProvincesService,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     if(JSON.parse(localStorage.getItem(StorageService.motelStorage))){
       this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
@@ -76,8 +82,12 @@ export class ThongTinCoBanComponent implements OnInit {
   }
 
   async privous(){
+    this.prevous = true;
     this.phoneMotel = this.motelprevous.phone;
     this.addressMotel = this.motelprevous.address;
+
+    this.lat = this.motelprevous.latitude;
+    this.long = this.motelprevous.longitude;
 
     //type
     this.newTypes.splice(0,this.newTypes.length);
@@ -242,43 +252,44 @@ export class ThongTinCoBanComponent implements OnInit {
 
   public async step2(){
     let motel = new Motel(); 
-    motel.latitude = "";
-    motel.longitude = "";
-    if(this.motelprevous != undefined)
-    {
-      motel = this.motelprevous;
-      motel.latitude = this.motelprevous.latitude;
-      motel.longitude = this.motelprevous.longitude;
+    if(this.prevous == false){
+      await this.getViTri(this.addressMotel);
     }
-    
-    if( this.typeMotel && this.city.id && this.province.id && this.addressMotel && this.phoneMotel){
-      motel.typemotel = this.typeMotel;
-      motel.cityId = this.city.id;
-      motel.provinceId = this.province.id;
-      motel.districtId = this.district.id;
-      
-      if(this.street == undefined){
-        motel.streetId = "0";
-      }
-      else{
-        motel.streetId = this.street.id;
-      }
-      
-      motel.address = this.addressMotel;
-      motel.phone = this.phoneMotel;
-      localStorage.setItem(StorageService.motelStorage, JSON.stringify(motel));
-      // this.behaviorSubjectClass.setNewTypes(this.newType);
-      localStorage.setItem(StorageService.TypeMotelStorage, JSON.stringify(this.newType))
-      this.router.navigateByUrl('/user/thong-tin-nha-tro');
+
+    if(this.lat == "" || this.long == ""){
+      this.toast.toastInfo('Không tìm thấy địa chỉ này bạn vui lòng nhập lại');
     }
     else{
-      this.openDialog();
+      motel.latitude = this.lat;
+      motel.longitude = this.long;
+      
+      if( this.typeMotel && this.city.id && this.province.id && this.addressMotel && this.phoneMotel){
+        motel.typemotel = this.typeMotel;
+        motel.cityId = this.city.id;
+        motel.provinceId = this.province.id;
+        motel.districtId = this.district.id;
+        
+        if(this.street == undefined){
+          motel.streetId = "0";
+        }
+        else{
+          motel.streetId = this.street.id;
+        }
+        
+        motel.address = this.addressMotel;
+        motel.phone = this.phoneMotel;
+        localStorage.setItem(StorageService.motelStorage, JSON.stringify(motel));
+        // this.behaviorSubjectClass.setNewTypes(this.newType);
+        localStorage.setItem(StorageService.TypeMotelStorage, JSON.stringify(this.newType))
+        this.router.navigateByUrl('/user/thong-tin-nha-tro');
+      }
+      else{
+        this.toast.toastInfo('Xin hãy nhập đủ thông tin');
+      }
     }
+    
   }
 
-  // public step1(){
-  //   this.router.navigateByUrl('/user/thong-tin-vi-tri');
-  // }
 
   public step3(){
     if(this.check == true){
@@ -316,9 +327,11 @@ export class ThongTinCoBanComponent implements OnInit {
     }
   }
 
-  // public prevous(){
-  //   this.router.navigateByUrl('/user/thong-tin-vi-tri');
-  // }
+  async getViTri(address: string){
+    var get = await this.motelService.getLocation(address);
+    this.lat = get["data"]["features"][0]["geometry"]["coordinates"][0];
+    this.long = get["data"]["features"][0]["geometry"]["coordinates"][1];
+  }
 
   public openDialog(): void {
      const dialogRef = this.dialog.open(DialogThongBaoComponent, {

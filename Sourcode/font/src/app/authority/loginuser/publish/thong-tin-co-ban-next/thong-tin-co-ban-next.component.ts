@@ -28,17 +28,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
   areaMotel: string;
 
   directs: Direct[] = [];
-  // directs:Array<Data> = [
-  //   {id: 0, text:'Không xác định'},
-  //   {id: 1, text:'Đông'},
-  //   {id: 2, text:'Tây'},
-  //   {id: 3, text:'Nam'},
-  //   {id: 4, text:'Bắc'},
-  //   {id: 5, text:'Đông Bắc'},
-  //   {id: 6, text:'Đông Nam'},
-  //   {id: 7, text:'Tây Bắc'},
-  //   {id: 8, text:'Tây Nam'},
-  // ];
+
   direct: string;
 
   title: string;

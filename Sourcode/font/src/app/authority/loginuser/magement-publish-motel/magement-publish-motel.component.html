@@ -54,7 +54,7 @@
               <th scope="col" class="font" style="color: white;">Ngày hết hạn</th>
               <th scope="col" class="font" style="color: white;">Trạng thái</th>
               <th scope="col" class="font" style="color: white; width: 180px;">Tiêu đề</th>
-              <th scope="col-md-1" class="font" style="color: white;">Đăng tin</th>
+              <th scope="col-md-1" class="font" style="color: white;">Chỉnh sửa</th>
               <th scope="col" class="font" style="color: white; ">Gia hạn</th>
             </tr>
           </thead>
@@ -66,22 +66,24 @@
               <td>{{motel.dateDue|date}}</td>
               <td>{{motel.status}}</td>
               <td><textarea style="width:500px;height: 50px;border: none;">{{motel.title}}</textarea></td>
-              <td style="text-align: center;">
-                <button type="button" class="btn btn-danger btn-sm" *ngIf="checkStatus[i]"  (click)="linkRouterChiTiet(motel.title, motel.id)">
-                  <i class="fa fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm" *ngIf="!checkStatus[i]"  disabled>
-                  <i class="fa fa-edit"></i>
-                </button>
+              <td style="text-align: center;" >
+                  <button *ngIf="returnCheckEdit(motel.status)" type="button" class="btn btn-danger btn-sm" (click)="linkRouterChiTiet(motel.title, motel.id)">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                  <button [hidden]="returnCheckEdit(motel.status)" type="button" class="btn btn-danger btn-sm" disabled>
+                    <i class="fa fa-edit"></i>
+                  </button>
               </td>
-              <td style="text-align: center;">
-                <button type="button" class="btn btn-danger btn-sm" *ngIf="!checkStatus[i]" (click)="linkRouterGiaHan(motel.title, motel.id)">
+          
+              <td style="text-align: center;" >
+                <button *ngIf="returnCheckExtend(motel.status)" type="button" class="btn btn-danger btn-sm"  (click)="linkRouterGiaHan(motel.title, motel.id)">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button type="button" class="btn btn-danger btn-sm" *ngIf="checkStatus[i]" disabled>
+                <button [hidden]="returnCheckExtend(motel.status)" type="button" class="btn btn-danger btn-sm" disabled>
                   <i class="fa fa-edit"></i>
-                </button>
+                </button>   
               </td>
+              
             </tr>
           </tbody>
         </table>
