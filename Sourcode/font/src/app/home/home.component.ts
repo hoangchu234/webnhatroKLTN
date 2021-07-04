@@ -222,17 +222,18 @@ export class HomeComponent implements OnInit {
       price = '/' + RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
     }
     
+
     if(this.searchText != ""){
       let str = this.searchText.toString().split(", ");
       if(str.length == 1){
-        city = RemoveVietnameseTones.removeVietnameseTones(str[0]);
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
       }
       else if(str.length == 2){
-        city = RemoveVietnameseTones.removeVietnameseTones(str[1]);
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
         province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
       }
       else {
-        city = RemoveVietnameseTones.removeVietnameseTones(str[2]);
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[2]);
         province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
         var indexDistrict: Number = 0;
         var indexStreet: number = 0;
@@ -256,8 +257,8 @@ export class HomeComponent implements OnInit {
     }
     var type = '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
     var link = '/home' + city + province + district + street + price  + type + direct + area;
-    // console.log(link)
-    // this.router.navigate( [link]);
+
+   
     this.linkRoute(link);
 
   }
@@ -268,6 +269,7 @@ export class HomeComponent implements OnInit {
 
   async enterSearch(){
     this.options = await this.cityService.getSearchs() as List[];
+    
     if(this.options.length){
       this.filteredOptions = this.myControl.valueChanges
       .pipe(
@@ -275,17 +277,15 @@ export class HomeComponent implements OnInit {
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filter(name) : this.options.slice(0,6))
       );
-      if(this.check == true){
-        this.filteredOptions.subscribe((data)=>{
-          if(data.length != 0){
-            this.searchText = data[0].name;
-          }
-          else{
-            this.searchText = "";
-          }
-        })
-      }
-
+      
+      this.filteredOptions.subscribe((data)=>{
+        if(data.length != 0){
+          this.searchText = data[0].name;
+        }
+        else{
+          this.searchText = "";
+        }
+      })
     }
   }
   

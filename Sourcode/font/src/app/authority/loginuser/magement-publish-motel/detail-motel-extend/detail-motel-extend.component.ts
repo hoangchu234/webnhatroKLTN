@@ -208,7 +208,7 @@ export class DetailMotelExtendComponent implements OnInit {
     this.decription = this.motelById.description;
 
 
-    if(this.motelById.status == "Tin đã hết hạn"){
+    if(this.motelById.status == "3"){
       this.checkOutOfDate = true;
     }
 
@@ -630,95 +630,7 @@ export class DetailMotelExtendComponent implements OnInit {
     this.tinhTien();
   }
 
-  // public tinhTien(){
-  //   console.log(this.timePublish.split(" "));
-  //   if(this.new == "Tin Hot"){
-  //     if(this.time == "Đăng theo ngày"){
-  //       this.priceBill = 50000
-  //       this.type = this.timePublish.split(" ");
-
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tuần"){
-  //       this.priceBill = 315000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tháng"){
-  //       this.priceBill = 120000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //   }
-  //   if(this.new == "Tin VIP 3"){
-  //     if(this.time == "Đăng theo ngày"){
-  //       this.priceBill = 30000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tuần"){
-  //       this.priceBill = 190000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tháng"){
-  //       this.priceBill = 800000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //   }
-  //   if(this.new == "Tin VIP 2"){
-  //     if(this.time == "Đăng theo ngày"){
-  //       this.priceBill = 20000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tuần"){
-  //       this.priceBill = 133000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tháng"){
-  //       this.priceBill = 540000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //   }
-  //   if(this.new == "Tin VIP 1"){
-  //     if(this.time == "Đăng theo ngày"){
-  //       this.priceBill = 10000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tuần"){
-  //       this.priceBill = 63000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tháng"){
-  //       this.priceBill = 240000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //   }
-  //   if(this.new == "Tin thường"){
-  //     if(this.time == "Đăng theo ngày"){
-  //       this.priceBill = 2000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tuần"){
-  //       this.priceBill = 12000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //     if(this.time == "Đăng theo tháng"){
-  //       this.priceBill = 48000
-  //       this.type = this.timePublish.split(" ");
-  //       this.totalprice = Number(this.type[0])*this.priceBill;
-  //     }
-  //   }
-  // }
+ 
 
   public tinhTien(){
     var data = this.servicePrice.find(a => a.typeofnew == this.new);
@@ -795,7 +707,6 @@ export class DetailMotelExtendComponent implements OnInit {
               this.imagesURLFirebare.push(url);
               console.log(url)
               if(Number(this.image.length) == Number(this.imagesURLFirebare.length)){
-                console.log("1 0")
                 this.updateMotel();
                 this.addImageNew();
                 this.addBill();
@@ -901,7 +812,7 @@ export class DetailMotelExtendComponent implements OnInit {
     if(this.street == undefined){
 
     }
-    this.motelUpdate.status = "Tin đang ẩn";
+    this.motelUpdate.status = "2";
     this.motelService.updateExtendMotel(this.motelUpdate).subscribe(data => {
       // console.log(data);
     });

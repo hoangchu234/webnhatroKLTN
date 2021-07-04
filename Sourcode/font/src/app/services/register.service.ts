@@ -67,7 +67,7 @@ checkPhoneForget = async (phone: string) => {
   checkPassword = async (id: string, account: Account) => {
     try {
       const url = `${this.urlAPI + "/api/Accounts/CheckPasswordEdit"}/${id}`;      
-      return await this.http.post(url,account).toPromise();
+      return await this.http.post(url,account, {responseType: 'text'}).toPromise();
     }
     catch (error) {
       console.log(error);

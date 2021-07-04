@@ -76,16 +76,20 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-sm-12" for="exampleFormControlSelect1"><b>Số nhà</b></label>
+                <div class="col-sm-12" style="margin-top: 5px ;">
+                  <input type="email" style="border-radius: 5px;" [(ngModel)]="addressNumber" ngDefaultControl name="AddressNumber" (ngModelChange)="saverange($event)" class="form-control" id="exampleFormControlInput2" placeholder="Nhập số nhà" >
+                </div>
+              </div>
+
+              <div class="form-group row">
                 <label class="col-sm-12" for="exampleFormControlSelect1"><b>Địa chỉ</b></label>
                 <div class="col-sm-12" style="margin-top: 5px ;">
-                  <input type="email" style="border-radius: 5px;" [(ngModel)]="addressMotel" ngDefaultControl name="AddressMotel" class="form-control" id="exampleFormControlInput2" placeholder="Nhập địa chỉ" #AddressMotel="ngModel">
-                  <p *ngIf="AddressMotel?.errors?.required">
-                    Xin nhập địa chỉ
-                  </p>
+                  <input type="email" style="border-radius: 5px;" [(ngModel)]="addressMotel" ngDefaultControl name="AddressMotel" class="form-control" id="exampleFormControlInput2" placeholder="Nhập địa chỉ" readonly>
                 </div>
               </div>
               <div class="form-group row" >
-                <button class="btn btn-warning"  href=# aria-hidden="true" style="width: 97.5%;height: 50px;font-size: 20px;border-radius: 5px;margin-top:10px" (click)='step2()'>Tiếp tục<i style="margin-left: 20px;font-size: 20px;" class="fa fa-angle-right"></i></button>
+                <button class="btn btn-warning" aria-hidden="true" style="width: 97.5%;height: 50px;font-size: 20px;border-radius: 5px;margin-top:10px" (click)='step2()'>Tiếp tục<i style="margin-left: 20px;font-size: 20px;" class="fa fa-angle-right"></i></button>
               </div>
               </form>
           </div>

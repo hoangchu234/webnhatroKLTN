@@ -128,7 +128,7 @@ export class MotelService {
         return await Motels.json();
     }
     catch (error) {
-       console.log(error);
+      //  console.log(error);
     }  
   }
 

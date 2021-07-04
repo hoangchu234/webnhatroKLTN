@@ -76,9 +76,9 @@ export class MagementProfileComponent implements OnInit {
       role:null,
       user:null,
       employee:null,
-      isHD:"",
+      isHD:true,
     },
-    accountid:"",
+    accountId:"",
     pubishFree:null
    }
  }
@@ -162,6 +162,7 @@ export class MagementProfileComponent implements OnInit {
         this.image = "../../../assets/images/blog_3.jpg";
        }
      }
+     window.location.reload();
    });
  }
 
@@ -178,31 +179,29 @@ export class MagementProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async (result: User) => {
-      var id = Number(this.authenticationService.currentAccountValue.user.id);
-      var user = await this.userService.getUserFromId(id) as User;
-      console.log(user.account);
-      console.log(result)
-      if (result.account.phone != user.account.phone)
-      {
-       var account = new Account();
-       account.id = result.account.id;
-       account.isActive = result.account.isActive;
-       account.roleId = result.account.roleId;
-       account.username = result.account.username;
-       //Lưa dat mới
-       account.password = result.account.password;
-       account.phone = result.account.phone;
+      // var id = Number(this.authenticationService.currentAccountValue.user.id);
+      // var user = await this.userService.getUserFromId(id) as User;
+      // if (result.account.phone != user.account.phone)
+      // {
+      //  var account = new Account();
+      //  account.id = result.account.id;
+      //  account.isActive = result.account.isActive;
+      //  account.roleId = result.account.roleId;
+      //  account.username = result.account.username;
+      //  //Lưa dat mới
+      //  account.password = result.account.password;
+      //  account.phone = result.account.phone;
 
-       this.userService.updateAccount(account).subscribe(update => {
-         console.log(update)
-         this.toast.toastSuccess('Lưu thành công');
-          // alert("Lưu thành công")
-        });
-      }
-      else{
-        // alert("Số điện thoại đã được dùng")
-        this.toast.toastInfo('Số điện thoại đã được dùng');
-      }
+      //  this.userService.updateAccount(account).subscribe(update => {
+      //    console.log(update)
+      //    this.toast.toastSuccess('Lưu thành công');
+      //     // alert("Lưu thành công")
+      //   });
+      // }
+      // else{
+      //   // alert("Số điện thoại đã được dùng")
+      //   this.toast.toastInfo('Số điện thoại đã được dùng');
+      // }
         
     });
   }
@@ -219,25 +218,8 @@ export class MagementProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: User) => {
-      if (result)
-      {
-       var account = new Account();
-       account.id = result.account.id;
-       account.isActive = result.account.isActive;
-       account.roleId = result.account.roleId;
-       account.username = result.account.username;
-       account.phone = result.account.phone;
-       //Lưa dat mới
-       
-       account.password = result.account.password;
-       this.userService.updateAccount(account).subscribe(update => {
-         if(update){
-          //  alert("Lưu thành công")
-          this.toast.toastSuccess('Lưu thành công');
-         }
-       });
-      }
-        
+
+      
     });
   }
 

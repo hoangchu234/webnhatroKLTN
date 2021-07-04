@@ -62,7 +62,7 @@ export class DialogEditUserComponent implements OnInit {
           user.email = this.data.email;
           user.facebook = this.data.facebook;
           user.userImage = url;
-          user.accountid = this.data.account.id;
+          user.accountId = this.data.account.id;
   
           this.userService.updateUser(user).subscribe(update => {
             // alert("Lưu thành công")
@@ -83,7 +83,7 @@ export class DialogEditUserComponent implements OnInit {
     user.email = this.data.email;
     user.facebook = this.data.facebook;
     user.userImage = this.data.userImage;
-    user.accountid = this.data.account.id;
+    user.accountId = this.data.account.id;
 
     this.userService.updateUser(user).subscribe(update => {
       // alert("Lưu thành công")

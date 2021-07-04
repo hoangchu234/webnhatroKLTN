@@ -126,7 +126,7 @@ export class DetailMotelPublishComponent implements OnInit {
     this.decription = this.motelById.description;
 
 
-    if(this.motelById.status == "Tin đã hết hạn"){
+    if(this.motelById.status == "3"){
       this.checkOutOfDate = true;
     }
 
@@ -650,7 +650,7 @@ export class DetailMotelPublishComponent implements OnInit {
     if(this.street == undefined){
 
     }
-    this.motelUpdate.status = "Tin đang ẩn";
+    this.motelUpdate.status = "2";
     this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
       // console.log(data);
     });

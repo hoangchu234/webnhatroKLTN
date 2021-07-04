@@ -109,7 +109,7 @@ export class DetailMotelPublishMagementComponent implements OnInit {
       var motelupdate = new Motel();
       motelupdate = motel;
       motelupdate.verify = true;
-      motelupdate.status = "Tin đang hiển thị";
+      motelupdate.status = "1";
       this.dangtinService.updateNVMotel(motelupdate).subscribe(update => {
         console.log(update)
       })

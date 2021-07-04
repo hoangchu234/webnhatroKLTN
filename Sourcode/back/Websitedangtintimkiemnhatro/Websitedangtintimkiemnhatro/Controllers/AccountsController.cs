@@ -95,6 +95,9 @@ namespace Websitedangtintimkiemnhatro.Controllers
             {
                 return BadRequest();
             }
+            // hash password
+            String passwordHash = BC.HashPassword(account.Password);
+            account.Password = passwordHash;
 
             _context.Entry(account).State = EntityState.Modified;
 

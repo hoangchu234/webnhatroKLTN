@@ -177,33 +177,6 @@ export class AdminPublishComponent implements OnInit {
 
   }
 
-  /*onduyettin(motel:Motel){
-    var motelupdate = new Motel();
-    motelupdate = motel;
-    motelupdate.verifyAdmin = true;
-    motelupdate.status = "Tin đang hiển thị";
-    console.log(motelupdate);
-    this.motelService.updateMotel(motelupdate).subscribe(update => {
-      console.log(update);
-    })
-  }*/
-
-
-  // openDialog(motel:Motel): void {
-  //   var motelSave: Motel[] = [];
-  //   motelSave = this.motels;
-  //   const dialogRef = this.dialog.open(DialogDetailMotelPublishComponent, {
-  //     direction: "ltr",
-  //     width: '1000px',
-  //     height:'600px',
-  //     data: motel
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result: Motel) => {
-  //     this.motels = motelSave;
-        
-  //   });
-  // }
 
   public linkRouterChiTiet(name, id) {
     //this.router.navigate( [{name: name, id: id}]);

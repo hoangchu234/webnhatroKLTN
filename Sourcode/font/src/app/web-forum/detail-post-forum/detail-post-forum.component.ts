@@ -39,7 +39,7 @@ export class DetailPostForumComponent implements OnInit {
   countCommentPost = 0;
   countComment: Array<ICountComment> = [];
   dataComment:Comment[] = [];
-  user: User = {id: 0, hovaTen:"", gender:"", doB:null, email:"",facebook: "", userImage:"", createdDate:null, lastLogOnDate:null,account:null, accountid:"", pubishFree:null}
+  user: User = {id: 0, hovaTen:"", gender:"", doB:null, email:"",facebook: "", userImage:"", createdDate:null, lastLogOnDate:null,account:null, accountId:"", pubishFree:null}
   dataPost: Post= {id: "", postUser: '', createDate: null, user: this.user, userId: "", comment: null, comments: null, hiddenOrNotHidden: null};
 
   countParentComment = 0;
@@ -69,7 +69,7 @@ export class DetailPostForumComponent implements OnInit {
         createdDate:null,
         lastLogOnDate:null,
         account:null,
-        accountid:"",
+        accountId:"",
         pubishFree:null
       }
       this.dataUser = user;

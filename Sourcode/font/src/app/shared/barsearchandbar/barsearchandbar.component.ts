@@ -306,7 +306,7 @@ export class BarsearchandbarComponent implements OnInit {
       var number = 0;
       districtZero.id = number.toString();
       districtZero.name = "Tất cả";
-      districtZero.provinceid = number.toString();
+      districtZero.provinceId = number.toString();
       this.districts.push(districtZero);
 
       for (let i = 0; i < list.length; i++) {        
@@ -380,22 +380,22 @@ export class BarsearchandbarComponent implements OnInit {
 
   public async enterSearch(){
     this.options = await this.cityService.getSearchs() as List[];
-    this.filteredOptions = this.myControl.valueChanges
+    if(this.options.length != 0){
+      this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filter(name) : this.options.slice(0,7))
       );
-      if(this.check == true){
-        this.filteredOptions.subscribe((data)=>{
-          if(data.length != 0){
-            this.searchText = data[0].name;
-          }
-          else{
-            this.searchText = "";
-          }
-        })
-      }
+      this.filteredOptions.subscribe((data)=>{
+        if(data.length != 0){
+          this.searchText = data[0].name;
+        }
+        else{
+          this.searchText = "";
+        }
+      })
+    }
   }
 
   private _filter(name: string): List[] {
@@ -446,14 +446,14 @@ export class BarsearchandbarComponent implements OnInit {
     if(this.searchText != ""){
       let str = this.searchText.toString().split(", ");
       if(str.length == 1){
-        city = RemoveVietnameseTones.removeVietnameseTones(str[0]);
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
       }
       else if(str.length == 2){
-        city = RemoveVietnameseTones.removeVietnameseTones(str[1]);
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
         province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
       }
       else {
-        city = RemoveVietnameseTones.removeVietnameseTones(str[2]);
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[2]);
         province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
         var indexDistrict: Number = 0;
         var indexStreet: number = 0;

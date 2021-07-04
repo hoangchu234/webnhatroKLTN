@@ -1,5 +1,5 @@
 
-<div class="theme-layout">
+<div class="theme-layout" >
 
     <div class="responsive-header">
         <div class="mh-head first Sticky">
@@ -214,57 +214,17 @@
     
     <app-header></app-header>
     
-
-    
 <section>
     <div class="gap2 no-gap gray-bg">
         <div class="container-fluid no-padding">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="message-users">
+                <div class="col-lg-12"  style="margin-top:80px">
+                    <div class="message-users" style="height: 650px;">
                         <div class="message-head">
-                            <h4>Chat Messages</h4>
-                            <div class="more">
-                                <div class="more-post-optns"><i class="ti-settings"></i>
-                                    <ul>
-                                        <li><i class="fa fa-wrench"></i>Setting</li>
-                                        <li><i class="fa fa-envelope-open"></i>Active Contacts</li>
-                                        <li><i class="fa fa-folder-open"></i>Archives Chats</li>
-                                        <li><i class="fa fa-eye-slash"></i>Unread Chats</li>
-                                        <li><i class="fa fa-flag"></i>Report a problem</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <h4>Nhắn tin</h4>
                         </div>
-                        <div class="message-people-srch">
-                            <form method="post">
-                                <input type="text" placeholder="Search Friend..">
-                                
-                            </form>
-                            <div class="btn-group add-group" role="group">
-                                <button id="btnGroupDrop2" type="button" class="btn group dropdown-toggle user-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  All
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
-                                  <a class="dropdown-item" href="#">Online</a>
-                                  <a class="dropdown-item" href="#">Away</a>
-                                  <a class="dropdown-item" href="#">unread</a>
-                                  <a class="dropdown-item" href="#">archive</a>
-                                </div>
-                            </div>
-                            <div class="btn-group add-group align-right" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn group dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Create+
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                  <a class="dropdown-item" href="#">New user</a>
-                                  <a class="dropdown-item" href="#">New Group +</a>
-                                    <a class="dropdown-item" href="#">Private Chat +</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mesg-peple">
-                            <ul class="nav nav-tabs nav-tabs--vertical msg-pepl-list ">
+                        <div class="mesg-peple ex2" style="margin-top: 20px;">
+                            <ul class="nav nav-tabs nav-tabs--vertical msg-pepl-list " style="overflow: scroll;">
                                 <li class="nav-item unread">
                                     <a class="active" href="#link{{fisrtUserHasChat.click}}" data-toggle="tab" (click)="clickChangeRoute(fisrtUserHasChat.idSender,fisrtUserHasChat.idReceiver)">
                                         <figure><img [src]="fisrtUserHasChat.image" alt="">
@@ -273,18 +233,6 @@
                                         <div class="user-name">
                                             <h6 class="">{{fisrtUserHasChat.hovaTen}}</h6>
                                             <span>{{fisrtUserHasChat.messeger}} - {{fisrtUserHasChat.date | date:'medium'}}</span>
-                                        </div>
-                                        <div class="more">
-                                            <div class="more-post-optns"><i class="ti-more-alt"></i>
-                                                <ul>
-                                                    <li><i class="fa fa-bell-slash-o"></i>Mute</li>
-                                                    <li><i class="ti-trash"></i>Delete</li>
-                                                    <li><i class="fa fa-folder-open-o"></i>Archive</li>
-                                                    <li><i class="fa fa-ban"></i>Block</li>
-                                                    <li><i class="fa fa-eye-slash"></i>Ignore Message</li>
-                                                    <li><i class="fa fa-envelope"></i>Mark Unread</li>
-                                                </ul>
-                                            </div>
                                         </div>
                                     </a>
                                 </li>
@@ -297,26 +245,13 @@
                                             <h6 class="unread">{{data.hovaTen}}</h6>
                                             <span>{{data.messeger}} - {{data.date | date:'medium'}}</span>
                                         </div>
-                                        <div class="more">
-                                            <div class="more-post-optns"><i class="ti-more-alt"></i>
-                                                <ul>
-                                                    <li><i class="fa fa-bell-slash-o"></i>Mute</li>
-                                                    <li><i class="ti-trash"></i>Delete</li>
-                                                    <li><i class="fa fa-folder-open-o"></i>Archive</li>
-                                                    <li><i class="fa fa-ban"></i>Block</li>
-                                                    <li><i class="fa fa-eye-slash"></i>Ignore Message</li>
-                                                    <li><i class="fa fa-envelope"></i>Mark Unread</li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
                                     </a>
 
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="tab-content messenger">
+                    <div class="tab-content messenger ">
                         <div class="tab-pane active fade show " id="link{{fisrtUserHasChat.click}}" >
                             <div class="row merged">
                                 <div class="col-lg-12">
@@ -327,23 +262,23 @@
                                             </figure>
                                             <div>
                                                 <h6 class="unread">{{fisrtUserHasChat.hovaTen}}</h6>
-                                                <span>Online</span>
+                                                <span>Hoạt động</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12">
+                                <div class="col-lg-12 col-md-12 ex2">
                                     <div class="mesge-area" [hidden]="!sender">
                                         <ul class="conversations" *ngFor="let msg of messageDatas"> 
                                             <li class="me" *ngIf="msg.userId == receiverId">
-                                                <figure><img class="img1" [src]="userSender.userImage" alt=""></figure>
+                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userSender.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p> {{msg.message}} </p>
                                                     <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
                                                 </div>
                                             </li>
                                             <li class="you" *ngIf="msg.userId == senderId">
-                                                <figure><img class="img1" [src]="userNow.userImage" alt=""></figure>
+                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userNow.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p>
                                                         {{msg.message}}   
@@ -357,14 +292,14 @@
                                     <div class="mesge-area" [hidden]="!receiver">
                                         <ul class="conversations" *ngFor="let msg of messageDatas"> 
                                             <li class="me" *ngIf="msg.userId == senderId">
-                                                <figure><img class="img1" [src]="userSender.userImage" alt=""></figure>
+                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userSender.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p> {{msg.message}} </p>
                                                     <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
                                                 </div>
                                             </li>
                                             <li class="you" *ngIf="msg.userId == receiverId">
-                                                <figure><img class="img1" [src]="userNow.userImage" alt=""></figure>
+                                                <figure><img style="width: 55px;height: 25px;"style="width: 55px;height: 25px;" class="img1" [src]="userNow.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p>
                                                         {{msg.message}}   
@@ -379,45 +314,6 @@
                                             <div class="text-area">
                                                 <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="write your message here..">
                                                 <button type="submit" style="background-color: white;border: none;"><i class="fa fa-paper-plane-o" (click)="sendMessage()"></i></button>
-                                            </div>
-                                            <div class="emojies">
-                                                <i><img class="img1" src="assets/forum/images1/smiles/happy-3.png" alt=""></i>
-                                                <ul class="emojies-list">
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/unhappy.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/tongue-out-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/suspicious.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/smiling.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/wink.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/bored.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/angry-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/angry.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/bored-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/bored-2.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/confused-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/confused.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/crying-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/crying.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/embarrassed.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/emoticons.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/happy-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/happy-2.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/happy-3.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/happy-4.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/ill.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/in-love.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/kissing.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/mad.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/nerd.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/ninja.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/quiet.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/sad.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/secret.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/smile.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/surprised-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/tongue-out.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/unhappy.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/suspicious.png" alt=""></a></li>
-                                                </ul>
                                             </div>
                                             <div class="attach-file">
                                                 <label class="fileContainer">
@@ -445,18 +341,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12">
+                                <div class="col-lg-12 col-md-12 ex2">
                                     <div class="mesge-area" [hidden]="!sender">
                                         <ul class="conversations" *ngFor="let msg of messageDatas"> 
                                             <li class="me" *ngIf="msg.userId == receiverId">
-                                                <figure><img class="img1" [src]="userSender.userImage" alt=""></figure>
+                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userSender.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p> {{msg.message}} </p>
                                                     <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
                                                 </div>
                                             </li>
                                             <li class="you" *ngIf="msg.userId == senderId">
-                                                <figure><img class="img1" [src]="userNow.userImage" alt=""></figure>
+                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userNow.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p>
                                                         {{msg.message}}   
@@ -469,14 +365,14 @@
                                     <div class="mesge-area" [hidden]="!receiver">
                                         <ul class="conversations" *ngFor="let msg of messageDatas"> 
                                             <li class="me" *ngIf="msg.userId == senderId">
-                                                <figure><img class="img1" [src]="userSender.userImage" alt=""></figure>
+                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userSender.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p> {{msg.message}} </p>
                                                     <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
                                                 </div>
                                             </li>
                                             <li class="you" *ngIf="msg.userId == receiverId">
-                                                <figure><img class="img1" [src]="userNow.userImage" alt=""></figure>
+                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userNow.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p>
                                                         {{msg.message}}   
@@ -491,45 +387,7 @@
                                                 <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="write your message here..">
                                                 <button type="submit" style="background-color: white;border: none;"><i class="fa fa-paper-plane-o" (click)="sendMessage()"></i></button>
                                             </div>
-                                            <div class="emojies">
-                                                <i><img class="img1" src="assets/forum/images1/smiles/happy-3.png" alt=""></i>
-                                                <ul class="emojies-list">
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/unhappy.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/tongue-out-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/suspicious.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/smiling.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/wink.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/bored.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/angry-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/angry.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/bored-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/bored-2.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/confused-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/confused.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/crying-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/crying.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/embarrassed.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/emoticons.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/happy-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/happy-2.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/happy-3.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/happy-4.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/ill.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/in-love.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/kissing.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/mad.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/nerd.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/ninja.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/quiet.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/sad.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/secret.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/smile.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/surprised-1.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/tongue-out.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/unhappy.png" alt=""></a></li>
-                                                    <li><a href="#" title=""><img class="img1" src="assets/forum/images1/smiles/suspicious.png" alt=""></a></li>
-                                                </ul>
-                                            </div>
+                                            
                                             <div class="attach-file">
                                                 <label class="fileContainer">
                                                     <i class="ti-clip"></i>

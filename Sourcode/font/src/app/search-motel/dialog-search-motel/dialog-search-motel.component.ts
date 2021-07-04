@@ -47,7 +47,6 @@ export class DialogSearchMotelComponent implements OnInit {
     if(localStorage.getItem(StorageService.AreaSearchStorage) != undefined){
       var AREA = await this.areaSearchService.getAreaSearch() as AreaSearch[];
       var index = AREA.findIndex(a => Number(a.id) === Number(localStorage.getItem(StorageService.AreaSearchStorage)));
-      console.log(index)
       if(AREA[index].id == "1"){
         var data = AREA[index].numberOne;
         this.areaId = "";
@@ -88,9 +87,11 @@ export class DialogSearchMotelComponent implements OnInit {
 
   public onTickArea(message: string): void { 
     var index = this.areas.findIndex(a => a.id === message);
-    if(message == "1"){
+
+    if(Number(message) == 1){
       this.area = "";
       this.tickArea = false;
+      this.areaId = "";
     }
     else{
       if(this.areas[index].id == "1"){
@@ -123,13 +124,16 @@ export class DialogSearchMotelComponent implements OnInit {
   public onNoClick(){
     if(this.direct == ""){
       var direct = " ";
+      localStorage.removeItem(StorageService.DirectSearchStorage);
     }
     else{
       direct = this.direct;
       localStorage.setItem(StorageService.DirectSearchStorage, direct);
     }
+    console.log(this.areaId)
     if(this.areaId == ""){
       var area = " ";
+      localStorage.removeItem(StorageService.AreaSearchStorage);
     }
     else{
       area = this.areaId;

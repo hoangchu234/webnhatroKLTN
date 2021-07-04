@@ -3,6 +3,6 @@ import { Province } from './Province';
 export class District {
     id: string;
     name: string;
-    provinceid: string;
+    provinceId: string;
     province: Province;
 }

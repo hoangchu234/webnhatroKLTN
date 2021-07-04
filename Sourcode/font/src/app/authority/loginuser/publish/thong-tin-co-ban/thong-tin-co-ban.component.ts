@@ -28,22 +28,23 @@ import { ToastService } from 'src/app/services/toast.service';
 export class ThongTinCoBanComponent implements OnInit {
 
   typeMotel: string;
-  addressMotel: string;
+  addressMotel: string = "";
+  addressNumber: string = ""
 
   cities: City [] = [];
-  city: City;
+  city: City = {id:"", name:""};
 
   provinces : Province [] = [];
-  province: Province;
+  province: Province = {id:"", name:"",cityid:"", city:null};
 
   districts :District [] = [];
-  district:District;
+  district:District= {id:"", name:"",provinceId:"", province:null};
 
   streets: Street [] = [];
-  street:Street;
+  street:Street= {id:"", name:"",provinceId:"", province:null};
 
   newTypes: Array<NewType>= [];
-  newType: NewType;
+  newType: NewType = {id:"", name:"", details:null};
   
   phoneMotel;
 
@@ -74,11 +75,16 @@ export class ThongTinCoBanComponent implements OnInit {
     this.typeMotel = "Thuê";
 
     if(this.motelprevous){
-      this.privous();
+      await this.privous();
     }
     else{
-      this.getCities();
+      await this.getCities();
+      this.changeAddress(this.addressNumber)
     }
+  }
+
+  changeAddress(x){
+    this.addressMotel = x + " " + this.street.name + " " + this.district.name + " " + this.province.name + " " + this.city.name;
   }
 
   async privous(){
@@ -164,21 +170,23 @@ export class ThongTinCoBanComponent implements OnInit {
     this.newType = typeFind;
   }
 
-  public onChangeCity(event)
+  public async onChangeCity(event)
   {
     let value = event.target.value;
     var cityFind = this.cities.find(m => m.id == value);
     this.city = cityFind;
-    this.getProvinceById(cityFind.id);
+    await this.getProvinceById(cityFind.id);
+    this.changeAddress(this.addressNumber);
   }
 
-  public onChangeProvince(event)
+  public async onChangeProvince(event)
   {
     let value = event.target.value;
     var provinceFind = this.provinces.find(m => m.id == value);
     this.province = provinceFind;
-    this.getStreetById(provinceFind.id);
-    this.getDistricteById(provinceFind.id);
+    await this.getStreetById(provinceFind.id);
+    await this.getDistricteById(provinceFind.id);
+    this.changeAddress(this.addressNumber);
   }
 
   public onChangeDistrict(event){
@@ -186,6 +194,7 @@ export class ThongTinCoBanComponent implements OnInit {
     if(value){    
       var districtFind = this.districts.find(m => m.id == value);
       this.district = districtFind;
+      this.changeAddress(this.addressNumber);
     }
     else{
 
@@ -196,7 +205,12 @@ export class ThongTinCoBanComponent implements OnInit {
     let value = event.target.value;
     var streetFind = this.streets.find(m => m.id == value);
     this.street = streetFind;
+    this.changeAddress(this.addressNumber);
   }
+
+  saverange(newValue) {
+    this.changeAddress(newValue);
+  } 
 
   public async getStreetById(ID){
     var streetNew : Street [] = [];
@@ -223,8 +237,8 @@ export class ThongTinCoBanComponent implements OnInit {
         this.provinces.push(province);
       }
       this.province = list[0]
-      this.getDistricteById(list[0].id)
-      this.getStreetById(list[0].id)
+      await this.getDistricteById(list[0].id)
+      await this.getStreetById(list[0].id)
   }
 
   public async getDistricteById(ID){
@@ -247,47 +261,49 @@ export class ThongTinCoBanComponent implements OnInit {
       this.cities.push(result[i]);
     }
     this.city = result[1]
-    this.getProvinceById(result[1].id)
+    await this.getProvinceById(result[1].id)
   }
 
   public async step2(){
     let motel = new Motel(); 
-    if(this.prevous == false){
-      await this.getViTri(this.addressMotel);
-    }
 
-    if(this.lat == "" || this.long == ""){
-      this.toast.toastInfo('Không tìm thấy địa chỉ này bạn vui lòng nhập lại');
-    }
-    else{
-      motel.latitude = this.lat;
-      motel.longitude = this.long;
+    if( this.typeMotel && this.city.id && this.province.id && this.addressMotel && this.phoneMotel){
+
+      if(this.prevous == false){
+        await this.getViTri(this.addressMotel);
+      }
+
+      motel.typemotel = this.typeMotel;
+      motel.cityId = this.city.id;
+      motel.provinceId = this.province.id;
+      motel.districtId = this.district.id;
       
-      if( this.typeMotel && this.city.id && this.province.id && this.addressMotel && this.phoneMotel){
-        motel.typemotel = this.typeMotel;
-        motel.cityId = this.city.id;
-        motel.provinceId = this.province.id;
-        motel.districtId = this.district.id;
-        
-        if(this.street == undefined){
-          motel.streetId = "0";
-        }
-        else{
-          motel.streetId = this.street.id;
-        }
-        
-        motel.address = this.addressMotel;
-        motel.phone = this.phoneMotel;
+      if(this.street == undefined){
+        motel.streetId = "0";
+      }
+      else{
+        motel.streetId = this.street.id;
+      }
+      
+      motel.address = this.addressMotel;
+      motel.phone = this.phoneMotel;
+
+      if(this.lat == "" || this.long == ""){
+        this.toast.toastInfo('Không tìm thấy địa chỉ này bạn vui lòng nhập lại');
+      }
+      else{
+        motel.latitude = this.lat;
+        motel.longitude = this.long;
+
         localStorage.setItem(StorageService.motelStorage, JSON.stringify(motel));
         // this.behaviorSubjectClass.setNewTypes(this.newType);
         localStorage.setItem(StorageService.TypeMotelStorage, JSON.stringify(this.newType))
         this.router.navigateByUrl('/user/thong-tin-nha-tro');
       }
-      else{
-        this.toast.toastInfo('Xin hãy nhập đủ thông tin');
-      }
     }
-    
+    else{
+      this.toast.toastInfo('Xin hãy nhập đủ thông tin');
+    }
   }
 
 

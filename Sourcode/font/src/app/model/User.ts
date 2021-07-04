@@ -11,6 +11,6 @@ export class User {
     createdDate:Date;
     lastLogOnDate:Date;
     account:Account;
-    accountid:string;
+    accountId:string;
     pubishFree:number;
 }

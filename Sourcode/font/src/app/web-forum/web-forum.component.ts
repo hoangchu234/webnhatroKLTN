@@ -74,7 +74,7 @@ export class WebForumComponent implements OnInit {
         createdDate:null,
         lastLogOnDate:null,
         account:null,
-        accountid:"",
+        accountId:"",
         pubishFree:null
       }
       this.dataUser = user;

@@ -34,8 +34,8 @@ export class ChatsComponent implements OnInit {
 
   message: Messeger = { id: "", message:"", date:null, userId: null, conversationId:null}; 
 
-  userSender: User = {id: null, hovaTen: "", gender: "", doB: null, email:"", facebook:"", userImage:"", createdDate:null, lastLogOnDate:null, account:null, accountid:"", pubishFree:null}
-  userNow: User = {id: null, hovaTen: "", gender: "", doB: null, email:"", facebook:"", userImage:"", createdDate:null, lastLogOnDate:null, account:null, accountid:"", pubishFree:null}
+  userSender: User = {id: null, hovaTen: "", gender: "", doB: null, email:"", facebook:"", userImage:"", createdDate:null, lastLogOnDate:null, account:null, accountId:"", pubishFree:null}
+  userNow: User = {id: null, hovaTen: "", gender: "", doB: null, email:"", facebook:"", userImage:"", createdDate:null, lastLogOnDate:null, account:null, accountId:"", pubishFree:null}
   
   listUserHasChat: ChatUserViewModel[] = [];
   fisrtUserHasChat: ChatUserViewModel = {idSender:"", idReceiver:"", hovaTen:"", image:"",messeger:"", date:null, click:"", active:""}

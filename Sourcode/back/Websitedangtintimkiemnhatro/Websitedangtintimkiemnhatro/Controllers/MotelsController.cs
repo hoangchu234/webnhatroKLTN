@@ -28,7 +28,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [ActionName("GetMotels")]
         public async Task<ActionResult<IEnumerable<Motel>>> GetMotels()
         {
-            return await _context.Motels.Include(e => e.Detail).Include(e => e.User).Include(e => e.Images).Where(a => a.Status == "Tin đang hiển thị").ToListAsync();
+            return await _context.Motels.Include(e => e.Detail).Include(e => e.User).Include(e => e.Images).Where(a => a.Status == "1").ToListAsync();
         }
         [HttpGet]
         [ActionName("GetMotelsAsync")]

@@ -132,6 +132,18 @@ export class MagementPublishMotelComponent implements OnInit {
     }
   }
 
+  displayStatus(number){
+    if(Number(number) == 1){
+      return "Tin đang hiển thị"
+    }
+    else if(Number(number) == 3){
+      return "Tin đã hết hạn"
+    }
+    else {
+      return "Tin đang ẩn"
+    }
+  }
+
   public async getMotels(){
     this.motels = await this.motelService.getmotelbyuser(this.authenticationService.currentAccountValue.user.id) as any;
       this.searchmotels = this.motels

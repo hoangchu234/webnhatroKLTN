@@ -12,5 +12,5 @@ export class Account {
     role:Role;
     user:User;
     employee:Employee;
-    isHD:string;
+    isHD:boolean;
 }

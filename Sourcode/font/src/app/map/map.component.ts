@@ -320,7 +320,7 @@ export class MapComponent implements OnInit {
       var number = 0;
       districtZero.id = number.toString();
       districtZero.name = "Tất cả";
-      districtZero.provinceid = number.toString();
+      districtZero.provinceId = number.toString();
       this.districts.push(districtZero);
 
       for (let i = 0; i < list.length; i++) {        

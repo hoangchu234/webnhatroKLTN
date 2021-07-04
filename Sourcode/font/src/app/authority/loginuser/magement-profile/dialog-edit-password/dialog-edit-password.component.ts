@@ -4,6 +4,7 @@ import { Account } from  '../../../../model/Account';
 import { User } from  '../../../..//model/User';
 import { ToastService } from 'src/app/services/toast.service';
 import { RegisterService } from 'src/app/services/register.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-dialog-edit-password',
@@ -14,7 +15,7 @@ export class DialogEditPasswordComponent implements OnInit {
 
   passwordNew = "";
   password = "";
-  constructor(private toast: ToastService, private registerService: RegisterService,
+  constructor(private userService: UserService,private toast: ToastService, private registerService: RegisterService,
     public dialogRef: MatDialogRef<DialogEditPasswordComponent>,@Inject(MAT_DIALOG_DATA) public data: User) {
   }
 
@@ -22,35 +23,55 @@ export class DialogEditPasswordComponent implements OnInit {
   }
 
   public async onChangePassword(): Promise<void> {
-    var check = this.passwordNew.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*?[#?!@$%^&*-])/);
-   
-    var account: Account = {
-      id:"",
-      username:"", 
-      password:"", 
-      phone:"", 
-      isActive: null,
-      roleId: null,
-      role: null, 
-      user:null, 
-      employee:null, 
-      isHD:""
-    }
-    account.password = this.password;
-    var data = await this.registerService.checkPassword(this.data.accountid,account)
-    if(data == "Không tồn tại password này"){
-      this.toast.toastError('Mật khẩu hoặc mật khẩu xác nhận không đúng');
+    if(this.password == "" || this.passwordNew == ""){
+      this.toast.toastInfo('Vui lòng nhập mật khẩu của bạn');
     }
     else{
-      if(check != null){
-        this.data.account.password = this.passwordNew;
+      var check = this.passwordNew.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*?[#?!@$%^&*-])/);
+   
+      var account: Account = {
+        id:this.data.accountId,
+        username:"", 
+        password:"", 
+        phone:"", 
+        isActive: true,
+        roleId: "1",
+        role: null, 
+        user:null, 
+        employee:null, 
+        isHD:true
+      }
+      account.password = this.password;
+
+      var data = await this.registerService.checkPassword(this.data.accountId,account);
+      if(data == "Không tồn tại password này"){
+        this.toast.toastError('Mật khẩu hoặc mật khẩu xác nhận không đúng');
       }
       else{
-        this.toast.toastInfo('Mật khẩu phải có các ký tự đặc biệt, có các số hay in hoa chữ cái đầu');
+        if(check != null){
+          // this.data.account.password = this.passwordNew;
+          var account = new Account();
+          account.id = this.data.account.id;
+          account.isActive = this.data.account.isActive;
+          account.roleId = this.data.account.roleId;
+          account.username = this.data.account.username;
+          account.phone = this.data.account.phone;
+          //Lưa dat mới
+          
+          account.password = this.passwordNew;
+          this.userService.updateAccount(account).subscribe(update => {
+            if(update){
+              //  alert("Lưu thành công")
+              this.toast.toastSuccess('Lưu thành công');
+            }
+          });
+          this.dialogRef.close();
+        }
+        else{
+          this.toast.toastInfo('Mật khẩu phải có các ký tự đặc biệt, có các số hay in hoa chữ cái đầu');
+        }
       }
-    }
-    
-    
+    } 
   }
 
   
