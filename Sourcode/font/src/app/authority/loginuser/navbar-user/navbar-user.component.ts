@@ -150,9 +150,9 @@ export class NavbarUserComponent implements OnInit {
   }
 
   public onLogout = () => {
+    this.username = '';
     this.authenticationService.logout();
     this.router.navigate(['/home']);
-    this.username = '';
   }  
 
   public onClickDangTin(){

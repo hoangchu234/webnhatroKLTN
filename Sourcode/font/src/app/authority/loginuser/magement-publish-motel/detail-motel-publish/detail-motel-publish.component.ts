@@ -98,6 +98,8 @@ export class DetailMotelPublishComponent implements OnInit {
   checkOutOfDate = false;
 
   address: string = "";
+  addressNumber: string = "";
+
   price = new Float32Array(0);
   areaZone:string = "";
   title:string = "";
@@ -112,12 +114,15 @@ export class DetailMotelPublishComponent implements OnInit {
     const id = this.router.snapshot.paramMap.get("id");
     this.motelById = await this.getDataMotelById(id);
 
-    this.getNewTypes();
-    this.getCities();
-    this.getLiveType();
-    this.getTypePrice();
+    this.addressNumber = this.motelById.addressNumber;
+    await this.getNewTypes();
+    await this.getCities();
+    this.changeAddress(this.addressNumber);
+
+    await this.getLiveType();
+    await this.getTypePrice();
     // this.getDirect();
-    this.getDirectData();
+    await this.getDirectData();
 
     this.address = this.motelById.address;
     this.price = this.motelById.price;
@@ -144,6 +149,14 @@ export class DetailMotelPublishComponent implements OnInit {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.phoneMotel = this.motelById.phone;
   }
+
+  changeAddress(x){
+    this.address = x + " " + this.street.name + " " + this.district.name + " " + this.procince.name + " " + this.city.name;
+  }
+
+  saverange(newValue) {
+    this.changeAddress(newValue);
+  } 
 
   async getDirectData(){
     var data = await this.motelService.getDirect() as Direct[];
@@ -207,20 +220,6 @@ export class DetailMotelPublishComponent implements OnInit {
     }
   }
 
-  // public getDirect(){
-  //   for(let i=0 ;i<this.directs.length; i++){
-  //     if(this.motelById.detail.director == this.directs[i].directName){
-  //       this.directsShow.push(this.directs[i])
-  //       break;
-  //     }
-  //   }
-  //   for(let i=0 ;i<this.directs.length; i++){
-  //     if(this.motelById.detail.director != this.directs[i].directName){
-  //       this.directsShow.push(this.directs[i])
-  //     }
-  //   }
-  // }
-
   public async getLiveType(){
     var result = await this.motelService.getLiveTypes() as LiveType[];
     result.splice(0,1);
@@ -237,142 +236,60 @@ export class DetailMotelPublishComponent implements OnInit {
   }
 
   public async getCities(){
-    const result = await this.cityService.getCitys() as City[];
-    for(let i=1; i< result.length; i++){
-      if(result[i].id == this.motelById.cityId){
-        this.cities.push(result[i]);
-        this.city = result[i];
-        this.getProvinceById(result[i].id)
-        break;
-      }
-    }
+    let result = await this.cityService.getCitys() as City[];
+    result.splice(0,1);
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.cityId));
+    this.city = result[index];
 
-    for(let i=1; i< result.length; i++){
-      if(result[i].id != this.motelById.cityId){
-        this.cities.push(result[i]);
-      }
-    }
+    this.cities = result;
+    this.cities.splice(index,1);
+    this.cities.unshift(this.city);
+    
+    await this.getProvinceById(this.city.id);
   }
 
   public async getProvinceById(ID){
-    const result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
-    for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.motelById.provinceId){
-        this.provinces.push(result[i]);
-        this.procince = result[i];
-        this.getStreetById(result[i].id)
-        this.getDistricteById(result[i].id)
-        break;
-      }
-    }
-    for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.motelById.provinceId){
-        this.provinces.push(result[i]);
-      }
-    }
+    let result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.provinceId));
+    console.log(this.motelById)
+    this.procince = result[index];
 
-
-    /*const list = this.provinceService.getProvincesByCity(Number(ID)).subscribe((data) => {
-      for (let i = 0; i < data.length; i++) {
-        if(data[i].id == this.motelById.provinceId){
-          this.provinces.push(data[i]);
-          this.procince = data[i];
-          this.getStreetById(data[i].id)
-          this.getDistricteById(data[i].id)
-          break;
-        }
-      }
-
-      for (let i = 1; i < data.length; i++) {
-        if(data[i].id != this.motelById.provinceId){
-          this.provinces.push(data[i]);
-        }
-      }
-
-    })*/
+    this.provinces = result;
+    this.provinces.splice(index, 1);
+    this.provinces.unshift(this.procince)
+    
+    await this.getStreetById(this.procince.id)
+    await this.getDistricteById(this.procince.id)
   }
 
   public async getStreetById(ID){
-    const result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
-    for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.motelById.streetId){
-        this.streets.push(result[i]);
-        this.street = result[i];
-        break;
-      }
-    }
-    for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.motelById.streetId){
-        this.streets.push(result[i]);
-      }
-    }
-    if(result.length == 0){
-      this.motelUpdate.streetId = "0"
-    }
-    /*const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
-        for (let i = 0; i < data.length; i++) {
-          if(data[i].id == this.motelById.streetId){
-            this.streets.push(data[i]);
-            this.street = data[i];
-            break;
-          }
-        }
-        for (let i = 1; i < data.length; i++) {
-          if(data[i].id != this.motelById.streetId){
-            this.streets.push(data[i]);
-          }
-        }
-        if(data.length == 0){
-          this.motelUpdate.streetId = "0"
-        }
-      })*/
+    let result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.streetId));
+    this.street = result[index];
+    this.streets = result;
+    this.streets.splice(index , 1);
+    this.streets.unshift(this.street)
+    // if(result.length == 0){
+    //   this.motelUpdate.streetId = "0"
+    // }
   }
 
   public async getDistricteById(ID){
     const result = await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
-    for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.motelById.districtId){
-        this.districts.push(result[i]);
-        this.district = result[i];
-        break;
-      }
-    }
-    for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.motelById.districtId){
-        this.districts.push(result[i]);
-      }
-    }
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.districtId));
+    this.district = result[index];
+    this.districts = result;
+    this.districts.splice(index, 1);
+    this.districts.unshift(this.district);
   }
 
   public getNewTypes = async () => {
-
-    /*this.typeservice.getTypeExcepts().subscribe(gettypes => {
-      for (let i = 0; i < gettypes.length; i++) {
-        if(this.motelById.detail.typeofnewId.toString() == gettypes[i].id){
-          this.newTypes.push(gettypes[i]);
-
-          break;
-        }
-      }
-      for (let i = 0; i < gettypes.length; i++) {
-        if(this.motelById.detail.typeofnewId.toString() != gettypes[i].id){
-          this.newTypes.push(gettypes[i]);
-        }
-      }
-    });*/
     const result = await this.typeservice.getTypeExcepts() as NewType[];
-    for (let i = 0; i < result.length; i++) {
-      if(this.motelById.detail.typeofnewId.toString() == result[i].id){
-        this.newTypes.push(result[i]);
-
-        break;
-      }
-    }
-    for (let i = 0; i < result.length; i++) {
-      if(this.motelById.detail.typeofnewId.toString() != result[i].id){
-        this.newTypes.push(result[i]);
-      }
-    }
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.detail.typeofnewId.toString()));
+    this.newType = result[index];
+    this.newTypes = result;
+    this.newTypes.splice(index, 1)
+    this.newTypes.unshift(this.newType);
   }
 
 
@@ -394,6 +311,8 @@ export class DetailMotelPublishComponent implements OnInit {
     this.provinces = provinceNew;
     this.getProvinceById(id.id);
     this.motelUpdate.cityId = id.id;
+    
+    this.changeAddress(this.addressNumber);
   }
 
   public onChangeProvince(event)
@@ -410,6 +329,8 @@ export class DetailMotelPublishComponent implements OnInit {
     this.getDistricteById(id.id);
     this.getStreetById(id.id);
     this.motelUpdate.provinceId = id.id;
+
+    this.changeAddress(this.addressNumber);
   }
 
   public onChangeDistrict(event)
@@ -417,8 +338,9 @@ export class DetailMotelPublishComponent implements OnInit {
     let value = event.target.value;
     this.district = value;
     var id = this.districts.find(a => a.name == value);
-    console.log(id)
     this.motelUpdate.districtId = id.id;
+
+    this.changeAddress(this.addressNumber);
   }
 
   public onChangeStreet(event)
@@ -426,8 +348,9 @@ export class DetailMotelPublishComponent implements OnInit {
     let value = event.target.value;
     this.street = value;
     var id = this.streets.find(a => a.name == value);
-    console.log(id)
     this.motelUpdate.streetId = id.id;
+
+    this.changeAddress(this.addressNumber);
   }
 
   public onChangePriceType(event)
@@ -447,11 +370,6 @@ export class DetailMotelPublishComponent implements OnInit {
   public async onChangeLiveType(event, liveTypes: LiveType)
   {
     this.liveType = liveTypes.nameType;
-    /*this.motelService.getLiveTypes().subscribe(getlivetype => {
-      var id = getlivetype.find(a => a.nameType == this.liveType)
-      this.motelUpdate.detail.liveTypeId = id.id;
-    })*/ 
-
     const result = await this.motelService.getLiveTypes() as LiveType[];
     var id = result.find(a => a.nameType == this.liveType)
     this.motelUpdate.detail.liveTypeId = id.id;
@@ -564,6 +482,7 @@ export class DetailMotelPublishComponent implements OnInit {
       if(this.address != "")
       {
         this.motelUpdate.address = this.address;
+        this.motelUpdate.addressNumber = this.addressNumber;
       }
       var float32 = new Float32Array(0);
       if(this.price != float32)
@@ -628,6 +547,7 @@ export class DetailMotelPublishComponent implements OnInit {
     if(this.address != "")
     {
       this.motelUpdate.address = this.address;
+      this.motelUpdate.addressNumber = this.addressNumber;
     }
     var float32 = new Float32Array(0);
     if(this.price != float32)

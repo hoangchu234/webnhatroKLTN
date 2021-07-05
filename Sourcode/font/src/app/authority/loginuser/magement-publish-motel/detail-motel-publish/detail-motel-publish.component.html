@@ -67,9 +67,15 @@
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label class="col-sm-3" for="exampleFormControlSelect1">Số nhà</label>
+                  <div class="col-sm-9" style="margin-top: -10px ;">
+                    <input type="email" [(ngModel)]="addressNumber"  name="AddressNumberMotel" ngDefaultControl (ngModelChange)="saverange($event)" class="form-control" id="exampleFormControlInput2">
+                  </div>
+                </div>
+                <div class="form-group row">
                   <label class="col-sm-3" for="exampleFormControlSelect1">Địa chỉ</label>
                   <div class="col-sm-9" style="margin-top: -10px ;">
-                    <input type="email" [(ngModel)]="address"  name="AddressMotel" ngDefaultControl class="form-control" id="exampleFormControlInput2">
+                    <input type="email" [(ngModel)]="address"  name="AddressMotel" ngDefaultControl class="form-control" id="exampleFormControlInput2" readonly>
                   </div>
                 </div>
                 </form>

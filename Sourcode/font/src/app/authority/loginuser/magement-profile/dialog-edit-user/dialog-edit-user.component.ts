@@ -7,6 +7,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-dialog-edit-user',
@@ -20,10 +21,11 @@ export class DialogEditUserComponent implements OnInit {
 
  imageUser: string = "";
  constructor(
-  private toast: ToastService,
-   private userService:UserService,
-   private storage: AngularFireStorage,
-   public dialogRef: MatDialogRef<DialogEditUserComponent>,@Inject(MAT_DIALOG_DATA) public data: User) {
+    private authenticationService: AuthenticationService,
+    private toast: ToastService,
+    private userService:UserService,
+    private storage: AngularFireStorage,
+    public dialogRef: MatDialogRef<DialogEditUserComponent>,@Inject(MAT_DIALOG_DATA) public data: User) {
    }
 
  ngOnInit(): void {
@@ -63,11 +65,6 @@ export class DialogEditUserComponent implements OnInit {
           user.facebook = this.data.facebook;
           user.userImage = url;
           user.accountId = this.data.account.id;
-  
-          this.userService.updateUser(user).subscribe(update => {
-            // alert("Lưu thành công")
-            this.toast.toastSuccess('Lưu thành công');
-          });
         })
       })
     ) .subscribe();

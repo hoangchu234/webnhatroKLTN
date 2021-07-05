@@ -54,6 +54,7 @@ export class DetailMotelPublishMagementComponent implements OnInit {
       status:"",
       verify:null,
       address:"",
+      addressNumber:"",
       description:"",
       phone:"",
       time:"",

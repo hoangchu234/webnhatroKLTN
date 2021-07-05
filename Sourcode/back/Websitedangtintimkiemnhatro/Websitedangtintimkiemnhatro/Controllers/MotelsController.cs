@@ -442,7 +442,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         // GET: api/Motels/GetMotelByOrderAddDistance
         [HttpGet]
         [Route("GetMotelByOrderAddDistance/{city}/{province}/{district}/{street}/{price}/{type}/{distance}/{log}/{lat}")]
-        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelByOrderAddDistance(int city, int province, int district, int street, int price, int type, int distance, string log, string lat)
+        public async Task<ActionResult<Object>> GetMotelByOrderAddDistance(int city, int province, int district, int street, int price, int type, int distance, string log, string lat)
         {
             var models = await _context.Motels
                 .Include(m => m.Detail)
@@ -497,17 +497,23 @@ namespace Websitedangtintimkiemnhatro.Controllers
             {
                 check = number / 1000;
             }
+            else
+            {
+                check = number;
+            }
+
             var data = models.OrderBy(a => Int32.Parse(a.Status)).ToList();
 
             List<Motel> t = new List<Motel>();
             foreach (Motel element in data)
             {
+
                 if (distanceBetween2Points(Double.Parse(lat), Double.Parse(log), Double.Parse(element.Latitude), Double.Parse(element.Longitude)) <= check)
                 {
                     t.Add(element);
                 }
             }
-            //models = models.Where(a => distanceBetween2Points(Double.Parse(lat), Double.Parse(log), Double.Parse(a.Latitude), Double.Parse(a.Longitude)) <= check).ToList();
+
 
             if (t == null)
             {

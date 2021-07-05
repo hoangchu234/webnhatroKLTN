@@ -20,6 +20,7 @@ namespace Websitedangtintimkiemnhatro.Models
         public string Status { get; set; }
         public bool Verify { get; set; }
         public string Address { get; set; }
+        public string AddressNumber { get; set; }
         public string Description { get; set; }
         public string Phone { get; set; }
         public string Typemotel { get; set; } // Mua bán hay thuê

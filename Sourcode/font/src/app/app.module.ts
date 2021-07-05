@@ -5,6 +5,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+
 //Gán service
 import { HttpClientModule } from '@angular/common/http';
 
@@ -60,6 +61,7 @@ import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatRippleModule} from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker'; 
 import { MatCheckboxModule} from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -207,6 +209,7 @@ import { AddEmployeeComponent } from '../app/authority/loginadmin/magement-emplo
     MatInputModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatTooltipModule, 
     MatRippleModule,

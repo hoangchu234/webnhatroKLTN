@@ -76,6 +76,7 @@ export class ThongTinCoBanComponent implements OnInit {
 
     if(this.motelprevous){
       await this.privous();
+      this.changeAddress(this.addressNumber);
     }
     else{
       await this.getCities();
@@ -90,7 +91,7 @@ export class ThongTinCoBanComponent implements OnInit {
   async privous(){
     this.prevous = true;
     this.phoneMotel = this.motelprevous.phone;
-    this.addressMotel = this.motelprevous.address;
+    this.addressNumber = this.motelprevous.address;
 
     this.lat = this.motelprevous.latitude;
     this.long = this.motelprevous.longitude;
@@ -285,7 +286,9 @@ export class ThongTinCoBanComponent implements OnInit {
         motel.streetId = this.street.id;
       }
       
+      motel.addressNumber = this.addressNumber;
       motel.address = this.addressMotel;
+
       motel.phone = this.phoneMotel;
 
       if(this.lat == "" || this.long == ""){

@@ -4,7 +4,7 @@ export class Employee {
     id: number;
     hovaTen: string;
     gender: string;
-    doB: Date;
+    doB: string;
     email: string;
     phone: string;
     country: string;

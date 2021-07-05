@@ -26,7 +26,7 @@ export class ChatsComponent implements OnInit {
 
   private hubConnection: signalR.HubConnection;
 
-  conversation:Conversation;
+  conversation:Conversation = {id:"", userIdOne:"", userIdTwo:"", messegers:null};
   messageDatas: Messeger[] = [];  
   txtMessage: string = '';  
   senderId: number = 0;
@@ -163,6 +163,7 @@ export class ChatsComponent implements OnInit {
       save.receiverId = this.receiverId;
       save.content = this.txtMessage;
       
+     
       this.signalRService.addMesseger(save).subscribe(data => {
         this.txtMessage = "";
       })
@@ -199,15 +200,17 @@ export class ChatsComponent implements OnInit {
       this.sender = true;
       this.receiver = false;
       await this.getDataSend(this.senderId, this.receiverId);
-      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId) as any;
-      this.signalRService.getUpdateClick(Number(this.authenticationService.currentAccountValue.user.id),Number(this.conversation.id));
+      this.conversation = {id:"", userIdOne:"", userIdTwo:"", messegers:null};
+      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId) as Conversation;
+      await this.signalRService.getUpdateClick(Number(this.authenticationService.currentAccountValue.user.id),Number(this.conversation.id));
     }
     else if(check == "Receiver"){
       this.sender = false;
       this.receiver = true;        
       await this.getDataReceive(this.senderId, this.receiverId);
-      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId) as any;
-      this.signalRService.getUpdateClick(Number(this.authenticationService.currentAccountValue.user.id),Number(this.conversation.id));
+      this.conversation = {id:"", userIdOne:"", userIdTwo:"", messegers:null};
+      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId) as Conversation;
+      await this.signalRService.getUpdateClick(Number(this.authenticationService.currentAccountValue.user.id),Number(this.conversation.id));
     }  
 
   }

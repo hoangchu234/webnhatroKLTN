@@ -96,20 +96,7 @@ export class DialogEditPhoneComponent implements OnInit {
             this.comfirm = confirmationResult;
             this.checkRecapt = false;
 
-            var account = new Account();
-            account.id = this.data.account.id;
-            account.isActive = this.data.account.isActive;
-            account.roleId = this.data.account.roleId;
-            account.username = this.data.account.username;
-            //Lưa dat mới
-            account.password = this.data.account.password;
-            account.phone = this.phone;
-
-            this.userService.updateAccount(account).subscribe(update => {
-              console.log(update)
-              this.toast.toastSuccess('Lưu thành công');
-                // alert("Lưu thành công")
-            });
+           
           })
           .catch((err) => {
             this.toast.toastError('Tin nhắn chưa được gửi');
@@ -138,6 +125,21 @@ export class DialogEditPhoneComponent implements OnInit {
         // console.log(verification);
         this.comfirm.confirm(verification).then(async () =>{
           await this.getData();
+
+          var account = new Account();
+          account.id = this.data.account.id;
+          account.isActive = this.data.account.isActive;
+          account.roleId = this.data.account.roleId;
+          account.username = this.data.account.username;
+          //Lưa dat mới
+          account.password = this.data.account.password;
+          account.phone = this.phone;
+
+          this.userService.updateAccount(account).subscribe(update => {
+            console.log(update)
+            this.toast.toastSuccess('Lưu thành công');
+              // alert("Lưu thành công")
+          });
           // alert('Success');
         }).catch(err =>{
           // alert(err);

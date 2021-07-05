@@ -85,57 +85,57 @@ namespace Websitedangtintimkiemnhatro.Controllers
         public async Task<ActionResult<Conversation>> PostMesseger(CreateMessageRequest request)
         {
             var id = 0;
-            var consevation = _context.Conversations.Where(a => a.UserIdOne == request.SenderId && a.UserIdTwo == request.ReceiverId).FirstOrDefault();
+            var consevation1 = _context.Conversations.Where(a => a.UserIdOne == request.SenderId && a.UserIdTwo == request.ReceiverId).FirstOrDefault();
             var consevation2 = _context.Conversations.Where(a => a.UserIdOne == request.ReceiverId && a.UserIdTwo == request.SenderId).FirstOrDefault();
 
-            if (consevation == null)
+            if (consevation1 == null)
             {
                 if(consevation2 == null)
                 {
-                    Conversation conversation = new Conversation();
-                    conversation.UserIdOne = request.SenderId;
-                    conversation.UserIdTwo = request.ReceiverId;
-                    _context.Conversations.Add(conversation);
+                    Conversation conversationnew = new Conversation();
+                    conversationnew.UserIdOne = request.SenderId;
+                    conversationnew.UserIdTwo = request.ReceiverId;
+                    _context.Conversations.Add(conversationnew);
                     await _context.SaveChangesAsync();
 
-                    id = conversation.Id;
+                    id = conversationnew.Id;
                 }
                 else
                 {
-                    id = consevation.Id;
+                    id = consevation2.Id;
                 }
             }
             else
             {
-                id = consevation.Id;
+                id = consevation1.Id;
             }
 
-            var notification = _context.Notifications.Where(a => a.UserSender == request.SenderId && a.UserReceiver == request.ReceiverId).FirstOrDefault();
+            var notification1 = _context.Notifications.Where(a => a.UserSender == request.SenderId && a.UserReceiver == request.ReceiverId).FirstOrDefault();
             var notification2 = _context.Notifications.Where(a => a.UserSender == request.ReceiverId && a.UserReceiver == request.SenderId).FirstOrDefault();
 
-            if (notification == null)
+            if (notification1 == null)
             {
                 if(notification2 == null)
                 {
-                    Notification n = new Notification();
-                    n.UserReceiver = request.ReceiverId;
-                    n.SeeReceiver = false;
+                    Notification notificationNew = new Notification();
+                    notificationNew.UserReceiver = request.ReceiverId;
+                    notificationNew.SeeReceiver = false;
 
-                    n.UserSender = request.SenderId;
-                    n.SeeSender = true;
-                    n.ConversationId = id;
-                    _context.Notifications.Add(n);
+                    notificationNew.UserSender = request.SenderId;
+                    notificationNew.SeeSender = true;
+                    notificationNew.ConversationId = id;
+                    _context.Notifications.Add(notificationNew);
                 }
                 else
                 {
-                    notification.SeeSender = false;
-                    _context.Entry(notification).State = EntityState.Modified;
+                    notification2.SeeSender = false;
+                    _context.Entry(notification2).State = EntityState.Modified;
                 }
             }
             else
             {
-                notification.SeeReceiver = false;
-                _context.Entry(notification).State = EntityState.Modified;
+                notification1.SeeReceiver = false;
+                _context.Entry(notification1).State = EntityState.Modified;
             }
 
             Messeger messeger = new Messeger();

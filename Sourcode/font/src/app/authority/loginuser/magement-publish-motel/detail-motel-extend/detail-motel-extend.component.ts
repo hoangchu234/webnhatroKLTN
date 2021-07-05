@@ -46,7 +46,7 @@ export class DetailMotelExtendComponent implements OnInit {
 
   motel: Motel[] = [];
   newTypes: NewType [] = [];
-  newType;
+  newType: NewType = {id:"", name:"", details:null};
 
   //currentAccount:Account;
   cities: City[] = [];
@@ -70,16 +70,6 @@ export class DetailMotelExtendComponent implements OnInit {
   typePriceShowMotels: Data[] = [];
   typePriceMotel;
 
-  // directs:Array<Data> = [
-  //   {id: 0, text:'Đông'},
-  //   {id: 1, text:'Tây'},
-  //   {id: 2, text:'Nam'},
-  //   {id: 3, text:'Bắc'},
-  //   {id: 4, text:'Đông Bắc'},
-  //   {id: 5, text:'Đông Nam'},
-  //   {id: 6, text:'Tây Bắc'},
-  //   {id: 7, text:'Tây Nam'},
-  // ];
   directs: Array<Direct> = [];
   
   directsShow: Direct[] = [];
@@ -108,6 +98,8 @@ export class DetailMotelExtendComponent implements OnInit {
   checkOutOfDate = false;
 
   address: string = "";
+  addressNumber: string = "";
+
   price = new Float32Array(0);
   areaZone:string = "";
   title:string = "";
@@ -117,64 +109,9 @@ export class DetailMotelExtendComponent implements OnInit {
   news:Array<New> = [];
   times:Array<Time> = [];
   
-  // public news:Array<Data> = [
-  //   {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
-  //   {id: 1, text:'Tin VIP 3'}, // 
-  //   {id: 2, text:'Tin VIP 2'},
-  //   {id: 3, text:'Tin VIP 1'},
-  //   {id: 4, text:'Tin thường'},
-  // ];
-  
-  // public times:Array<Data> = [
-  //   {id: 0, text:'Đăng theo ngày'}, 
-  //   {id: 1, text:'Đăng theo tuần'}, 
-  //   {id: 2, text:'Đăng theo tháng'},
-  // ];
 
   time: string;
 
-  // public months:Array<Data> = [
-  //   {id: 0, text:'1 Tháng'}, 
-  //   {id: 1, text:'2 Tháng'}, 
-  //   {id: 2, text:'3 Tháng'}, 
-  //   {id: 3, text:'4 Tháng'}, 
-  //   {id: 4, text:'5 Tháng'}, 
-  //   {id: 5, text:'6 Tháng'}, 
-  //   {id: 6, text:'7 Tháng'}, 
-  //   {id: 7, text:'8 Tháng'}, 
-  //   {id: 8, text:'9 Tháng'}, 
-  //   {id: 9, text:'10 Tháng'}, 
-  //   {id: 10, text:'11 Tháng'}, 
-  //   {id: 11, text:'12 Tháng'}, 
-  // ];
-
-  // public days:Array<Data> = [
-  //   {id: 0, text:'6 Ngày'}, 
-  //   {id: 1, text:'7 Ngày'}, 
-  //   {id: 2, text:'8 Ngày'}, 
-  //   {id: 3, text:'9 Ngày'}, 
-  //   {id: 4, text:'10 Ngày'}, 
-  //   {id: 5, text:'11 Ngày'}, 
-  //   {id: 6, text:'12 Ngày'}, 
-  //   {id: 7, text:'13 Ngày'}, 
-  //   {id: 8, text:'14 Ngày'}, 
-  //   {id: 9, text:'15 Ngày'}, 
-  //   {id: 10, text:'16 Ngày'}, 
-  //   {id: 11, text:'17 Ngày'}, 
-  // ];
-
-  // public weeks:Array<Data> = [
-  //   {id: 0, text:'1 Tuần'}, 
-  //   {id: 1, text:'2 Tuần'}, 
-  //   {id: 2, text:'3 Tuần'}, 
-  //   {id: 3, text:'4 Tuần'}, 
-  //   {id: 4, text:'5 Tuần'}, 
-  //   {id: 5, text:'6 Tuần'}, 
-  //   {id: 6, text:'7 Tuần'}, 
-  //   {id: 7, text:'8 Tuần'}, 
-  //   {id: 8, text:'9 Tuần'}, 
-  //   {id: 9, text:'10 Tuần'}, 
-  // ];
 
   setValueName: string = "Số ngày";
   setArrayChoices: Array<ChangeTime> = [];
@@ -195,11 +132,14 @@ export class DetailMotelExtendComponent implements OnInit {
     const id = this.router.snapshot.paramMap.get("id");
     this.motelById = await this.getDataMotelById(id);
 
-    this.getNewTypes();
-    this.getCities();
-    this.getLiveType();
-    this.getTypePrice();
-    this.getDirectData();
+    this.addressNumber = this.motelById.addressNumber;
+    await this.getNewTypes();
+    await this.getCities();
+    this.changeAddress(this.addressNumber);
+    
+    await this.getLiveType();
+    await this.getTypePrice();
+    await this.getDirectData();
 
     this.address = this.motelById.address;
     this.price = this.motelById.price;
@@ -239,6 +179,13 @@ export class DetailMotelExtendComponent implements OnInit {
     this.tinhTien();
   }
 
+  changeAddress(x){
+    this.address = x + " " + this.street.name + " " + this.district.name + " " + this.procince.name + " " + this.city.name;
+  }
+
+  saverange(newValue) {
+    this.changeAddress(newValue);
+  } 
   
   async getDataNew(){
     this.news = await this.motelService.getNew() as New[];
@@ -319,19 +266,7 @@ export class DetailMotelExtendComponent implements OnInit {
     }
   }
 
-  // public getDirect(){
-  //   for(let i=0 ;i<this.directs.length; i++){
-  //     if(this.motelById.detail.director == this.directs[i].directName){
-  //       this.directsShow.push(this.directs[i])
-  //       break;
-  //     }
-  //   }
-  //   for(let i=0 ;i<this.directs.length; i++){
-  //     if(this.motelById.detail.director != this.directs[i].directName){
-  //       this.directsShow.push(this.directs[i])
-  //     }
-  //   }
-  // }
+
 
   public async getLiveType(){
     var result = await this.motelService.getLiveTypes() as LiveType[];
@@ -349,144 +284,62 @@ export class DetailMotelExtendComponent implements OnInit {
   }
 
   public async getCities(){
-    const result = await this.cityService.getCitys() as City[];
-    for(let i=1; i< result.length; i++){
-      if(result[i].id == this.motelById.cityId){
-        this.cities.push(result[i]);
-        this.city = result[i];
-        this.getProvinceById(result[i].id)
-        break;
-      }
-    }
+    let result = await this.cityService.getCitys() as City[];
+    result.splice(0,1);
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.cityId));
+    this.city = result[index];
 
-    for(let i=1; i< result.length; i++){
-      if(result[i].id != this.motelById.cityId){
-        this.cities.push(result[i]);
-      }
-    }
+    this.cities = result;
+    this.cities.splice(index,1);
+    this.cities.unshift(this.city);
+    
+    await this.getProvinceById(this.city.id);
+    
   }
 
   public async getProvinceById(ID){
-    const result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
-    for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.motelById.provinceId){
-        this.provinces.push(result[i]);
-        this.procince = result[i];
-        this.getStreetById(result[i].id)
-        this.getDistricteById(result[i].id)
-        break;
-      }
-    }
-    for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.motelById.provinceId){
-        this.provinces.push(result[i]);
-      }
-    }
+    let result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.provinceId));
 
+    this.procince = result[index];
 
-    /*const list = this.provinceService.getProvincesByCity(Number(ID)).subscribe((data) => {
-      for (let i = 0; i < data.length; i++) {
-        if(data[i].id == this.motelById.provinceId){
-          this.provinces.push(data[i]);
-          this.procince = data[i];
-          this.getStreetById(data[i].id)
-          this.getDistricteById(data[i].id)
-          break;
-        }
-      }
-
-      for (let i = 1; i < data.length; i++) {
-        if(data[i].id != this.motelById.provinceId){
-          this.provinces.push(data[i]);
-        }
-      }
-
-    })*/
+    this.provinces = result;
+    this.provinces.splice(index, 1);
+    this.provinces.unshift(this.procince)
+    
+    await this.getStreetById(this.procince.id)
+    await this.getDistricteById(this.procince.id)
   }
 
   public async getStreetById(ID){
-    const result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
-    for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.motelById.streetId){
-        this.streets.push(result[i]);
-        this.street = result[i];
-        break;
-      }
-    }
-    for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.motelById.streetId){
-        this.streets.push(result[i]);
-      }
-    }
-    if(result.length == 0){
-      this.motelUpdate.streetId = "0"
-    }
-      /*const list = this.streetService.getStreetByProvince(Number(ID)).subscribe((data) => {
-        for (let i = 0; i < data.length; i++) {
-          if(data[i].id == this.motelById.streetId){
-            this.streets.push(data[i]);
-            this.street = data[i];
-            break;
-          }
-        }
-        for (let i = 1; i < data.length; i++) {
-          if(data[i].id != this.motelById.streetId){
-            this.streets.push(data[i]);
-          }
-        }
-        if(data.length == 0){
-          this.motelUpdate.streetId = "0"
-        }
-      })*/
+    let result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.streetId));
+    this.street = result[index];
+    this.streets = result;
+    this.streets.splice(index , 1);
+    this.streets.unshift(this.street)
+    
+      
   }
 
-  /*public getDistricteById(ID){
-        const list = this.dictrictService.getDistrictByProvince(Number(ID)).subscribe((data) => {
-          for (let i = 0; i < data.length; i++) {
-            if(data[i].id == this.motelById.districtId){
-              this.districts.push(data[i]);
-              this.district = data[i];
-              break;
-            }
-          }
-          for (let i = 1; i < data.length; i++) {
-            if(data[i].id != this.motelById.districtId){
-              this.districts.push(data[i]);
-            }
-          }
-        
-      })
-  }*/
   public async getDistricteById(ID){
     const result = await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
-    for (let i = 0; i < result.length; i++) {
-      if(result[i].id == this.motelById.districtId){
-        this.districts.push(result[i]);
-        this.district = result[i];
-        break;
-      }
-    }
-    for (let i = 1; i < result.length; i++) {
-      if(result[i].id != this.motelById.districtId){
-        this.districts.push(result[i]);
-      }
-    }
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.districtId));
+    this.district = result[index];
+    this.districts = result;
+    this.districts.splice(index, 1);
+    this.districts.unshift(this.district);
+   
   }
 
   public getNewTypes = async () => {
     const result = await this.typeservice.getTypeExcepts() as NewType[];
-    for (let i = 0; i < result.length; i++) {
-      if(this.motelById.detail.typeofnewId.toString() == result[i].id){
-        this.newTypes.push(result[i]);
+    var index = result.findIndex(a => Number(a.id) === Number(this.motelById.detail.typeofnewId.toString()));
+    this.newType = result[index];
+    this.newTypes = result;
+    this.newTypes.splice(index, 1)
+    this.newTypes.unshift(this.newType);
 
-        break;
-      }
-    }
-    for (let i = 0; i < result.length; i++) {
-      if(this.motelById.detail.typeofnewId.toString() != result[i].id){
-        this.newTypes.push(result[i]);
-      }
-    }
   }
 
 
@@ -499,18 +352,20 @@ export class DetailMotelExtendComponent implements OnInit {
     this.motelUpdate.detail.typeofnewId = Number(id.id);
   }
 
-  public onChangeCity(event)
+  public async onChangeCity(event)
   {
     let value = event.target.value;
     this.city = value;
     var id = this.cities.find(a => a.name == value);
     var provinceNew: Province[] = [];
     this.provinces = provinceNew;
-    this.getProvinceById(id.id);
+    await this.getProvinceById(id.id);
     this.motelUpdate.cityId = id.id;
+
+    this.changeAddress(this.addressNumber);
   }
 
-  public onChangeProvince(event)
+  public async onChangeProvince(event)
   {
     let value = event.target.value;
     this.procince = value;
@@ -521,9 +376,11 @@ export class DetailMotelExtendComponent implements OnInit {
     var streetNew: Street[] = [];
     this.districts = districtNew;
     this.streets = streetNew;
-    this.getDistricteById(id.id);
-    this.getStreetById(id.id);
+    await this.getDistricteById(id.id);
+    await this.getStreetById(id.id);
     this.motelUpdate.provinceId = id.id;
+
+    this.changeAddress(this.addressNumber);
   }
 
   public onChangeDistrict(event)
@@ -531,8 +388,9 @@ export class DetailMotelExtendComponent implements OnInit {
     let value = event.target.value;
     this.district = value;
     var id = this.districts.find(a => a.name == value);
-    console.log(id)
     this.motelUpdate.districtId = id.id;
+
+    this.changeAddress(this.addressNumber);
   }
 
   public onChangeStreet(event)
@@ -540,8 +398,9 @@ export class DetailMotelExtendComponent implements OnInit {
     let value = event.target.value;
     this.street = value;
     var id = this.streets.find(a => a.name == value);
-    console.log(id)
     this.motelUpdate.streetId = id.id;
+
+    this.changeAddress(this.addressNumber);
   }
 
   public onChangePriceType(event)
@@ -724,6 +583,7 @@ export class DetailMotelExtendComponent implements OnInit {
       if(this.address != "")
       {
         this.motelUpdate.address = this.address;
+        this.motelUpdate.addressNumber = this.addressNumber;
       }
       var float32 = new Float32Array(0);
       if(this.price != float32)
@@ -790,6 +650,7 @@ export class DetailMotelExtendComponent implements OnInit {
     if(this.address != "")
     {
       this.motelUpdate.address = this.address;
+      this.motelUpdate.addressNumber = this.addressNumber;
     }
     var float32 = new Float32Array(0);
     if(this.price != float32)

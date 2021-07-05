@@ -18,7 +18,7 @@
               <div class="col-md-7 " style="font-size:15px"  >
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size: 16px;">Tên: {{user.hovaTen}} </span>
                 <div style="margin-top:15px;" *ngIf="isUser"><span style="color:black;">Tên đăng nhập: {{user.account.username}}</span></div>
-                <div style="margin-top:15px;" >Ngày tham gia: {{user.createdDate}}</div>
+                <div style="margin-top:15px;" >Ngày tham gia: {{user.createdDate | date}}</div>
                 <div style="margin-top:15px;" >Email: {{user.email}}</div>
                 <div style="margin-top:15px;" >Facebook: {{user.facebook}}</div>
                 

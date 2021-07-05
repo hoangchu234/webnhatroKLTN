@@ -56,7 +56,11 @@ export class HomeComponent implements OnInit {
   options: List[] = [];
   filteredOptions: Observable<List[]>;
 
-  constructor( private toast: ToastService,private priceSearchServer:PriceSearchService,
+  listName: String[] = [];
+
+  constructor(
+
+    private toast: ToastService,private priceSearchServer:PriceSearchService,
     private http: HttpClient,private router: Router,private motelService: MotelService,
     private cityService: CitiesService, private provinceService: ProvincesService, 
     private typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,
@@ -83,14 +87,6 @@ export class HomeComponent implements OnInit {
     
   }
 
-  /*sendEmail() {
-    let email = new Email();
-    email.name = this.name;
-    email.subject = this.subject;
-    email.text = this.text;
-    console.log(email);
-    this.motelService.postEmail(email).subscribe(email => this.emailsend == email);
-  }*/
   async getCountTypes(){
     const result = await this.typeservice.getCountTypes() as any;
     for(let i = 1;i< result.length; i++){
@@ -301,4 +297,6 @@ export class HomeComponent implements OnInit {
   onKeyUp(x) { // appending the updated value to the variable
     this.check = true;
   }
+
+ 
 }

@@ -151,18 +151,19 @@ export class MagementProfileComponent implements OnInit {
    });
 
    dialogRef.afterClosed().subscribe(async (result: User) => {
-     if (result)
-     {
-       var id = Number(this.authenticationService.currentAccountValue.user.id);
-       this.user = await this.userService.getUserFromId(id) as User;
-       if(this.user.userImage != null){
+    var id = Number(this.authenticationService.currentAccountValue.user.id);
+    this.user = await this.userService.getUserFromId(id) as User;
+    if(this.image != this.user.userImage){
+      if(this.user.userImage != null){
         this.image = this.user.userImage;
        }
        else{
         this.image = "../../../assets/images/blog_3.jpg";
        }
-     }
-     window.location.reload();
+       window.location.reload();
+    }
+    
+   
    });
  }
 

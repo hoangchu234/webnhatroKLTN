@@ -18,6 +18,7 @@ export class Motel {
     status:string;
     verify:boolean;
     address:string;
+    addressNumber:string;
     description:string;
     phone:string;
     time:string;
