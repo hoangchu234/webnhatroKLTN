@@ -400,16 +400,16 @@ export class MapComponent implements OnInit {
 
   }
 
-  public onChoiceDistance(distance:Distance) {
+  public async onChoiceDistance(distance:Distance) {
     if(distance.id == 0){
       this.distance = "Tất cả";
       this.distanceId = "0";
-      this.getMotelByURL();
+      await this.getMotelByURL();
     }
     else{
       this.distance = distance.number + " " + distance.name;
       this.distanceId = distance.id.toString();
-      this.getDataMotelDistance();
+      await this.getDataMotelDistance();
     }
 
 
@@ -442,10 +442,15 @@ export class MapComponent implements OnInit {
       var linkData = await this.motelService.getLocation(searchtext) as any;
       if(linkData["data"]["features"].length !=0){
         this.name = linkData["data"]["features"][0]["properties"]["name"].toString();
-        this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
-        this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
-        this.buildMap( this.lat , this.long, this.name);
-        this.getMotelByURL();
+        this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
+        this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
+
+        console.log(this.lat);
+        console.log(this.long);
+        this.youLat = this.lat.toString();
+        this.youLong = this.long.toString();
+        this.buildMap( this.long , this.lat, this.name);
+        await this.getMotelByURL();
       }
     }
 
@@ -617,6 +622,7 @@ export class MapComponent implements OnInit {
   }
 
   async getDataMotelDistance(){
+
     if(this.youLong != "" && this.youLat != ""){
 
       var city = this.router.snapshot.paramMap.get("city");
@@ -635,10 +641,7 @@ export class MapComponent implements OnInit {
   
       const types = await this.getTypes();
       const cities = await this.getDataCities();
-      // const provinces = await this.provinceService.getProvinces() as Province[];
-      // const districts = await this.dictrictService.getDistricts() as District[];
-      // const streets = await this.streetService.getStreets() as Street[];
-  
+
       var indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type);
       idType = indexType + 1;
   

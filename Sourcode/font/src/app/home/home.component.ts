@@ -274,14 +274,17 @@ export class HomeComponent implements OnInit {
         map(name => name ? this._filter(name) : this.options.slice(0,6))
       );
       
-      this.filteredOptions.subscribe((data)=>{
-        if(data.length != 0){
-          this.searchText = data[0].name;
-        }
-        else{
-          this.searchText = "";
-        }
-      })
+      if(this.check == true){
+        this.filteredOptions.subscribe((data)=>{
+          if(data.length != 0){
+            this.searchText = data[0].name;
+          }
+          else{
+            this.searchText = "";
+          }
+        })
+      }
+      
     }
   }
   
@@ -295,7 +298,13 @@ export class HomeComponent implements OnInit {
   }
 
   onKeyUp(x) { // appending the updated value to the variable
-    this.check = true;
+    if(x.target.value != ""){
+      this.check = true;
+    }
+    else{
+      this.check = false;
+    }
+
   }
 
  

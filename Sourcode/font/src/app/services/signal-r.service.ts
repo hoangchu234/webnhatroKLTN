@@ -56,7 +56,7 @@ export class SignalRService {
   public getConservationSend = async (idSender: number, idReciver: number) => {
     try {
       const url = `${this.urlAPI + "/api/Messegers/GetConservationSend"}/${idSender}/${idReciver}`;
-      return await this.http.get(url).toPromise();
+      return await this.http.get<Conversation>(url).toPromise();
     }
     catch (error) {
       console.log(error);
@@ -66,7 +66,7 @@ export class SignalRService {
   public getConservationReceive = async (idSender: number, idReciver: number) => {
     try {
       const url = `${this.urlAPI + "/api/Messegers/GetConservationReceive"}/${idSender}/${idReciver}`;
-      return await this.http.get(url).toPromise();
+      return await this.http.get<Conversation>(url).toPromise();
     }
     catch (error) {
       console.log(error);

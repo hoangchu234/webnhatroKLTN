@@ -134,26 +134,26 @@ export class ChatsComponent implements OnInit {
 
   async getDataSend(idSender: number, idReciver: number){
     this.conversation = await this.signalRService.getConservationSend(idSender,idReciver) as any;
-    var id = this.router.snapshot.paramMap.get("id");
-    var index = this.conversation.messegers.findIndex(a => a.userId.toString() == id);
-    var message = new Messeger;
-    message = this.conversation.messegers[index];
-    this.conversation.messegers.splice(index,1);
+    // var id = this.router.snapshot.paramMap.get("id");
+    // var index = this.conversation.messegers.findIndex(a => a.userId.toString() == id);
+    // var message = new Messeger;
+    // message = this.conversation.messegers[index];
+    // this.conversation.messegers.splice(index,1);
     
     this.messageDatas = this.conversation.messegers;
-    this.messageDatas.unshift(message);
+    // this.messageDatas.unshift(message);
   }
 
   async getDataReceive(idSender: number, idReciver: number){
     this.conversation  = await this.signalRService.getConservationReceive(idSender,idReciver) as any;
-    var id = this.router.snapshot.paramMap.get("id");
-    var index = this.conversation.messegers.findIndex(a => a.userId.toString() == id);
-    var message = new Messeger;
-    message = this.conversation.messegers[index];
-    this.conversation.messegers.splice(index,1);
+    // var id = this.router.snapshot.paramMap.get("id");
+    // var index = this.conversation.messegers.findIndex(a => a.userId.toString() == id);
+    // var message = new Messeger;
+    // message = this.conversation.messegers[index];
+    // this.conversation.messegers.splice(index,1);
     
     this.messageDatas = this.conversation.messegers;
-    this.messageDatas.unshift(message);
+    // this.messageDatas.unshift(message);
   }
 
   sendMessage(): void {  
@@ -200,18 +200,17 @@ export class ChatsComponent implements OnInit {
       this.sender = true;
       this.receiver = false;
       await this.getDataSend(this.senderId, this.receiverId);
-      this.conversation = {id:"", userIdOne:"", userIdTwo:"", messegers:null};
-      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId) as Conversation;
+      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId);
       await this.signalRService.getUpdateClick(Number(this.authenticationService.currentAccountValue.user.id),Number(this.conversation.id));
     }
     else if(check == "Receiver"){
       this.sender = false;
       this.receiver = true;        
       await this.getDataReceive(this.senderId, this.receiverId);
-      this.conversation = {id:"", userIdOne:"", userIdTwo:"", messegers:null};
-      this.conversation = await this.signalRService.getConservationSend(this.senderId, this.receiverId) as Conversation;
+      this.conversation = await this.signalRService.getConservationReceive(this.senderId, this.receiverId);
       await this.signalRService.getUpdateClick(Number(this.authenticationService.currentAccountValue.user.id),Number(this.conversation.id));
     }  
 
+   
   }
 }

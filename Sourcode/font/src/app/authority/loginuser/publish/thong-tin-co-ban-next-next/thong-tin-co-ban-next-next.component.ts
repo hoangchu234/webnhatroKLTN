@@ -50,10 +50,22 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
    }
 
   async ngOnInit(): Promise<void> {
-    this.nameCity = await this.getNameCity(this.motelprevous.cityId);
-    this.nameProvince = await this.getNameProvince(this.motelprevous.provinceId);
-    this.nameDistrict = await this.getNameCity(this.motelprevous.districtId);
-    this.nameStreet = await this.getNameStreet(this.motelprevous.streetId);
+    // try{
+    //   this.nameProvince = await this.getNameProvince(this.motelprevous.provinceId);
+    //   this.nameDistrict = await this.getNameCity(this.motelprevous.districtId);
+    //   this.nameStreet = await this.getNameStreet(this.motelprevous.streetId);
+    // }
+    // catch{
+    //   this.nameCity = await this.getNameCity(this.motelprevous.cityId);
+    //   this.nameProvince = await this.getNameProvince(this.motelprevous.provinceId);
+    //   this.nameDistrict = await this.getNameCity(this.motelprevous.districtId);
+    //   this.nameStreet = await this.getNameStreet(this.motelprevous.streetId);
+    // }
+    // await this.getNameCity(this.motelprevous.cityId);
+    // await this.getNameProvince(this.motelprevous.provinceId);
+    // await this.getNameCity(this.motelprevous.districtId);
+    // await this.getNameStreet(this.motelprevous.streetId);
+
     this.getLiveType();
     this.numberBath = "0";
     this.numberLiving = "0";
@@ -61,22 +73,23 @@ export class ThongTinCoBanNextNextComponent implements OnInit {
     // this.getlonglat();
   }
 
-  async getNameCity(id){
-    var data = await this.cityService.getCityFromId(id) as City;
-    return data.name;
-  }
-  async getNameProvince(id){
-    var data = await this.provinceService.getProvinceById(id) as Province;
-    return data.name;
-  }
-  async getNameDistrict(id){
-    var data = await this.dictrictService.getDistrictFromId(id) as District;
-    return data.name;
-  }
-  async getNameStreet(id){
-    var data = await this.streetService.getStreetFromId(id) as Street;
-    return data.name;
-  }
+  // async getNameCity(id){
+  //   var data = await this.cityService.getCityFromId(id) as City;
+  //   this.nameCity = data.name;
+  // }
+  // async getNameProvince(id){
+  //   var data = await this.provinceService.getProvinceById(id) as Province;
+  //   console.log(data)
+  //   this.nameProvince = data.name;
+  // }
+  // async getNameDistrict(id){
+  //   var data = await this.dictrictService.getDistrictFromId(id) as District;
+  //   this.nameDistrict = data.name;
+  // }
+  // async getNameStreet(id){
+  //   var data = await this.streetService.getStreetFromId(id) as Street;
+  //   this.nameStreet = data.name;
+  // }
 
   // async getViTri(cityname,provincename,districtname,streetname,addressMotel){
   //   var data = cityname + ", " + provincename + ", " + districtname + ", " + streetname;

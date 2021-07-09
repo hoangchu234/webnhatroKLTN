@@ -219,11 +219,11 @@
         <div class="container-fluid no-padding">
             <div class="row">
                 <div class="col-lg-12"  style="margin-top:80px">
-                    <div class="message-users" style="height: 650px;">
-                        <div class="message-head">
+                    <div class="message-users" style="height: auto;">
+                        <div class="message-head" style="margin-top: 12px;">
                             <h4>Nhắn tin</h4>
                         </div>
-                        <div class="mesg-peple ex2" style="margin-top: 20px;">
+                        <div class="mesg-peple " style="margin-top: 20px;">
                             <ul class="nav nav-tabs nav-tabs--vertical msg-pepl-list " style="overflow: scroll;">
                                 <li class="nav-item unread">
                                     <a class="active" href="#link{{fisrtUserHasChat.click}}" data-toggle="tab" (click)="clickChangeRoute(fisrtUserHasChat.idSender,fisrtUserHasChat.idReceiver)">
@@ -255,7 +255,7 @@
                         <div class="tab-pane active fade show " id="link{{fisrtUserHasChat.click}}" >
                             <div class="row merged">
                                 <div class="col-lg-12">
-                                    <div class="mesg-area-head">
+                                    <div class="mesg-area-head" >
                                         <div class="active-user">
                                             <figure><img class="img1" [src]="fisrtUserHasChat.image" alt="">
                                                 <span class="status f-online"></span>
@@ -267,17 +267,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12 ex2">
-                                    <div class="mesge-area" [hidden]="!sender">
+                                <div class="col-lg-8 col-md-12 ex2">
+                                    <div class="mesge-area" >
                                         <ul class="conversations" *ngFor="let msg of messageDatas"> 
-                                            <li class="me" *ngIf="msg.userId == receiverId">
+                                            <li class="me" *ngIf="msg.userId == senderId">
                                                 <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userSender.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p> {{msg.message}} </p>
                                                     <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
                                                 </div>
                                             </li>
-                                            <li class="you" *ngIf="msg.userId == senderId">
+                                            <li class="you" *ngIf="msg.userId != senderId">
                                                 <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userNow.userImage" alt=""></figure>
                                                 <div class="text-box">
                                                     <p>
@@ -289,37 +289,12 @@
                                         </ul>
                                     </div>
 
-                                    <div class="mesge-area" [hidden]="!receiver">
-                                        <ul class="conversations" *ngFor="let msg of messageDatas"> 
-                                            <li class="me" *ngIf="msg.userId == senderId">
-                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userSender.userImage" alt=""></figure>
-                                                <div class="text-box">
-                                                    <p> {{msg.message}} </p>
-                                                    <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
-                                                </div>
-                                            </li>
-                                            <li class="you" *ngIf="msg.userId == receiverId">
-                                                <figure><img style="width: 55px;height: 25px;"style="width: 55px;height: 25px;" class="img1" [src]="userNow.userImage" alt=""></figure>
-                                                <div class="text-box">
-                                                    <p>
-                                                        {{msg.message}}   
-                                                    </p>
-                                                    <span><i class="ti-check"></i><i class="ti-check"></i> {{msg.date | date:'medium'}}</span>
-                                                </div>
-                                        </ul>
-                                    </div>
-
+                                 
                                     <div class="message-writing-box">
                                         <form method="post">
                                             <div class="text-area">
                                                 <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="write your message here..">
                                                 <button type="submit" style="background-color: white;border: none;"><i class="fa fa-paper-plane-o" (click)="sendMessage()"></i></button>
-                                            </div>
-                                            <div class="attach-file">
-                                                <label class="fileContainer">
-                                                    <i class="ti-clip"></i>
-                                                    <input type="file">
-                                                </label>
                                             </div>
                                         </form>
                                     </div>
@@ -341,28 +316,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12 ex2">
-                                    <div class="mesge-area" [hidden]="!sender">
-                                        <ul class="conversations" *ngFor="let msg of messageDatas"> 
-                                            <li class="me" *ngIf="msg.userId == receiverId">
-                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userSender.userImage" alt=""></figure>
-                                                <div class="text-box">
-                                                    <p> {{msg.message}} </p>
-                                                    <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
-                                                </div>
-                                            </li>
-                                            <li class="you" *ngIf="msg.userId == senderId">
-                                                <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userNow.userImage" alt=""></figure>
-                                                <div class="text-box">
-                                                    <p>
-                                                        {{msg.message}}   
-                                                    </p>
-                                                    <span><i class="ti-check"></i><i class="ti-check"></i> {{msg.date | date:'medium'}}</span>
-                                                </div>
-                                        </ul>
-                                    </div>
-
-                                    <div class="mesge-area" [hidden]="!receiver">
+                                <div class="col-lg-8 col-md-12 ex2">
+                                    <div class="mesge-area" [>
                                         <ul class="conversations" *ngFor="let msg of messageDatas"> 
                                             <li class="me" *ngIf="msg.userId == senderId">
                                                 <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userSender.userImage" alt=""></figure>
@@ -371,14 +326,14 @@
                                                     <span><i class="ti-check"></i><i class="ti-check"></i>  {{msg.date | date:'medium'}} </span>
                                                 </div>
                                             </li>
-                                            <li class="you" *ngIf="msg.userId == receiverId">
+                                            <li class="you" *ngIf="msg.userId != senderId">
                                                 <figure><img style="width: 55px;height: 25px;" class="img1" [src]="userNow.userImage" alt=""></figure>
-                                                <div class="text-box">
+                                                <span class="text-box">
                                                     <p>
                                                         {{msg.message}}   
                                                     </p>
-                                                    <span><i class="ti-check"></i><i class="ti-check"></i> {{msg.date | date:'medium'}}</span>
-                                                </div>
+                                                </span>
+                                                <span><i class="ti-check"></i><i class="ti-check"></i> {{msg.date | date:'medium'}}</span>
                                         </ul>
                                     </div>
                                     <div class="message-writing-box">
@@ -386,13 +341,6 @@
                                             <div class="text-area">
                                                 <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="write your message here..">
                                                 <button type="submit" style="background-color: white;border: none;"><i class="fa fa-paper-plane-o" (click)="sendMessage()"></i></button>
-                                            </div>
-                                            
-                                            <div class="attach-file">
-                                                <label class="fileContainer">
-                                                    <i class="ti-clip"></i>
-                                                    <input type="file">
-                                                </label>
                                             </div>
                                         </form>
                                     </div>

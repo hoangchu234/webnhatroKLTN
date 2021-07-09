@@ -375,7 +375,13 @@ export class BarsearchandbarComponent implements OnInit {
 
 
   onKeyUp(x) { // appending the updated value to the variable
-    this.check = true;
+    if(x.target.value != ""){
+      this.check = true;
+    }
+    else{
+      this.check = false;
+    }
+
   }
 
   public async enterSearch(){
@@ -387,14 +393,17 @@ export class BarsearchandbarComponent implements OnInit {
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filter(name) : this.options.slice(0,7))
       );
-      this.filteredOptions.subscribe((data)=>{
-        if(data.length != 0){
-          this.searchText = data[0].name;
-        }
-        else{
-          this.searchText = "";
-        }
-      })
+      if(this.check == true){
+        this.filteredOptions.subscribe((data)=>{
+          if(data.length != 0){
+            this.searchText = data[0].name;
+          }
+          else{
+            this.searchText = "";
+          }
+        })
+      }
+      
     }
   }
 
