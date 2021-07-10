@@ -116,7 +116,11 @@ export class DetailMotelComponent implements OnInit {
   linkChat(){
     if(this.authenticationService.currentAccountValue){
       var id = this.motel.userId;
-      this.route.navigate( ['/chat',id]);
+
+      if(Number(id) != Number(this.authenticationService.currentAccountValue.user.id)){
+        this.route.navigate( ['/chat',id]);
+
+      }
     }
     else{
       this.openDialogInform();
