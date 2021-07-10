@@ -93,6 +93,14 @@ export class UserService {
     );
   }
 
+  public updateAccountPhone(account: Account): Observable<any>{
+    return this.http.put(`${this.urlAPI + "/api/Accounts/PutAccountPhone"}/${account.id}`, account, httpOptions).pipe(
+      tap(updateAccount => JSON.stringify(updateAccount)),
+      catchError(error => of(new Account()))
+    );
+  }
+
+
   public updateUser(user: User): Observable<any>{
     return this.http.put(`${this.urlAPI + "/api/Users"}/${user.id}`, user, httpOptions).pipe(
       tap(updateUser =>  JSON.stringify(updateUser)),

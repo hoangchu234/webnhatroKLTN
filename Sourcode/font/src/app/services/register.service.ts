@@ -34,6 +34,16 @@ export class RegisterService {
     }
   }
 
+  public addAccountSocial = async (account: Account) => {
+    try {
+        const loginUrl = `${this.urlAPI}/api/Accounts/Socialaccount`;
+        return await this.http.post(loginUrl, account, httpOptions).toPromise();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   forgetPassword = async (account: Account) => {
     try {
         const loginUrl = `${this.urlAPI}/api/Accounts/ForgetPassword`;

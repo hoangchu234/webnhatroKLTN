@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartOptions, ChartDataSets } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, Color } from 'ng2-charts';
+import { New } from 'src/app/model/New';
 import { environment } from 'src/environments/environment';
 import { Motel } from '../../../model/Motel';
 import { MotelService } from '../../../services/motel.service';
@@ -23,14 +24,15 @@ export class MangementChartComponent implements OnInit {
   totalUser = 0;
   totalMoney = 0;
   nametophead = "Trang thống kê"
-  public news:Array<Type> = [
-    {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
-    {id: 1, text:'Tin VIP 30'}, // 
-    {id: 2, text:'Tin VIP 20'},
-    {id: 3, text:'Tin VIP 10'},
-    {id: 4, text:'Tin thường'},
-  ];
-
+  // public news:Array<Type> = [
+  //   {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
+  //   {id: 1, text:'Tin VIP 30'}, // 
+  //   {id: 2, text:'Tin VIP 20'},
+  //   {id: 3, text:'Tin VIP 10'},
+  //   {id: 4, text:'Tin thường'},
+  // ];
+  news:Array<New> = [];
+  
   //PieChart
   countHot: Number = 0;
   countVIP30: Number = 0;
@@ -109,7 +111,7 @@ export class MangementChartComponent implements OnInit {
 
     if(counthot && count30 && count20 && count10 && countthuong){
       this.chartReady = true;
-      this.pieChartLabels = [this.news[0].text, this.news[1].text, this.news[2].text,this.news[3].text,this.news[4].text];
+      this.pieChartLabels = [this.news[0].newName, this.news[1].newName, this.news[2].newName,this.news[3].newName,this.news[4].newName];
       this.pieChartData = [Number(counthot), Number(count30), Number(count20), Number(count10),Number(countthuong)];
     }
    

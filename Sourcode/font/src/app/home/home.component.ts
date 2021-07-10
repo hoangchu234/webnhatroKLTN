@@ -24,6 +24,7 @@ import { ViewportScroller } from '@angular/common';
 import { CountNewTypeViewModel } from '../model/CountNewTypeViewModel';
 import { StorageService } from '../storage.service';
 import { ToastService } from '../services/toast.service';
+import { New } from '../model/New';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class HomeComponent implements OnInit {
   filteredOptions: Observable<List[]>;
 
   listName: String[] = [];
+  news:Array<New> = [];
 
   constructor(
 
@@ -71,6 +73,7 @@ export class HomeComponent implements OnInit {
   async ngOnInit(){
     await this.motelService.getmoteloutofdate();
     await this.getCountTypes();
+    await this.getDataNew();
 
     this.getPrices();
     this.getNewTypes();
@@ -85,6 +88,10 @@ export class HomeComponent implements OnInit {
     this.newType = "Phòng trọ, nhà trọ";
 
     
+  }
+
+  async getDataNew(){
+    this.news = await this.motelService.getNew() as New[];
   }
 
   async getCountTypes(){
@@ -218,6 +225,9 @@ export class HomeComponent implements OnInit {
       price = '/' + RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
     }
     
+    if(this.myControl.value != null){
+      this.searchText = this.myControl.value.name;
+    }
 
     if(this.searchText != ""){
       let str = this.searchText.toString().split(", ");
@@ -288,6 +298,12 @@ export class HomeComponent implements OnInit {
     }
   }
   
+
+  displayType(id){
+    var index = this.news.findIndex(a => Number(a.id) === Number(id)); 
+     return this.news[index].newName;
+  }
+
   private _filter(name: string): List[] {
     const filterValue = name.toLowerCase();
     return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).slice(0,6);
@@ -304,7 +320,6 @@ export class HomeComponent implements OnInit {
     else{
       this.check = false;
     }
-
   }
 
  

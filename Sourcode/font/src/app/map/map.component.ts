@@ -4,6 +4,7 @@ import { City } from '../model/City';
 import { Distance } from '../model/Distance';
 import { District } from '../model/District';
 import { Motel } from '../model/Motel';
+import { New } from '../model/New';
 import { NewType } from '../model/NewType';
 import { PriceSearch } from '../model/PriceSearch';
 import { Province } from '../model/Province';
@@ -31,13 +32,7 @@ export interface Type{
 })
 export class MapComponent implements OnInit {
 
-  public news:Array<Type> = [
-    {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
-    {id: 1, text:'Tin VIP 1'}, // 
-    {id: 2, text:'Tin VIP 2'},
-    {id: 3, text:'Tin VIP 3'},
-    {id: 4, text:'Tin thường'},
-  ];
+  news:Array<New> = [];
 
   title = 'locationApp';
 
@@ -83,17 +78,26 @@ export class MapComponent implements OnInit {
   mymap: any;
   marker: any;
   constructor(public streetService:StreetService,public dictrictService:DictrictService,private priceSearchServer:PriceSearchService,private router:ActivatedRoute,private route: Router,public activerouter:ActivatedRoute,private motelService: MotelService,private cityService: CitiesService, private provinceService: ProvincesService, private typeservice:TypeofnewService) {
-    this.getPrices();
-    this.getCities();
-    this.getNewTypes();
-    this.getDistance();
-    this.getMotelByURL();
+   
   }
 
   async ngOnInit() {
     this.runMap();
     this.firstTime();
+
+    await this.getPrices();
+    await this.getDataNew();
+
+    await this.getCities();
+    await this.getNewTypes();
+    await this.getDistance();
+    await this.getMotelByURL();
+
     await this.setData();
+  }
+
+  async getDataNew(){
+    this.news = await this.motelService.getNew() as New[];
   }
 
   buildMap(lat,lon,name)  {
@@ -461,7 +465,7 @@ export class MapComponent implements OnInit {
   //Load data
   public loadDataHot(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin Hot")
+      if(motel[i].typeservice == "1")
       {
         this.motelsearch.push(motel[i])
       }
@@ -470,7 +474,7 @@ export class MapComponent implements OnInit {
 
   public loadData3(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 3")
+      if(motel[i].typeservice == "2")
       {
         this.motelsearch.push(motel[i])
       }
@@ -479,7 +483,7 @@ export class MapComponent implements OnInit {
 
   public loadData2(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 2")
+      if(motel[i].typeservice == "3")
       {
         this.motelsearch.push(motel[i])
       }
@@ -488,7 +492,7 @@ export class MapComponent implements OnInit {
 
   public loadData1(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 1")
+      if(motel[i].typeservice == "4")
       {
         this.motelsearch.push(motel[i])
       }
@@ -497,7 +501,7 @@ export class MapComponent implements OnInit {
 
   public loadDataThuong(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin thường")
+      if(motel[i].typeservice == "5")
       {
         this.motelsearch.push(motel[i])
       }

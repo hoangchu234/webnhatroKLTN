@@ -23,12 +23,12 @@
         <div *ngFor= "let motel of motels | paginate: { itemsPerPage: 10, currentPage: page } ">
           <div  style="margin-top: 30px;" >
             <div class="container-fluid" >
-              <div class="row " *ngIf="motel.typeservice == news[0].text" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
+              <div class="row " *ngIf="motel.typeservice == 1" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
                 <div class="col-lg-4 " >
                   <div class="offers_image_container" style="height: 270px;margin-top: 10px;">
                     <!-- Image by https://unsplash.com/@kensuarez -->
                     <div class="offers_image_background" style="border-radius: 10px;" [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
-                    <div class="offer_name button"><a href="single_listing.html">{{motel.typeservice}}</a></div>
+                    <div class="offer_name button"><a href="single_listing.html">{{displayType(motel.typeservice)}}</a></div>
                   </div>
                 </div>
                 <div class="col-lg-8">
@@ -61,12 +61,12 @@
               </div>
 
               <div>
-                <div class="row " *ngIf="motel.typeservice == news[1].text" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px">
+                <div class="row " *ngIf="motel.typeservice == 4" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px">
                   <div class="col-lg-4 " >
                     <div class="offers_image_container" style="height: 270px;margin-top: 10px;">
                       <!-- Image by https://unsplash.com/@kensuarez -->
                       <div class="offers_image_background" style="border-radius: 10px;" [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
-                      <div class="offer_name " style="background-color: red;"><a href="single_listing.html">{{motel.typeservice}}</a></div>
+                      <div class="offer_name " style="background-color: red;"><a href="single_listing.html">{{displayType(motel.typeservice)}}</a></div>
                     </div>
                   </div>
                 <div class="col-lg-8">
@@ -97,12 +97,12 @@
               </div>
 
               <div>
-                <div class="row " *ngIf="motel.typeservice == news[2].text" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
+                <div class="row " *ngIf="motel.typeservice == 3" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
                   <div class="col-lg-4 " >
                     <div class="offers_image_container" style="height: 270px;margin-top: 10px;">
                       <!-- Image by https://unsplash.com/@kensuarez -->
                       <div class="offers_image_background" style="border-radius: 10px;" [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
-                      <div class="offer_name " style="background-color: orange;"><a href="single_listing.html">{{motel.typeservice}}</a></div>
+                      <div class="offer_name " style="background-color: orange;"><a href="single_listing.html">{{displayType(motel.typeservice)}}</a></div>
                     </div>
                   </div>
                   <div class="col-lg-8">
@@ -133,12 +133,12 @@
               </div>
              
               <div>
-                <div class="row " *ngIf="motel.typeservice == news[3].text" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
+                <div class="row " *ngIf="motel.typeservice == 2" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
                   <div class="col-lg-4">
                     <div class="offers_image_container" style="height: 270px;margin-top: 10px;">
                       <!-- Image by https://unsplash.com/@kensuarez -->
                       <div class="offers_image_background" style="border-radius: 10px;" [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
-                      <div class="offer_name" style="background-color: rgb(0, 217, 255);"><a href="single_listing.html">{{motel.typeservice}}</a></div>
+                      <div class="offer_name" style="background-color: rgb(0, 217, 255);"><a href="single_listing.html">{{displayType(motel.typeservice)}}</a></div>
                     </div>
                   </div>
                 <div class="col-lg-8">
@@ -170,12 +170,12 @@
               </div>
 
               <div>
-                <div class="row " *ngIf="motel.typeservice == news[4].text" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
+                <div class="row " *ngIf="motel.typeservice == 5" style="padding:5px;box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);border-radius: 10px;">
                   <div class="col-lg-4">
                     <div class="offers_image_container" style="height: 270px;margin-top: 10px;">
                       <!-- Image by https://unsplash.com/@kensuarez -->
                       <div class="offers_image_background" style="border-radius: 10px;" [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
-                      <div class="offer_name" style="background-color: green;"><a href="single_listing.html">{{motel.typeservice}}</a></div>
+                      <div class="offer_name" style="background-color: green;"><a href="single_listing.html">{{displayType(motel.typeservice)}}</a></div>
                     </div>
                   </div>
                 <div class="col-lg-8">

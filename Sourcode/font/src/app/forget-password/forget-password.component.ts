@@ -16,15 +16,15 @@ import { ToastService } from '../services/toast.service';
 })
 export class ForgetPasswordComponent implements OnInit {
 
-  phone:string = "";
-  password:string = "";
+  public phone:string = "";
+  public password:string = "";
   public recaptchaVerifier: firebase.auth.RecaptchaVerifier;
 
-  phone_number:string = "";
-  user: any;
+  showError: boolean = true;
+  public phone_number:string;
+  public user: any;
   public comfirm :firebase.auth.ConfirmationResult;
 
-  showError: boolean = true;
   constructor(private toast: ToastService,
     private employeeService:EmployeesService,
     private authenticationService: AuthenticationService,
@@ -46,110 +46,124 @@ export class ForgetPasswordComponent implements OnInit {
       }
      }
 
-  ngOnInit(): void {
-    try{
-      this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    }
-    catch(err){
-
-    }
-  }
-
-  public createNewAccount = async () => {
-    try {
-      const verification = this.phone_number;
-      if (verification != null) {
-        this.comfirm.confirm(verification).then(async () =>{
-          // this.name,this.phone,this.password.
-          let account = new Account();
-          account.password = this.password;
-          account.phone = this.phone;
-          const result = await this.service.forgetPassword(account) as Account;
-          if(result.id != undefined){
-            this.router.navigateByUrl('home');
-          }
-          // alert('Success');
-        }).catch(err =>{
-          this.toast.toastInfo('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
-          // alert('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
-        })
-      } else {
-        this.toast.toastError("Không nhận được mã code");
-        // alert('No verification code entered');
+     ngOnInit(): void {
+      try{
+        this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+      }
+      catch(err){
+  
       }
     }
-    catch (e) {
-      this.toast.toastError("Không thục thi thành công");
-      // alert('Add failed');
-    }
-  };
 
-  async onSubmit() {    
-    if(this.password == "" || this.phone == ""){
-      this.showError = false;
+    public createNewAccount = async () => {
+      try {
+        const verification = this.phone_number;
+        if (verification != null) {
+          this.comfirm.confirm(verification).then(async () =>{
+            // this.name,this.phone,this.password.
+            var accountPhone = await this.authenticationService.getAccountByPhone(this.phone) as Account;
+            var account = new Account();
+            account.id = accountPhone.id;
+            account.isActive = accountPhone.isActive;
+            account.roleId = accountPhone.roleId;
+            account.username =accountPhone.username;
+            account.phone = accountPhone.phone;
+            //Lưa dat mới
+            
+            account.password = this.password;
+            this.authenticationService.updateForgetPassword(account).subscribe(update => {
+              if(update){
+                //  alert("Lưu thành công")
+                this.router.navigateByUrl('home');
+              }
+            });
+          }).catch(err =>{
+            this.toast.toastInfo('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
+            // alert('Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới');
+          })
+        } else {
+          this.toast.toastError("Không nhận được mã code");
+          // alert('No verification code entered');
+        }
+      }
+      catch (e) {
+        this.toast.toastError("Không thục thi thành công");
+        // alert('Add failed');
+      }
+    };
+  
+    clickChange(){
+      this.showError = true;
     }
-    else{
-      var check = this.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*?[#?!@$%^&*-])/);
-      if(check != null){
-        if(this.validationPhone(this.phone) == -2){
-          this.toast.toastError("Số điện thoại của bạn không đúng định dạng!");
-          // alert('Số điện thoại của bạn không đúng định dạng!');
-        }
-        else if(this.validationPhone(this.phone) == -2){
-          this.toast.toastError("Số điện thoại của bạn hợp lệ!");
-          // alert('Số điện thoại của bạn hợp lệ!');
-        }
-        else if(this.validationPhone(this.phone) == -2){
-          this.toast.toastError("Bạn chưa điền số điện thoại!");
-          // alert('Bạn chưa điền số điện thoại!');
-        }
-        else{
-          var checkPhone = await this.service.checkPhoneForget(this.phone);
-          if(checkPhone == "Số điện thoại tồn tại"){
-            const appVerifier = this.recaptchaVerifier;
-            var p = this.phone;  
-            var phoneNumber = "+84" + p.substring(0, p.length);
-            var testVerificationCode = "123456";
-            firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-              .then((confirmationResult) => {
-                this.user = "Xac Thuc";
-                this.comfirm = confirmationResult;
-              })
-              .catch((err) => {
-                // console.log('sms not sent', err);
-                this.toast.toastError("Đã xảy ra lỗi");
-              });
-          }
-          else if(checkPhone == "Số điện thoại không tồn tại"){
-            this.toast.toastInfo('Số điện thoại không tồn tại');
-          }
-         
-        }
+
+  
+    async onSubmit() {    
+
+      if( this.password == "" || this.phone == ""){
+        this.showError = false;
       }
       else{
-        this.toast.toastInfo('Mật khẩu phải có các ký tự đặc biệt, có các số hay in hoa chữ cái đầu');
-      }
-    }
-   
-  };
-
-  validationPhone(mobile){
-    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    if(mobile !==''){
-        if (vnf_regex.test(mobile) == false) 
-        {
-          // alert('Số điện thoại của bạn không đúng định dạng!');
-          return -2;
+        var check = this.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*?[#?!@$%^&*-])/);
+        if(check != null){
+          if(this.validationPhone(this.phone) == -2){
+            this.toast.toastError("Số điện thoại của bạn không đúng định dạng!");
+            // alert('Số điện thoại của bạn không đúng định dạng!');
+          }
+          else if(this.validationPhone(this.phone) == -2){
+            this.toast.toastError("Số điện thoại của bạn hợp lệ!");
+            // alert('Số điện thoại của bạn hợp lệ!');
+          }
+          else if(this.validationPhone(this.phone) == -2){
+            this.toast.toastError("Bạn chưa điền số điện thoại!");
+            // alert('Bạn chưa điền số điện thoại!');
+          }
+          else{
+            var checkPhone = await this.service.checkPhone(this.phone);
+            if(checkPhone == "Số điện thoại chưa được dùng"){
+              this.toast.toastInfo('Số điện thoại chưa đăng ký');
+            }
+            else if(checkPhone == "Số điện thoại đã được dùng"){
+              const appVerifier = this.recaptchaVerifier;
+              var p = this.phone;  
+              var phoneNumber = "+84" + p.substring(0, p.length);
+              var testVerificationCode = "123456";
+              firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+                .then((confirmationResult) => {
+                  this.user = "Xac Thuc";
+                  this.comfirm = confirmationResult;
+                })
+                .catch((err) => {
+                  // console.log('sms not sent', err);
+                  this.toast.toastError("Đã xảy ra lỗi");
+                });
+            }
+           
+          }
         }
         else{
-          return -1;
-          // alert('Số điện thoại của bạn hợp lệ!');
+          this.toast.toastInfo('Mật khẩu phải có các ký tự đặc biệt, có các số hay in hoa chữ cái đầu');
         }
+      }
+     
+    };
+  
+    validationPhone(mobile){
+      var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+      if(mobile !==''){
+          if (vnf_regex.test(mobile) == false) 
+          {
+            // alert('Số điện thoại của bạn không đúng định dạng!');
+            return -2;
+          }
+          else{
+            return -1;
+            // alert('Số điện thoại của bạn hợp lệ!');
+          }
+      }
+      else{
+        // alert('Bạn chưa điền số điện thoại!');
+        return 0;
+      }
     }
-    else{
-      // alert('Bạn chưa điền số điện thoại!');
-      return 0;
-    }
-  }
 
 }

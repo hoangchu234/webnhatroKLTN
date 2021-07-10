@@ -58,8 +58,8 @@
                                 </div>
                                 <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
                                  class="form-control bg-transparent border-0" placeholder="Tìm kiếm theo tiêu đề" (keyup)="onKeyUp($event)" style="padding-right: 20px;">
-                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                                  <mat-option *ngFor="let option of filteredOptions | async;let i=index" [value]="option">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
+                                  <mat-option *ngFor="let option of filteredOptions | async;let i=index" [value]="option" > 
                                     <div >{{option.name}}</div>
                                   </mat-option>
                                 </mat-autocomplete>
@@ -187,7 +187,7 @@
                         <div class="offers_image_container" style="height: 270px;margin-left: 15px;margin-top: 10px;">
                           <!-- Image by https://unsplash.com/@kensuarez -->
                           <div class="offers_image_background" style="border-radius: 10px;" [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
-                          <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div>
+                          <div class="offer_name"><a href="single_listing.html">{{displayType(motel.typeservice)}}</a></div>
                         </div>
                       </div>
     
@@ -357,27 +357,6 @@
   </div>
 </div>
 <!--contact-->
-	<div class="contact body" style="margin-top: 40px;">
 
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-5" style="background-color: black;" style="background-image:url(../../assets/images/product-9.jpg);">
-
-				</div>
-				<div class="col-lg-7">
-					<div class="contact_form_container">
-						<div class="contact_title">Để lại thông tin</div>
-						<form action="#" id="contact_form" class="contact_form" >
-							<input type="text" id="contact_form_name" class="contact_form_name input_field"  placeholder="Name" required="required" data-error="Name is required.">
-							<input type="text" id="contact_form_email" class="contact_form_email input_field"   placeholder="E-mail" required="required" data-error="Email is required.">
-							<input type="text" id="contact_form_subject" class="contact_form_subject input_field" placeholder="Subject" name="subject"  required="required" data-error="Subject is required.">
-							<textarea id="contact_form_message" class="text_field contact_form_message" name="message" rows="4" placeholder="Message" name="text"   required="required" data-error="Please, write us a message."></textarea>
-							<button type="submit" id="form_submit_button" class="form_submit_button button">Gửi email<span></span><span></span><span></span></button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 

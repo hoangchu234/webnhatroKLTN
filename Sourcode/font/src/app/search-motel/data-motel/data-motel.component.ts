@@ -25,6 +25,7 @@ import { Street } from 'src/app/model/Street';
 import { PriceSearchService } from 'src/app/services/price-search.service';
 import { PriceSearch } from 'src/app/model/PriceSearch';
 import { StorageService } from 'src/app/storage.service';
+import { New } from 'src/app/model/New';
 
 
 export interface Type{
@@ -41,14 +42,15 @@ declare var jQuery: any;
 })
 export class DataMotelComponent implements OnInit {
 
-  public news:Array<Type> = [
-    {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
-    {id: 1, text:'Tin VIP 1'}, // 
-    {id: 2, text:'Tin VIP 2'},
-    {id: 3, text:'Tin VIP 3'},
-    {id: 4, text:'Tin thường'},
-  ];
-
+  // public news:Array<Type> = [
+  //   {id: 0, text:'Tin Hot'}, // 4 tuần, 2 tuần
+  //   {id: 1, text:'Tin VIP 1'}, // 
+  //   {id: 2, text:'Tin VIP 2'},
+  //   {id: 3, text:'Tin VIP 3'},
+  //   {id: 4, text:'Tin thường'},
+  // ];
+  news:Array<New> = [];
+  
   motelsearch: Motel[] = [];
   motels:Motel[] = [];
 
@@ -94,68 +96,30 @@ export class DataMotelComponent implements OnInit {
   str: string = ""
   constructor(private priceSearchServer:PriceSearchService,private provinceService: ProvincesService,public streetService:StreetService,public dictrictService:DictrictService,private cityService: CitiesService,private areaSearchService:AreaSearchService,private userService:UserService,private authenticationService: AuthenticationService,public dialog: MatDialog,private typeservice:TypeofnewService,private route: Router,private router: ActivatedRoute,private motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-    this.getArea();
-    this.getDataAreaZone();
-    this.getMotelByURL();
-    /*
-    (function ($) {
-      $(document).ready(function myFunction(){
-        var myVar;
-        myVar = setTimeout(showPage, 2000);
-      });
-
-      function showPage() {
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("myDiv").style.display = "block";
-      }
-      
-    })(jQuery);
-    */
+    
    }
 
 
   async ngOnInit(): Promise<void> {
-   
+    await this.getArea();
+    await this.getDataNew();
+
+    await this.getDataAreaZone();
+    await this.getMotelByURL();
     this.isUser();
 
-    /*const name = this.router.snapshot.paramMap.get("name");
-    const type = this.router.snapshot.paramMap.get("type");
-    const city = this.router.snapshot.paramMap.get("city");
-    const province = this.router.snapshot.paramMap.get("province");
-    const district = this.router.snapshot.paramMap.get("district");
-    const street = this.router.snapshot.paramMap.get("street");
-    const price = this.router.snapshot.paramMap.get("price");*/
-    
-    
-    /*if(this.name == "cho-thue-nha-tro"){
-      this.nametophead = "Cho thuê phòng trọ, nhà trọ số 1 Việt Nam";
-       await this.getMotelByType("Phòng trọ, nhà trọ");
-       console.log("aa")
-    }
-    else if(this.name == "nha-cho-thue"){
-      this.nametophead = "Cho Thuê Nhà Nguyên Căn, Giá Rẻ, Chính Chủ, Mới Nhất 2020";
-      await this.getMotelByType("Nhà thuê nguyên căn");
-    }
-    else if(this.name == "cho-thue-can-ho"){
-      this.nametophead = "Cho Thuê Căn Hộ Chung Cư Mini, Căn Hộ Dịch Vụ, Giá Rẻ - Mới Nhất 2020";
-      await this.getMotelByType("Cho thuê căn hộ");
-    }
-    else if(this.name == "tim-nguoi-o-ghep-cap"){
-      this.nametophead = "Tìm Người Ở Ghép, Tìm Nam Ở Ghép, Tìm Nữ Ở Ghép";
-      await this.getMotelByType("Tìm người ở ghép");
-    }
-    else if(this.name == "cho-thue-mat-bang"){
-      this.nametophead = "Cho Thuê Mặt Bằng, Cho Thuê Văn Phòng, Cửa Hàng, Kiot";
-      await this.getMotelByType("Cho thuê mặt bằng");
-    }
-    */
-    
-    
-    
-    //this.dangtinService.getSearchMotel().subscribe(motel => this.motelsearch = motel);
-    //this.dangtinService.searchmoteluser(this.motelsearch).subscribe(getmotels => this.motels = getmotels);
+  
   }
 
+  displayType(id){
+    var index = this.news.findIndex(a => Number(a.id) === Number(id)); 
+     return this.news[index].newName;
+  }
+
+
+  async getDataNew(){
+    this.news = await this.motelService.getNew() as New[];
+  }
 
   public async getTypes(){
     return await this.typeservice.getTypes() as NewType [];
@@ -214,7 +178,7 @@ export class DataMotelComponent implements OnInit {
   //Load data
   public loadDataHot(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin Hot")
+      if(motel[i].typeservice == "1")
       {
         this.motelsearch.push(motel[i])
       }
@@ -223,7 +187,7 @@ export class DataMotelComponent implements OnInit {
 
   public loadData3(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 3")
+      if(motel[i].typeservice == "2")
       {
         this.motelsearch.push(motel[i])
       }
@@ -232,7 +196,7 @@ export class DataMotelComponent implements OnInit {
 
   public loadData2(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 2")
+      if(motel[i].typeservice == "3")
       {
         this.motelsearch.push(motel[i])
       }
@@ -241,7 +205,7 @@ export class DataMotelComponent implements OnInit {
 
   public loadData1(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 1")
+      if(motel[i].typeservice == "4")
       {
         this.motelsearch.push(motel[i])
       }
@@ -250,7 +214,7 @@ export class DataMotelComponent implements OnInit {
 
   public loadDataThuong(motel){
     for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin thường")
+      if(motel[i].typeservice == "5")
       {
         this.motelsearch.push(motel[i])
       }
@@ -474,6 +438,7 @@ export class DataMotelComponent implements OnInit {
     // this.totalRecord = this.motels.length;
     this.motels = dataMotelFilter.slice();
     this.totalRecord = this.motels.length;
+
   }
 
   /*

@@ -95,9 +95,17 @@ namespace Websitedangtintimkiemnhatro.Controllers
             {
                 return BadRequest();
             }
-            // hash password
-            String passwordHash = BC.HashPassword(account.Password);
-            account.Password = passwordHash;
+
+            var accountFind = await _context.Accounts.Where(a => a.Id == id).FirstOrDefaultAsync();
+            bool verified = BC.Verify(account.Password, accountFind.Password);
+
+            if (!verified)
+            {
+                // hash password
+                String passwordHash = BC.HashPassword(account.Password);
+                account.Password = passwordHash;
+            }
+
 
             _context.Entry(account).State = EntityState.Modified;
 
@@ -120,18 +128,18 @@ namespace Websitedangtintimkiemnhatro.Controllers
             return CreatedAtAction("GetAccount", new { id = account.Id }, account);
         }
 
-        // PUT: api/Accounts/ForgetPassword
+        // PUT: api/Accounts/PutAccountPhone
         [HttpPut]
-        [Route("ForgetPassword")]
-        public async Task<IActionResult> ForgetPassword(Account account)
+        [Route("PutAccountPhone/{id}")]
+        public async Task<IActionResult> PutAccountPhone(int id, Account account)
         {
-            var accountFind = _context.Accounts.Where(a => a.Phone == account.Phone).FirstOrDefault();
+            if (id != account.Id)
+            {
+                return BadRequest();
+            }
 
-            // hash password
-            String passwordHash = BC.HashPassword(account.Password);
-            accountFind.Password = passwordHash;
-
-            _context.Entry(accountFind).State = EntityState.Modified;
+      
+            _context.Entry(account).State = EntityState.Modified;
 
             try
             {
@@ -139,7 +147,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AccountExists(accountFind.Id))
+                if (!AccountExists(id))
                 {
                     return NotFound();
                 }
@@ -149,7 +157,56 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 }
             }
 
-            return CreatedAtAction("GetAccount", new { id = accountFind.Id }, accountFind);
+            return CreatedAtAction("GetAccount", new { id = account.Id }, account);
+        }
+
+        // GET: api/Accounts/GetAccountPhone
+        [HttpGet]
+        [Route("GetAccountPhone/{phone}")]
+        public async Task<ActionResult<Account>> GetAccountPhone(string phone)
+        {
+            var account = _context.Accounts.Where(a => a.Phone == phone).FirstOrDefault();
+
+            if (account == null)
+            {
+                return NotFound();
+            }
+
+            return account;
+        }
+
+        // PUT: api/Accounts/ForgetPassword
+        [HttpPut]
+        [Route("ForgetPassword/{id}")]
+        public async Task<IActionResult> ForgetPassword(int id, Account account)
+        {
+            if (id != account.Id)
+            {
+                return BadRequest();
+            }
+
+            // hash password
+            String passwordHash = BC.HashPassword(account.Password);
+            account.Password = passwordHash;
+            _context.Entry(account).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AccountExists(account.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtAction("GetAccount", new { id = account.Id }, account);
         }
 
         // POST: api/Accounts/Normal
@@ -176,6 +233,34 @@ namespace Websitedangtintimkiemnhatro.Controllers
             account.User.PubishFree = 3;
             _context.Users.Add(account.User);
             
+
+            return CreatedAtAction("GetAccount", new { id = account.Id }, account);
+        }
+
+        // POST: api/Accounts/SocialAccount
+        // string password
+        [HttpPost]
+        [Route("Socialaccount")]
+        public async Task<ActionResult<Account>> SocialAccount(Account account)
+        {
+            account.IsActive = true;
+            account.RoleId = 1;
+            account.IsHD = true;
+
+            // hash password
+            String passwordHash = BC.HashPassword(account.Password);
+            account.Password = passwordHash;
+
+            _context.Accounts.Add(account);
+            await _context.SaveChangesAsync();
+
+            int id = account.Id;
+            account.User.CreatedDate = DateTime.Now;
+            account.User.LastLogOnDate = DateTime.Now;
+            account.User.Gender = true;
+            account.User.PubishFree = 3;
+            _context.Users.Add(account.User);
+
 
             return CreatedAtAction("GetAccount", new { id = account.Id }, account);
         }

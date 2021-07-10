@@ -65,6 +65,11 @@ export class DialogEditUserComponent implements OnInit {
           user.facebook = this.data.facebook;
           user.userImage = url;
           user.accountId = this.data.account.id;
+
+          this.userService.updateUser(user).subscribe(update => {
+            // alert("Lưu thành công")
+            this.toast.toastSuccess('Lưu thành công');
+          });
         })
       })
     ) .subscribe();

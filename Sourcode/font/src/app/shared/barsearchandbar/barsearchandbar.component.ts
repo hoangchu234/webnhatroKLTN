@@ -452,6 +452,9 @@ export class BarsearchandbarComponent implements OnInit {
       price = '/' + RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
     }
 
+    if(this.myControl.value != null){
+      this.searchText = this.myControl.value.name;
+    }
     if(this.searchText != ""){
       let str = this.searchText.toString().split(", ");
       if(str.length == 1){

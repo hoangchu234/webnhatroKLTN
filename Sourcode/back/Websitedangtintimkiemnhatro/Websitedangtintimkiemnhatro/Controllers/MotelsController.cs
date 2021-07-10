@@ -95,7 +95,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("GetTotalMotelHot")]
         public async Task<ActionResult<Object>> GetTotalMotelHot()
         {
-            var motels = _context.Motels.Where(a => a.Typeservice == "Tin Hot").ToList();
+            var motels = _context.Motels.Where(a => a.Typeservice == "1").ToList();
             return motels.Count().ToString() as Object;
         }
 
@@ -122,7 +122,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         {
             return await _context.Motels.Include(a => a.Detail)
                 .ThenInclude(a => a.Typeofnew).Include(e => e.Images)
-                .Where(a => a.Typeservice == "Tin Hot" && a.Status == "1" && a.Verify == true).OrderByDescending(e => e.Price).Take(5).ToListAsync();
+                .Where(a => a.Typeservice == "1" && a.Status == "1" && a.Verify == true).OrderByDescending(e => e.Price).Take(5).ToListAsync();
         }
 
         //Tin vừa đăng
@@ -580,7 +580,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 typeservice = a.Typeservice,
                 user = _context.Users.Where(c => c.Id == a.UserId).Select(f => new { hovaten = f.HovaTen, image = f.UserImage }).FirstOrDefault()
             })
-            .OrderByDescending(a => a.typeservice == "Tin Hot" || a.typeservice == "Tin VIP 3" || a.typeservice == "Tin VIP 2" || a.typeservice == "Tin VIP 1" || a.typeservice == "Tin thường")
+            .OrderByDescending(a => a.typeservice == "1" || a.typeservice == "2" || a.typeservice == "3" || a.typeservice == "4" || a.typeservice == "5")
             .ToList();
 
             if (result == null)
@@ -633,18 +633,23 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
         // GET: api/Motels/GetMotelByType
         [HttpGet]
-        [Route("GetMotelAdmin")]
-        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelAdmin()
+        [Route("GetMotelAdmin/{newType}/{status}/{type}")]
+        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelAdmin(int newType, int status, int type)
         {
             var models = await _context.Motels
-                .Include(m => m.Detail)
-                .ThenInclude(m => m.Typeofnew)
-                .Include(m => m.Images)
-                .ToListAsync();
+                       .Include(m => m.Detail)
+                       .Include(m => m.Images)
+                       .Where(a => a.Detail.TypeofnewId == type && a.Typeservice == newType.ToString())
+                       .OrderByDescending(a => a.DateUpdate)
+                       .ToListAsync();
 
-            if (models == null)
+            if (status == 1)
             {
-                return NotFound();
+                models = models.Where(a => a.Verify == true).ToList();
+            }
+            if (status == 2)
+            {
+                models = models.Where(a => a.Verify == false).ToList();
             }
 
             return models;
@@ -668,19 +673,25 @@ namespace Websitedangtintimkiemnhatro.Controllers
 
         // GET: api/Motels/GetMotelNV
         [HttpGet]
-        [Route("GetMotelNV")]
-        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelNV()
+        [Route("GetMotelNV/{newType}/{status}/{type}")]
+        public async Task<ActionResult<IEnumerable<Motel>>> GetMotelNV(int newType, int status, int type)
         {
             var models = await _context.Motels
-                .Include(m => m.Detail)
-                .ThenInclude(m => m.Typeofnew)
-                .Include(m => m.Images)
-                .ToListAsync();
+                        .Include(m => m.Detail)
+                        .Include(m => m.Images)
+                        .Where(a => a.Detail.TypeofnewId == type && a.Typeservice == newType.ToString())
+                        .OrderByDescending(a => a.DateUpdate)
+                        .ToListAsync();
 
-            if (models == null)
+            if (status == 1)
             {
-                return NotFound();
+                models = models.Where(a => a.Verify == true).ToList();
             }
+            if(status == 2)
+            {
+                models = models.Where(a => a.Verify == false).ToList();
+            }
+
 
             return models;
         }
@@ -689,7 +700,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("TopHot")]
         public async Task<ActionResult> GetMotelTopHots()
         {
-            var list = await _context.Motels.Where(a => a.Typeservice == "Tin Hot").ToListAsync();
+            var list = await _context.Motels.Where(a => a.Typeservice == "1").ToListAsync();
             return Content(list.Count.ToString());
         }
 
@@ -697,7 +708,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("TopHot30")]
         public async Task<ActionResult> GetMotelTop30s()
         {
-            var list = await _context.Motels.Where(a => a.Typeservice == "Tin VIP 3").ToListAsync();
+            var list = await _context.Motels.Where(a => a.Typeservice == "2").ToListAsync();
             return Content(list.Count.ToString());
         }
 
@@ -705,7 +716,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("TopHot20")]
         public async Task<ActionResult> GetMotelTop20s()
         {
-            var list = await _context.Motels.Where(a => a.Typeservice == "Tin VIP 2").ToListAsync();
+            var list = await _context.Motels.Where(a => a.Typeservice == "3").ToListAsync();
             return Content(list.Count.ToString());
         }
 
@@ -713,7 +724,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("TopHot10")]
         public async Task<ActionResult> GetMotelTop10s()
         {
-            var list = await _context.Motels.Where(a => a.Typeservice == "Tin VIP 1").ToListAsync();
+            var list = await _context.Motels.Where(a => a.Typeservice == "4").ToListAsync();
             return Content(list.Count.ToString());
         }
 
@@ -721,7 +732,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [Route("TopThuong")]
         public async Task<ActionResult> GetMotelTopThuongs()
         {
-            var list = await _context.Motels.Where(a => a.Typeservice == "Tin thường").ToListAsync();
+            var list = await _context.Motels.Where(a => a.Typeservice == "5").ToListAsync();
             return Content(list.Count.ToString());
         }
 

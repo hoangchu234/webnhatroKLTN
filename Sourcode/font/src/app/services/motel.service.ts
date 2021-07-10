@@ -202,9 +202,9 @@ export class MotelService {
       catchError(error => of([]))
     );
   }*/
-  public getmoteladmin = async () => {
+  public getmoteladmin = async (status: string, type: string, newT: string) => {
     try {
-        const Motels = await fetch(`${this.urlAPI}/api/Motels/GetMotelAdmin`);
+        const Motels = await fetch(`${this.urlAPI}/api/Motels/GetMotelAdmin/${newT}/${status}/${type}`);
         return await Motels.json();
     }
     catch (error) {
@@ -218,9 +218,9 @@ export class MotelService {
       catchError(error => of([]))
     );
   }*/
-  public getmotelNV = async () => {
+  public getmotelNV = async (status: string, type: string, newT: string) => {
     try {
-        const Motels = await fetch(`${this.urlAPI}/api/Motels/GetMotelNV`);
+        const Motels = await fetch(`${this.urlAPI}/api/Motels/GetMotelNV/${newT}/${status}/${type}`);
         return await Motels.json();
     }
     catch (error) {

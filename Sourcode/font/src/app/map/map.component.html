@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div *ngFor= "let motel of motels | paginate: { itemsPerPage: 4, currentPage: page } ">
-              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[0].text">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == 1">
                 <div class="row" >
                     <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
@@ -115,7 +115,7 @@
                   </div>
               </div>
 
-              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;box-shadow: #000000;" *ngIf="motel.typeservice == news[1].text">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;box-shadow: #000000;" *ngIf="motel.typeservice == 4">
                 <div class="row" >
                     <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
@@ -143,7 +143,7 @@
                   </div>
               </div>
 
-              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;box-shadow: #00deb6;" *ngIf="motel.typeservice == news[2].text">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;box-shadow: #00deb6;" *ngIf="motel.typeservice == 3">
                 <div class="row" >
                     <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
@@ -172,7 +172,7 @@
                   </div>
               </div>
 
-              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[3].text">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == 2">
                 <div class="row" >
                     <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">
@@ -201,7 +201,7 @@
                   </div>
               </div>
 
-              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == news[4].text">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == 5">
                 <div class="row" >
                     <div class="col-lg-5" style="padding:3px" >
                       <div style="height: 110px;width: 100%;">

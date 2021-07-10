@@ -128,6 +128,23 @@ export class AuthenticationService {
         );
     }
 
+    public updateForgetPassword(account: Account): Observable<any>{
+        return this.http.put(`${this.urlAPI + "/api/Accounts/ForgetPassword"}/${account.id}`, account, httpOptions).pipe(
+          tap(updateAccount => updateAccount),
+          catchError(error => of(new Account()))
+        );
+    }
+
+    public getAccountByPhone = async (phone: string) => {
+        try {
+          const url = this.urlAPI + '/api/Accounts/GetAccountPhone/'+ phone;
+          return await this.http.get(url).toPromise();
+        }
+        catch (error) {
+          console.log(error);
+        }
+    }
+
     public getRole = async () => {
         try {
           const url = this.urlAPI + '/api/Users/GetRoles';

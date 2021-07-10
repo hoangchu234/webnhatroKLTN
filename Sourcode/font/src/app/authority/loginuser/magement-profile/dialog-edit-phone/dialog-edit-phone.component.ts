@@ -135,12 +135,11 @@ export class DialogEditPhoneComponent implements OnInit {
           account.password = this.data.account.password;
           account.phone = this.phone;
 
-          this.userService.updateAccount(account).subscribe(update => {
+          this.userService.updateAccountPhone(account).subscribe(update => {
             console.log(update)
             this.toast.toastSuccess('Lưu thành công');
               // alert("Lưu thành công")
           });
-          // alert('Success');
         }).catch(err =>{
           // alert(err);
           this.toast.toastError("Mã xác thực sai vui lòng nhập lại hay điền số điện thoại mới");

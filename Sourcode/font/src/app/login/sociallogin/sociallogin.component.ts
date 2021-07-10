@@ -15,86 +15,7 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./sociallogin.component.css']
 })
 export class SocialloginComponent implements OnInit {
-  /*//Social register
-  public email:string;
-  public check;
 
-  constructor( private authenticationService: AuthenticationService,private serviceregister: RegisterService,private service:UserService,private httpClient: HttpClient) { }
-
-  ngOnInit(): void {
-   
-  }
-
-  public search(email) {
-    this.check = this.service.getsearchcertificate(email).subscribe(
-      (data) => {
-        if (data == true) {
-          console.log("Chay cai")
-          this.createNewAccountSocial();
-        }
-        else {
-          //this.login();
-        }
-      }
-    )
-  }
-
-  signInWithGoogle(): void {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    this.search()
-  }
-
-  signInWithFB(): void {
-    
-  }
-
-  public createNewAccountSocial = async () => {
-    try {
-      let account = new Account();
-      let user = new User();
-
-      console.log(account.user);
-      
-      account.user = user;
-      console.log(account);
-      const resultaccount = await this.serviceregister.addAccount(account) as any;          
-
-      alert('Add sucessfully');
-    }
-    catch (e) {
-      alert('Add failed');
-    }
-  };
-
-  /*
-  public login = () => {
-    this.authenticationService.loginsocial().subscribe(
-      (data) => {
-        console.log(data);
-        console.log(data.isActive);
-        if (data.isActive) {
-          if (data != null && data.username) {
-            localStorage.setItem('username', data.username);
-            localStorage.setItem('password', data.password);
-            console.log(this.authenticationService);
-            console.log('Login Success');
-          }
-          else {
-            console.log('Login fail');
-          }
-        }
-        else {
-          
-          this.authenticationService.logout();
-            alert('Lock data');
-        }
-        
-      },
-      (error) => console.error(error)
-    )
-  }
-*/
-  
  
   public email:string;
   userName = "";
@@ -124,7 +45,8 @@ export class SocialloginComponent implements OnInit {
 
   public async search(email) {
     this.checkmail = await this.userService.getsearchemail(email);
-    console.log(this.checkmail)
+
+    console.log(this.checkmail.length)
     if (this.checkmail.length == 0) {
       this.createNewAccountSocial();
     }
@@ -141,7 +63,8 @@ export class SocialloginComponent implements OnInit {
       let account = new Account();
       account.user = user;
       account.username = this.userName;
-      const resultaccount = await this.serviceregister.addAccount(account) as any;   
+      console.log(account)
+      const resultaccount = await this.serviceregister.addAccountSocial(account) as any;   
       if(resultaccount != false){
         var accountLogin = resultaccount as Account;
         if(accountLogin.isActive == false){
@@ -172,13 +95,13 @@ export class SocialloginComponent implements OnInit {
       }
       else{
         // alert('Đăng nhập thất bại');
-        this.toast.toastError('Đăng nhập thất bại');
+        this.toast.toastError('Tài khoản bị khóa');
 
       }
     }
     catch (e) {
       // alert('Đăng nhập thất bại');
-      this.toast.toastError('Đăng nhập thất bại');
+      //this.toast.toastError('Đăng nhập thất bại');
 
     }
   };
@@ -193,7 +116,7 @@ export class SocialloginComponent implements OnInit {
         var account = result as Account;
         if(account.isActive == false){
           // alert('Đăng nhập thất bại');
-          this.toast.toastError('Đăng nhập thất bại');
+          this.toast.toastError('Tài khoản bị khóa');
 
         }
         else{
@@ -226,7 +149,7 @@ export class SocialloginComponent implements OnInit {
     catch(e) 
     {
       console.log(e)
-      this.toast.toastError('Tài khoản không tồn tại!');
+      //this.toast.toastError('Tài khoản không tồn tại!');
 
       // alert('Tài khoản không tồn tại!');
     }
@@ -243,7 +166,6 @@ export class SocialloginComponent implements OnInit {
         var user = confirmationResult.user;
         this.email = user.email;
         this.userName = user.displayName;
-        //this.createNewAccountSocial();
         this.search(this.email)
       }).catch(function(error) {
         // Handle Errors here.
@@ -257,28 +179,28 @@ export class SocialloginComponent implements OnInit {
       });
   }
 
-  public async facebookSignin(){
-    const provider = new firebase.auth.FacebookAuthProvider();
+  // public async facebookSignin(){
+  //   const provider = new firebase.auth.FacebookAuthProvider();
 
-    firebase.auth().signInWithPopup(provider)
-      .then((confirmationResult) => {
-         // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = confirmationResult.credential.signInMethod;
-        // The signed-in user info.
-        var user = confirmationResult.user;
-        console.log(user.providerData);
-        //this.createNewAccountSocial();
-      }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        console.log('Can not login', error);
-      });
-  }
+  //   firebase.auth().signInWithPopup(provider)
+  //     .then((confirmationResult) => {
+  //        // This gives you a Google Access Token. You can use it to access the Google API.
+  //       var token = confirmationResult.credential.signInMethod;
+  //       // The signed-in user info.
+  //       var user = confirmationResult.user;
+  //       console.log(user.providerData);
+  //       //this.createNewAccountSocial();
+  //     }).catch(function(error) {
+  //       // Handle Errors here.
+  //       var errorCode = error.code;
+  //       var errorMessage = error.message;
+  //       // The email of the user's account used.
+  //       var email = error.email;
+  //       // The firebase.auth.AuthCredential type that was used.
+  //       var credential = error.credential;
+  //       console.log('Can not login', error);
+  //     });
+  // }
 
   
  /*/ 

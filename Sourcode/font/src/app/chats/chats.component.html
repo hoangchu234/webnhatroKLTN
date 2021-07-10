@@ -227,7 +227,7 @@
                             <ul class="nav nav-tabs nav-tabs--vertical msg-pepl-list " style="overflow: scroll;">
                                 <li class="nav-item unread">
                                     <a class="active" href="#link{{fisrtUserHasChat.click}}" data-toggle="tab" (click)="clickChangeRoute(fisrtUserHasChat.idSender,fisrtUserHasChat.idReceiver)">
-                                        <figure><img [src]="fisrtUserHasChat.image" alt="">
+                                        <figure><img class="img1" [src]="fisrtUserHasChat.image" alt="">
                                             <span class="status f-online"></span>
                                         </figure>
                                         <div class="user-name">
@@ -238,7 +238,7 @@
                                 </li>
                                 <li class="nav-item" *ngFor="let data of listUserHasChat">
                                     <a class="" href="#link{{data.click}}" data-toggle="tab" (click)="clickChangeRoute(data.idSender,data.idReceiver)">
-                                        <figure><img [src]="data.image" alt="">
+                                        <figure><img class="img1" [src]="data.image" alt="">
                                             <span class="status f-away"></span>
                                         </figure>
                                         <div class="user-name">
@@ -293,7 +293,7 @@
                                     <div class="message-writing-box">
                                         <form method="post">
                                             <div class="text-area">
-                                                <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="write your message here..">
+                                                <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="Nhập tin nhắn của bạn tại đây">
                                                 <button type="submit" style="background-color: white;border: none;"><i class="fa fa-paper-plane-o" (click)="sendMessage()"></i></button>
                                             </div>
                                         </form>
@@ -306,7 +306,7 @@
                                 <div class="col-lg-12">
                                     <div class="mesg-area-head">
                                         <div class="active-user">
-                                            <figure><img [src]="data.image" alt="">
+                                            <figure><img class="img1" [src]="data.image" alt="">
                                                 <span class="status f-away"></span>
                                             </figure>
                                             <div>
@@ -339,7 +339,7 @@
                                     <div class="message-writing-box">
                                         <form method="post">
                                             <div class="text-area">
-                                                <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="write your message here..">
+                                                <input type="text" [value]="txtMessage" (input)="txtMessage=$event.target.value" (keydown.enter)="sendMessage()" placeholder="Nhập tin nhắn của bạn tại đây">
                                                 <button type="submit" style="background-color: white;border: none;"><i class="fa fa-paper-plane-o" (click)="sendMessage()"></i></button>
                                             </div>
                                         </form>

@@ -9,6 +9,7 @@ import {Observable, Subject} from 'rxjs';
 import {startWith, map, debounce ,distinctUntilChanged,switchMap} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { New } from 'src/app/model/New';
 
 export interface Type{
   id:number;
@@ -23,8 +24,10 @@ export interface Type{
 export class AdminPublishComponent implements OnInit {
 
   nametophead = "Quản lý đăng tin"
-  newTypes: NewType [];
-  newType = "";
+  newTypes: NewType[];
+  newType: NewType = {id:"", name:"", details:null};
+  news:Array<New> = [];
+  new: New = {id:null, newName:""}
 
   statuss:Array<Type> = [
     {id: 0, text:'Tất cả'}, 
@@ -33,7 +36,7 @@ export class AdminPublishComponent implements OnInit {
   ];
   status: string= "";
 
-  motels: Motel[];
+  motels: Motel[] = [];
   searchmotels: Motel[] = [];
 
   //pagination
@@ -44,39 +47,53 @@ export class AdminPublishComponent implements OnInit {
 
   constructor(private router: ActivatedRoute,private route: Router,public dialog: MatDialog,private authenticationService: AuthenticationService,private motelService: MotelService,private typeservice:TypeofnewService) { 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-    this.getMotels();
+    this.getMotels("0","2","1");
   }
 
-  ngOnInit(): void {
-    this.newType = "Tất cả";
+  async ngOnInit(): Promise<void> {
     this.status = "Tất cả"
     this.getTypes();
+    await this.getDataNew();
   }
 
   public handlePageChange(event) {
     this.page = event;
   }
 
-  public onChangeNewType(event: any){
+  async getDataNew(){
+    this.news = await this.motelService.getNew() as New[];
+    this.newTypes.shift();
+    this.newType = this.newTypes[0];
+  }
+
+
+  async onChangeNew(event: any){
+    let value = event.target.value;
+    this.new = this.news.find(a => a.id == value);
+
+    if(this.status == "Tất cả"){
+      await this.getMotels("0", this.newType.id, this.new.id.toString());
+    }
+    if(this.status == "Tin đã duyệt"){
+      await this.getMotels("1", this.newType.id, this.new.id.toString());
+    }
+    if(this.status == "Tin chưa duyệt"){
+      await this.getMotels("2", this.newType.id, this.new.id.toString());
+    }
+  }
+  
+  public async onChangeNewType(event: any){
     let value = event.target.value;
     var city = this.newTypes.find(a => a.id == value);
-    this.newType = city.name;
-    if((this.status == "Tất cả" && this.newType != "Tất cả") || this.status == "Tất cả" && this.newType != "Tất cả"){
-      this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType);
+    this.newType = city;
+    if(this.status == "Tất cả"){
+      await this.getMotels("0", this.newType.id, this.new.id.toString());
     }
-    else if(this.status == "Tất cả" && this.newType == "Tất cả"){
-      this.motels = this.searchmotels;
+    if(this.status == "Tin đã duyệt"){
+      await this.getMotels("1", this.newType.id, this.new.id.toString());
     }
-    else if(this.status != "Tất cả" && this.newType == "Tất cả"){
-      this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType);
-    }
-    else{
-      if(this.status == "Tin đã duyệt"){
-        this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType && motel.verify == true);
-      }
-      if(this.status == "Tin chưa duyệt"){
-        this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType && motel.verify == false);
-      }
+    if(this.status == "Tin chưa duyệt"){
+      await this.getMotels("2", this.newType.id, this.new.id.toString());
     }
   }
 
@@ -87,94 +104,83 @@ export class AdminPublishComponent implements OnInit {
     this.newTypes = await this.typeservice.getTypes() as NewType [];
   }
 
-  public loadDataHot(motel){
-    for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin Hot")
-      {
-        this.searchmotels.push(motel[i])
-      }
-    }
-  }
+  // public loadDataHot(motel){
+  //   for(let i = 0; i< motel.length; i++){
+  //     if(motel[i].typeservice == "1")
+  //     {
+  //       this.searchmotels.push(motel[i])
+  //     }
+  //   }
+  // }
 
-  public loadData3(motel){
-    for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 3")
-      {
-        this.searchmotels.push(motel[i])
-      }
-    }
-  }
+  // public loadData3(motel){
+  //   for(let i = 0; i< motel.length; i++){
+  //     if(motel[i].typeservice == "2")
+  //     {
+  //       this.searchmotels.push(motel[i])
+  //     }
+  //   }
+  // }
 
-  public loadData2(motel){
-    for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 2")
-      {
-        this.searchmotels.push(motel[i])
-      }
-    }
-  }
+  // public loadData2(motel){
+  //   for(let i = 0; i< motel.length; i++){
+  //     if(motel[i].typeservice == "3")
+  //     {
+  //       this.searchmotels.push(motel[i])
+  //     }
+  //   }
+  // }
 
-  public loadData1(motel){
-    for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin VIP 1")
-      {
-        this.searchmotels.push(motel[i])
-      }
-    }
-  }
+  // public loadData1(motel){
+  //   for(let i = 0; i< motel.length; i++){
+  //     if(motel[i].typeservice == "4")
+  //     {
+  //       this.searchmotels.push(motel[i])
+  //     }
+  //   }
+  // }
 
-  public loadDataThuong(motel){
-    for(let i = 0; i< motel.length; i++){
-      if(motel[i].typeservice == "Tin thường")
-      {
-        this.searchmotels.push(motel[i])
-      }
-    }
-  }
+  // public loadDataThuong(motel){
+  //   for(let i = 0; i< motel.length; i++){
+  //     if(motel[i].typeservice == "5")
+  //     {
+  //       this.searchmotels.push(motel[i])
+  //     }
+  //   }
+  // }
 
-  public async getMotels(){
+  public async getMotels(status: string, type: string, newT:string){
     /*this.motelService.getmoteladmin().subscribe(getmotel => {
       
     })*/
-    const result = await this.motelService.getmoteladmin() as Motel[];
-    this.loadDataHot(result);
-    this.loadData1(result);
-    this.loadData2(result);
-    this.loadData3(result);    
-    this.loadDataThuong(result);
+    const result = await this.motelService.getmoteladmin(status, type,newT) as Motel[];
+    if(this.motels.length != 0){
+      this.motels.splice(0 , this.motels.length);
+    }
+    // this.loadDataHot(result);
+    // this.loadData1(result);
+    // this.loadData2(result);
+    // this.loadData3(result);    
+    // this.loadDataThuong(result);
 
-    this.motels = this.searchmotels
+    this.motels = result
     this.totalRecord = this.motels.length;
   }
 
-  public onChangeStatus(event: any)
+  public async onChangeStatus(event: any)
   {
     let value = event.target.value;
     var name = this.statuss[value].text.toString();
     this.status = name;
-    if((this.newType == "Tất cả" && this.status != "Tất cả") || (this.status == "Tất cả" && this.newType != "Tất cả")){
-      if(this.status == "Tin đã duyệt"){
-        this.motels = this.searchmotels.filter(motel => motel.verify == true);
-      }
-      if(this.status == "Tin chưa duyệt"){
-        this.motels = this.searchmotels.filter(motel => motel.verify == false);
-      }
+    if(this.status == "Tất cả"){
+      await this.getMotels("0", this.newType.id, this.new.id.toString());
     }
-    else if(this.status == "Tất cả" && this.newType == "Tất cả"){
-      this.motels = this.searchmotels;
+    if(this.status == "Tin đã duyệt"){
+      await this.getMotels("1", this.newType.id, this.new.id.toString());
     }
-    else if(this.status != "Tất cả" && this.newType == "Tất cả"){
-      this.motels = this.searchmotels.filter(motel => motel.detail.typeofnew.name == this.newType);
+    if(this.status == "Tin chưa duyệt"){
+      await this.getMotels("2", this.newType.id, this.new.id.toString());
     }
-    else{
-      if(this.status == "Tin đã duyệt"){
-        this.motels = this.searchmotels.filter(motel => motel.verify == true && motel.detail.typeofnew.name == this.newType);
-      }
-      if(this.status == "Tin chưa duyệt"){
-        this.motels = this.searchmotels.filter(motel => motel.verify == false && motel.detail.typeofnew.name == this.newType);
-      }
-    }
-
   }
 
 
