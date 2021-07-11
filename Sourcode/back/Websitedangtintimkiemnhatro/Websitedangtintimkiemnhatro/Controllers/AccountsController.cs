@@ -232,7 +232,8 @@ namespace Websitedangtintimkiemnhatro.Controllers
             account.User.Gender = true;
             account.User.PubishFree = 3;
             _context.Users.Add(account.User);
-            
+            await _context.SaveChangesAsync();
+
 
             return CreatedAtAction("GetAccount", new { id = account.Id }, account);
         }
@@ -247,10 +248,6 @@ namespace Websitedangtintimkiemnhatro.Controllers
             account.RoleId = 1;
             account.IsHD = true;
 
-            // hash password
-            String passwordHash = BC.HashPassword(account.Password);
-            account.Password = passwordHash;
-
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
@@ -260,7 +257,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
             account.User.Gender = true;
             account.User.PubishFree = 3;
             _context.Users.Add(account.User);
-
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAccount", new { id = account.Id }, account);
         }

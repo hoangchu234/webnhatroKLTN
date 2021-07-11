@@ -1,17 +1,18 @@
 <div class="col-md-12" style="padding: 0px;">
   <div style="text-align: center;">THÊM NHÂN VIÊN</div>
-    <div class="row" [formGroup]="range">
+    <div class="row" >
         <div class="col-md-4" >
           <div style="margin-top:20px;padding: 5px;">Họ và tên</div>         
           <div style="margin-top:20px;padding: 5px;">Giới tính</div>          
           <div style="margin-top:20px;padding: 5px;">Ngày sinh</div>        
-          <div style="margin-top:20px;padding: 5px;">Địa chỉ</div>         
+          <div style="margin-top:20px;padding: 5px;">Địa chỉ</div>   
+          <div style="margin-top:20px;padding: 5px;">Số điện thoại</div>          
           <div style="margin-top:20px;padding: 5px;">Username</div>  
           <div style="margin-top:20px;padding: 5px;">Password</div>
         </div>
         <div class="col-md-8" >
           <div style="height: 30px;padding: 5px;margin-top:18px;">
-            <input formControlName="hovaten" style="width: 100%;padding: 5px;border: 1px solid black;"  >
+            <input [(ngModel)]="hovaten" ngDefaultControl name="Name" style="width: 100%;padding: 5px;border: 1px solid black;"  >
           </div>
           <div class="btn-group p-2 link-secondary select-control select-cate" style="width: 100%;padding: 5px;margin-top: 5px;margin-left: 5px;" >
             <a *ngIf="genderShow else elseDefferentGender" class="font" style="color:black;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">{{genderShow}}<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a>
@@ -26,7 +27,7 @@
           <div style="padding: 0px;margin-left: 5px;" >
             <mat-form-field class="example-full-width" appearance="fill" >
               <mat-label style="margin-top:50px">Chọn ngày sinh</mat-label>
-              <input style="margin-top: -10px;" matInput formControlName="birthday"  [matDatepicker]="picker">
+              <input style="margin-top: -10px;" matInput [(ngModel)]="birthday" ngDefaultControl name="Birthday"  [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"  >
                 <mat-icon matDatepickerToggleIcon style="font-size: 13px;margin-right: 14px;" class="fa fa-calendar">
                 </mat-icon>
@@ -35,13 +36,16 @@
             </mat-form-field>
           </div>
           <div style="height: 30px;padding: 5px;margin-top: -20px;">
-            <input formControlName="address" style="width: 100%;padding: 5px;border: 1px solid black;"  >
+            <input  [(ngModel)]="address" ngDefaultControl name="Address" style="width: 100%;padding: 5px;border: 1px solid black;"  >
+          </div>
+          <div style="height: 30px;padding: 5px;margin-top: -20px;">
+            <input  [(ngModel)]="phone" ngDefaultControl name="Phone" style="width: 100%;padding: 5px;border: 1px solid black;"  >
           </div>
           <div style="height: 30px;padding: 5px;margin-top:18px;">
-            <input formControlName="username" style="width: 100%;padding: 5px;border: 1px solid black;"  >
+            <input [(ngModel)]="username" ngDefaultControl name="Username" style="width: 100%;padding: 5px;border: 1px solid black;"  >
           </div>
           <div style="height: 30px;padding: 5px;margin-top:18px;">
-            <input formControlName="password" style="width: 100%;padding: 5px;border: 1px solid black;"  >
+            <input  [(ngModel)]="password" ngDefaultControl name="Password" style="width: 100%;padding: 5px;border: 1px solid black;"  >
           </div>
         </div>
     </div>

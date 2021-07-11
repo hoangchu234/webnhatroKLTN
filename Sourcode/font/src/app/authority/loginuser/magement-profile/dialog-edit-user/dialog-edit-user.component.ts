@@ -69,6 +69,7 @@ export class DialogEditUserComponent implements OnInit {
           this.userService.updateUser(user).subscribe(update => {
             // alert("Lưu thành công")
             this.toast.toastSuccess('Lưu thành công');
+            this.dialogRef.close();
           });
         })
       })
@@ -90,6 +91,7 @@ export class DialogEditUserComponent implements OnInit {
     this.userService.updateUser(user).subscribe(update => {
       // alert("Lưu thành công")
       this.toast.toastSuccess('Lưu thành công');
+      this.dialogRef.close();
     });
    }
    

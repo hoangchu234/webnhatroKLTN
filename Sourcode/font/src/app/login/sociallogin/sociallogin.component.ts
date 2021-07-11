@@ -46,9 +46,10 @@ export class SocialloginComponent implements OnInit {
   public async search(email) {
     this.checkmail = await this.userService.getsearchemail(email);
 
-    console.log(this.checkmail.length)
     if (this.checkmail.length == 0) {
       this.createNewAccountSocial();
+      console.log(this.checkmail.length)
+
     }
     else {
       this.login();

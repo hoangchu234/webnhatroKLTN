@@ -4,6 +4,7 @@ import { Employee } from 'src/app/model/Employee';
 import { EmployeesService } from 'src/app/services/employees.service';
 import {FormGroup, FormControl} from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export interface Type{
   id:number;
@@ -23,40 +24,79 @@ export class AddEmployeeComponent implements OnInit {
   ];
   genderShow = "";
 
-  range = new FormGroup({
-    hovaten: new FormControl(),
-    username: new FormControl(),
-    password: new FormControl(),
-    address: new FormControl(),
-    birthday: new FormControl()
-  });
+  hovaten: ""
+  username: ""
+  password: ""
+  address: ""
+  birthday: ""
 
-  constructor(private employeesService: EmployeesService,private toast: ToastService) { }
+  phone: "";
+  constructor(public dialogRef: MatDialogRef<AddEmployeeComponent>,private employeesService: EmployeesService,private toast: ToastService) { }
 
   ngOnInit(): void {
   }
 
 
   add(){
-    var check = this.range.value.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*?[#?!@$%^&*-])/);
+    if(this.validationPhone(this.phone) == -2){
+      this.toast.toastInfo('Số điện thoại của bạn không đúng định dạng!');
+      // alert('Số điện thoại của bạn không đúng định dạng!');
+    }
+    else if(this.validationPhone(this.phone) == -2){
+      // alert('Số điện thoại của bạn hợp lệ!');
+      this.toast.toastInfo('Số điện thoại của bạn hợp lệ!');
 
-    if(check != null){
-      var employee = new Employee;
-      employee.hovaTen = this.range.value.hovaten;
-      employee.addressOne = this.range.value.address;
-      employee.gender = this.genderShow
-      employee.doB = this.convertDateTimeCSharp(this.range.value.birthday);
-      var account =  new Account;
-      account.username = this.range.value.username;
-      account.password = this.range.value.password;
-      account.employee = employee;
+    }
+    else if(this.validationPhone(this.phone) == -2){
+      // alert('Bạn chưa điền số điện thoại!');
+      this.toast.toastInfo('Bạn chưa điền số điện thoại!');
 
-      this.employeesService.addemployee(account).subscribe()
     }
     else{
-      this.toast.toastInfo('Mật khẩu phải có các ký tự đặc biệt, có các số hay in hoa chữ cái đầu');
+      var check = this.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*?[#?!@$%^&*-])/);
+
+      if(check != null){
+        if(Number(this.calculateDiff(this.birthday)) > 18){
+          var employee = new Employee;
+          employee.hovaTen = this.hovaten;
+          employee.addressOne = this.address;
+          employee.gender = this.genderShow
+          
+          employee.doB = this.convertDateTimeCSharp(this.birthday);
+          var account =  new Account;
+          account.username = this.username;
+          account.password = this.password;
+          account.employee = employee;
+          account.phone = this.phone;
+  
+          this.employeesService.addemployee(account).subscribe()
+          this.dialogRef.close();
+        }
+       
+      }
+      else{
+        this.toast.toastInfo('Mật khẩu phải có các ký tự đặc biệt, có các số hay in hoa chữ cái đầu');
+      }
+    } 
+  }
+
+  validationPhone(mobile){
+    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    if(mobile !==''){
+        if (vnf_regex.test(mobile) == false) 
+        {
+          // alert('Số điện thoại của bạn không đúng định dạng!');
+          return -2;
+        }
+        else{
+          return -1;
+          // alert('Số điện thoại của bạn hợp lệ!');
+        }
     }
-    
+    else{
+      // alert('Bạn chưa điền số điện thoại!');
+      return 0;
+    }
   }
 
   onClickGender (gen: Type)  {
@@ -78,5 +118,14 @@ export class AddEmployeeComponent implements OnInit {
     console.log('time: ', time);
 
     return time;
+  }
+
+
+  calculateDiff(dateSent){
+    let currentDate = new Date();
+    dateSent = new Date(dateSent);
+
+    return currentDate.getFullYear() - dateSent.getFullYear();
+    // return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(), dateSent.getDate()) ) /(1000 * 60 * 60 * 24));
   }
 }

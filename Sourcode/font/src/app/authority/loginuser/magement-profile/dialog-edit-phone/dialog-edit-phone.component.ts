@@ -136,9 +136,9 @@ export class DialogEditPhoneComponent implements OnInit {
           account.phone = this.phone;
 
           this.userService.updateAccountPhone(account).subscribe(update => {
-            console.log(update)
             this.toast.toastSuccess('Lưu thành công');
               // alert("Lưu thành công")
+            this.dialogRef.close();
           });
         }).catch(err =>{
           // alert(err);
