@@ -97,7 +97,7 @@ class _FindState extends State<Find> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Lọc tin",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
+        title: Text("HOURS",style:TextStyle( color: Colors.black,fontWeight: FontWeight.bold)),
         titleSpacing: 5,
         backgroundColor: Colors.white,
 
@@ -213,30 +213,6 @@ class _FindState extends State<Find> {
       ),
     );
   }
-  // Widget buildFilter(String filterName){
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 12),
-  //     margin: EdgeInsets.only(right: 12),
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.all(
-  //         Radius.circular(5),
-  //       ),
-  //       border: Border.all(
-  //         color: Colors.grey[300],
-  //         width: 1,
-  //       )
-  //     ),
-  //     child: Center(
-  //       child: Text(
-  //         filterName,
-  //         style: TextStyle(
-  //           fontSize: 16,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
   List<Widget> buildFilter() {
     List<Widget> list = [];
     for (var i = 1; i < type_name.length; i++) {
@@ -280,9 +256,6 @@ class _FindState extends State<Find> {
 
     return list;
   }
-
-
-
   List<Widget> buildProperties(){
     List<Widget> list = [];
     var i=0;
@@ -343,7 +316,6 @@ class _FindState extends State<Find> {
     return list;
 
   }
-
   Widget buildProperty(Property property, int index){
     return GestureDetector(
         onTap: () {
@@ -720,8 +692,6 @@ class _FindState extends State<Find> {
 
     );
   }
-
-
   void _showBottomSheet(){
     showModalBottomSheet(
         context: context,

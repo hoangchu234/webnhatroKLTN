@@ -222,7 +222,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
     this.router.navigateByUrl('/user/thong-tin-hinh-anh');
   }
 
-  prevous(){
+  async prevous(){
     let motelnew = new Motel();
     motelnew = JSON.parse(localStorage.getItem(StorageService.motelStorage));
     if(motelnew.bill != undefined){
@@ -241,10 +241,11 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
       this.getDataTimePrevous(motelnew.bill.timeChoice,data);
     }
     else{
-      this.getDataNew();
-      this.getDataTime();
+      await this.getDataNew();
+      await this.getServicePrices();
+      await this.getDataTime();
     }
-    this.getServicePrices();
+    
   }
 
   public step6(){
@@ -273,7 +274,10 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
   // }
 
   public tinhTien(){
-    var data = this.servicePrice.find(a => Number(a.typeofnew) == this.new.id);
+
+    var data = this.servicePrice.find(a => a.typeofnew == this.new.newName);
+
+
     if(this.time == "Đăng theo ngày"){
       this.price = data.priceDate.split(" ")[0];
       this.type = this.timePublish.split(" ");

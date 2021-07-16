@@ -7,6 +7,7 @@ import 'package:real_estate/filter.dart';
 import 'package:real_estate/detail.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'API.dart';
+import 'package:lazy_loading_list/lazy_loading_list.dart';
 
 String dropdownValue = 'One';
 class Search extends StatefulWidget {
@@ -32,13 +33,14 @@ class _SearchState extends State<Search> {
         var jsRes = json.decode(utf8.decode(res.bodyBytes));
         List<dynamic> list = jsRes;
         for(int i=0;i<list.length;i++){
-          Type p = new Type(list.elementAt(i)['id'],list.elementAt(i)['name'],list.elementAt(i)['details']);
+          Type p = new Type(list.elementAt(i)['id'],
+              list.elementAt(i)['name'],list.elementAt(i)['details']);
           type_name.add(p.name.toString());
         }
       });
     });
   }
-
+  
   _getMotel(int type) async{
     API.getMotels(0,0,-1,-1,type).then((res) {
       setState(() {
@@ -52,8 +54,10 @@ class _SearchState extends State<Search> {
           for(int i=0;i<list.length;i++){
             List<dynamic> list_image =  list.elementAt(i)['images'];
             Property p = new Property(list.elementAt(i)['typemotel'], list.elementAt(i)['title'], list.elementAt(i)['price'],
-              list.elementAt(i)['address'],list.elementAt(i)['phone'], list.elementAt(i)['numberBath'] , list.elementAt(i)['numberLiving'] , list.elementAt(i)['time'], list.elementAt(i)['description'],
-              list_image.elementAt(0)['imageMotel'], list_image.elementAt(0)['imageMotel'],list.elementAt(i)['typeservice'] , list.elementAt(i)['user']['hovaten'], list.elementAt(i)['user']['image'],[
+              list.elementAt(i)['address'],list.elementAt(i)['phone'],
+              list.elementAt(i)['numberBath'] , list.elementAt(i)['numberLiving'] , list.elementAt(i)['time'], list.elementAt(i)['description'],
+              list_image.elementAt(0)['imageMotel'], list_image.elementAt(0)['imageMotel'],
+              list.elementAt(i)['typeservice'] , list.elementAt(i)['user']['hovaten'], list.elementAt(i)['user']['image'],[
                 list_image.elementAt(0)['imageMotel'],
                 list_image.elementAt(0)['imageMotel'],
                 list_image.elementAt(0)['imageMotel'],
@@ -199,30 +203,6 @@ class _SearchState extends State<Search> {
       ),
     );
   }
-  // Widget buildFilter(String filterName){
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 12),
-  //     margin: EdgeInsets.only(right: 12),
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.all(
-  //         Radius.circular(5),
-  //       ),
-  //       border: Border.all(
-  //         color: Colors.grey[300],
-  //         width: 1,
-  //       )
-  //     ),
-  //     child: Center(
-  //       child: Text(
-  //         filterName,
-  //         style: TextStyle(
-  //           fontSize: 16,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
   List<Widget> buildFilter() {
     List<Widget> list = [];
     for (var i = 1; i < type_name.length; i++) {
@@ -266,9 +246,6 @@ class _SearchState extends State<Search> {
 
     return list;
   }
-
-
-
   List<Widget> buildProperties(){
     List<Widget> list = [];
     var i=0;
@@ -329,7 +306,6 @@ class _SearchState extends State<Search> {
     return list;
 
   }
-
   Widget buildProperty(Property property, int index, String variable){
     return GestureDetector(
       onTap: () {
@@ -386,7 +362,7 @@ class _SearchState extends State<Search> {
                                     Container(
                                       decoration: BoxDecoration(
                                         // color: Colors.yellow[700],
-                                        color: variable == "Tin Hot" ? Colors.redAccent[700] :  variable == "Tin VIP 3" ? Colors.amber : variable == "Tin VIP 2" ? Colors.blueAccent : variable == "Tin VIP 1" ? Colors.red : Colors.green, // last black color will become default color
+                                        color: variable == "1" ? Colors.redAccent[700] :  variable == "4" ? Colors.amber : variable == "3" ? Colors.blueAccent : variable == "2" ? Colors.red : Colors.green, // last black color will become default color
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(5),
                                         ),
@@ -394,8 +370,42 @@ class _SearchState extends State<Search> {
                                       width: 80,
                                       padding: EdgeInsets.symmetric(vertical: 4,),
                                       child: Center(
-                                        child: Text(
-                                          property.typeService,
+
+                                        child: property.typeService=="1"?  Text(
+                                          "Tin hot",
+                                          // property.typeService ,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ): property.typeService=="2"?Text(
+                                          "Tin VIP1",
+                                          // property.typeService ,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ):property.typeService=="3"?Text(
+                                          "Tin VIP2",
+                                          // property.typeService ,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ):property.typeService=="4"?Text(
+                                          "Tin VIP3",
+                                          // property.typeService ,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ):Text(
+                                          "Tin thường",
+                                          // property.typeService ,
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -422,7 +432,7 @@ class _SearchState extends State<Search> {
                     child:Column(
                       children:[
                         Text(
-                          property.name,
+                          property.name ,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(
@@ -466,249 +476,17 @@ class _SearchState extends State<Search> {
                             fontSize: 10,
                           ),
                         ),
-
-                        // Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     DropdownButton<String>(
-                        //       value: dropdownValue,
-                        //       icon: const Icon(Icons.arrow_downward),
-                        //       iconSize: 24,
-                        //       elevation: 16,
-                        //       style: const TextStyle(color: Colors.deepPurple),
-                        //       underline: Container(
-                        //         height: 2,
-                        //         color: Colors.deepPurpleAccent,
-                        //       ),
-                        //       onChanged: (newValue) {
-                        //         setState(() {
-                        //           dropdownValue = newValue;
-                        //         });
-                        //       },
-                        //       items: <String>['One', 'Two', 'Free', 'Four','five','six','a','a','a','a','a','a','a','a','a','a','a','a','a','a']
-                        //           .map<DropdownMenuItem<String>>((String value) {
-                        //         return DropdownMenuItem<String>(
-                        //           value: value,
-                        //           child: Text(value),
-                        //         );
-                        //
-                        //       }).toList(),
-                        //
-                        //     )
-                        //
-                        //
-                        //
-                        //   ],)
                       ]
                     )
 
                   )
                 ]
             ),),
-
-
-
           ]
-
         ),
       )
-      // child: Column(
-      //
-      //    children: [
-      //    Card(
-      //     margin: EdgeInsets.only(bottom: 24),
-      //     clipBehavior: Clip.antiAlias,
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.all(
-      //         Radius.circular(15),
-      //       ),
-      //     ),
-      //
-      //     child: Container(
-      //       height: 210,
-      //       decoration: BoxDecoration(
-      //         image: DecorationImage(
-      //           // image: AssetImage(property.frontImage),
-      //           image: NetworkImage(property.frontImage),
-      //           fit: BoxFit.cover,
-      //         ),
-      //       ),
-      //       child: Container(
-      //         padding: EdgeInsets.all(20),
-      //         decoration: BoxDecoration(
-      //           gradient: LinearGradient(
-      //             begin: Alignment.topCenter,
-      //             end: Alignment.bottomCenter,
-      //             colors: [
-      //                 Colors.transparent,
-      //                 Colors.black.withOpacity(0.7),
-      //             ],
-      //           ),
-      //         ),
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: [
-      //
-      //
-      //             Container(
-      //               decoration: BoxDecoration(
-      //                 color: Colors.yellow[700],
-      //                 borderRadius: BorderRadius.all(
-      //                   Radius.circular(5),
-      //                 ),
-      //               ),
-      //               width: 80,
-      //               padding: EdgeInsets.symmetric(vertical: 4,),
-      //               child: Center(
-      //                 child: Text(
-      //                   "Cho " + property.label,
-      //                   style: TextStyle(
-      //                     color: Colors.white,
-      //                     fontSize: 14,
-      //                     fontWeight: FontWeight.bold,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //
-      //             Expanded(
-      //               child: Container(),
-      //             ),
-      //
-      //             Column(
-      //               children: [
-      //
-      //                 Row(
-      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                   children: [
-      //
-      //                     Text(
-      //                       property.name,
-      //                       style: TextStyle(
-      //                         color: Colors.white,
-      //                         fontSize: 18,
-      //                         fontWeight: FontWeight.bold,
-      //                       ),
-      //                     ),
-      //
-      //                     Text(
-      //                       "đ" + property.price,
-      //                       style: TextStyle(
-      //                         color: Colors.white,
-      //                         fontSize: 18,
-      //                         fontWeight: FontWeight.bold,
-      //                       ),
-      //                     ),
-      //
-      //                   ],
-      //                 ),
-      //
-      //                 SizedBox(
-      //                   height: 4,
-      //                 ),
-      //
-      //                 Row(
-      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                   children: [
-      //
-      //                     Row(
-      //                       children: [
-      //
-      //                         Icon(
-      //                           Icons.location_on,
-      //                           color: Colors.white,
-      //                           size: 14,
-      //                         ),
-      //
-      //                         SizedBox(
-      //                           width: 4,
-      //                         ),
-      //
-      //                         Text(
-      //                           property.location,
-      //                           style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 14,
-      //                           ),
-      //                         ),
-      //
-      //                         SizedBox(
-      //                           width: 8,
-      //                         ),
-      //
-      //                         Icon(
-      //                           Icons.zoom_out_map,
-      //                           color: Colors.white,
-      //                           size: 16,
-      //                         ),
-      //
-      //                         SizedBox(
-      //                           width: 4,
-      //                         ),
-      //
-      //                         Text(
-      //                           property.sqm + " m²",
-      //                           style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 14,
-      //                           ),
-      //                         ),
-      //
-      //                       ],
-      //                     ),
-      //
-      //                     Row(
-      //                       children: [
-      //
-      //                         Icon(
-      //                           Icons.star,
-      //                           color: Colors.yellow[700],
-      //                           size: 14,
-      //                         ),
-      //
-      //                         SizedBox(
-      //                           width: 4,
-      //                         ),
-      //
-      //                         Text(
-      //                           property.review + " ngày đăng",
-      //                           style: TextStyle(
-      //                             color: Colors.white,
-      //                             fontSize: 14,
-      //                           ),
-      //                         ),
-      //
-      //                       ],
-      //                     ),
-      //
-      //                   ],
-      //                 ),
-      //               ],
-      //             ),
-      //
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      //      Container(
-      //        margin: EdgeInsets.only(bottom: 44),
-      //
-      //        child:Text(
-      //          property.name,
-      //          style: TextStyle(
-      //            color: Colors.black,
-      //            fontSize: 18,
-      //            fontWeight: FontWeight.bold,
-      //          ),
-      //        ),
-      //      ),
-      //    ],
-      // ),
-
     );
   }
-
-
   void _showBottomSheet(){
     showModalBottomSheet(
       context: context,

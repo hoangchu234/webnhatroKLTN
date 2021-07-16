@@ -95,20 +95,6 @@ class Detail extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: map<Widget>(property.images, (index, url) {
-                    //     return Container(
-                    //       width: 10.0,
-                    //       height: 10.0,
-                    //       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                    //       decoration: BoxDecoration(
-                    //         shape: BoxShape.circle,
-                    //         color: _current == index ? Colors.redAccent : Colors.green,
-                    //       ),
-                    //     );
-                    //   }),
-                    // ),
                     SizedBox(
                       height: 10.0,
                     ),
@@ -159,72 +145,7 @@ class Detail extends StatelessWidget {
                          ],
                        ),
                     ]
-
                   ),
-
-
-                    // child: Column(
-                    //   children: [
-                    //     Text(
-                    //       property.name,
-                    //       style: TextStyle(
-                    //         color: Colors.black,
-                    //         fontSize: 16,
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     ),
-                    //
-                    //     SizedBox(
-                    //       width: 8,
-                    //     ),
-                    //
-                    //     Icon(
-                    //       Icons.zoom_out_map,
-                    //       color: Colors.black,
-                    //       size: 16,
-                    //     ),
-                    //
-                    //     SizedBox(
-                    //       width: 4,
-                    //     ),
-                    //
-                    //     Text(
-                    //       property.sqm + " sq/m",
-                    //       style: TextStyle(
-                    //         color: Colors.white,
-                    //         fontSize: 16,
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     ),
-                    //
-                    //   ],
-                    // ),
-                    //
-                    // child: Row(
-                    //   children: [
-                    //
-                    //     Icon(
-                    //       Icons.star,
-                    //       color: Colors.yellow[700],
-                    //       size: 16,
-                    //     ),
-                    //
-                    //     SizedBox(
-                    //       width: 4,
-                    //     ),
-                    //
-                    //     Text(
-                    //       property.review + " Reviews",
-                    //       style: TextStyle(
-                    //         color: Colors.white,
-                    //         fontSize: 16,
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     ),
-                    //
-                    //   ],
-                    // ),
-
                 ),
               ),
               //số phòng ngủ
@@ -370,69 +291,6 @@ class Detail extends StatelessWidget {
         ),
 
       ),
-    //   bottomNavigationBar: BottomAppBar(
-    //     child: Row(
-    //
-    //       children: [
-    //         Row(
-    //           children: [
-    //             Container(
-    //               height: 65,
-    //               width: 65,
-    //               decoration: BoxDecoration(
-    //                 image: DecorationImage(
-    //                   image: NetworkImage(property.ownerImage),
-    //                   fit: BoxFit.cover,
-    //                 ),
-    //                 shape: BoxShape.circle,
-    //               ),
-    //             ),
-    //             SizedBox(
-    //               width: 16,
-    //             ),
-    //
-    //           ],
-    //         ),
-    //         Row(
-    //           children: [
-    //             Container(
-    //               height: 50,
-    //               width: 50,
-    //               decoration: BoxDecoration(
-    //                 color: Colors.yellow[700].withOpacity(0.1),
-    //                 shape: BoxShape.circle,
-    //               ),
-    //               child: Center(
-    //                 child: Icon(
-    //                   Icons.phone,
-    //                   color: Colors.yellow[700],
-    //                   size: 20,
-    //                 ),
-    //               ),
-    //             ),
-    //             SizedBox(
-    //               width: 16,
-    //             ),
-    //             Container(
-    //               height: 50,
-    //               width: 50,
-    //               decoration: BoxDecoration(
-    //                 color: Colors.yellow[700].withOpacity(0.1),
-    //                 shape: BoxShape.circle,
-    //               ),
-    //               child: Center(
-    //                 child: Icon(
-    //                   Icons.message,
-    //                   color: Colors.yellow[700],
-    //                   size: 20,
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    // )
     );
   }
 
@@ -462,32 +320,6 @@ class Detail extends StatelessWidget {
     );
   }
 
-  List<Widget> buildPhotos(List<String> images){
-    List<Widget> list = [];
-    list.add(SizedBox(width: 12,));
-    for (var i = 0; i < images.length; i++) {
-      list.add(buildPhoto(images[i]));
-    }
-    return list;
-  }
-
-  Widget buildPhoto(String url){
-    return AspectRatio(
-      aspectRatio: 3 / 2,
-      child: Container(
-        margin: EdgeInsets.only(right: 24),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-          image: DecorationImage(
-            image: NetworkImage(url),
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
-    );
-  }
 
 }
 
