@@ -26,7 +26,16 @@ p.test2 {
     text-overflow: ellipsis;
     margin-bottom: 0px;
   } 
-  
+  p.test3 {
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    white-space: nowrap; 
+    width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0px;
+  } 
   p.chu {
     width: 200px;
     overflow: hidden;

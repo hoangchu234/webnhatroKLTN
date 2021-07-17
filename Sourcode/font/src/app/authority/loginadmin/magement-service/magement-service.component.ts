@@ -29,13 +29,34 @@ export class MagementServiceComponent implements OnInit {
   id = "";
   change = true;
 
-  typePriceMotels:Array<Data> = [
+  typePriceMotels1:Array<Data> = [
     {id: 0, text:'đồng'},
     {id: 1, text:'triệu'},
   ];
   typePriceMotel1: string;
+
+  typePriceMotels2:Array<Data> = [
+    {id: 0, text:'đồng'},
+    {id: 1, text:'triệu'},
+  ];
   typePriceMotel2: string;
+
+  typePriceMotels3:Array<Data> = [
+    {id: 0, text:'đồng'},
+    {id: 1, text:'triệu'},
+  ];
   typePriceMotel3: string;
+
+
+  opport:Array<Data> = [
+    {id: 0, text:'triệu'},
+    {id: 1, text:'đồng'},
+  ];
+
+  pre:Array<Data> = [
+    {id: 0, text:'đồng'},
+    {id: 1, text:'triệu'},
+  ];
 
   constructor(private toast: ToastService,private http: HttpClient,private router: Router,private priceSearchService: ServicePriceService) { }
 
@@ -51,19 +72,19 @@ export class MagementServiceComponent implements OnInit {
 
   onChangeTypePriceMote1(event){
     let value = event.target.value;
-    var name = this.typePriceMotels[value].text.toString();
+    var name = this.typePriceMotels1[value].text.toString();
     this.typePriceMotel1 = name;
   }
 
   onChangeTypePriceMote2(event){
     let value = event.target.value;
-    var name = this.typePriceMotels[value].text.toString();
+    var name = this.typePriceMotels2[value].text.toString();
     this.typePriceMotel2 = name;
   }
 
   onChangeTypePriceMote3(event){
     let value = event.target.value;
-    var name = this.typePriceMotels[value].text.toString();
+    var name = this.typePriceMotels3[value].text.toString();
     this.typePriceMotel3 = name;
   }
 
@@ -77,32 +98,37 @@ export class MagementServiceComponent implements OnInit {
 
     if((Number(result.priceDate.split(" ")[0]) / 1000000) < 1){
       this.priceDate = (Number(result.priceDate.split(" ")[0]) / 1000).toString();
-      this.typePriceMotel1 = this.typePriceMotels[0].text;
+      this.typePriceMotel1 = this.typePriceMotels1[0].text;
+      this.typePriceMotels1 = this.pre;
     }
     else{
       this.priceDate = (Number(result.priceDate.split(" ")[0]) / 1000000).toString();
-      this.typePriceMotel1 = this.typePriceMotels[1].text;
-
+      this.typePriceMotel1 = this.typePriceMotels1[1].text;
+      this.typePriceMotels1 = this.opport;
     }
 
     if((Number(result.priceMonth.split(" ")[0]) / 1000000) < 1){
       this.priceMonth = (Number(result.priceMonth.split(" ")[0]) / 1000).toString();
-      this.typePriceMotel3 = this.typePriceMotels[0].text;
+      this.typePriceMotel3 = this.typePriceMotels3[0].text;
+      this.typePriceMotels3 = this.pre;
+
     }
     else{
       this.priceMonth = (Number(result.priceMonth.split(" ")[0]) / 1000000).toString();
-      this.typePriceMotel3 = this.typePriceMotels[1].text;
-
+      this.typePriceMotel3 = this.typePriceMotels3[1].text;
+      this.typePriceMotels3 = this.opport;
     }
 
     if((Number(result.priceWeek.split(" ")[0]) / 1000000) < 1){
       this.priceWeek = (Number(result.priceWeek.split(" ")[0]) / 1000).toString();
-      this.typePriceMotel2 = this.typePriceMotels[0].text;
+      this.typePriceMotel2 = this.typePriceMotels2[0].text;
+      this.typePriceMotels2 = this.pre;
+
     }
     else{
       this.priceWeek = (Number(result.priceWeek.split(" ")[0]) / 1000000).toString();
-      this.typePriceMotel2 = this.typePriceMotels[1].text;
-
+      this.typePriceMotel2 = this.typePriceMotels2[1].text;
+      this.typePriceMotels2 = this.opport;
     }
   }
 

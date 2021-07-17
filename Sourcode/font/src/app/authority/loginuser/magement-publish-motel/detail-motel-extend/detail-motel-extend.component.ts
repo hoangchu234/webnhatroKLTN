@@ -172,9 +172,9 @@ export class DetailMotelExtendComponent implements OnInit {
     // this.new = 'Tin Hot';
     // this.time = 'Đăng theo ngày';
     // this.timePublish = '6 Ngày'
-    this.getDataNew();
-    this.getDataTime();
-    this.getServicePrices();
+    await this.getDataNew();
+    await this.getDataTime();
+    await this.getServicePrices();
 
     this.tinhTien();
   }
@@ -197,7 +197,6 @@ export class DetailMotelExtendComponent implements OnInit {
     this.time = this.times[0].timeName;
     await this.getDataChangeTime(this.times[0].id);
     this.timePublish = this.setArrayChoices[0].changeTimeName;
-    this.tinhTien();
   }
 
   async getDataChangeTime(typeTime: number){
@@ -496,17 +495,20 @@ export class DetailMotelExtendComponent implements OnInit {
     if(this.time == "Đăng theo ngày"){
       this.priceBill = data.priceDate.split(" ")[0];
       this.type = this.timePublish.split(" ");
-      this.totalprice = (Number(this.type[0]))*(Number(this.price));
+      this.totalprice = (Number(this.type[0]))*(Number(this.priceBill));
+      console.log(this.type)
+      console.log(this.price)
+
     }
     else if(this.time == "Đăng theo tuần"){
       this.priceBill = data.priceWeek.split(" ")[0];
       this.type = this.timePublish.split(" ");
-      this.totalprice = (Number(this.type[0]))*(Number(this.price));
+      this.totalprice = (Number(this.type[0]))*(Number(this.priceBill));
     }
     else if(this.time == "Đăng theo tháng"){
       this.priceBill = data.priceMonth.split(" ")[0];
       this.type = this.timePublish.split(" ");
-      this.totalprice = (Number(this.type[0]))*(Number(this.price));
+      this.totalprice = (Number(this.type[0]))*(Number(this.priceBill));
     }
   }
 
@@ -536,7 +538,8 @@ export class DetailMotelExtendComponent implements OnInit {
                 this.addBill();
                 // alert("Sửa thành công")
                 this.toast.toastSuccess('Sửa thành công');
-                window.location.reload();
+                var link = '/user/quan-ly-dang-tin';
+                window.location.replace(link);
               }
             })
           })
@@ -572,7 +575,8 @@ export class DetailMotelExtendComponent implements OnInit {
                 // alert("Sửa thành công")
                 this.toast.toastSuccess('Sửa thành công');
 
-                window.location.reload();
+                var link = '/user/quan-ly-dang-tin';
+                window.location.replace(link);
               }
             })
           })
@@ -606,6 +610,8 @@ export class DetailMotelExtendComponent implements OnInit {
       if(this.street == undefined){
 
       }
+      this.motelUpdate.verify = false;
+      this.motelUpdate.status = "2"
       this.motelService.updateExtendMotel(this.motelUpdate).subscribe(data => {
         this.addBill();
       });
@@ -613,7 +619,8 @@ export class DetailMotelExtendComponent implements OnInit {
       this.toast.toastSuccess('Sửa thành công');
 
     
-      window.location.reload();
+      var link = '/user/quan-ly-dang-tin';
+      window.location.replace(link);
     }
    
   }
@@ -673,7 +680,8 @@ export class DetailMotelExtendComponent implements OnInit {
     if(this.street == undefined){
 
     }
-    this.motelUpdate.status = "2";
+    this.motelUpdate.verify = false;
+    this.motelUpdate.status = "2"
     this.motelService.updateExtendMotel(this.motelUpdate).subscribe(data => {
       // console.log(data);
     });

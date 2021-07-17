@@ -413,7 +413,6 @@ export class DetailMotelPublishComponent implements OnInit {
     });
   }
 
-
   public loadImage = async () => {
     if(this.image.length != 0 && this.motelImageDelete.length != 0){
       for(let i=0; i< this.image.length;i++){
@@ -425,16 +424,12 @@ export class DetailMotelPublishComponent implements OnInit {
             fileRef.getDownloadURL().subscribe((url) => {
               this.imagesURLFirebare.push(url);
               if(Number(this.image.length) == Number(this.imagesURLFirebare.length)){
-                console.log("1 1")
-                console.log(url)
                 this.updateMotel();
                 this.deleteImageOld();
                 this.addImageNew();
-                // alert("Sửa thành công")
                 this.toast.toastSuccess('Sửa thành công');
-
-                // this.dialogRef.close();
-                this.route.navigate(['/user/quan-ly-dang-tin']);
+                var link = '/user/quan-ly-dang-tin';
+                window.location.replace(link);
               }
             })
           })
@@ -446,11 +441,9 @@ export class DetailMotelPublishComponent implements OnInit {
 
       this.updateMotel();
       this.deleteImageOld();
-      // alert("Sửa thành công")
       this.toast.toastSuccess('Sửa thành công');
-
-      // this.dialogRef.close();
-      window.location.reload();
+      var link = '/user/quan-ly-dang-tin';
+      window.location.replace(link);
     }
 
     if(this.image.length != 0 && this.motelImageDelete.length == 0){
@@ -464,14 +457,11 @@ export class DetailMotelPublishComponent implements OnInit {
               this.imagesURLFirebare.push(url);
               console.log(url)
               if(Number(this.image.length) == Number(this.imagesURLFirebare.length)){
-                console.log("1 0")
                 this.updateMotel();
                 this.addImageNew();
-                // alert("Sửa thành công")
                 this.toast.toastSuccess('Sửa thành công');
-
-                // this.dialogRef.close();
-                window.location.reload();
+                var link = '/user/quan-ly-dang-tin';
+                window.location.replace(link);
               }
             })
           })
@@ -505,14 +495,14 @@ export class DetailMotelPublishComponent implements OnInit {
       if(this.street == undefined){
 
       }
+      this.motelUpdate.verify = false;
+      this.motelUpdate.status = "2"
       this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
-        console.log(data);
+        
       });
-      // alert("Sửa thành công")
       this.toast.toastSuccess('Sửa thành công');
-
-      // this.dialogRef.close();
-      window.location.reload();
+      var link = '/user/quan-ly-dang-tin';
+      window.location.replace(link);
     }
    
   }
@@ -539,7 +529,7 @@ export class DetailMotelPublishComponent implements OnInit {
       this.imageService.postImageMotel(motel).subscribe();
     }
 
-    
+   
   }
 
   public updateMotel(){
@@ -570,7 +560,8 @@ export class DetailMotelPublishComponent implements OnInit {
     if(this.street == undefined){
 
     }
-    this.motelUpdate.status = "2";
+    this.motelUpdate.verify = false;
+    this.motelUpdate.status = "2"
     this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
       // console.log(data);
     });

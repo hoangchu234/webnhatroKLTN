@@ -442,7 +442,28 @@ export class MotelService {
         apikey: environment.keyVietMap,
         text: searchText
       };
-      const url = urlVietMap + '&api-version=1.1';
+      const url = urlVietMap + 'api-version=1.1';
+      console.log(url);
+      console.log(params)
+      // "api-version=1.1&apikey=8f1ec1ae46c3a1ea966640cf0077f1ea8b6950a3030d9d47&text=Phường 12,Quận Tân Bình,Thành phố Hồ Chí Minh, Chung cư k300"
+      return await this.http.get(url,{params}).toPromise();
+    }
+    catch (e) {
+      // console.log(e);
+    }
+  }
+
+  getLocationSearch = async (searchText :string) => {
+    try 
+    {
+      var urlVietMap = environment.urlVietMapSearch;
+      const params = {
+        apikey: environment.keyVietMap,
+        text: searchText
+      };
+      const url = urlVietMap + 'api-version=1.1';
+      console.log(url);
+      console.log(params)
       // "api-version=1.1&apikey=8f1ec1ae46c3a1ea966640cf0077f1ea8b6950a3030d9d47&text=Phường 12,Quận Tân Bình,Thành phố Hồ Chí Minh, Chung cư k300"
       return await this.http.get(url,{params}).toPromise();
     }
@@ -454,6 +475,8 @@ export class MotelService {
   public getMotelDistance = async (city: Number, province: Number, district: Number, street: Number, price: Number, type: Number, distance: string, log: string, lat: string) => {
     try {
       const url = `${this.urlAPI + "/api/Motels/GetMotelByOrderAddDistance"}/${city}/${province}/${district}/${street}/${price}/${type}/${distance}/${log}/${lat}`;
+      console.log(url)
+
       return await this.http.get(url).toPromise();
     }
     catch (error) {

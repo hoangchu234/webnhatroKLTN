@@ -78,11 +78,11 @@ export class MapComponent implements OnInit {
   mymap: any;
   marker: any;
   constructor(public streetService:StreetService,public dictrictService:DictrictService,private priceSearchServer:PriceSearchService,private router:ActivatedRoute,private route: Router,public activerouter:ActivatedRoute,private motelService: MotelService,private cityService: CitiesService, private provinceService: ProvincesService, private typeservice:TypeofnewService) {
-   
+    this.runMap();
+
   }
 
   async ngOnInit() {
-    this.runMap();
     this.firstTime();
 
     await this.getPrices();
@@ -426,40 +426,97 @@ export class MapComponent implements OnInit {
       searchtext = this.search
     }
 
-    if(this.city.name != "Tỉnh thành phố"){
-      searchtext = searchtext + " " + this.city.name
+    if(this.street.name != "Tất cả"){
+      searchtext = searchtext + " ," + this.street.name
     }
-    if(this.province.name != "Quận Huyện"){
-      searchtext = searchtext + " " + this.province.name 
+
+    if(this.district.name != "Tất cả"){
+      searchtext = searchtext + " ," + this.district.name
     }
-    if(this.district.name != "Phường Xã"){
-      searchtext = searchtext + " " + this.district.name
+
+    if(this.province.name != "Tất cả"){
+      searchtext = searchtext + " ," + this.province.name 
     }
-    if(this.street.name != "Đường Phố"){
-      searchtext = searchtext + " " + this.street.name
+
+    if(this.city.name != "Tất cả"){
+      searchtext = searchtext + " ," + this.city.name
     }
     
     if(searchtext == ""){
       await this.getDistance();
     }
     else{
-      var linkData = await this.motelService.getLocation(searchtext) as any;
+      var linkData = await this.motelService.getLocationSearch(searchtext) as any;
+      console.log(linkData);
+
       if(linkData["data"]["features"].length !=0){
         this.name = linkData["data"]["features"][0]["properties"]["name"].toString();
         this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
         this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
 
-        console.log(this.lat);
-        console.log(this.long);
+
         this.youLat = this.lat.toString();
         this.youLong = this.long.toString();
-        this.buildMap( this.long , this.lat, this.name);
-        await this.getMotelByURL();
+        await this.onURL();
       }
+    }
+  }
+
+  async onURL(){
+    const districts = await this.dictrictService.getDistricts() as District[];
+    const streets = await this.streetService.getStreets() as Street[]
+    var city = "", province = "", district = "", street = "", price = "", direct = "", area = "";
+    if(this.city.name == "Tỉnh thành phố" || this.city.name == "Tất cả"){
+      city = "";
+    }
+    else{
+      city = '/' + RemoveVietnameseTones.removeVietnameseTones(this.city.name);
+    }
+    if(this.province.name == "Quận Huyện" || this.province.name == "Tất cả"){
+      province = "";
+    }
+    else{
+      province = '/' + RemoveVietnameseTones.removeVietnameseTones(this.province.name);
+    }
+    if(this.district.name == "Phường Xã" || this.district.name == "Tất cả"){
+      district = "";
+    }
+    else{
+      district = '/' + RemoveVietnameseTones.removeVietnameseTones(this.district.name);
+    }
+    if(this.street.name == "Đường Phố" || this.street.name == "Tất cả"){
+      street = "";
+    }
+    else{
+      street = '/' + RemoveVietnameseTones.removeVietnameseTones(this.street.name);
+    }
+
+    if(RemoveVietnameseTones.removeVietnameseTones(this.priceSearch) == RemoveVietnameseTones.removeVietnameseTones("Tất cả")){
+      price = "";
+    }
+    else{
+      price = '/' + RemoveVietnameseTones.removeVietnameseTones(this.priceSearch.replace("-", " "));
     }
 
     
-    // }
+    var type = '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
+    if(this.newType == "Tất cả"){
+      const result = await this.typeservice.getTypes() as NewType[];
+      // this.newType = result[1].name;
+      type = '/' + RemoveVietnameseTones.removeVietnameseTones(result[1].name);
+    }
+    
+    var link = '/map' + city + province + district + street + price + type + direct + area;
+
+    // var link = '/home' + '/' + city + province + district + street + '/' + price  + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
+    
+    this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.route.navigate([link]);
+      
+    }); 
+
+    await this.getMotelByURL();
+    this.buildMap( this.long , this.lat, this.name);
   }
 
   //Load data

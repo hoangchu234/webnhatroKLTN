@@ -16,6 +16,7 @@ export const environment = {
   urlAPI : 'http://localhost:5001',
   urlPython: 'http://127.0.0.1:3000/',
   urlVietMap: 'https://maps.vietmap.vn/api/autocomplete?',
+  urlVietMapSearch: 'https://maps.vietmap.vn/api/search?',
   keyVietMap: '8f1ec1ae46c3a1ea966640cf0077f1ea8b6950a3030d9d47'
 };
 

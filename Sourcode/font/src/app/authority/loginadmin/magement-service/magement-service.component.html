@@ -41,9 +41,9 @@
       <div class="form-group">
         <div class="input-group">
           <input type="text" class="form-control"  aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceDate" name="PriceDate">
-          <div>
+          <div class="input-group-append">
             <select (change)="onChangeTypePriceMote1($event)" class="form-control form-control-lg">
-              <option *ngFor='let typePriceMotel of typePriceMotels' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+              <option *ngFor='let typePriceMotel of typePriceMotels1' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
             </select>
           </div>
         </div>
@@ -52,9 +52,9 @@
       <div class="form-group">
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceWeek" name="PriceWeek">
-          <div>
+          <div class="input-group-append">
             <select (change)="onChangeTypePriceMote2($event)" class="form-control form-control-lg">
-              <option *ngFor='let typePriceMotel of typePriceMotels' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+              <option *ngFor='let typePriceMotel of typePriceMotels2' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
             </select>
           </div>
         </div>
@@ -66,9 +66,9 @@
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceMonth" name="PriceMonth">
       
-          <div>
+          <div class="input-group-append">
             <select (change)="onChangeTypePriceMote3($event)" class="form-control form-control-lg">
-              <option *ngFor='let typePriceMotel of typePriceMotels' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+              <option   *ngFor='let typePriceMotel of typePriceMotels3' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
             </select>
           </div>
         </div>

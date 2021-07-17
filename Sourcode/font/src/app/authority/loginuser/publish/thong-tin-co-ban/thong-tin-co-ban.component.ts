@@ -91,7 +91,7 @@ export class ThongTinCoBanComponent implements OnInit {
   async privous(){
     this.prevous = true;
     this.phoneMotel = this.motelprevous.phone;
-    this.addressNumber = this.motelprevous.address;
+    this.addressNumber = this.motelprevous.addressNumber;
 
     this.lat = this.motelprevous.latitude;
     this.long = this.motelprevous.longitude;
@@ -267,7 +267,6 @@ export class ThongTinCoBanComponent implements OnInit {
 
   public async step2(){
     let motel = new Motel(); 
-
     if( this.typeMotel && this.city.id && this.province.id && this.addressMotel && this.phoneMotel){
 
       if(this.prevous == false){
@@ -347,7 +346,7 @@ export class ThongTinCoBanComponent implements OnInit {
   }
 
   async getViTri(address: string){
-    var get = await this.motelService.getLocation(address);
+    var get = await this.motelService.getLocationSearch(address);
     this.lat = get["data"]["features"][0]["geometry"]["coordinates"][0];
     this.long = get["data"]["features"][0]["geometry"]["coordinates"][1];
   }

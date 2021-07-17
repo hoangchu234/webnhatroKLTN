@@ -176,7 +176,7 @@
                                     <div class="user-post">
                                         <div class="friend-info">
                                             <figure>
-                                                <img  class="img1" style="width: 50px;height: 50px;"  [src]="dataPost.user.userImage"  alt="2">
+                                                <img  class="img1" style="width: 40px;height: 40px;"  [src]="dataPost.user.userImage"  alt="2">
                                             </figure>
                                             <div class="friend-name">
                                                 <div class="more">
@@ -229,7 +229,7 @@
                                                     <ng-template #recursiveListTmpl let-list="list">
                                                         <li *ngFor="let item of list;let j=index">
                                                             <div class="comet-avatar">
-                                                                    <img class="img1" style="width: 50px;height: 50px;"  [src]="item.user.userImage" alt="">
+                                                                    <img class="img1" style="width: 40px;height: 40px;"  [src]="item.user.userImage" alt="">
                                                             </div>
                                                             <div class="we-comment" >
                                                                     <h5><a href="time-line.html" title="">{{item.user.hovaTen}}</a></h5>
@@ -254,12 +254,12 @@
                                                             <!-- *ngIf="j == postData.comments.length" -->
                                                             <ul *ngIf="checkLogin()" class="post-comment" [hidden] = "showChildComments(dataPost.id,item.id,item.parentCommentId)" >
                                                                 <div class="comet-avatar">
-                                                                    <img class="img1" style="width: 50px;height: 50px;"  [src]="dataUser.userImage" alt="">
+                                                                    <img class="img1" style="width: 40px;height: 40px;"  [src]="dataUser.userImage" alt="">
                                                                 </div>
                                                                 <div class="post-comt-box-reply">
                                                                     <form method="post">
                                                                         <div id="postData.id">
-                                                                            <textarea placeholder="Trả lời bài post" name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
+                                                                            <textarea placeholder="Trả lời bài đăng" name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
                                                                         </div>
                                                                         <div class=" add-smiles">
                                                                             <span type="submit" (click)="saveChildComment(dataPost.id,item.id, item.user.id)" class="fa fa-arrow-circle-right"></span>
@@ -278,12 +278,12 @@
                                                     <!-- Add Comment-->
                                                     <li *ngIf="checkLogin()" class="post-comment" >
                                                         <div class="comet-avatar">
-                                                            <img class="img1" style="width: 50px;height: 50px;"  [src]="dataUser.userImage" alt="">
+                                                            <img class="img1" style="width: 40px;height: 40px;"  [src]="dataUser.userImage" alt="">
                                                         </div>
                                                         <div class="post-comt-box">
                                                             <form method="post">
                                                                 <div id="postData.id">
-                                                                    <textarea placeholder="Trả lời bài post"  name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
+                                                                    <textarea placeholder="Trả lời bài đăng"  name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
                                                                 </div>
                                                                 <div class=" add-smiles">
                                                                     <span type="submit" type="submit" (click)="saveComment(dataPost.id, dataPost.user.id)" class="fa fa-arrow-circle-right"></span>

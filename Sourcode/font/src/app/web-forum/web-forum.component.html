@@ -165,7 +165,7 @@
                                     <span class="create-post">Câu hỏi của bạn</span>
                                     <div class="new-postbox">
                                         <figure >
-                                            <img  class="img1" style="width: 50px;height: 40px;" [src]="dataUser.userImage" alt="">
+                                            <img  class="img1" style="width: 40px;height: 40px;" [src]="dataUser.userImage" alt="">
                                         </figure>
                                         <div class="newpst-input">
                                             <form method="post">
@@ -271,7 +271,7 @@
                                                                         <div class="post-comt-box-reply">
                                                                             <form method="post">
                                                                                 <div id="postData.id">
-                                                                                    <textarea placeholder="Trả lời bài post" name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
+                                                                                    <textarea placeholder="Trả lời bài đăng" name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
                                                                                 </div>
                                                                                 <div class=" add-smiles">
                                                                                   <span type="submit" (click)="saveChildComment(postData.id,item.id, item.user.id)" class="fa fa-arrow-circle-right"></span>
@@ -297,7 +297,7 @@
                                                                 <div class="post-comt-box">
                                                                     <form method="post">
                                                                       <div id="postData.id">
-                                                                        <textarea placeholder="Trả lời bài post" name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
+                                                                        <textarea placeholder="Trả lời bài đăng" name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
                                                                     </div>
                                                                     <div class=" add-smiles">
                                                                       <span type="submit" (click)="saveComment(postData.id, postData.user.id)" class="fa fa-arrow-circle-right"></span>
@@ -414,7 +414,7 @@
                                                                             <div class="post-comt-box-reply">
                                                                                 <form method="post">
                                                                                     <div id="postData.id">
-                                                                                        <textarea placeholder="Trả lời bài post" name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
+                                                                                        <textarea placeholder="Trả lời bài đăng" name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
                                                                                     </div>
                                                                                     <div class=" add-smiles">
                                                                                         <span type="submit" (click)="saveChildComment(postData.id,item.id,item.user.id)" class="fa fa-arrow-circle-right"></span>
@@ -438,7 +438,7 @@
                                                                     <div class="post-comt-box">
                                                                         <form method="post">
                                                                             <div id="postData.id" >
-                                                                                <textarea style="border: 0.01px solid;" placeholder="Trả lời bài post"  name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
+                                                                                <textarea style="border: 0.01px solid;" placeholder="Trả lời bài đăng"  name="postData.postUser"  [(ngModel)]="comment.commentUser" ngDefaultControl></textarea>
                                                                             </div>
                                                                             <div class=" add-smiles">
                                                                                 <span type="submit" (click)="saveComment(postData.id, postData.user.id)" class="fa fa-arrow-circle-right"></span>
