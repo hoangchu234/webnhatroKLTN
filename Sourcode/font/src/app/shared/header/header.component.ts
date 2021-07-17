@@ -158,7 +158,7 @@ export class HeaderComponent implements OnInit {
   ///////////////////////////////////////////////////////////////////////////////////////////////
   async onClickDetailPostINotify(data){
     if(data.justSee == false){
-      data.justSee = true;
+      data.justSee = true; 
       var update = {id: data.id,idUserReceiced: data.idUserReceiced,justSee: data.justSee,commentId: data.idComment};
       const result = await this.postService.updateCommentNotifyByOneUser(update,data.id);
       if(result){
@@ -170,11 +170,8 @@ export class HeaderComponent implements OnInit {
       var link = '/forum' + '/' + data.postUser + '/' + data.idPost;
       window.location.replace(link);
     }
-    
-    // this.router.navigate(['/forum',data.postUser,data.idPost]);
-    // this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    //   this.route.navigate(['/forum',data.postUser,data.idPost]);
-    // }); 
+      
+      
   }
 
   async getUserById(id){

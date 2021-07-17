@@ -281,17 +281,17 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
     if(this.time == "Đăng theo ngày"){
       this.price = data.priceDate.split(" ")[0];
       this.type = this.timePublish.split(" ");
-      this.totalprice = (Number(this.type[0]))*(Number(this.price)*1000);
+      this.totalprice = (Number(this.type[0]))*(Number(this.price));
     }
     else if(this.time == "Đăng theo tuần"){
       this.price = data.priceWeek.split(" ")[0];
       this.type = this.timePublish.split(" ");
-      this.totalprice = (Number(this.type[0]))*(Number(this.price)*1000);
+      this.totalprice = (Number(this.type[0]))*(Number(this.price));
     }
     else if(this.time == "Đăng theo tháng"){
       this.price = data.priceMonth.split(" ")[0];
       this.type = this.timePublish.split(" ");
-      this.totalprice = (Number(this.type[0]))*(Number(this.price)*1000);
+      this.totalprice = (Number(this.type[0]))*(Number(this.price));
     }
   }
 }

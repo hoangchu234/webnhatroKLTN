@@ -41,8 +41,10 @@
       <div class="form-group">
         <div class="input-group">
           <input type="text" class="form-control"  aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceDate" name="PriceDate">
-          <div class="input-group-append">
-            <span class="input-group-text">Đồng</span>
+          <div>
+            <select (change)="onChangeTypePriceMote1($event)" class="form-control form-control-lg">
+              <option *ngFor='let typePriceMotel of typePriceMotels' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -50,8 +52,10 @@
       <div class="form-group">
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceWeek" name="PriceWeek">
-          <div class="input-group-append">
-            <span class="input-group-text">Đồng</span>
+          <div>
+            <select (change)="onChangeTypePriceMote2($event)" class="form-control form-control-lg">
+              <option *ngFor='let typePriceMotel of typePriceMotels' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -61,8 +65,11 @@
       <div class="form-group">
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceMonth" name="PriceMonth">
-          <div class="input-group-append">
-            <span class="input-group-text">Đồng</span>
+      
+          <div>
+            <select (change)="onChangeTypePriceMote3($event)" class="form-control form-control-lg">
+              <option *ngFor='let typePriceMotel of typePriceMotels' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+            </select>
           </div>
         </div>
       </div>
