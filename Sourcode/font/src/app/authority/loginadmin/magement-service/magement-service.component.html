@@ -9,40 +9,74 @@
       </ol>
     </nav>
   </div>
-
+<div style="text-align: center;margin-top: 60px;font-size: 25x;"> Bảng giá dịch vụ</div>
   <table  style="width:100%;border: 1px solid black;border-collapse: collapse;margin-top: 30px;">
     <thead>
       <th></th>
       <td style="font-weight: bold;color: red;">Giá ngày</td>
       <td style="font-weight: bold;color: red;">Giá tuần </td>
       <td style="font-weight: bold;color: red;">Giá tháng </td>
-      <td style="font-weight: bold;color: red;">Giá UP TOP </td>
       <td style="font-weight: bold;color: red;">Tối thiểu </td>
       <td style="font-weight: bold;color: red;">Thay đổi</td>
   
     </thead>
     <tr  *ngFor= 'let serviceprice of servicePrice; let i=index'>
       <th style="font-weight: bold;">{{serviceprice.typeofnew}}</th>
-      <td *ngIf="serviceprice.id === editRowID"><input style="width:120px;border-style: none;" type="text" (change)="updatePriceDate($event, serviceprice.priceDate)" [(ngModel)]="serviceprice.priceDate" ngDefaultControl></td>
-      <td  *ngIf="serviceprice.id !== editRowID" (click)="edit(serviceprice.id)">{{serviceprice.priceDate}}</td>
-  
-      <td *ngIf="serviceprice.id === editRowID"><input style="width:120px;border-style: none;" type="text" (change)="updatePriceWeek($event, serviceprice.priceWeek)" [(ngModel)]="serviceprice.priceWeek" ngDefaultControl></td>
-      <td  *ngIf="serviceprice.id !== editRowID" (click)="edit(serviceprice.id)">{{serviceprice.priceWeek}}</td>
-  
-      <td *ngIf="serviceprice.id === editRowID"><input style="width:120px;border-style: none;" type="text" (change)="updatePriceMonth($event, serviceprice.priceMonth)" [(ngModel)]="serviceprice.priceMonth" ngDefaultControl></td>
-      <td  *ngIf="serviceprice.id !== editRowID" (click)="edit(serviceprice.id)">{{serviceprice.priceMonth}}</td>
-  
-      <td *ngIf="serviceprice.id === editRowID"><input style="width:120px;border-style: none;" type="text" (change)="updatePriceUpTop($event, serviceprice.priceUpTop)" [(ngModel)]="serviceprice.priceUpTop" ngDefaultControl></td>
-      <td  *ngIf="serviceprice.id !== editRowID" (click)="edit(serviceprice.id)">{{serviceprice.priceUpTop}}</td>
-  
-      <td *ngIf="serviceprice.id === editRowID"><input style="width:120px;border-style: none;" type="text" (change)="updateDate($event, serviceprice.date)" [(ngModel)]="serviceprice.date" ngDefaultControl></td>
-      <td  *ngIf="serviceprice.id !== editRowID"  (click)="edit(serviceprice.id)" >{{serviceprice.date}}</td>
-  
-      <td *ngIf="serviceprice.id === editRowID"><button class="btn btn-light" style="width:100%" (click)="saveData(serviceprice.id)">Sửa</button></td>
-      <td  *ngIf="serviceprice.id !== editRowID" (click)="edit(serviceprice)">Thay đổi </td>
+      <td>{{serviceprice.priceDate}}</td>
+      <td>{{serviceprice.priceWeek}}</td>
+      <td>{{serviceprice.priceMonth}}</td>
+      <td>{{serviceprice.date}}</td>
+      <td (click)="ChangeButton(serviceprice.id)">Thay đổi </td>
     </tr>
   </table>
-</div>
-<!-- <div class="container-fluid">
 
-</div> -->
+
+  
+</div >
+<div class="container" style="border: 1px solid black;" [hidden]="change">
+  <div style="text-align: center;font-size: 25px;margin-top: 10px;">Sửa giá dịch vụ</div>
+  <div class="row" style="padding: 15px;">
+    <div class="col-md-6">
+      <div class="col-md-6" style="margin-bottom: 10px;" >Giá ngày: </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control"  aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceDate" name="PriceDate">
+          <div class="input-group-append">
+            <span class="input-group-text">Đồng</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" style="margin-bottom: 10px;">Giá tuần: </div> 
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceWeek" name="PriceWeek">
+          <div class="input-group-append">
+            <span class="input-group-text">Đồng</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-6" style="margin-bottom: 10px;">Giá tháng: </div> 
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceMonth" name="PriceMonth">
+          <div class="input-group-append">
+            <span class="input-group-text">Đồng</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" style="margin-bottom: 10px;">Số ngày(tối thiêu): </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="date" name="Date">
+          <div class="input-group-append">
+            <span class="input-group-text">Ngày</span>
+          </div>
+        </div>
+      </div>
+    </div> 
+      <div class="col-md-12" style="margin-left: 20px;margin-top: 20px;"><button class="btn" style="margin-bottom: 10px;float: right;margin-right: 20px; background-color: antiquewhite;border: 1px solid black;height: 60px;width: 120px;" (click)="saveData()">Thay đổi</button></div>
+    </div>
+</div>
+

@@ -166,6 +166,10 @@ export class HeaderComponent implements OnInit {
         window.location.replace(link);
       }
     }
+    else{
+      var link = '/forum' + '/' + data.postUser + '/' + data.idPost;
+      window.location.replace(link);
+    }
     
     // this.router.navigate(['/forum',data.postUser,data.idPost]);
     // this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {

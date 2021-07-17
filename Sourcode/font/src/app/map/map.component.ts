@@ -612,6 +612,9 @@ export class MapComponent implements OnInit {
     }
 
     const result =  await this.motelService.getmotelbyorder(idCity,idProvince,idDistrict,idStreet,idPrice,idType) as any;
+    if(this.motelsearch.length){
+      this.motelsearch.splice(0, this.motelsearch.length);
+    } 
     this.loadDataHot(result);
     this.loadData1(result);
     this.loadData2(result);

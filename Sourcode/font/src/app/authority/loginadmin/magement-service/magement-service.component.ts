@@ -15,15 +15,14 @@ export class MagementServiceComponent implements OnInit {
 
   nametophead = "Quản lý dịch vụ"
   servicePrice: Serviceprice[];
-  // Xét click lấy value
-  editRowID: any = "";
 
   date = "";
   priceDate = "";
   priceMonth = "";
-  priceUpTop = "";
   priceWeek = "";
   
+  id = "";
+  change = true;
   constructor(private toast: ToastService,private http: HttpClient,private router: Router,private priceSearchService: ServicePriceService) { }
 
   ngOnInit(): void {
@@ -36,52 +35,52 @@ export class MagementServiceComponent implements OnInit {
     this.servicePrice = await this.priceSearchService.getServiceprices() as Serviceprice[];
   }
 
-  public edit(value){
-    this.editRowID = value;
+  async ChangeButton(ID){
+    if(this.change == true){
+      this.change = false;
+    }
+    var result = await this.priceSearchService.geterviceById(ID) as Serviceprice;
+    this.id = result.id.toString();
+    this.date = result.date.split(" ")[0];
+    this.priceDate = result.priceDate.split(" ")[0];
+    this.priceMonth = result.priceMonth.split(" ")[0];
+    this.priceWeek = result.priceWeek.split(" ")[0];
   }
 
-  public saveData(ID){
-    var id = Number(ID) - Number(1);
+
+  public saveData(){
     var bill = new Serviceprice();
-    bill.id = this.servicePrice[id].id;
-    bill.typeofnew = this.servicePrice[id].typeofnew; 
+    bill.id = this.servicePrice.find(a => Number(a.id) === Number(this.id)).id;
+    bill.typeofnew = this.servicePrice.find(a => Number(a.id) === Number(this.id)).typeofnew; 
     
     if(this.date == ""){
-      bill.date = this.servicePrice[id].date;
+      bill.date = this.servicePrice.find(a => Number(a.id) === Number(this.id)).date;
     }
     else{
-      bill.date = this.date;
+      bill.date = this.date + "ngày";
     }
 
     if(this.priceDate == ""){
-      bill.priceDate = this.servicePrice[id].priceDate; 
+      bill.priceDate = this.servicePrice.find(a => Number(a.id) === Number(this.id)).priceDate; 
     }
     else{
-      bill.priceDate = this.priceDate;  
+      bill.priceDate = this.priceDate + "đồng";  
     }
 
     if(this.priceMonth == ""){
-       bill.priceMonth = this.servicePrice[id].priceMonth; 
+       bill.priceMonth = this.servicePrice.find(a => Number(a.id) === Number(this.id)).priceMonth; 
     }
     else{
-      bill.priceMonth = this.priceMonth;  
-    }
-
-    if(this.priceUpTop == ""){
-      bill.priceUpTop = this.servicePrice[id].priceUpTop;
-    }
-    else{
-      bill.priceUpTop = this.priceUpTop;
+      bill.priceMonth = this.priceMonth + "đồng";   
     }
 
     if(this.priceWeek == ""){
-      bill.priceWeek = this.servicePrice[id].priceWeek;
+      bill.priceWeek = this.servicePrice.find(a => Number(a.id) === Number(this.id)).priceWeek;
     }
     else{
-      bill.priceWeek = this.priceWeek;
+      bill.priceWeek = this.priceWeek + "đồng";  
     }
  
-    console.log(bill);
     this.priceSearchService.updateServiceprice(bill).subscribe(update => {
       //console.log(update);
       // alert("Sửa thành công")
@@ -90,24 +89,5 @@ export class MagementServiceComponent implements OnInit {
     })
   }
 
-  public updatePriceDate(event: any, priceDate: string)
-  {
-    this.priceDate = priceDate;
-  }
-  public updatePriceWeek(event: any, priceWeek: string)
-  {
-    this.priceWeek = priceWeek;
-  }
-  public updatePriceMonth(event: any, priceMonth: string)
-  {
-    this.priceMonth = priceMonth;
-  }
-  public updatePriceUpTop(event: any, priceUpTop: string)
-  {
-    this.priceUpTop = priceUpTop;
-  }
-  public updateDate(event: any, date: string)
-  {
-    this.date = date;
-  }
+
 }

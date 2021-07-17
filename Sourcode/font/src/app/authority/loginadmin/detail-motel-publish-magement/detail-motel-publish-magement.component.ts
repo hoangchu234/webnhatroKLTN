@@ -87,19 +87,6 @@ export class DetailMotelPublishMagementComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  public onNoClick(): void {
-    // if(Number(this.authenticationService.currentAccountValue.roleId) == 4){
-    //   window.location.reload()
-    //   this.route.navigate(['/admin/quan-ly-duyet-tin']);
-     
-    // }
-    // if(Number(this.authenticationService.currentAccountValue.roleId) == 2 || Number(this.authenticationService.currentAccountValue.roleId) == 3){
-    //   window.location.reload()
-    //   this.route.navigate(['/admin/nhan-vien-quan-ly-duyet-tin']); 
-     
-    // }
-    window.location.reload()
-  }
 
   public onDuyetTin(motel: Motel){
     if((this.motel.verify == true && Number(this.authenticationService.currentAccountValue.roleId) == 2) || Number(this.authenticationService.currentAccountValue.roleId) == 4){
@@ -116,7 +103,7 @@ export class DetailMotelPublishMagementComponent implements OnInit {
       })
       this.toast.toastSuccess('Xác thực thành công');
 
-      // alert("Xác thực thành công")
+      this.route.navigate(['/admin/quan-ly-duyet-tin']);
     }
    
   }

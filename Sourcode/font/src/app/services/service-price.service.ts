@@ -40,4 +40,13 @@ export class ServicePriceService {
       console.log(e);
     }
   }
+
+  public geterviceById = async (id: string) => {
+    try {
+      return await this.http.get(this.urlAPI + "/api/Serviceprices/" + id).toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 }

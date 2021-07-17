@@ -19,7 +19,7 @@ import { District } from 'src/app/model/District';
 import { Street } from 'src/app/model/Street';
 import { DictrictService } from 'src/app/services/dictrict.service';
 import { StreetService } from 'src/app/services/street.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Direct } from 'src/app/model/Direct';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -107,7 +107,7 @@ export class DetailMotelPublishComponent implements OnInit {
 
   checkSaveImage = false;
   motelById: Motel;
-  constructor(private toast: ToastService,private router: ActivatedRoute,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
+  constructor(private route: Router,private toast: ToastService,private router: ActivatedRoute,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -434,7 +434,7 @@ export class DetailMotelPublishComponent implements OnInit {
                 this.toast.toastSuccess('Sửa thành công');
 
                 // this.dialogRef.close();
-                window.location.reload();
+                this.route.navigate(['/user/quan-ly-dang-tin']);
               }
             })
           })

@@ -24,7 +24,7 @@ import { ServicePriceService } from 'src/app/services/service-price.service';
 import { BillService } from 'src/app/services/bill.service';
 import { Bill } from 'src/app/model/Bill';
 import { ExtendPaypalComponent } from './extend-paypal/extend-paypal.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/storage.service';
 import { Direct } from 'src/app/model/Direct';
 import { New } from 'src/app/model/New';
@@ -124,7 +124,7 @@ export class DetailMotelExtendComponent implements OnInit {
   priceBill:string = "";
   motelById: Motel;
 
-  constructor(private toast: ToastService,private router: ActivatedRoute,private billService:BillService,private priceService: ServicePriceService,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
+  constructor(private route: Router,private toast: ToastService,private router: ActivatedRoute,private billService:BillService,private priceService: ServicePriceService,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
     
   }
 
@@ -690,6 +690,7 @@ export class DetailMotelExtendComponent implements OnInit {
       if(localStorage.getItem(StorageService.totalMoneyStorage)){
         this.loadImage()
       }
+      this.route.navigate(['/user/quan-ly-dang-tin']);
     });
   }
 
