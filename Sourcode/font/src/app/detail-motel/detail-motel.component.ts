@@ -114,17 +114,25 @@ export class DetailMotelComponent implements OnInit {
   }
 
   linkChat(){
+
     if(this.authenticationService.currentAccountValue){
-      var id = this.motel.userId;
-
-      if(Number(id) != Number(this.authenticationService.currentAccountValue.user.id)){
-        this.route.navigate( ['/chat',id]);
-
+      if(this.authenticationService.currentAccountValue.user.email != null){
+        var id = this.motel.userId;
+  
+        if(Number(id) != Number(this.authenticationService.currentAccountValue.user.id)){
+          this.route.navigate( ['/chat',id]);
+  
+        }
+      }
+      else{
+        this.toast.toastInfo('Vui lòng nhập mail để khi chat sẽ nhận được thông tin khi có tin nhắn mới');
       }
     }
     else{
       this.openDialogInform();
+
     }
+  
   }
   public openDialogInform(): void {
     const dialogRef = this.dialog.open(DialogInformComponent, {

@@ -7,6 +7,7 @@ import { User } from '../model/User';
 import { ChatUserViewModel } from '../model/viewmodel/ChatUserViewModel';
 import { CreateMessageRequest } from '../model/viewmodel/CreateMessageRequest';
 import { AuthenticationService } from '../services/authentication.service';
+import { MotelService } from '../services/motel.service';
 import { SignalRService } from '../services/signal-r.service';
 import { UserService } from '../services/user.service';
 
@@ -42,7 +43,7 @@ export class ChatsComponent implements OnInit {
   
   sender = false;
   receiver = false;
-  constructor(private userService: UserService,private route: Router,private router: ActivatedRoute,private signalRService:SignalRService,private _ngZone: NgZone,private authenticationService: AuthenticationService) { 
+  constructor(private motelService:MotelService,private userService: UserService,private route: Router,private router: ActivatedRoute,private signalRService:SignalRService,private _ngZone: NgZone,private authenticationService: AuthenticationService) { 
     
   }
 
@@ -156,7 +157,7 @@ export class ChatsComponent implements OnInit {
     // this.messageDatas.unshift(message);
   }
 
-  sendMessage(): void {  
+  async sendMessage(): Promise<void> {  
     if (this.txtMessage) {  
       var save = new CreateMessageRequest();
       save.senderId = Number(this.senderId);
@@ -167,6 +168,12 @@ export class ChatsComponent implements OnInit {
       this.signalRService.addMesseger(save).subscribe(data => {
         this.txtMessage = "";
       })
+
+      let id = this.router.snapshot.paramMap.get("id");
+
+      var result = await this.userService.getUserFromId(Number(id)) as User;
+      
+      console.log(this.motelService.getSendMail(result.email,"new","test"));
     }  
   } 
 

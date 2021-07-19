@@ -483,4 +483,16 @@ export class MotelService {
       console.log(error);
     }
   }
+
+  public getSendMail = async (to: string ,subject: string ,body: string ) => {
+    try {
+      const url = `${this.urlAPI + "/api/Mails/SendMail"}/${to}/${subject}/${body}`;
+      console.log(url)
+      const count = await fetch(url);
+      return await count.json();
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 }
