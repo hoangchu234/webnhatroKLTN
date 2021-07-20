@@ -228,6 +228,7 @@ export class PaypalComponent implements OnInit {
           var bill = new Bill();
           bill = this.saveNewMotel.bill;
           bill.motelId = newMotel.id;
+          bill.payMoney=this.money;
           await this.billService.addbill(bill);
           //this.billService.addbill(bill).subscribe(data => console.log(data))
         });

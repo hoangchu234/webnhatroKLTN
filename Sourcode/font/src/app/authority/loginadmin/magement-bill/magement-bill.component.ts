@@ -70,6 +70,7 @@ export class MagementBillComponent implements OnInit {
     for(let i=0; i< this.bills.length;i++){
       this.totalPrice = Number(this.totalPrice) + Number(this.bills[i].payMoney);
     }
+    this.totalPrice=Number(this.totalPrice);
   }
 
 }
