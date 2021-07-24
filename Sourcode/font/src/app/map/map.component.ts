@@ -17,6 +17,7 @@ import { TypeofnewService } from '../services/newstype.service';
 import { PriceSearchService } from '../services/price-search.service';
 import { ProvincesService } from '../services/provinces.service';
 import { StreetService } from '../services/street.service';
+import { StorageService } from '../storage.service';
 
 declare const L: any;
 declare const L2: any;
@@ -61,8 +62,8 @@ export class MapComponent implements OnInit {
 
   search = "";
 
-  long = 106.66456239976246;
-  lat = 10.802007379610322;
+  long = "106.66456239976246";
+  lat = "10.802007379610322";
   name = "Công viên hoàng văn thụ";
 
   motelsearch: Motel[] = [];
@@ -91,8 +92,6 @@ export class MapComponent implements OnInit {
     await this.getCities();
     await this.getNewTypes();
     await this.getDistance();
-    await this.getMotelByURL();
-
     await this.setData();
   }
 
@@ -411,12 +410,24 @@ export class MapComponent implements OnInit {
       await this.getMotelByURL();
     }
     else{
-      this.distance = distance.number + " " + distance.name;
-      this.distanceId = distance.id.toString();
-      await this.getDataMotelDistance();
+      if(localStorage.getItem(StorageService.searchStorage) != null){
+        var searchEnter = localStorage.getItem(StorageService.searchStorage);
+        this.search = searchEnter.split(",")[0];
+        this.long = searchEnter.split(",")[1];
+        this.lat = searchEnter.split(",")[2];
+      }
+      if(this.search != "" && this.search != null){
+        this.distance = distance.number + " " + distance.name;
+        this.distanceId = distance.id.toString();
+        this.long
+        await this.getDataMotelDistance();      
+      }
     }
+  }
 
-
+  linkRouter(name, id) {
+    //this.router.navigate( [{name: name, id: id}]);
+    this.route.navigate( ['/home/chi-tiet',name,id]);
   }
 
   async onSearch(){
@@ -426,20 +437,20 @@ export class MapComponent implements OnInit {
       searchtext = this.search
     }
 
-    if(this.street.name != "Tất cả"){
-      searchtext = searchtext + " ," + this.street.name
+    if(this.street.name != "Tất cả" && this.street.name != "Đường Phố"){
+      searchtext = searchtext + " " + this.street.name
     }
 
-    if(this.district.name != "Tất cả"){
-      searchtext = searchtext + " ," + this.district.name
+    if(this.district.name != "Tất cả" && this.district.name != "Phường Xã"){
+      searchtext = searchtext + " " + this.district.name
     }
 
-    if(this.province.name != "Tất cả"){
-      searchtext = searchtext + " ," + this.province.name 
+    if(this.province.name != "Tất cả" && this.province.name != "Quận Huyện"){
+      searchtext = searchtext + " " + this.province.name 
     }
 
-    if(this.city.name != "Tất cả"){
-      searchtext = searchtext + " ," + this.city.name
+    if(this.city.name != "Tất cả" && this.city.name != "Tỉnh thành phố"){
+      searchtext = searchtext + " " + this.city.name
     }
     
     if(searchtext == ""){
@@ -453,6 +464,9 @@ export class MapComponent implements OnInit {
         this.name = linkData["data"]["features"][0]["properties"]["name"].toString();
         this.long = linkData["data"]["features"][0]["geometry"]["coordinates"][0];
         this.lat = linkData["data"]["features"][0]["geometry"]["coordinates"][1];
+
+        var searchEnter = this.name + "," + this.long + "," + this.lat;
+        localStorage.setItem(StorageService.searchStorage,searchEnter);
 
 
         this.youLat = this.lat.toString();
@@ -783,18 +797,18 @@ export class MapComponent implements OnInit {
     }
   }
 
-  async success(position) {
-    var	latitude = position.coords.latitude,
-      longitude = position.coords.longitude,
-      altitude = position.coords.altitude,
-      accuracy = position.coords.accuracy;
+  // async success(position) {
+  //   var	latitude = position.coords.latitude,
+  //     longitude = position.coords.longitude,
+  //     altitude = position.coords.altitude,
+  //     accuracy = position.coords.accuracy;
   
-    // Hiển thị các thông số về vị trí hiện tại của bạn.
-    console.log(latitude);
-    console.log(longitude);
-    console.log(altitude);
-    console.log(accuracy);
-  }
+  //   // Hiển thị các thông số về vị trí hiện tại của bạn.
+  //   console.log(latitude);
+  //   console.log(longitude);
+  //   console.log(altitude);
+  //   console.log(accuracy);
+  // }
 
   async setData(){
     var city = this.router.snapshot.paramMap.get("city");
@@ -879,8 +893,10 @@ export class MapComponent implements OnInit {
 
     }
 
-    this.getProvinceByID(this.city.id);
-    this.getDistricteById(this.province .id)
-    this.getStreetById(this.province.id);
+    await this.getProvinceByID(this.city.id);
+    await this.getDistricteById(this.province .id)
+    await this.getStreetById(this.province.id);
+
+    await this.getMotelByURL();
   }
 }

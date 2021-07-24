@@ -475,8 +475,6 @@ export class MotelService {
   public getMotelDistance = async (city: Number, province: Number, district: Number, street: Number, price: Number, type: Number, distance: string, log: string, lat: string) => {
     try {
       const url = `${this.urlAPI + "/api/Motels/GetMotelByOrderAddDistance"}/${city}/${province}/${district}/${street}/${price}/${type}/${distance}/${log}/${lat}`;
-      console.log(url)
-
       return await this.http.get(url).toPromise();
     }
     catch (error) {

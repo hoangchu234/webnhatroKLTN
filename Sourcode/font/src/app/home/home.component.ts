@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
     private typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,
     viewportScroller: ViewportScroller) { 
       StorageService.removeLocalPubish();
+
   }
 
   async ngOnInit(){

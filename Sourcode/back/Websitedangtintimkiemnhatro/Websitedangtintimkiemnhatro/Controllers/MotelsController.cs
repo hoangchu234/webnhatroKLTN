@@ -750,7 +750,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
                 {
                     count++;
                 }
-                if (list[i].PriceType.Equals("đồng/tháng") && Int32.Parse(list[i].Price) < 999)
+                if (list[i].PriceType.Equals("đồng/tháng") && float.Parse(list[i].Price) < 999)
                 {
                     count++;
                 }

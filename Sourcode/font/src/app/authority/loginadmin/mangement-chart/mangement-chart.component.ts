@@ -111,7 +111,7 @@ export class MangementChartComponent implements OnInit {
 
     if(counthot && count30 && count20 && count10 && countthuong){
       this.chartReady = true;
-      this.pieChartLabels = [this.news[0].newName, this.news[1].newName, this.news[2].newName,this.news[3].newName,this.news[4].newName];
+      this.pieChartLabels = ["Tin Hot", "Tin VIP 3", "Tin VIP 2","Tin VIP 1","Tin thường"];
       this.pieChartData = [Number(counthot), Number(count30), Number(count20), Number(count10),Number(countthuong)];
     }
    

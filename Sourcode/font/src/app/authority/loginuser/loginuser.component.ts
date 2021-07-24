@@ -4,6 +4,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Account } from  '../../model/Account';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/services/user.service';
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-loginuser',
@@ -18,7 +19,8 @@ export class LoginuserComponent implements OnInit {
   constructor(private router: Router,private userService: UserService,
     private authenticationService: AuthenticationService) { 
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-      
+      localStorage.removeItem(StorageService.searchStorage)
+
     }
 
   async ngOnInit(): Promise<void> {

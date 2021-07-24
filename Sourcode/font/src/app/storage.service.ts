@@ -14,6 +14,9 @@ export class StorageService
     // public static AreaSearchTickStorage: string = 'areaTick';
     // public static DirectSearchTickStorage: string = 'directTick';
 
+    public static searchStorage: string = 'search';
+
+
     constructor() { }
 
     public static removeLocalSearch(){

@@ -18,6 +18,7 @@ import * as signalR from '@aspnet/signalr';
 import { NotificationResult } from 'src/app/model/viewmodel/NotificationResult';
 import { INotifyComment } from 'src/app/model/interface/INotifyComment';
 import { PostService } from 'src/app/services/post.service';
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -61,6 +62,8 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     public postService:PostService,
     private authenticationService: AuthenticationService) {     
+      localStorage.removeItem(StorageService.searchStorage)
+
     }
 
   async ngOnInit(): Promise<void> { 
