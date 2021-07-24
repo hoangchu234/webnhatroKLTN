@@ -13,6 +13,7 @@ import { UserService } from '../services/user.service'
 import { data } from 'jquery';
 import { City } from '../model/City';
 import { RemoveVietnameseTones } from '../removeVietnameseTones.service';
+import { StorageService } from '../storage.service';
 
 declare var jQuery: any;
 
@@ -51,7 +52,7 @@ export class SearchMotelComponent implements OnInit {
     private motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
    
-    
+
     
    }
 

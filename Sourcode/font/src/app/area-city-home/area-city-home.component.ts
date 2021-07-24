@@ -5,6 +5,7 @@ import { City } from '../model/City';
 import { ProvincesService } from '../services/provinces.service';
 import { Province } from '../model/Province';
 import { RemoveVietnameseTones } from '../removeVietnameseTones.service';
+import { StorageService } from '../storage.service';
 
 export interface Data{
   id:number;
@@ -69,6 +70,7 @@ export class AreaCityHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.nameURL = this.router.snapshot.paramMap.get("name");
     if(this.nameURL == "Ho-Chi-Minh"){
       this.checkHCM = true;

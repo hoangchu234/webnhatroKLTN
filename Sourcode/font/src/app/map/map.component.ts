@@ -419,7 +419,9 @@ export class MapComponent implements OnInit {
       if(this.search != "" && this.search != null){
         this.distance = distance.number + " " + distance.name;
         this.distanceId = distance.id.toString();
-        this.long
+
+        this.youLat = this.lat.toString();
+        this.youLong = this.long.toString();
         await this.getDataMotelDistance();      
       }
     }
@@ -458,7 +460,7 @@ export class MapComponent implements OnInit {
     }
     else{
       var linkData = await this.motelService.getLocationSearch(searchtext) as any;
-      console.log(linkData);
+      // console.log(linkData);
 
       if(linkData["data"]["features"].length !=0){
         this.name = linkData["data"]["features"][0]["properties"]["name"].toString();
@@ -467,7 +469,6 @@ export class MapComponent implements OnInit {
 
         var searchEnter = this.name + "," + this.long + "," + this.lat;
         localStorage.setItem(StorageService.searchStorage,searchEnter);
-
 
         this.youLat = this.lat.toString();
         this.youLong = this.long.toString();

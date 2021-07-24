@@ -16,6 +16,7 @@ import { Status } from '../model/Status';
 import { ToastService } from '../services/toast.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { DialogInformComponent } from '../dialog-inform/dialog-inform.component';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-detail-motel',
@@ -39,6 +40,7 @@ export class DetailMotelComponent implements OnInit {
    }
 
   async ngOnInit(): Promise<void> {
+
     await this.getMotelById();
     await this.getRecommend();
   }

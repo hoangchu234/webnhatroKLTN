@@ -443,8 +443,8 @@ export class MotelService {
         text: searchText
       };
       const url = urlVietMap + 'api-version=1.1';
-      console.log(url);
-      console.log(params)
+      // console.log(url);
+      // console.log(params)
       // "api-version=1.1&apikey=8f1ec1ae46c3a1ea966640cf0077f1ea8b6950a3030d9d47&text=Phường 12,Quận Tân Bình,Thành phố Hồ Chí Minh, Chung cư k300"
       return await this.http.get(url,{params}).toPromise();
     }
@@ -462,8 +462,8 @@ export class MotelService {
         text: searchText
       };
       const url = urlVietMap + 'api-version=1.1';
-      console.log(url);
-      console.log(params)
+      // console.log(url);
+      // console.log(params)
       // "api-version=1.1&apikey=8f1ec1ae46c3a1ea966640cf0077f1ea8b6950a3030d9d47&text=Phường 12,Quận Tân Bình,Thành phố Hồ Chí Minh, Chung cư k300"
       return await this.http.get(url,{params}).toPromise();
     }
@@ -485,7 +485,7 @@ export class MotelService {
   public getSendMail = async (to: string ,subject: string ,body: string ) => {
     try {
       const url = `${this.urlAPI + "/api/Mails/SendMail"}/${to}/${subject}/${body}`;
-      console.log(url)
+      // console.log(url)
       const count = await fetch(url);
       return await count.json();
     }

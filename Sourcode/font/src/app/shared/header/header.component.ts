@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,
     public postService:PostService,
     private authenticationService: AuthenticationService) {     
-      localStorage.removeItem(StorageService.searchStorage)
 
     }
 

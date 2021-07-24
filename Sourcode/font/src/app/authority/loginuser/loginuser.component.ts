@@ -19,7 +19,6 @@ export class LoginuserComponent implements OnInit {
   constructor(private router: Router,private userService: UserService,
     private authenticationService: AuthenticationService) { 
       //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
-      localStorage.removeItem(StorageService.searchStorage)
 
     }
 

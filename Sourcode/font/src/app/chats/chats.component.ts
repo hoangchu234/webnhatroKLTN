@@ -10,6 +10,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { MotelService } from '../services/motel.service';
 import { SignalRService } from '../services/signal-r.service';
 import { UserService } from '../services/user.service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-chats',
@@ -44,7 +45,7 @@ export class ChatsComponent implements OnInit {
   sender = false;
   receiver = false;
   constructor(private motelService:MotelService,private userService: UserService,private route: Router,private router: ActivatedRoute,private signalRService:SignalRService,private _ngZone: NgZone,private authenticationService: AuthenticationService) { 
-    
+
   }
 
   async ngOnInit(): Promise<void> {
@@ -63,11 +64,11 @@ export class ChatsComponent implements OnInit {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('Connection started!')
+        // console.log('Connection started!')
       })
       .then()
       .catch(error => {
-        console.log('Can not start connection with error: ' + error);
+        // console.log('Can not start connection with error: ' + error);
       })
   
     this.hubConnection.on("BroadcastMessage", async () => {  
@@ -173,7 +174,7 @@ export class ChatsComponent implements OnInit {
 
       var result = await this.userService.getUserFromId(Number(id)) as User;
       
-      console.log(this.motelService.getSendMail(result.email,"new","test"));
+      // console.log(this.motelService.getSendMail(result.email,"new","test"));
     }  
   } 
 

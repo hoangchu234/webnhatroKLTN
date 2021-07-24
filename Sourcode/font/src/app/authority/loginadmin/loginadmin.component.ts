@@ -11,7 +11,6 @@ export class LoginadminComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    localStorage.removeItem(StorageService.searchStorage)
   }
 
 }

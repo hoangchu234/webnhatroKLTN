@@ -8,6 +8,7 @@ import { RegisterService } from '../services/register.service';
 import { UserService } from '../services/user.service';
 import { EmployeesService } from '../services/employees.service';
 import { ToastService } from '../services/toast.service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-login',
