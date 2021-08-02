@@ -156,7 +156,7 @@ export class EmployeePublishComponent implements OnInit {
     this.motels = result
     this.totalRecord = this.motels.length;
 
-    console.log(this.motels)
+    // console.log(this.motels)
   }
 
   async onChangeNew(event: any){

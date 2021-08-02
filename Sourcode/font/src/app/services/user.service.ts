@@ -31,7 +31,7 @@ export class UserService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -82,7 +82,7 @@ export class UserService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

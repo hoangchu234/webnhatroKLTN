@@ -30,7 +30,7 @@ export class AreaSearchService {
       return await this.http.get(this.urlAPI + "/api/AreaSearches").toPromise();
     }
     catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 }

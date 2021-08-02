@@ -130,7 +130,7 @@ export class DialogSearchMotelComponent implements OnInit {
       direct = this.direct;
       localStorage.setItem(StorageService.DirectSearchStorage, direct);
     }
-    console.log(this.areaId)
+    // console.log(this.areaId)
     if(this.areaId == ""){
       var area = " ";
       localStorage.removeItem(StorageService.AreaSearchStorage);

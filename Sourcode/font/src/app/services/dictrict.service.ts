@@ -31,7 +31,7 @@ export class DictrictService {
         return await Districts.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -48,7 +48,7 @@ export class DictrictService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -65,7 +65,7 @@ export class DictrictService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 }

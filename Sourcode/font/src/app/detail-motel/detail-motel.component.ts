@@ -115,15 +115,21 @@ export class DetailMotelComponent implements OnInit {
     }
   }
 
-  linkChat(){
-
+  async linkChat(){
     if(this.authenticationService.currentAccountValue){
       if(this.authenticationService.currentAccountValue.user.email != null){
         var id = this.motel.userId;
   
         if(Number(id) != Number(this.authenticationService.currentAccountValue.user.id)){
-          this.route.navigate( ['/chat',id]);
-  
+          var idaccount = this.authenticationService.currentAccountValue.user.accountId;
+          var result = await this.authenticationService.GetAccountPhoneCheck(idaccount) as any;
+          console.log(result)
+          if(result == "1"){
+            this.route.navigate(['/xac-thuc-so-dien-thoai']);
+          }
+          else{
+            this.route.navigate( ['/chat',id]);
+          }
         }
       }
       else{

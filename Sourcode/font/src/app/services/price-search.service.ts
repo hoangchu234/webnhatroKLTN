@@ -33,7 +33,7 @@ export class PriceSearchService {
       return await this.http.get(this.urlAPI + "/api/PriceSearches").toPromise();
     }
     catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 

@@ -59,9 +59,10 @@ export class DialogEditPasswordComponent implements OnInit {
           //Lưa dat mới
           
           account.password = this.passwordNew;
+          // console.log(account)
           this.userService.updateAccount(account).subscribe(update => {
             if(update){
-              //  alert("Lưu thành công")
+              // console.log(update)
               this.toast.toastSuccess('Lưu thành công');
             }
           });

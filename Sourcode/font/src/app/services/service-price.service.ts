@@ -37,7 +37,7 @@ export class ServicePriceService {
       return await this.http.get(this.urlAPI + "/api/Serviceprices").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -46,7 +46,7 @@ export class ServicePriceService {
       return await this.http.get(this.urlAPI + "/api/Serviceprices/" + id).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 }

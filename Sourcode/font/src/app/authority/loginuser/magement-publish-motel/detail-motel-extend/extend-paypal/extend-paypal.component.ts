@@ -41,7 +41,7 @@ export class ExtendPaypalComponent implements OnInit {
 
   private initConfig(): void {
     // Gía tiền
-    console.log(this.money);
+    // console.log(this.money);
     var usd = "0.000043";
     this.numberPayPal = this.money * Number(usd);
     this.numberPayPal = Number((this.numberPayPal).toFixed(1));
@@ -85,26 +85,26 @@ export class ExtendPaypalComponent implements OnInit {
       layout: 'vertical'
     },
     onApprove: (data, actions) => {
-      console.log('onApprove - transaction was approved, but not authorized', data, actions);
+      // console.log('onApprove - transaction was approved, but not authorized', data, actions);
       actions.order.get().then(details => {
-        console.log('onApprove - you can get full order details inside onApprove: ', details);
+        // console.log('onApprove - you can get full order details inside onApprove: ', details);
 
-        console.log("Bạn phải thanh toán là:",this.money.toString());// Gía tiền
+        // console.log("Bạn phải thanh toán là:",this.money.toString());// Gía tiền
         this.onNoClick();
       });
     },
     onClientAuthorization: (data) => {
-      console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+      // console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
       this.showSuccess = true;
     },
     onCancel: (data, actions) => {
-      console.log('OnCancel', data, actions);
+      // console.log('OnCancel', data, actions);
     },
     onError: err => {
-      console.log('OnError', err);
+      // console.log('OnError', err);
     },
     onClick: (data, actions) => {
-      console.log('onClick', data, actions);
+      // console.log('onClick', data, actions);
     },
   };
   }

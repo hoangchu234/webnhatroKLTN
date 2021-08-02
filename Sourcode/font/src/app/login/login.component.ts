@@ -81,7 +81,8 @@ export class LoginComponent implements OnInit {
         accounta.phone = this.phone;
         accounta.password = this.password;
         const result = await this.authenticationService.loginPhone(accounta);
-        if(result != false){
+        
+        if(result != "false"){
           var account = result as Account;
           if(account.isActive == false){
             // alert('Đăng nhập thất bại');

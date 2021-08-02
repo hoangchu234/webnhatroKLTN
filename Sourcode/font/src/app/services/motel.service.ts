@@ -34,7 +34,7 @@ export class MotelService {
         return await Motels.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
   
@@ -51,7 +51,7 @@ export class MotelService {
         return await Motels.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -67,7 +67,7 @@ export class MotelService {
         return await Motels.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -84,7 +84,7 @@ export class MotelService {
         return await this.http.get(url).toPromise();
       }
       catch (error) {
-        console.log(error);
+        //console.log(error);
       }
   }
 
@@ -111,7 +111,7 @@ export class MotelService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -128,7 +128,7 @@ export class MotelService {
         return await Motels.json();
     }
     catch (error) {
-      //  console.log(error);
+      //  //console.log(error);
     }  
   }
 
@@ -147,7 +147,7 @@ export class MotelService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -192,7 +192,7 @@ export class MotelService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -208,7 +208,7 @@ export class MotelService {
         return await Motels.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -224,7 +224,7 @@ export class MotelService {
         return await Motels.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -240,7 +240,7 @@ export class MotelService {
         return await Motels.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -251,7 +251,7 @@ export class MotelService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -276,7 +276,7 @@ export class MotelService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -294,7 +294,7 @@ export class MotelService {
         return await LiveTypes.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -319,7 +319,7 @@ export class MotelService {
         return await count.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -329,7 +329,7 @@ export class MotelService {
         return await count.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -339,7 +339,7 @@ export class MotelService {
         return await count.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -349,7 +349,7 @@ export class MotelService {
         return await count.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -359,7 +359,7 @@ export class MotelService {
         return await count.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -369,7 +369,7 @@ export class MotelService {
         return await count.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -379,7 +379,7 @@ export class MotelService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -393,7 +393,7 @@ export class MotelService {
   //     return await this.http.get(url,{params}).toPromise();
   //   }
   //   catch (error) {
-  //     console.log(error);
+  //     //console.log(error);
   //   }
   // }
 
@@ -410,7 +410,7 @@ export class MotelService {
       return await this.http.post(url, formData).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -420,7 +420,7 @@ export class MotelService {
         return await count.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -430,7 +430,7 @@ export class MotelService {
         return await count.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -449,7 +449,7 @@ export class MotelService {
       return await this.http.get(url,{params}).toPromise();
     }
     catch (e) {
-      // console.log(e);
+      // //console.log(e);
     }
   }
 
@@ -468,7 +468,7 @@ export class MotelService {
       return await this.http.get(url,{params}).toPromise();
     }
     catch (e) {
-      // console.log(e);
+      // //console.log(e);
     }
   }
 
@@ -478,7 +478,7 @@ export class MotelService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -490,7 +490,7 @@ export class MotelService {
       return await count.json();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 }

@@ -30,7 +30,7 @@ export class ProvincesService {
       return await this.http.get(this.urlAPI + "/api/Provinces").toPromise();
     }
     catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
   
@@ -48,7 +48,7 @@ export class ProvincesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -65,7 +65,7 @@ export class ProvincesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }*/
 
@@ -96,7 +96,7 @@ export class ProvincesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -113,7 +113,7 @@ export class ProvincesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 }

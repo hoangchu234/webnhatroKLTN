@@ -41,7 +41,7 @@ export class MagementProfileComponent implements OnInit {
  user: User;
  image = "../../../assets/images/blog_3.jpg";
 //  account = this.authenticationService.currentAccountValue;
-
+remember: boolean = false;
  constructor(private toast: ToastService,private motelService: MotelService,public dialog: MatDialog,private router: Router,private authenticationService: AuthenticationService,private userService: UserService) {
    //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);
    
@@ -156,13 +156,19 @@ export class MagementProfileComponent implements OnInit {
     if(this.image != this.user.userImage){
       if(this.user.userImage != null){
         this.image = this.user.userImage;
-       }
-       else{
+      }
+      else{
         this.image = "../../../assets/images/blog_3.jpg";
-       }
-       window.location.reload();
+      }
     }
-    
+    var accountUpdate = new Account();
+    accountUpdate.phone = this.user.account.phone;
+
+    const a =  await this.authenticationService.getAccountUser(accountUpdate) as Account;
+    this.authenticationService.logout();
+    this.authenticationService.saveAccount(a, this.remember);
+
+    // window.location.reload();
    
    });
  }
@@ -180,30 +186,7 @@ export class MagementProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async (result: User) => {
-      // var id = Number(this.authenticationService.currentAccountValue.user.id);
-      // var user = await this.userService.getUserFromId(id) as User;
-      // if (result.account.phone != user.account.phone)
-      // {
-      //  var account = new Account();
-      //  account.id = result.account.id;
-      //  account.isActive = result.account.isActive;
-      //  account.roleId = result.account.roleId;
-      //  account.username = result.account.username;
-      //  //Lưa dat mới
-      //  account.password = result.account.password;
-      //  account.phone = result.account.phone;
-
-      //  this.userService.updateAccount(account).subscribe(update => {
-      //    console.log(update)
-      //    this.toast.toastSuccess('Lưu thành công');
-      //     // alert("Lưu thành công")
-      //   });
-      // }
-      // else{
-      //   // alert("Số điện thoại đã được dùng")
-      //   this.toast.toastInfo('Số điện thoại đã được dùng');
-      // }
-        
+  
     });
   }
 

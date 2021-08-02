@@ -89,7 +89,7 @@ export class DialogEditUserComponent implements OnInit {
     user.accountId = this.data.account.id;
 
     this.userService.updateUser(user).subscribe(update => {
-      // alert("Lưu thành công")
+      
       this.toast.toastSuccess('Lưu thành công');
       this.dialogRef.close();
     });

@@ -30,7 +30,7 @@ export class RegisterService {
         return await this.http.post(loginUrl, account).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -40,7 +40,7 @@ export class RegisterService {
         return await this.http.post(loginUrl, account, httpOptions).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -50,7 +50,7 @@ export class RegisterService {
         return await this.http.put(loginUrl, account).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -60,7 +60,7 @@ export class RegisterService {
       return await this.http.get(url, {responseType: 'text'}).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -70,7 +70,7 @@ checkPhoneForget = async (phone: string) => {
       return await this.http.get(url, {responseType: 'text'}).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -80,7 +80,7 @@ checkPhoneForget = async (phone: string) => {
       return await this.http.post(url,account, {responseType: 'text'}).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 }

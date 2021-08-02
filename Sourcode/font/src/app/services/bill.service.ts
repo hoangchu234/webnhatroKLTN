@@ -31,7 +31,7 @@ export class BillService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
   
@@ -47,7 +47,7 @@ export class BillService {
       return await this.http.get(this.urlAPI + "/api/Bills").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -62,7 +62,7 @@ export class BillService {
       return await this.http.get(this.urlAPI + "/api/Bills/Nows").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -80,7 +80,7 @@ export class BillService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -96,7 +96,7 @@ export class BillService {
       return await this.http.post(url, newBill).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 }

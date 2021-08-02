@@ -99,7 +99,7 @@ export class DetailMotelPublishMagementComponent implements OnInit {
       motelupdate.verify = true;
       motelupdate.status = "1";
       this.dangtinService.updateNVMotel(motelupdate).subscribe(update => {
-        console.log(update)
+        // console.log(update)
       })
       this.toast.toastSuccess('Xác thực thành công');
 

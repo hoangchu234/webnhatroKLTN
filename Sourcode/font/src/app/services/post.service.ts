@@ -49,7 +49,7 @@ export class PostService {
       return await this.http.post(url, newLike, httpOptions).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -68,7 +68,7 @@ export class PostService {
       return await this.http.delete(url, httpOptions).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -87,7 +87,7 @@ export class PostService {
       return await this.http.delete(url, httpOptions).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -97,7 +97,7 @@ export class PostService {
       return await this.http.put(url, notifyComment, httpOptions).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -129,7 +129,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -139,7 +139,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -149,7 +149,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -159,7 +159,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -168,7 +168,7 @@ export class PostService {
       return await this.http.get(this.urlAPI + "/api/Posts/GetSomePosts").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -185,7 +185,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -194,7 +194,7 @@ export class PostService {
       return await this.http.get(this.urlAPI + "/api/Comments/GetCountParentComment").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -205,7 +205,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -215,7 +215,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -224,7 +224,7 @@ export class PostService {
       return await this.http.get(this.urlAPI + "/api/Posts/TotalPost").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
   public totalComment = async () => {
@@ -232,7 +232,7 @@ export class PostService {
       return await this.http.get(this.urlAPI + "/api/Comments/TotalComment").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -241,7 +241,7 @@ export class PostService {
       return await this.http.get(this.urlAPI + "/api/Posts/GetRecentlyPost").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
   /*public getParentCommentById(id: string): Observable<Comment[]>{
@@ -257,7 +257,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -267,7 +267,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -277,7 +277,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -287,7 +287,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -297,7 +297,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -307,7 +307,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -317,7 +317,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -327,7 +327,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -337,7 +337,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -347,7 +347,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -367,7 +367,7 @@ export class PostService {
       return await this.http.get(url).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 

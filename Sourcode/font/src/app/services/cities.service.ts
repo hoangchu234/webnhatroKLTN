@@ -24,7 +24,7 @@ export class CitiesService {
         return await Cities.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -33,7 +33,7 @@ export class CitiesService {
       return await this.http.get(this.urlAPI + "/api/Cities/GetLists").toPromise();
     }
     catch (e) {
-      //console.log(e);
+      ////console.log(e);
     }
   }
 
@@ -58,7 +58,7 @@ export class CitiesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -68,7 +68,7 @@ export class CitiesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }*/
 
@@ -85,7 +85,7 @@ export class CitiesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }*/
 
@@ -100,7 +100,7 @@ export class CitiesService {
       return await this.http.put(this.urlAPI + "/api/Cities" + "/" + city.id, city).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
   
@@ -116,7 +116,7 @@ export class CitiesService {
       return await this.http.post(this.urlAPI + "/api/Cities", newcity).toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 }

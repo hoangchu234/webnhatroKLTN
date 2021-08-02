@@ -25,7 +25,7 @@ export class EmployeesService {
         return await Cities.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }*/
 
@@ -41,7 +41,7 @@ export class EmployeesService {
         return await Employees.json();
     }
     catch (error) {
-       console.log(error);
+       //console.log(error);
     }  
   }
 
@@ -58,7 +58,7 @@ export class EmployeesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }*/
 
@@ -89,7 +89,7 @@ export class EmployeesService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }*/
 }

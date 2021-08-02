@@ -84,10 +84,11 @@ export class AuthenticationService {
           return await this.http.post(url, account, httpOptions).toPromise();
         }
         catch (e) {
-          console.log(e);
+          // //console.log(e);
         }
       }
 
+      
     public loginFacebook = (account: Account) => {
         var path = `${this.urlAPI}/api/Accounts/Signinsocial`;
         return this.http.post<any>(path, account, httpOptions).toPromise() as any;
@@ -99,7 +100,7 @@ export class AuthenticationService {
             return await this.http.post(loginUrl, user, httpOptions).toPromise();
         }
         catch (e) {
-            console.log(e);
+            //console.log(e);
         }
     }
 
@@ -141,7 +142,7 @@ export class AuthenticationService {
           return await this.http.get(url).toPromise();
         }
         catch (error) {
-          console.log(error);
+          //console.log(error);
         }
     }
 
@@ -151,7 +152,35 @@ export class AuthenticationService {
           return await this.http.get(url).toPromise();
         }
         catch (error) {
-          console.log(error);
+          //console.log(error);
         }
     }
+
+    public getAccountUser = async (account: Account) => {
+      try {
+        const url = `${this.urlAPI + "/api/Accounts/SigninUser"}`;
+        return await this.http.post(url, account, httpOptions).toPromise();
+      }
+      catch (error) {
+        //console.log(error);
+      }
+  }
+
+  public updatePhoneNumber(account: Account): Observable<any>{
+    return this.http.put(`${this.urlAPI + "/api/Accounts/PutUpdatePhone"}/${account.id}`, account, httpOptions).pipe(
+      tap(updateAccount => updateAccount),
+      catchError(error => of(new Account()))
+    );
+}
+
+public GetAccountPhoneCheck = async (id: string) => {
+  try {
+    const url = await fetch(`${this.urlAPI}/api/Accounts/GetAccountPhoneCheck/`+ id);
+    return await url.json();
+  }
+  catch (error) {
+    //console.log(error);
+  }
+}
+
 }

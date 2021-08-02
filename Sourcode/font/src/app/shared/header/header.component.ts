@@ -99,11 +99,11 @@ export class HeaderComponent implements OnInit {
       this.hubConnection
         .start()
         .then(() => {
-          console.log('Connection started!')
+          // console.log('Connection started!')
         })
         .then()
         .catch(error => {
-          console.log('Can not start connection with error: ' + error);
+          // console.log('Can not start connection with error: ' + error);
         })
     
       this.hubConnection.on("BroadcastMessage", async () => {  
@@ -112,7 +112,7 @@ export class HeaderComponent implements OnInit {
         await this.getDataMessageCount(userId);
         //forum
         await this.getDataForumNotification();
-        console.log("run")
+        // console.log("run")
       });
 
     }
@@ -191,7 +191,6 @@ export class HeaderComponent implements OnInit {
 
   onClickURL(link){
     window.location.replace(link);
-    //this.router.navigate([link]);
   }
 
   public async getTypes(){
@@ -308,4 +307,26 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/user/quan-ly-messeger']);
   }
 
+  async checkPhoneNumber(url){
+    var id = this.authenticationService.currentAccountValue.user.accountId;
+    var result = await this.authenticationService.GetAccountPhoneCheck(id) as any;
+    // console.log(result)
+    if(result == "1"){
+      this.router.navigate(['/xac-thuc-so-dien-thoai']);
+    }
+    else{
+      if(url == "1"){
+        this.router.navigate(['/user/thong-tin-ca-nhan']);
+      }
+      if(url == "2"){
+        this.router.navigate(['/user/quan-ly-dang-tin']);
+      }
+      if(url == "3"){
+        this.router.navigate(['/user/lich-su-giao-dich']);
+      }
+      if(url == "4"){
+        this.router.navigate(['/user/thong-tin-vi-tri']);
+      }
+    }
+  }
 }

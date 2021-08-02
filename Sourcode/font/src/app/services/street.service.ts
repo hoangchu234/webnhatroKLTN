@@ -30,7 +30,7 @@ export class StreetService {
       return await this.http.get(this.urlAPI + "/api/Streets").toPromise();
     }
     catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 
@@ -48,7 +48,7 @@ export class StreetService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -65,7 +65,7 @@ export class StreetService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 }

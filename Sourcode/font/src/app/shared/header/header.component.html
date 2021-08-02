@@ -40,15 +40,15 @@
                           <a class="nav-link " id="profileDropdown"  data-toggle="dropdown" aria-expanded="false" style="margin-top: -12px;">
                             <div style="margin-top:5px;"><img class="img-profile rounded-circle"  src="{{userImage}}" style="height: 30px;width: 30px;"><span class="font" style="color:black;margin-left: 5px;">{{username}} </span></div>
                             <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown" style="font-size: 20px;">
-                              <a [routerLink]="['/user/thong-tin-ca-nhan']" class="dropdown-item font">
+                              <a (click)="checkPhoneNumber(1)" class="dropdown-item font">
                                 <i class="mdi mdi-account mr-2 text-success "></i>Thông tin cá nhân</a>
                                 <div class="dropdown-divider"></div>
-                              <a [routerLink]="['/user/quan-ly-dang-tin']" class="dropdown-item font" >
+                              <a (click)="checkPhoneNumber(2)" class="dropdown-item font" >
                                 <i class="mdi mdi-message-processing mr-2 text-warning font"></i>Tin đã đăng </a>
                               <!-- <a [routerLink]="['/user/quan-ly-messeger']" class="dropdown-item font" >
                                 <i class="mdi mdi-file-find mr-2 text-warning font"></i>Quản lý tin nhắn</a> -->
                               <div class="dropdown-divider"></div>
-                              <a [routerLink]="['/user/lich-su-giao-dich']" class="dropdown-item font" >
+                              <a (click)="checkPhoneNumber(3)" class="dropdown-item font" >
                                 <i class="mdi  mdi-history mr-2 text-success font"></i>Lịch sử giao dịch</a>
                               <a [routerLink]="['/bang-gia-dich-vu']" class="dropdown-item font" >
                                 <i class="mdi mdi-newspaper mr-2 text-success font"></i>Bảng giá dịch vụ</a>
@@ -69,11 +69,11 @@
                       <div class="top-area">
                           <ul class="setting-area " style="line-height: 0px;margin-top: -10px;font-size: 20px;">
                               <li >
-                                  <a href="#" title="Notification" data-ripple="">
+                                  <a  title="Notification" data-ripple="">
                                       <i class="fa fa-bell"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
                                   </a>
                                   <div class="dropdowns">
-                                      <span>{{countNotifyNotSee}} comment mới <a href="#" title=""></a></span>
+                                      <span>{{countNotifyNotSee}} comment mới <a  title=""></a></span>
                                       <ul class="drops-menu">
                                           <li *ngFor="let data of notifys">
                                             <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="!data.justSee" style="background-color: whitesmoke;">
@@ -150,7 +150,7 @@
                    
                     <li class="nav-item active" style="margin-top:0px ;">
                       <button *ngIf="!checkLogin" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" [routerLink]="['/login']"><b>Đăng tin</b></button>
-                      <button *ngIf="checkLogin" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" [routerLink]="['/user/thong-tin-vi-tri']"><b>Đăng tin</b></button>
+                      <button *ngIf="checkLogin" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" (click)="checkPhoneNumber(4)"><b>Đăng tin</b></button>
                     </li>
 
                   </ul>

@@ -45,6 +45,7 @@ import { DetailMotelPublishMagementComponent } from './authority/loginadmin/deta
 import { ManagementForumComponent } from './authority/loginadmin/management-forum/management-forum.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { MapComponent } from './map/map.component';
+import { InputPhoneComponent } from './input-phone/input-phone.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,7 @@ const routes: Routes = [
     ]
   },
 
+  { path: 'xac-thuc-so-dien-thoai',          component: InputPhoneComponent },
   { path: 'bang-gia-dich-vu',          component: TableServicePriceComponent },
   { path: 'tro-giup',          component: HelpComponent } ,
   { path: 'area/:name',          component: AreaCityHomeComponent },

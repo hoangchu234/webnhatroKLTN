@@ -1,0 +1,46 @@
+<app-header></app-header>
+
+<div [hidden]="user" style="margin-top: 200px;" >
+    <form class="form-signin" style="margin-top: -15px;"  #formRegister="ngForm" (ngSubmit)="onSubmit()">
+      <a style="margin: 15px;font-size: 15px;">Số điện thoại</a>
+      <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
+        <input type="text" id="phone2" class="form-control" required style="color: black;" [(ngModel)]="phone" name="phone2" ngDefaultControl>
+        <p [hidden]="showError" *ngIf="formRegister.controls.phone2?.errors?.required">
+          Xin nhập số điện thoại
+        </p>
+      </div>
+      <!--capcha-->
+      <div id="recaptcha-container" style="margin-top: 15px;"></div>
+      <div class="form-group" style="padding-top: 0px;">
+        <button type="submit" name="button_1" class="btn btn-create" style="width:406px;margin-left:5px;background-color: #00deb6;" >Lưu</button>
+      </div>
+      <!-- <p class="text-center">Bạn đã có tài khoản <i  href="#nav-home">Đăng nhập</i></p> -->
+    </form>
+
+</div>
+<div *ngIf="user" >
+  <form #formPhone="ngForm" (ngSubmit)="UpdatePhoneNumber()">
+    <div class="container-fluid" id="signup" >
+        <hr>
+        <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+          <h4 class="card-title mt-3 text-center font" style="font-size: 30px">Xác thực số điện thoại</h4>
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+
+              </div>
+                  <input style="height: 60px;margin-left: 20px;" name="phone_number"  [(ngModel)]="phone_number" ngDefaultControl class="form-control" placeholder="code xac nhan" type="text">
+                  <p [hidden]="showError" *ngIf="formPhone.controls.phone_number?.errors?.required">
+                    Xin nhập mã xác nhận
+                  </p>
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                  <button type="submit" name="button_2" class="btn btn-primary btn-block btn-create" > Xác thực  </button>
+              </div> <!-- form-group// -->
+        </article>
+        </div> <!-- card.// -->
+    </div>
+  </form>
+</div>
+
+<app-footer></app-footer>

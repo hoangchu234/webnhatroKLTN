@@ -3,8 +3,8 @@ import { Account } from '../model/Account';
 export class Employee {
     id: number;
     hovaTen: string;
-    gender: string;
-    doB: string;
+    gender: boolean;
+    birthday: string;
     email: string;
     phone: string;
     country: string;

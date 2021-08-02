@@ -128,6 +128,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { MapComponent } from './map/map.component';
 import { AddEmployeeComponent } from '../app/authority/loginadmin/magement-employee/add-employee/add-employee.component';
+import { InputPhoneComponent } from './input-phone/input-phone.component';
 
 @NgModule({
   declarations: [
@@ -193,6 +194,7 @@ import { AddEmployeeComponent } from '../app/authority/loginadmin/magement-emplo
     ForgetPasswordComponent,
     MapComponent,
     AddEmployeeComponent,
+    InputPhoneComponent,
   ],
   imports: [
     BrowserModule,

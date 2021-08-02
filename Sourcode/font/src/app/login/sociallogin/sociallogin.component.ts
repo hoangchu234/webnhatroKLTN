@@ -48,8 +48,6 @@ export class SocialloginComponent implements OnInit {
 
     if (this.checkmail.length == 0) {
       this.createNewAccountSocial();
-      console.log(this.checkmail.length)
-
     }
     else {
       this.login();
@@ -64,10 +62,9 @@ export class SocialloginComponent implements OnInit {
       let account = new Account();
       account.user = user;
       account.username = this.userName;
-      console.log(account)
+
       const resultaccount = await this.serviceregister.addAccountSocial(account) as any;   
-      if(resultaccount != false){
-        var accountLogin = resultaccount as Account;
+      var accountLogin = resultaccount as Account;
         if(accountLogin.isActive == false){
           this.toast.toastError('Đăng nhập thất bại');
           // alert('Đăng nhập thất bại');
@@ -93,12 +90,6 @@ export class SocialloginComponent implements OnInit {
 
           }
         }
-      }
-      else{
-        // alert('Đăng nhập thất bại');
-        this.toast.toastError('Tài khoản bị khóa');
-
-      }
     }
     catch (e) {
       // alert('Đăng nhập thất bại');
@@ -149,7 +140,7 @@ export class SocialloginComponent implements OnInit {
     } 
     catch(e) 
     {
-      console.log(e)
+      // console.log(e)
       //this.toast.toastError('Tài khoản không tồn tại!');
 
       // alert('Tài khoản không tồn tại!');
@@ -176,7 +167,7 @@ export class SocialloginComponent implements OnInit {
         var email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
-        console.log('Can not login', error);
+        // console.log('Can not login', error);
       });
   }
 

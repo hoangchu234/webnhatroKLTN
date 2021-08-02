@@ -496,8 +496,8 @@ export class DetailMotelExtendComponent implements OnInit {
       this.priceBill = data.priceDate.split(" ")[0];
       this.type = this.timePublish.split(" ");
       this.totalprice = (Number(this.type[0]))*(Number(this.priceBill));
-      console.log(this.type)
-      console.log(this.price)
+      // console.log(this.type)
+      // console.log(this.price)
 
     }
     else if(this.time == "Đăng theo tuần"){
@@ -530,8 +530,8 @@ export class DetailMotelExtendComponent implements OnInit {
             fileRef.getDownloadURL().subscribe((url) => {
               this.imagesURLFirebare.push(url);
               if(Number(this.image.length) == Number(this.imagesURLFirebare.length)){
-                console.log("1 1")
-                console.log(url)
+                // console.log("1 1")
+                // console.log(url)
                 this.updateMotel();
                 this.deleteImageOld();
                 this.addImageNew();
@@ -567,7 +567,7 @@ export class DetailMotelExtendComponent implements OnInit {
           finalize(() => {
             fileRef.getDownloadURL().subscribe((url) => {
               this.imagesURLFirebare.push(url);
-              console.log(url)
+              // console.log(url)
               if(Number(this.image.length) == Number(this.imagesURLFirebare.length)){
                 this.updateMotel();
                 this.addImageNew();

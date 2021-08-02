@@ -5,6 +5,7 @@ import { EmployeesService } from 'src/app/services/employees.service';
 import {FormGroup, FormControl} from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { RegisterService } from 'src/app/services/register.service';
 
 export interface Type{
   id:number;
@@ -31,13 +32,13 @@ export class AddEmployeeComponent implements OnInit {
   birthday: ""
 
   phone: "";
-  constructor(public dialogRef: MatDialogRef<AddEmployeeComponent>,private employeesService: EmployeesService,private toast: ToastService) { }
+  constructor(private service: RegisterService,public dialogRef: MatDialogRef<AddEmployeeComponent>,private employeesService: EmployeesService,private toast: ToastService) { }
 
   ngOnInit(): void {
   }
 
 
-  add(){
+  async add(){
     if(this.validationPhone(this.phone) == -2){
       this.toast.toastInfo('Số điện thoại của bạn không đúng định dạng!');
       // alert('Số điện thoại của bạn không đúng định dạng!');
@@ -57,22 +58,39 @@ export class AddEmployeeComponent implements OnInit {
 
       if(check != null){
         if(Number(this.calculateDiff(this.birthday)) > 18){
-          var employee = new Employee;
-          employee.hovaTen = this.hovaten;
-          employee.addressOne = this.address;
-          employee.gender = this.genderShow
-          
-          employee.doB = this.convertDateTimeCSharp(this.birthday);
-          var account =  new Account;
-          account.username = this.username;
-          account.password = this.password;
-          account.employee = employee;
-          account.phone = this.phone;
-  
-          this.employeesService.addemployee(account).subscribe()
-          this.dialogRef.close();
+          var checkPhone = await this.service.checkPhone(this.phone);
+          if(checkPhone == "Số điện thoại chưa được dùng"){
+            var employee = new Employee;
+            employee.hovaTen = this.hovaten;
+            employee.addressOne = this.address;
+
+            if(this.genderShow == "Nam"){
+              employee.gender = true;
+            }
+            else{
+              employee.gender = false;
+        
+            }
+
+            
+            employee.birthday = this.convertDateTimeCSharp(this.birthday);
+            var account =  new Account;
+            account.username = this.username;
+            account.password = this.password;
+            account.employee = employee;
+            account.phone = this.phone;
+    
+            // console.log(account)
+            this.employeesService.addemployee(account).subscribe()
+            this.dialogRef.close();
+          }
+          else if(checkPhone == "Số điện thoại đã được dùng"){
+            this.toast.toastInfo('Số điện thoại đã được dùng');
+          }
         }
-       
+        else{
+          this.toast.toastInfo('Tuổi phải lớn hơn 18 tuổi');
+        }
       }
       else{
         this.toast.toastInfo('Mật khẩu phải có các ký tự đặc biệt, có các số hay in hoa chữ cái đầu');
@@ -115,7 +133,6 @@ export class AddEmployeeComponent implements OnInit {
 
     // After this construct a string with the above results as below
     const time = day + "/" + month + "/" + year + " " + hour + ':' + minute + ':' + second;
-    console.log('time: ', time);
 
     return time;
   }

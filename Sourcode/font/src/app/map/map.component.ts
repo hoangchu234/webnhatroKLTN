@@ -125,12 +125,12 @@ export class MapComponent implements OnInit {
 
   runMap(){
     if (!navigator.geolocation) {
-      console.log('location is not supported');
+      // console.log('location is not supported');
     }
     navigator.geolocation.getCurrentPosition((position) => {
       const coords = position.coords;
-      console.log(position.coords.latitude+","+position.coords.longitude);
-      console.log(this.lat+","+ this.long);
+      // console.log(position.coords.latitude+","+position.coords.longitude);
+      // console.log(this.lat+","+ this.long);
 
       // this.youLat = position.coords.latitude;
       this.youLat = position.coords.latitude.toString()
@@ -139,9 +139,9 @@ export class MapComponent implements OnInit {
 
       const latlong1 =[position.coords.latitude,position.coords.longitude];//vị trí hiện tại
       const latLong = [this.lat, this.long];
-      console.log(
-        `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-      );
+      // console.log(
+      //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+      // );
       
       
       this.mymap = L.map('map').setView(latLong, 13);
@@ -177,15 +177,15 @@ export class MapComponent implements OnInit {
     let desLon = 0;
     let id = navigator.geolocation.watchPosition(
       (position) => {
-        console.log(
-          `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-        );
+        // console.log(
+        //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+        // );
         if (position.coords.latitude === desLat) {
           navigator.geolocation.clearWatch(id);
         }
       },
       (err) => {
-        console.log(err);
+        // console.log(err);
       },
       {
         enableHighAccuracy: true,

@@ -52,7 +52,7 @@ export class MagementTransactionHistoryComponent implements OnInit {
 
     let value = event.target.value;
     var name = this.times[value].text.toString();
-    console.log(this.times[value].text)
+    // console.log(this.times[value].text)
     this.time = name;
     this.bills = this.billSearch.filter(a => a.timeChoice == name);
   }

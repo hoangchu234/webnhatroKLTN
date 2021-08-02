@@ -32,7 +32,7 @@ export class TypeofnewService {
       return await this.http.get(this.urlAPI + "/api/Typeofnews").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -50,7 +50,7 @@ export class TypeofnewService {
       return await this.http.get(url).toPromise();
     }
     catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -65,7 +65,7 @@ export class TypeofnewService {
       return await this.http.get(this.urlAPI + "/api/Typeofnews/GetNewTypeExcept").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -80,7 +80,7 @@ export class TypeofnewService {
       return await this.http.get(this.urlAPI + "/api/Typeofnews/CountTypeofMotel").toPromise();
     }
     catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 

@@ -50,8 +50,8 @@ export class MagementEmployeeComponent implements OnInit {
       data: ""
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-  
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.getEmployees();
     });
   }
 }

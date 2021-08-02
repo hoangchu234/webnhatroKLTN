@@ -251,7 +251,7 @@ export class DetailMotelPublishComponent implements OnInit {
   public async getProvinceById(ID){
     let result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
     var index = result.findIndex(a => Number(a.id) === Number(this.motelById.provinceId));
-    console.log(this.motelById)
+    // console.log(this.motelById)
     this.procince = result[index];
 
     this.provinces = result;
@@ -455,7 +455,7 @@ export class DetailMotelPublishComponent implements OnInit {
           finalize(() => {
             fileRef.getDownloadURL().subscribe((url) => {
               this.imagesURLFirebare.push(url);
-              console.log(url)
+              // console.log(url)
               if(Number(this.image.length) == Number(this.imagesURLFirebare.length)){
                 this.updateMotel();
                 this.addImageNew();

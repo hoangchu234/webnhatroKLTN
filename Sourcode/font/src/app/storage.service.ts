@@ -16,6 +16,7 @@ export class StorageService
 
     public static searchStorage: string = 'search';
 
+    public static searchOneTimeStorage: string = 'searchOneTime';
 
     constructor() { }
 
