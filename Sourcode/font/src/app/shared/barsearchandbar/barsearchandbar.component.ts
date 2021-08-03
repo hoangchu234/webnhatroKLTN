@@ -21,7 +21,6 @@ import { List } from 'src/app/model/viewmodel/ListViewModel';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { RemoveVietnameseTones } from 'src/app/removeVietnameseTones.service';
-import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-barsearchandbar',
@@ -65,6 +64,7 @@ export class BarsearchandbarComponent implements OnInit {
     this.getPrices();
     this.getCities();
     this.getNewTypes();
+
   }
 
   ngOnInit(): void {
@@ -140,7 +140,11 @@ export class BarsearchandbarComponent implements OnInit {
     const cities = await this.cityService.getCitys() as City[];
 
     var indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type)
-   
+    // var result: NewType = {
+    //   id:types[indexType].id, 
+    //   name:types[indexType].name, 
+    //   details:types[indexType].details
+    // }
     this.newType = types[indexType].name;
 
     if(city != null){
@@ -159,7 +163,7 @@ export class BarsearchandbarComponent implements OnInit {
       var provinceByCityId = await this.provinceService.getProvincesByCity(Number(idCity)) as Province[];
       var indexProvince = provinceByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
       if(indexProvince == -1){
-        district = province;
+        price = province;
       }
       else{
         this.province = provinceByCityId[indexProvince];
@@ -171,7 +175,7 @@ export class BarsearchandbarComponent implements OnInit {
       var districtByCityId = await this.dictrictService.getDistrictByProvince(Number(idProvince)) as District[];
       var indexDistrict = districtByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district);
       if(indexDistrict == -1){
-        street = district;
+        price = district;
       }  
       else{
         this.district = districtByCityId[indexDistrict];
@@ -254,18 +258,10 @@ export class BarsearchandbarComponent implements OnInit {
 
   public onChoiceDistrict(district:District) {
     this.district = district;
-
-    if(district.name == "Tất cả"){
-      var streets= new Street();
-      streets.id = "0";
-      streets.name = "Tất cả";
-      this.street = streets;
-    }
   }
 
   public onChoiceStreet(street:Street) {
     this.street = street;
-
   }
 
   public onChoiceNewtype(name) {
@@ -413,11 +409,6 @@ export class BarsearchandbarComponent implements OnInit {
 
   private _filter(name: string): List[] {
     const filterValue = name.toLowerCase();
-    var list = this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).slice(0,1);
-    for(let i=0; i< list.length; i++){
-      localStorage.setItem(StorageService.searchOneTimeStorage,list[i].name);
-      break;
-    }
     return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0).slice(0,7);
   }
 
@@ -464,46 +455,39 @@ export class BarsearchandbarComponent implements OnInit {
     if(this.myControl.value != null){
       this.searchText = this.myControl.value.name;
     }
-
-    this.searchText = localStorage.getItem(StorageService.searchOneTimeStorage);
-
-
-    if(this.searchText != undefined){
-      if(this.searchText != ""){
-        let str = this.searchText.toString().split(", ");
-        if(str.length == 1){
-          city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
-        }
-        else if(str.length == 2){
-          city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
-          province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
-        }
-        else {
-          city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[2]);
-          province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
-          var indexDistrict: Number = 0;
-          var indexStreet: number = 0;
-          streets.forEach(a => {
-            if(RemoveVietnameseTones.removeVietnameseTones(a.name) === str[0]){
-              indexStreet = Number(a.id);
-            }
-          }); 
-          districts.forEach(a => {
-            if(RemoveVietnameseTones.removeVietnameseTones(a.name) == str[0]){
-              indexDistrict = Number(a.id);
-            }
-          }); 
-          if(indexDistrict != 0){
-            district = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
+    if(this.searchText != ""){
+      let str = this.searchText.toString().split(", ");
+      if(str.length == 1){
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
+      }
+      else if(str.length == 2){
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
+        province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
+      }
+      else {
+        city = '/' + RemoveVietnameseTones.removeVietnameseTones(str[2]);
+        province = '/' + RemoveVietnameseTones.removeVietnameseTones(str[1]);
+        var indexDistrict: Number = 0;
+        var indexStreet: number = 0;
+        streets.forEach(a => {
+          if(RemoveVietnameseTones.removeVietnameseTones(a.name) === str[0]){
+            indexStreet = Number(a.id);
           }
-          else{
-            street = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
+        }); 
+        districts.forEach(a => {
+          if(RemoveVietnameseTones.removeVietnameseTones(a.name) == str[0]){
+            indexDistrict = Number(a.id);
           }
+        }); 
+        if(indexDistrict != 0){
+          district = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
+        }
+        else{
+          street = '/' + RemoveVietnameseTones.removeVietnameseTones(str[0]);
         }
       }
-  
     }
-    
+
     var type = '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
     if(this.newType == "Tất cả"){
       const result = await this.typeservice.getTypes() as NewType[];
@@ -514,8 +498,7 @@ export class BarsearchandbarComponent implements OnInit {
     var link = '/home' + city + province + district + street + price + type + direct + area;
 
     // var link = '/home' + '/' + city + province + district + street + '/' + price  + '/' + RemoveVietnameseTones.removeVietnameseTones(this.newType);
-    localStorage.removeItem(StorageService.searchOneTimeStorage);
-
+    
     this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.route.navigate([link]);
       

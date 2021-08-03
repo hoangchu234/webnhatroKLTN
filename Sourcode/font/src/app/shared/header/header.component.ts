@@ -317,20 +317,16 @@ export class HeaderComponent implements OnInit {
     }
     else{
       if(url == "1"){
-        var link = '/user/thong-tin-ca-nhan';
-        window.location.replace(link);
+        this.router.navigate(['/user/thong-tin-ca-nhan']);
       }
       if(url == "2"){
-        var link = '/user/quan-ly-dang-tin';
-        window.location.replace(link);
+        this.router.navigate(['/user/quan-ly-dang-tin']);
       }
       if(url == "3"){
-        var link = '/user/lich-su-giao-dich';
-        window.location.replace(link);
+        this.router.navigate(['/user/lich-su-giao-dich']);
       }
       if(url == "4"){
-        var link = '/user/thong-tin-vi-tri';
-        window.location.replace(link);
+        this.router.navigate(['/user/thong-tin-vi-tri']);
       }
     }
     
