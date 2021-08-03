@@ -1,4 +1,4 @@
-<div class="content-wrapper container" style="margin-top: -40px;">
+<div class="content-wrapper container"  >
   <div>
     <h3 class="page-title" style=" float:right;margin-top: 10px;" > Quản lý nhân viên</h3>
     <nav aria-label="breadcrumb" style=" float:left" >
@@ -8,7 +8,33 @@
         <li class="breadcrumb-item active" aria-current="page">Quản lý nhân viên</li>
       </ol>
     </nav>
+    
   </div>
+  
+
+    <div style="text-align: center;margin-top: 80px;font-size: 25x;"> Quản lý nhân viên</div>
+    <button type="button" style="width:150px;height: 40px;border: none;float: right;padding: 0px;margin-top: -30px;" (click)="openDialog()">Thêm nhân viên</button>
+      <table  style="width:100%;border: 1px solid black;border-collapse: collapse;margin-top: 30px;">
+        <thead>
+          <td style="font-weight: bold;color: red;">Tên</td>
+          <td style="font-weight: bold;color: red;">Số điện thoại</td>
+          <td style="font-weight: bold;color: red;">Email </td>
+          <td style="font-weight: bold;color: red;">Địa chỉ 1</td>
+          <td style="font-weight: bold;color: red;">Địa chỉ 2 </td>
+          <td style="font-weight: bold;color: red;">Mật khẩu</td>
+          <td style="font-weight: bold;color: red;">Sửa</td>
+      
+        </thead>
+        <tr>
+          <th style="font-weight: bold;">Chu Minh Hoang</th>
+          <td>0867490321</td>
+          <td>hoang2452@gmail.com</td>
+          <td>Võ Thị Sáu 7a</td>
+          <td>Võ Thị Sáu 7a</td>
+          <td>Đố bạn biết</td>
+          <td>Thay đổi </td>
+        </tr>
+      </table>
 
   <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800 font" style="margin-left: 35px;font-weight: bold;">QUẢN LÝ NHÂN VIÊN </h1>

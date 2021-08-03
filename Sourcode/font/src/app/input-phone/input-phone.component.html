@@ -1,46 +1,46 @@
 <app-header></app-header>
 
-<div [hidden]="user" style="margin-top: 200px;" >
-    <form class="form-signin" style="margin-top: -15px;"  #formRegister="ngForm" (ngSubmit)="onSubmit()">
-      <a style="margin: 15px;font-size: 15px;">Số điện thoại</a>
+<div class="container" [hidden]="user" style="margin-top: 100px;padding: 50px; height: 430px;" >
+    <form class="form-signin" style="margin-top: -15px;border-radius: 5px ;border: 1px solid black;padding: 40px;"  #formRegister="ngForm" (ngSubmit)="onSubmit()">
+      <h3 class="font" style="text-align: center;">Tạo tài khoản</h3>
+      <a style="margin: 15px;font-size: 18px;">Số điện thoại</a>
       <div class="form-label-group" style="padding-top: 5px;padding-left: 10px;margin-left: 10px;">
         <input type="text" id="phone2" class="form-control" required style="color: black;" [(ngModel)]="phone" name="phone2" ngDefaultControl>
         <p [hidden]="showError" *ngIf="formRegister.controls.phone2?.errors?.required">
           Xin nhập số điện thoại
         </p>
+        <a style="font-size: 13px; color: red">Nhập số điện thoại của bạn để hoàn thành quá trình đăng ký tài khoản</a>
       </div>
       <!--capcha-->
       <div id="recaptcha-container" style="margin-top: 15px;"></div>
       <div class="form-group" style="padding-top: 0px;">
-        <button type="submit" name="button_1" class="btn btn-create" style="width:406px;margin-left:5px;background-color: #00deb6;" >Lưu</button>
+        <button type="submit" name="button_1" class="btn btn-create" style="width:406px;margin-left:5px;background-color: #00deb6;border-radius: 5px;height: 40px;font-size: 17px;" >Lưu</button>
       </div>
       <!-- <p class="text-center">Bạn đã có tài khoản <i  href="#nav-home">Đăng nhập</i></p> -->
     </form>
 
 </div>
-<div *ngIf="user" >
+<div *ngIf="user" style="height: 430px;;" >
   <form #formPhone="ngForm" (ngSubmit)="UpdatePhoneNumber()">
-    <div class="container-fluid" id="signup" >
-        <hr>
+    <div class="container" id="signup" style="margin-top: 100px;" >
         <div class="card bg-light">
-        <article class="card-body mx-auto" style="max-width: 400px;">
-          <h4 class="card-title mt-3 text-center font" style="font-size: 30px">Xác thực số điện thoại</h4>
+        <article class="card-body mx-auto">
+          <h4 class="card-title text-center font" style="font-size: 30px">Xác thực số điện thoại</h4>
             <div class="form-group input-group">
               <div class="input-group-prepend">
-
               </div>
-                  <input style="height: 60px;margin-left: 20px;" name="phone_number"  [(ngModel)]="phone_number" ngDefaultControl class="form-control" placeholder="code xac nhan" type="text">
+                  <input style="height: 60px;" name="phone_number"  [(ngModel)]="phone_number" ngDefaultControl class="form-control" placeholder="code xac nhan" type="text">
                   <p [hidden]="showError" *ngIf="formPhone.controls.phone_number?.errors?.required">
                     Xin nhập mã xác nhận
                   </p>
               </div> <!-- form-group// -->
               <div class="form-group">
-                  <button type="submit" name="button_2" class="btn btn-primary btn-block btn-create" > Xác thực  </button>
+                  <button type="submit" name="button_2" class="btn btn-primary btn-block btn-create" style="margin-left:-15px;width:406px;background-color: #327bda;border-radius: 5px;height: 40px;font-size: 17px;" > Xác thực  </button>
               </div> <!-- form-group// -->
         </article>
         </div> <!-- card.// -->
     </div>
   </form>
 </div>
-
+<div style="margin-top: 120px;"></div>
 <app-footer></app-footer>

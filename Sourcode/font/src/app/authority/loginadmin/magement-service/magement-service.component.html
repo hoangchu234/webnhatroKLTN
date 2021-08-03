@@ -40,10 +40,10 @@
       <div class="col-md-6" style="margin-bottom: 10px;" >Giá ngày: </div>
       <div class="form-group">
         <div class="input-group">
-          <input type="text" class="form-control"  aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceDate" name="PriceDate">
-          <div class="input-group-append">
-            <select (change)="onChangeTypePriceMote1($event)" class="form-control form-control-lg">
-              <option *ngFor='let typePriceMotel of typePriceMotels1' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+          <input style="margin-right: 20px;" type="text" class="form-control"  aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceDate" name="PriceDate">
+          <div class="input-group-append" style="margin-top: -1px;">
+            <select style="color: black;" (change)="onChangeTypePriceMote1($event)" class="form-control form-control-lg">
+              <option style="color: black;" *ngFor='let typePriceMotel of typePriceMotels1' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
             </select>
           </div>
         </div>
@@ -51,10 +51,10 @@
       <div class="col-md-6" style="margin-bottom: 10px;">Giá tuần: </div> 
       <div class="form-group">
         <div class="input-group">
-          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceWeek" name="PriceWeek">
-          <div class="input-group-append">
-            <select (change)="onChangeTypePriceMote2($event)" class="form-control form-control-lg">
-              <option *ngFor='let typePriceMotel of typePriceMotels2' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+          <input style="margin-right: 20px;" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceWeek" name="PriceWeek">
+          <div style="margin-top: -1px;color: black;" class="input-group-append">
+            <select style="color: black;" (change)="onChangeTypePriceMote2($event)" class="form-control form-control-lg">
+              <option style="color: black;" *ngFor='let typePriceMotel of typePriceMotels2' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
             </select>
           </div>
         </div>
@@ -64,11 +64,11 @@
       <div class="col-md-6" style="margin-bottom: 10px;">Giá tháng: </div> 
       <div class="form-group">
         <div class="input-group">
-          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceMonth" name="PriceMonth">
+          <input style="margin-right: 20px;" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceMonth" name="PriceMonth">
       
-          <div class="input-group-append">
-            <select (change)="onChangeTypePriceMote3($event)" class="form-control form-control-lg">
-              <option   *ngFor='let typePriceMotel of typePriceMotels3' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+          <div vstyle="margin-top: -1px;" class="input-group-append">
+            <select style="color: black;" (change)="onChangeTypePriceMote3($event)" class="form-control form-control-lg">
+              <option style="color: black;"  *ngFor='let typePriceMotel of typePriceMotels3' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
             </select>
           </div>
         </div>
@@ -76,9 +76,9 @@
       <div class="col-md-6" style="margin-bottom: 10px;">Số ngày(tối thiêu): </div>
       <div class="form-group">
         <div class="input-group">
-          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="date" name="Date">
-          <div class="input-group-append">
-            <span class="input-group-text">Ngày</span>
+          <input style="margin-right: 5px;" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="date" name="Date">
+          <div style="color: black;" class="input-group-append">
+            <span style="padding-left: 40px;text-align: center;color: black;" class="input-group-text">Ngày</span>
           </div>
         </div>
       </div>
@@ -86,4 +86,3 @@
       <div class="col-md-12" style="margin-left: 20px;margin-top: 20px;"><button class="btn" style="margin-bottom: 10px;float: right;margin-right: 20px; background-color: antiquewhite;border: 1px solid black;height: 60px;width: 120px;" (click)="saveData()">Thay đổi</button></div>
     </div>
 </div>
-

@@ -15,10 +15,10 @@
             <input [(ngModel)]="hovaten" ngDefaultControl name="Name" style="width: 100%;padding: 5px;border: 1px solid black;"  >
           </div>
           <div class="btn-group p-2 link-secondary select-control select-cate" style="width: 100%;padding: 5px;margin-top: 5px;margin-left: 5px;" >
-            <a *ngIf="genderShow else elseDefferentGender" class="font" style="color:black;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">{{genderShow}}<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a>
+            <a *ngIf="genderShow else elseDefferentGender" class="font" style="color:black;text-decoration: none;width: 220px;margin-bottom: 10px;margin-top: 20px;" data-toggle="dropdown">{{genderShow}}<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a>
             <ng-template #elseDefferentGender><a class="font" style="color:black;text-decoration: none;width: 220px;margin-bottom: 10px;margin-top: 15px;" data-toggle="dropdown">Giới tính<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a></ng-template>
-            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
-              <div *ngFor="let gender of genders" >
+            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:15px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div  *ngFor="let gender of genders" >
                 <a class="dropdown-item" (click)="onClickGender(gender)"  [value]="gender.id">{{gender.text}}</a>
               </div>
             </div>

@@ -6553,7 +6553,6 @@ a.addnewforum {
 }
 /* Weather Widget */
 .weather-widget {
-    background-image: url("../images/resources/weather.jpg");
     float: left;
     min-height: 300px;
     text-align: center;
@@ -15949,7 +15948,7 @@ a.shopping-cart > i {
 .coming-meta > h1 {
     font-weight: 500;
     font-size: 80px;
-    background-image: url(../images/resources/text-bg.jpg);
+
 	text-transform: capitalize;
     padding-right: 30px;
 
