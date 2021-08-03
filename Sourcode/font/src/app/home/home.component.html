@@ -57,7 +57,7 @@
                                   <i class="input-group-text border-0 mdi mdi-magnify" style="color: black; background-color: white;"></i>
                                 </div>
                                 <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
-                                 class="form-control bg-transparent border-0" placeholder="Tìm kiếm theo tiêu đề" (keyup)="onKeyUp($event)" style="padding-right: 20px;">
+                                 class="form-control bg-transparent border-0" placeholder="Tìm kiếm theo thành phố" (keyup)="onKeyUp($event)" style="padding-right: 20px;">
                                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
                                   <mat-option *ngFor="let option of filteredOptions | async;let i=index" [value]="option" > 
                                     <div >{{option.name}}</div>
@@ -96,15 +96,15 @@
                                       </div>
                                     </div>
                                   </li>
-                                  <!-- <li class="nav-item active" style="margin: 10px;">
+                                  <li class="nav-item active" style="margin: 10px;">
                                     <a *ngIf="newType else elseDefferentNewType" class="font" style="color:white;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">{{newType}}<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a>
                                     <ng-template #elseDefferentNewType><a class="font" style="color:white;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">Loại nhà trọ<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a></ng-template>
                                     <div class="dropdown-menu scrollable-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 10px; left: 0px; will-change: transform;">
                                       <div *ngFor="let newTypes of newTypes">
-                                        <a class="dropdown-item" (click)="onClickNewType($event)" [ngModel]="ngModelcity" [value]="newTypes.id">{{newTypes.name}}</a>
+                                        <a class="dropdown-item" (click)="onClickNewType($event)" [value]="newTypes.id">{{newTypes.name}}</a>
                                       </div>
                                     </div>
-                                  </li> -->
+                                  </li>
 
                                   <li class="nav-item active" style="margin: 10px;">
                                     <a *ngIf="priceSearch else elseDefferentPriceSearch" class="font" style="color:white;text-decoration: none;width: 220px;margin-bottom: 10px;" data-toggle="dropdown">{{priceSearch}}<span class="fa fa-angle-down" style="color:#00deb6; font-size: 20px;margin: 0px 0px 0px 10px;"></span> </a>

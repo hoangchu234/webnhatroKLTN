@@ -47,7 +47,7 @@ namespace Websitedangtintimkiemnhatro.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
-            var employee = await _context.Employees.Include(a => a.Account).Where(a => a.Id == id).FirstOrDefaultAsync();
+            var employee = await _context.Employees.Include(a => a.Account).ThenInclude(a => a.Role).Where(a => a.Id == id).FirstOrDefaultAsync();
 
             if (employee == null)
             {

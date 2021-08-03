@@ -1,8 +1,9 @@
 <div class="row" *ngIf="employee" style="border: 1px solid black;padding: 30px;">
-        <div class="col-md-5" style="text-align:center; margin-top: 20px;">
+        <div class="col-md-5" style="text-align:center;">
 
           <img  [src]="employee.employeeImage" alt="profile" style="width:180px;height:180px;text-align: center;margin-top: 60px;">
-
+          <input style="display: none;" type="file" id="file" (change)="handleFileInput($event)" #fileInput>
+          <button class="btn btn-light" type="button" (click)="fileInput.click()" style="margin-top: 20px;border-radius: 5px;height: 30px;background-color: rgb(110, 210, 250);">Chọn hình ảnh</button>
         </div>
         <div class="col-md-7" >
           <div style="margin:10px">Họ và tên</div>
@@ -11,7 +12,7 @@
           </div>
           <div  style="margin:10px;">Số điện thoại</div>
              <div style="margin: 5px;height: 30px;padding: 5px;width:400px;margin-bottom:20px">
-            <input [(ngModel)]="employee.phone" ngDefaultControl style="width:100%;padding: 5px;margin-left: -10px;border:1px solid black;border-radius:5px"><span style="float: right;"><a><img class="exeO06P9Kb3k23VUTAr9H"  height="20"></a></span>
+            <input [(ngModel)]="employee.account.phone" ngDefaultControl style="width:100%;padding: 5px;margin-left: -10px;border:1px solid black;border-radius:5px"><span style="float: right;"><a><img class="exeO06P9Kb3k23VUTAr9H"  height="20"></a></span>
           </div>
           <div  style="margin:10px">Email</div>
              <div style="margin: 5px;height: 30px;padding: 5px;width:400px;margin-bottom:20px">
@@ -25,12 +26,8 @@
              <div style="margin: 5px;height: 30px;padding: 5px;width:400px;margin-bottom:20px">
             <input [(ngModel)]="employee.addressTwo" ngDefaultControl style="width:100%;padding: 5px;margin-left: -10px;border:1px solid black;border-radius:5px"> <span style="float: right;"><a><img class="exeO06P9Kb3k23VUTAr9H"  height="20"></a></span>
           </div>
-          <div  style="margin:10px">Mật khẩu</div>
-             <div style="margin: 5px;height: 30px;padding: 5px;width:400px;margin-bottom:20px">
-            <input [(ngModel)]="employee.account.password" ngDefaultControl style="width:100%;padding: 5px;margin-left: -10px;border:1px solid black;border-radius:5px"><span style="float: right;"><a><img class="exeO06P9Kb3k23VUTAr9H"  height="20"></a></span>
-          </div>
         </div>
         <div class="col-md-12" style="text-align: center; margin-top: 30px;">
-        <button class="btn btn-warning" style="width:260px" type="submit" (click)="onSubmit(employee)" >Lưu thông tin</button></div>
+        <button class="btn btn-warning" style="width:260px" type="submit" (click)="onSubmit(employee)" style="border-radius: 5px;height: 30px;">Lưu thông tin</button></div>
 </div>
 

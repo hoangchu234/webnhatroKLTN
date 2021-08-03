@@ -275,6 +275,13 @@ export class MapComponent implements OnInit {
 
   public onChoiceDistrict(district:District) {
     this.district = district;
+
+    if(district.name == "Tất cả"){
+      var streets= new Street();
+      streets.id = "0";
+      streets.name = "Tất cả";
+      this.street = streets;
+    }
   }
 
   public onChoiceStreet(street:Street) {
@@ -737,7 +744,7 @@ export class MapComponent implements OnInit {
         var provinceByCityId = await this.getDataProvinceByID(idCity);
         var indexProvince = provinceByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
         if(indexProvince == -1){
-          price = province;
+          district = province;
           indexProvince = 0;
           idProvince = indexProvince;
         }
@@ -750,7 +757,7 @@ export class MapComponent implements OnInit {
         var districtByCityId = await this.getDataDistricteById(idProvince);
         var indexDistrict = districtByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district); 
         if(indexDistrict == -1){
-          price = district;
+          street = district;
           indexDistrict = 0;
           idDistrict = indexDistrict
         }  

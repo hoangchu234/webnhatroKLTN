@@ -66,6 +66,7 @@ export class HeaderComponent implements OnInit {
     }
 
   async ngOnInit(): Promise<void> { 
+    
     this.types = await this.getTypes();
     if(this.authenticationService.currentAccountValue){
       if(this.authenticationService.currentAccountValue.user){
@@ -316,17 +317,22 @@ export class HeaderComponent implements OnInit {
     }
     else{
       if(url == "1"){
-        this.router.navigate(['/user/thong-tin-ca-nhan']);
+        var link = '/user/thong-tin-ca-nhan';
+        window.location.replace(link);
       }
       if(url == "2"){
-        this.router.navigate(['/user/quan-ly-dang-tin']);
+        var link = '/user/quan-ly-dang-tin';
+        window.location.replace(link);
       }
       if(url == "3"){
-        this.router.navigate(['/user/lich-su-giao-dich']);
+        var link = '/user/lich-su-giao-dich';
+        window.location.replace(link);
       }
       if(url == "4"){
-        this.router.navigate(['/user/thong-tin-vi-tri']);
+        var link = '/user/thong-tin-vi-tri';
+        window.location.replace(link);
       }
     }
+    
   }
 }

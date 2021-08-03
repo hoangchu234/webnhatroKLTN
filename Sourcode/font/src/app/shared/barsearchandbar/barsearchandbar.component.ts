@@ -140,11 +140,7 @@ export class BarsearchandbarComponent implements OnInit {
     const cities = await this.cityService.getCitys() as City[];
 
     var indexType = types.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === type)
-    // var result: NewType = {
-    //   id:types[indexType].id, 
-    //   name:types[indexType].name, 
-    //   details:types[indexType].details
-    // }
+   
     this.newType = types[indexType].name;
 
     if(city != null){
@@ -163,7 +159,7 @@ export class BarsearchandbarComponent implements OnInit {
       var provinceByCityId = await this.provinceService.getProvincesByCity(Number(idCity)) as Province[];
       var indexProvince = provinceByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === province); 
       if(indexProvince == -1){
-        price = province;
+        district = province;
       }
       else{
         this.province = provinceByCityId[indexProvince];
@@ -175,7 +171,7 @@ export class BarsearchandbarComponent implements OnInit {
       var districtByCityId = await this.dictrictService.getDistrictByProvince(Number(idProvince)) as District[];
       var indexDistrict = districtByCityId.findIndex(a => RemoveVietnameseTones.removeVietnameseTones(a.name) === district);
       if(indexDistrict == -1){
-        price = district;
+        street = district;
       }  
       else{
         this.district = districtByCityId[indexDistrict];
@@ -258,10 +254,18 @@ export class BarsearchandbarComponent implements OnInit {
 
   public onChoiceDistrict(district:District) {
     this.district = district;
+
+    if(district.name == "Tất cả"){
+      var streets= new Street();
+      streets.id = "0";
+      streets.name = "Tất cả";
+      this.street = streets;
+    }
   }
 
   public onChoiceStreet(street:Street) {
     this.street = street;
+
   }
 
   public onChoiceNewtype(name) {

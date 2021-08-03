@@ -19,22 +19,7 @@ export class EmployeesService {
 
   constructor( private http: HttpClient) { }
 
-  /*public getCitys = async () => {
-    try {
-        const Cities = await fetch(`${this.urlAPI}/api/Cities`);
-        return await Cities.json();
-    }
-    catch (error) {
-       //console.log(error);
-    }  
-  }*/
 
-  /*public getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.urlAPI + "/api/Employees").pipe(
-      tap(receivedEmployees => receivedEmployees),
-      catchError(error => of([]))
-    );
-  }*/
   public getEmployees = async () => {
     try {
         const Employees = await fetch(`${this.urlAPI}/api/Employees`);
@@ -52,7 +37,8 @@ export class EmployeesService {
       catchError(error => of(new Employee()))
     );
   }*/
-  /*public getEmployeeFromId = async (id: number) => {
+  
+  public getEmployeeFromId = async (id: number) => {
     try {
       const url = `${this.urlAPI + "/api/Employees"}/${id}`;
       return await this.http.get(url).toPromise();
@@ -60,7 +46,7 @@ export class EmployeesService {
     catch (error) {
       //console.log(error);
     }
-  }*/
+  }
 
   public updateEmployee(employee: Employee): Observable<any>{
     return this.http.put(`${this.urlAPI + "/api/Employees"}/${employee.id}`, employee, httpOptions).pipe(

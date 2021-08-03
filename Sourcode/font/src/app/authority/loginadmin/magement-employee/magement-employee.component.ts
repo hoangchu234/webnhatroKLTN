@@ -15,15 +15,23 @@ export class MagementEmployeeComponent implements OnInit {
   employees:Employee[] = [];
   selectEmployee:Employee;
   image = "";
+
+  //pagination
+  totalRecord: Number;
+  page:Number = 1;
+
   constructor(public dialog: MatDialog,private router: Router,private employeesService: EmployeesService) { 
     this.image = "../../../assets/images/blog_3.jpg";
    }
 
   async ngOnInit(): Promise<void> {
     await this.getEmployees();
-   
   }
 
+  public handlePageChange(event) {
+    this.page = event;
+  }
+     
   public async getEmployees(){
    try{
     this.employees = await this.employeesService.getEmployees() as Employee[];
@@ -40,7 +48,9 @@ export class MagementEmployeeComponent implements OnInit {
   }
 
   onselecte(employee:Employee): void{
-    this.selectEmployee = employee;
+    var em = new Employee();
+    em = employee;
+    this.selectEmployee = em;
   }
 
   openDialog(): void {

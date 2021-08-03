@@ -61,25 +61,30 @@ export class ThongTinCoBanComponent implements OnInit {
 
   constructor(private toast: ToastService, public typeservice:TypeofnewService,public streetService:StreetService,public dictrictService:DictrictService,private authenticationService: AuthenticationService,public dialog: MatDialog,private router: Router,private cityService: CitiesService, private provinceService: ProvincesService,public motelService:MotelService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
-    if(JSON.parse(localStorage.getItem(StorageService.motelStorage))){
-      this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
-      this.check = true;
-    }
-
-    this.getNewTypes();
 
   }
 
   async ngOnInit(): Promise<void> {
-    this.phoneMotel = this.authenticationService.currentAccountValue.phone;
     this.typeMotel = "Thuê";
 
-    if(this.motelprevous){
+    if(JSON.parse(localStorage.getItem(StorageService.motelStorage))){
+      this.phoneMotel = this.authenticationService.currentAccountValue.phone;
+      this.motelprevous = JSON.parse(localStorage.getItem(StorageService.motelStorage));
+      this.check = true;
       await this.privous();
       this.changeAddress(this.addressNumber);
+
     }
+
+    
     else{
       await this.getCities();
+
+      await this.getProvinceById(this.city.id)
+      await this.getDistricteById(this.province.id)
+      await this.getStreetById(this.province.id)
+      await this.getNewTypes();
+
       this.changeAddress(this.addressNumber)
     }
   }
@@ -214,55 +219,30 @@ export class ThongTinCoBanComponent implements OnInit {
   } 
 
   public async getStreetById(ID){
-    var streetNew : Street [] = [];
-    this.streets = streetNew;
-   
     const result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
-    for (let i = 0; i < result.length; i++) {
-      let street = new Street();
-      street.id = result[i].id;
-      street.name = result[i].name;
-      this.streets.push(street);
-    }
-    this.street = result[0]
+    this.streets = result.slice();
+    this.street = this.streets[0]
   }
 
   public async getProvinceById(ID){
-    var provinceNew : Province [] = [];
-    this.provinces = provinceNew;
     const list = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
-      for (let i = 0; i < list.length; i++) {
-        let province = new Province();
-        province.id = list[i].id;
-        province.name = list[i].name;
-        this.provinces.push(province);
-      }
-      this.province = list[0]
-      await this.getDistricteById(list[0].id)
-      await this.getStreetById(list[0].id)
+    this.provinces = list.slice();
+    
+    this.province = this.provinces[0];
   }
 
   public async getDistricteById(ID){
-    var districtNew : District [] = [];
-    this.districts = districtNew;
     const list = await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
-      for (let i = 0; i < list.length; i++) {
-        let district = new District();
-        district.id = list[i].id;
-        district.name = list[i].name;
-        this.districts.push(district);
-      }
-      this.district = list[0];
+    this.districts = list.slice();
+    this.district =  this.districts[0];
     
   }
 
   public async getCities(){
     const result = await this.cityService.getCitys() as City[];
-    for(let i=1;i<result.length;i++){
-      this.cities.push(result[i]);
-    }
-    this.city = result[1]
-    await this.getProvinceById(result[1].id)
+    this.cities = result.slice();
+    this.cities.shift();
+    this.city =  this.cities[1];
   }
 
   public async step2(){

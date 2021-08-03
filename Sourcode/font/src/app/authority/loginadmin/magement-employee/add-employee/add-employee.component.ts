@@ -32,6 +32,7 @@ export class AddEmployeeComponent implements OnInit {
   birthday: ""
 
   phone: "";
+  email = "";
   constructor(private service: RegisterService,public dialogRef: MatDialogRef<AddEmployeeComponent>,private employeesService: EmployeesService,private toast: ToastService) { }
 
   ngOnInit(): void {
@@ -64,6 +65,7 @@ export class AddEmployeeComponent implements OnInit {
             employee.hovaTen = this.hovaten;
             employee.addressOne = this.address;
 
+            employee.email = this.email;
             if(this.genderShow == "Nam"){
               employee.gender = true;
             }
@@ -80,6 +82,7 @@ export class AddEmployeeComponent implements OnInit {
             account.employee = employee;
             account.phone = this.phone;
     
+            
             // console.log(account)
             this.employeesService.addemployee(account).subscribe()
             this.dialogRef.close();

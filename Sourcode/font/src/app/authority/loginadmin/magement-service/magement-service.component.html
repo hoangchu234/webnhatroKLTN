@@ -26,7 +26,11 @@
       <td>{{serviceprice.priceWeek}}</td>
       <td>{{serviceprice.priceMonth}}</td>
       <td>{{serviceprice.date}}</td>
-      <td (click)="ChangeButton(serviceprice.id)">Thay đổi </td>
+      <td style="text-align: center;">
+        <button type="button" class="btn btn-info btn-sm" (click)="ChangeButton(serviceprice.id)">
+            <i class="fa fa-edit"></i>
+          </button>
+      </td>
     </tr>
   </table>
 

@@ -168,7 +168,7 @@ remember: boolean = false;
     this.authenticationService.logout();
     this.authenticationService.saveAccount(a, this.remember);
 
-    // window.location.reload();
+    window.location.reload();
    
    });
  }

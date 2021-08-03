@@ -19,59 +19,34 @@
           <td style="font-weight: bold;color: red;">Tên</td>
           <td style="font-weight: bold;color: red;">Số điện thoại</td>
           <td style="font-weight: bold;color: red;">Email </td>
-          <td style="font-weight: bold;color: red;">Địa chỉ 1</td>
-          <td style="font-weight: bold;color: red;">Địa chỉ 2 </td>
-          <td style="font-weight: bold;color: red;">Mật khẩu</td>
+          <td style="font-weight: bold;color: red;">Chức vụ</td>
+          <td style="font-weight: bold;color: red;">Địa chỉ</td>
           <td style="font-weight: bold;color: red;">Sửa</td>
       
         </thead>
-        <tr>
-          <th style="font-weight: bold;">Chu Minh Hoang</th>
-          <td>0867490321</td>
-          <td>hoang2452@gmail.com</td>
-          <td>Võ Thị Sáu 7a</td>
-          <td>Võ Thị Sáu 7a</td>
-          <td>Đố bạn biết</td>
-          <td>Thay đổi </td>
+        <tr *ngFor="let employee of employees | paginate: { itemsPerPage: 5, currentPage: page }">
+          <th style="font-weight: bold;">{{employee.hovaTen}}</th>
+          <td>{{employee.account.phone}}</td>
+          <td>{{employee.email}}</td>
+          <td>{{employee.account.role.roleName}}</td>
+          <td>{{employee.addressOne}}</td>
+          <td style="text-align: center;">
+            <button type="button" class="btn btn-info btn-sm" (click)="onselecte(employee)">
+                <i class="fa fa-edit"></i>
+              </button>
+          </td>
         </tr>
       </table>
-
-  <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800 font" style="margin-left: 35px;font-weight: bold;">QUẢN LÝ NHÂN VIÊN </h1>
-  </div> -->
-
-  
-  <div class="row" style="margin-top: 60px;">
-    <div class="col-md-12" style="margin-bottom:10px" >
-      <button type="button" style="width:150px;height: 40px;border: none;float: right;padding: 0px;" (click)="openDialog()">Thêm nhân viên</button>
-    </div>
-    <div class="col-md-9">
-      
-      <app-employee-detail [employee] = "selectEmployee"></app-employee-detail>
-    </div>
-    <div class="col-md-3">
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-          <li class="nav-item nav-profile" *ngFor="let employee of employees; let i=index">
-            <a class="nav-link" (click)="onselecte(employee)">
-              <div class="nav-profile-image">
-                <img src="{{employee.employeeImage}}" alt="profile">
-                <span class="login-status online"></span>
-               
-              </div>
-              <div class="nav-profile-text d-flex flex-column">
-                <span class="font-weight-bold mb-2">{{employee.hovaTen}}</span>
-                <span class="text-secondary text-small">{{employee.account.role.roleName}}</span>
-              </div>
-              <i *ngIf="!employee.account.isHD" class="mdi mdi-bookmark-check text-warning nav-profile-badge"></i>
-              <i *ngIf="employee.account.isHD" class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
 </div>
+
+<pagination-controls (pageChange)="page = $event" style="text-align: center;"></pagination-controls>
+
+
+<div class="container" style="width:800px">
+  <app-employee-detail [employee] = "selectEmployee"></app-employee-detail>
+</div>
+
+
 <!-- <div class="container-fluid" style="margin-top: 20px;">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800 font" style="margin-left: 35px;font-weight: bold;">QUẢN LÝ NHÂN VIÊN </h1>
