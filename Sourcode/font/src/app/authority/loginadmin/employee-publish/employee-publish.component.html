@@ -18,22 +18,41 @@
           <div class="col-md-4">
             <div class="form-group">
               <div class="font">Trạng thái tin</div>
-              <div >
+              <!-- <div >
                 <select (change)="onChangeStatus($event)" class="form-control form-control-lg" style="color: black;width:150px;height:40px;margin-left: 5pxpx; margin-top: 5px;">
                   <option *ngFor='let status of statuss' [value]="status.id">{{status.text}}</option>
                 </select>
 
+              </div> -->
+              <div>
+                <div  style="width:auto;border-radius: 10px;width:150px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black; margin-top: 5px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                  {{status}}</div> </div>
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                  <div *ngFor='let status of statuss' >
+                    <a class="dropdown-item" (click)="onChangeStatus($event)" [value]="status.id" >{{status.text}}</a>
+                  </div>
+                </div>
               </div>
           </div>
           </div>
           <div class="col-md-4" >
             <div class="form-group " >
               <div class="font">Loại nhà trọ</div>
-              <div  >
+              <!-- <div  >
                 <select (change)="onChangeNewType($event)" class="form-control form-control-lg" style="color: black;;width:200px;height:40px;margin-left: 5px; margin-top: 5px;">
                   <option *ngFor='let newtypes of newTypes'  [value]="newtypes.id">{{newtypes.name}}</option>
                 </select>
 
+              </div> -->
+
+              <div >
+                <div  style="width:auto;border-radius: 10px;width:150px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black;margin-top: 5px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                  {{newType.name}}</div> </div>
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                  <div *ngFor='let newtypes of newTypes'>
+                    <a class="dropdown-item" (click)="onChangeNewType($event)" [value]="newtypes.id" >{{newtypes.name}}</a>
+                  </div>
+                </div>
               </div>
           </div>
           </div>
@@ -41,11 +60,21 @@
           <div class="col-md-4" >
             <div class="form-group " >
               <div class="font">Loại tin</div>
-              <div  >
+              <!-- <div  >
                 <select (change)="onChangeNew($event)" class="form-control form-control-lg" style="color: black;;width:200px;height:40px;margin-left: 5px; margin-top: 5px;">
                   <option *ngFor='let n of news'  [value]="n.id">{{n.newName}}</option>
                 </select>
 
+              </div> -->
+
+              <div>
+                <div  style="width:auto;border-radius: 10px;width:200px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black;margin-top: 5px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                  {{new.newName}}</div> </div>
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                  <div *ngFor='let n of news' >
+                    <a class="dropdown-item" (click)="onChangeNew($event)" [value]="n.id">{{n.newName}}</a>
+                  </div>
+                </div>
               </div>
           </div>
           </div>

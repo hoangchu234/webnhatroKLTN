@@ -33,7 +33,7 @@ export class MagementTransactionHistoryComponent implements OnInit {
     {id: 2, text:'Đăng theo tháng'},
   ];
 
-  time: string;
+  time: string = 'Đăng theo ngày';
 
   constructor(private authenticationService: AuthenticationService,private chRef : ChangeDetectorRef,private billsrvice : BillService) {
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);

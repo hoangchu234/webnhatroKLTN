@@ -15,22 +15,42 @@
             <div class="col-md-4" style="margin-top: -30px;">
               <div class="form-group">
                 <div class="font" style="margin-left:-10px">Trạng thái tin</div>
-                <div >
+                <!-- <div >
                   <select (change)="onChangeStatus($event)" class="form-control form-control-lg" style="color: black;width:100%;height:40px;margin-top:10px;">
                     <option *ngFor='let status of statuss' [value]="status.id">{{status.name}}</option>
                   </select>
 
+                </div> -->
+
+                <div >
+                  <div  style="width:auto;border-radius: 10px;height: 40px;background-color: rgb(255, 255, 255);border:1px solid black;color: black;width:100%;margin-top:10px;margin-left: -10px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 10px;text-align: left;" >
+                    {{status.name}}</div> </div>
+                  <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                    <div *ngFor='let status of statuss' >
+                      <a class="dropdown-item" (click)="onChangeStatus($event)" [value]="status.id" >{{status.name}}</a>
+                    </div>
+                  </div>
                 </div>
             </div>
             </div>
             <div class="col-md-4" style="margin-top: -30px;">
               <div class="form-group" style="padding: 25p;">
                 <div class="font" style="margin-left:-10px">Lọc theo loại tin</div>
-                <div  >
+                <!-- <div  >
                   <select (change)="onClickSearchNewType($event)" class="form-control form-control-lg" style="color: black;;width:100%;height:40px;margin-top:10px;">
                     <option *ngFor='let newTypes of newTypes'  [value]="newTypes.id">{{newTypes.name}}</option>
                   </select>
 
+                </div> -->
+
+                <div>
+                  <div  style="width:auto;border-radius: 10px;height: 40px;background-color: rgb(255, 255, 255);border:1px solid black;color: black;width:100%;margin-top:10px;margin-left: -10px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 10px;text-align: left;" >
+                    {{newType.name}}</div> </div>
+                  <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                    <div *ngFor='let newTypes of newTypes' >
+                      <a class="dropdown-item" (click)="onClickSearchNewType($event)" [value]="newTypes.id" >{{newTypes.name}}</a>
+                    </div>
+                  </div>
                 </div>
             </div>
             </div>

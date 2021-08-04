@@ -11,17 +11,27 @@
               <form>
                 <div class="form-group row">
                     <label class="col-sm-3" for="exampleFormControlSelect1">Loại nhà trọ</label>
-                    <div class="col-sm-9" style="margin-top: -10px ;">
+                    <!-- <div class="col-sm-9" style="margin-top: -10px ;">
                         <select  (change)="onChangeNewType($event)" class="form-control form-control-lg" style="color: black;">
                             <option *ngFor="let newtype of newTypes">{{newtype.name}}</option>
                         </select>
+                    </div> -->
+
+                    <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
+                      <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                        {{newType.name}}</div> </div>
+                      <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor="let newtype of newTypes" >
+                          <a class="dropdown-item" (click)="onChangeNewType($event)" [value]="newtype.id">{{newtype.name}}</a>
+                        </div>
+                      </div>
                     </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-3" for="exampleFormControlSelect1">Loại hình</label>
-                  <div class="col-sm-9" style="padding-left: 28px;margin-top: -10px;" >
+                  <div class="col-sm-9" style="padding-left: 38px;margin-top: -10px;" >
                   <!--<button type="submit" class="btn btn-primary" click="clickbuy()"  style="height:45px;width: 100px;margin-left:-23px;padding: 5px;">Mua bán</button>-->
-                  <button type="submit" style="height:45px;width: 100px;margin-left: -22px;" [class.yellow-background]="true"  class="btn btn-primary">Cho thuê</button>
+                  <button type="submit" style="height:45px;width: 100px;margin-left: -40px;" [class.yellow-background]="true"  class="btn btn-primary">Cho thuê</button>
                   </div>
                 <br>
                 <br>
@@ -29,35 +39,75 @@
                 </div>
                 <div class="form-group row" style="margin-top: -30px;">
                   <label class="col-sm-3" for="exampleFormControlSelect1">Tỉnh thành phố</label>
-                  <div  class="col-sm-9" style="margin-top: -10px ;" placeholder="Nhập tên dự án">
+                  <!-- <div  class="col-sm-9" style="margin-top: -10px ;" placeholder="Nhập tên dự án">
                     <select (change)="onChangeCity($event)" class="form-control form-control-lg" style="color: black;">
                         <option *ngFor="let city of cities">{{city.name}}</option>
                     </select>
+                  </div> -->
+
+                  <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
+                    <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                      {{city.name}}</div> </div>
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                      <div *ngFor="let city of cities" >
+                        <a class="dropdown-item" (click)="onChangeCity($event)" [value]="city.id">{{city.name}}</a>
+                      </div>
+                    </div>
                   </div>
 
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-3" for="exampleFormControlSelect1">Quận/Huyện </label>
-                  <div class="col-sm-9" style="margin-top: -10px ;">
+                  <!-- <div class="col-sm-9" style="margin-top: -10px ;">
                     <select (change)="onChangeProvince($event)"  class="form-control form-control-lg" style="color: black;">
                         <option *ngFor="let province of provinces">{{province.name}}</option>
                     </select>
+                    </div> -->
+
+                    <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
+                      <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                        {{procince.name}}</div> </div>
+                      <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor="let province of provinces" >
+                          <a class="dropdown-item" (click)="onChangeProvince($event)"  [value]="province.id">{{province.name}}</a>
+                        </div>
+                      </div>
                     </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-3" for="exampleFormControlSelect1">Phường/Xã </label>
-                  <div class="col-sm-9" style="margin-top: -10px ;">
+                  <!-- <div class="col-sm-9" style="margin-top: -10px ;">
                     <select (change)="onChangeDistrict($event)"  class="form-control form-control-lg" style="color: black;">
                         <option *ngFor="let district of districts">{{district.name}}</option>
                     </select>
+                    </div> -->
+                    <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
+                      <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                        {{district.name}}</div> </div>
+                      <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor="let district of districts" >
+                          <a class="dropdown-item" (click)="onChangeDistrict($event)"  [value]="district.id">{{district.name}}</a>
+                        </div>
+                      </div>
                     </div>
+
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-3" for="exampleFormControlSelect1">Đường/Phố </label>
-                  <div class="col-sm-9" style="margin-top: -10px ;">
+                  <!-- <div class="col-sm-9" style="margin-top: -10px ;">
                     <select (change)="onChangeStreet($event)"  class="form-control form-control-lg" style="color: black;">
                         <option *ngFor="let street of streets">{{street.name}}</option>
                     </select>
+                    </div> -->
+
+                    <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
+                      <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                        {{street.name}}</div> </div>
+                      <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor="let street of streets" >
+                          <a class="dropdown-item" (click)="onChangeStreet($event)" [value]="street.id" >{{street.name}}</a>
+                        </div>
+                      </div>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -97,21 +147,31 @@
         <div class="col-md-8">
             <div class="form-group row">
               <label class="col-sm-2" style="margin-top: 5px;">Giá tiền </label>
-              <div class="col-sm-6" style="margin-top: -10px ;">
+              <div class="col-sm-6" style="margin-top: -10px ;margin-left: 10px;">
               <input type="number" [(ngModel)]="price" name="priceMotel" ngDefaultControl class="form-control" style="margin-left: -6px;">
               </div>
-              <div class="col-sm-4">
+              <!-- <div class="col-sm-4">
                   <select (change)="onChangePriceType($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
                       <option *ngFor='let typePriceMotel of typePriceShowMotels' [value]="typePriceMotel.text">{{typePriceMotel.text}}</option>
                   </select>
+              </div> -->
+              <div class="btn-group col-sm-3 link-secondary select-control select-cate" style="margin-top: -10px;color: black;">
+                <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                  {{typePriceMotel}}</div> </div>
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                  <div *ngFor='let typePriceMotel of typePriceShowMotels' >
+                    <a class="dropdown-item" (click)="onChangePriceType($event)" [value]="typePriceMotel.text" >{{typePriceMotel.text}}</a>
+                  </div>
+                </div>
               </div>
+              
             </div>
             <div class="form-group row" >
               <label class="col-sm-2" style="margin-top: 5px;">Diện tích </label>
-              <div class="col-sm-6" style="margin-top: -10px ;width: 100%;">
+              <div class="col-sm-6" style="margin-top: -10px ;width: 100%;margin-left: 10px;">
               <input type="number" [(ngModel)]="areaZone"  name="AreaMotel" ngDefaultControl class="form-control" placeholder="min" style="margin-left: -6px;" >
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
                 m²
               </div>
             </div>
@@ -119,10 +179,20 @@
         <div class="col-md-4">
           <div class="form-group row">
             <label class="col-sm-4" for="exampleFormControlSelect1" style="margin-top:5px">Hướng nhà</label>
-            <div class="col-sm-8">
+            <!-- <div class="col-sm-8">
               <select (change)="onChangeDirect($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
                   <option *ngFor='let direct of directsShow' [value]="direct.directName">{{direct.directName}}</option>
                 </select>
+            </div> -->
+
+            <div class="btn-group col-sm-8 link-secondary select-control select-cate" style="margin-top: -10px;color: black;">
+              <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                {{direct.directName}}</div> </div>
+              <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                <div *ngFor='let direct of directsShow' >
+                  <a class="dropdown-item" (click)="onChangeDirect($event)"  [value]="direct.id" > {{direct.directName}}</a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -130,14 +200,14 @@
         <div class="col-md-12" style="padding-top: 20px;">
           <div class="form-group row" style="margin-top: -20px;">
             <label class="col-sm-2" for="exampleFormControlSelect1" >Tiêu đề</label>
-            <div class="col-sm-10" style="margin-top: -10px; margin-left: -55px;;">
+            <div class="col-sm-9" style="margin-top: -10px; margin-left: -80px;;">
               <input name="Title" [(ngModel)]="title" class="form-control" ngDefaultControl style="float: right;" placeholder="" >
             </div>
           </div>
 
-          <div class="form-group row" style="padding-top: 20px;margin-left: -10px;">
+          <div class="form-group row" style="padding-top: 20px;">
             <label class="col-sm-2" for="exampleFormControlSelect1" >Mô tả</label>
-            <div class="col-sm-10" style="margin-top: -10px; margin-left: -65px;">
+            <div class="col-sm-10" style="margin-top: -10px; margin-left: -80px;">
               <ck-editor name="editor1" [(ngModel)]="decription" ngDefaultControl  skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
             </div>
           </div>
@@ -268,31 +338,65 @@
               <div class="col-md-4">
                 <div class="form-group row" style="padding:5px ;">
                   <label for="exampleFormControlSelect1">Loại tin</label>
-                  <div class="col-sm-12" style="margin-top: 10px ;width: 400px;color: black;">
+                  <!-- <div class="col-sm-12" style="margin-top: 10px ;width: 400px;color: black;">
                   <select (change)="onChangeNewMotel($event)" class="form-control form-control-lg" style="color: black;">
                     <option *ngFor='let new of news' [value]="new.id" >{{new.newName}}</option>
                   </select>
+                  </div> -->
+
+                  <div class="btn-group col-sm-12 link-secondary select-control select-cate" style="margin-top: 10px ;width: 400px;color: black;">
+                    <div  style="width:auto;height: 50px;margin-left: -15px;border:1px solid black" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                      {{new}}</div> </div>
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                      <div *ngFor='let new of news'  >
+                        <a class="dropdown-item" (click)="onChangeNewMotel($event)" [value]="new.id" >{{new.newName}}</a>
+                      </div>
+                    </div>
                   </div>
+
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group row" style="padding:5px ;">
                   <label for="exampleFormControlSelect1">Gói thời gian</label>
-                  <div class="col-sm-12" style="margin-top: 10px ;width: 400px;color:black;">
+                  <!-- <div class="col-sm-12" style="margin-top: 10px ;width: 400px;color:black;">
                     <select (change)="onChangetime($event)" class="form-control form-control-lg" style="color: black;">
                       <option *ngFor='let time of times' [value]="time.id" >{{time.timeName}}</option>
                     </select>
+                  </div> -->
+
+                  
+                  <div class="btn-group col-sm-12 link-secondary select-control select-cate" style="margin-top: 10px ;width: 400px;color:black;">
+                    <div  style="width:auto;height: 50px;margin-left: -10px;border:1px solid black" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                      {{time}}</div> </div>
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                      <div *ngFor='let time of times' >
+                        <a class="dropdown-item" (click)="onChangetime($event)" [value]="time.id" >{{time.timeName}}</a>
+                      </div>
+                    </div>
                   </div>
+
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group row" style="padding:5px ;">
-                  <label for="exampleFormControlSelect1">{{setValueName}}</label>
+                  <!-- <label for="exampleFormControlSelect1">{{setValueName}}</label>
                   <div class="col-sm-12" style="margin-top: 10px ;width: 400px;">
                     <select (change)="onChangeSetValueName($event)" class="form-control form-control-lg" style="color: black;">
                       <option *ngFor='let setArrayChoice of setArrayChoices' [value]="setArrayChoice.id" >{{setArrayChoice.changeTimeName}}</option>
                     </select>
+                  </div> -->
+                  <label for="exampleFormControlSelect1">Ngày</label>
+                  <div class="btn-group col-sm-12 link-secondary select-control select-cate" style="margin-top: 10px ;width: 350px;">
+                    <div  style="width:auto;height: 50px;margin-left: -10px;border:1px solid black" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                      {{timePublish}}</div> </div>
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                      <div *ngFor='let setArrayChoice of setArrayChoices'>
+                        <a class="dropdown-item" (click)="onChangeSetValueName($event)" [value]="setArrayChoice.id" >{{setArrayChoice.changeTimeName}}</a>
+                      </div>
+                    </div>
                   </div>
+                  
                 </div>
               </div>
 

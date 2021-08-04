@@ -64,6 +64,7 @@ export class AdminPublishComponent implements OnInit {
     this.news = await this.motelService.getNew() as New[];
     this.newTypes.shift();
     this.newType = this.newTypes[0];
+    this.new = this.news[0];
   }
 
 

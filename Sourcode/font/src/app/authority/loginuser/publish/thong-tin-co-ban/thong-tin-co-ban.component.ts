@@ -66,7 +66,6 @@ export class ThongTinCoBanComponent implements OnInit {
       this.check = true;
     }
 
-    this.getNewTypes();
 
   }
 
@@ -80,6 +79,8 @@ export class ThongTinCoBanComponent implements OnInit {
     }
     else{
       await this.getCities();
+      await this.getNewTypes();
+
       this.changeAddress(this.addressNumber)
     }
   }
@@ -169,6 +170,8 @@ export class ThongTinCoBanComponent implements OnInit {
     let value = event.target.value;
     var typeFind = this.newTypes.find(m => m.id == value);
     this.newType = typeFind;
+
+    console.log(event)
   }
 
   public async onChangeCity(event)

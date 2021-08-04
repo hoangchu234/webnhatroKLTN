@@ -37,7 +37,7 @@ export class DetailMotelPublishComponent implements OnInit {
 
   motel: Motel[] = [];
   newTypes: NewType [] = [];
-  newType;
+  newType: NewType = {id:"", name:"", details:null};
 
   //currentAccount:Account;
   cities: City[] = [];
@@ -59,7 +59,7 @@ export class DetailMotelPublishComponent implements OnInit {
     {id: 1, text:'triệu/tháng'},
   ];
   typePriceShowMotels: Data[] = [];
-  typePriceMotel;
+  typePriceMotel ='đồng/tháng';
 
   // directs:Array<Data> = [
   //   {id: 0, text:'Đông'},
@@ -73,7 +73,7 @@ export class DetailMotelPublishComponent implements OnInit {
   // ];
 
   directsShow: Direct[] = [];
-  direct;
+  direct: Direct = {id:null, directName:""};
 
   liveTypes:LiveType[] = [];
   liveType;
@@ -166,7 +166,7 @@ export class DetailMotelPublishComponent implements OnInit {
     for(let i=0; i<data.length;i++){
       this.directsShow.push(data[i]);
     }
-    this.direct = this.directsShow[0].directName.toString();
+    this.direct = this.directsShow[0];
   }
 
   async getDataMotelById(id){
@@ -218,6 +218,7 @@ export class DetailMotelPublishComponent implements OnInit {
         this.typePriceShowMotels.push(this.typePriceMotels[i])
       }
     }
+    this.typePriceMotel = this.typePriceShowMotels[0].text;
   }
 
   public async getLiveType(){
@@ -252,7 +253,15 @@ export class DetailMotelPublishComponent implements OnInit {
     let result = await this.provinceService.getProvincesByCity(Number(ID)) as Province[];
     var index = result.findIndex(a => Number(a.id) === Number(this.motelById.provinceId));
     // console.log(this.motelById)
-    this.procince = result[index];
+    
+    if(index == -1){
+      this.procince = result[0];
+    }
+    else{
+      this.procince = result[index];
+
+    }
+    
 
     this.provinces = result;
     this.provinces.splice(index, 1);
@@ -265,7 +274,14 @@ export class DetailMotelPublishComponent implements OnInit {
   public async getStreetById(ID){
     let result = await this.streetService.getStreetByProvince(Number(ID)) as Street[];
     var index = result.findIndex(a => Number(a.id) === Number(this.motelById.streetId));
-    this.street = result[index];
+
+    if(index == -1){
+      this.street = result[0];
+    }
+    else{
+      this.street = result[index];
+
+    }
     this.streets = result;
     this.streets.splice(index , 1);
     this.streets.unshift(this.street)
@@ -277,7 +293,13 @@ export class DetailMotelPublishComponent implements OnInit {
   public async getDistricteById(ID){
     const result = await this.dictrictService.getDistrictByProvince(Number(ID)) as District[];
     var index = result.findIndex(a => Number(a.id) === Number(this.motelById.districtId));
-    this.district = result[index];
+    if(index == -1){
+      this.district = result[0];
+    }
+    else{
+      this.district = result[index];
+
+    }
     this.districts = result;
     this.districts.splice(index, 1);
     this.districts.unshift(this.district);
@@ -297,19 +319,21 @@ export class DetailMotelPublishComponent implements OnInit {
   public onChangeNewType(event)
   {
     let value = event.target.value;
-    this.newType = value;
-    var id = this.newTypes.find(a => a.name == value);
+    var id = this.newTypes.find(a => a.id == value);
+    this.newType = id;
+
     this.motelUpdate.detail.typeofnewId = Number(id.id);
   }
 
-  public onChangeCity(event)
+  public async onChangeCity(event)
   {
     let value = event.target.value;
-    this.city = value;
-    var id = this.cities.find(a => a.name == value);
+    var id = this.cities.find(a => a.id == value);
+    this.city = id;
+    
     var provinceNew: Province[] = [];
     this.provinces = provinceNew;
-    this.getProvinceById(id.id);
+    await this.getProvinceById(this.city.id);
     this.motelUpdate.cityId = id.id;
     
     this.changeAddress(this.addressNumber);
@@ -318,8 +342,8 @@ export class DetailMotelPublishComponent implements OnInit {
   public onChangeProvince(event)
   {
     let value = event.target.value;
-    this.procince = value;
-    var id = this.provinces.find(a => a.name == value);
+    var id = this.provinces.find(a => a.id == value);
+    this.procince = id;
 
     var districtNew: District[] = [];
     this.districts = districtNew;
@@ -336,8 +360,9 @@ export class DetailMotelPublishComponent implements OnInit {
   public onChangeDistrict(event)
   {
     let value = event.target.value;
-    this.district = value;
-    var id = this.districts.find(a => a.name == value);
+    var id = this.districts.find(a => a.id == value);
+    this.district = id;
+
     this.motelUpdate.districtId = id.id;
 
     this.changeAddress(this.addressNumber);
@@ -346,8 +371,9 @@ export class DetailMotelPublishComponent implements OnInit {
   public onChangeStreet(event)
   {
     let value = event.target.value;
-    this.street = value;
-    var id = this.streets.find(a => a.name == value);
+    var id = this.streets.find(a => a.id == value);
+    this.street = id;
+
     this.motelUpdate.streetId = id.id;
 
     this.changeAddress(this.addressNumber);
@@ -363,8 +389,8 @@ export class DetailMotelPublishComponent implements OnInit {
   public onChangeDirect(event)
   {
     let value = event.target.value;
-    this.direct = value;
-    this.motelUpdate.detail.director = value;
+    this.direct = this.directsShow.find(a => a.id == value);
+    this.motelUpdate.detail.director = this.direct.directName;
   }
 
   public async onChangeLiveType(event, liveTypes: LiveType)

@@ -10,10 +10,20 @@
     <div class="form-group row" style="padding:5px ;">
       <label class="col-md-3 font" for="exampleFormControlSelect1" style="font-size: 18px;margin-top: 10px;">Chọn tin đăng theo</label>
       <div class="col-md-1"></div>
-      <div class="col-md-8" style="width: 400px;color:black;">
+      <!-- <div class="col-md-8" style="width: 400px;color:black;">
         <select (change)="onChangetime($event)" class="form-control form-control-lg font" style="color: black;">
           <option *ngFor='let time of times' [value]="time.id" >{{time.text}}</option>
         </select>
+      </div> -->
+
+      <div class="btn-group col-sm-8 link-secondary select-control select-cate" style="width: 400px;color:black;">
+        <div  style="width:auto;border-radius: 10px;height: 50px;border:1px solid black;margin-top: -2px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+          {{time}}</div> </div>
+        <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+          <div *ngFor='let time of times' >
+            <a class="dropdown-item" (click)="onChangetime($event)" [value]="time.id">{{time.text}}</a>
+          </div>
+        </div>
       </div>
         <!-- Code here -->
     <table style="margin-top: 20px;">

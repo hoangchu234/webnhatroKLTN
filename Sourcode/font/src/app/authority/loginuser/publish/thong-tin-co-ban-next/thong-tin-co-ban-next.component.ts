@@ -29,7 +29,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
 
   directs: Direct[] = [];
 
-  direct: string;
+  direct: Direct = {id:null,directName:""};
 
   title: string;
   description: string;
@@ -73,7 +73,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
 
   async getDirect(){
     this.directs = await this.motelService.getDirect() as Direct[];
-    this.direct = this.directs[0].directName.toString();
+    this.direct = this.directs[0]
   }
 
   async getDirectPrevous(name){
@@ -86,7 +86,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
       this.directs.push(data[i]);
     }
     
-    this.direct = this.directs[0].directName.toString();
+    this.direct = this.directs[0]
     
   }
 
@@ -99,8 +99,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
   public onChangeDirect(event)
   {
     let value = event.target.value;
-    var name = this.directs[value].directName.toString();
-    this.direct = name;
+    this.direct = this.directs[value];
   }
 
   public step3(){
@@ -112,7 +111,7 @@ export class ThongTinCoBanNextComponent implements OnInit {
       motelnew.priceType = this.typePriceMotel;
       motelnew.areaZoneType = "m²";
       let detail = new Detail();
-      detail.director = this.direct;
+      detail.director = this.direct.directName;
       motelnew.detail = detail;
       motelnew.title = this.title;
       motelnew.description = this.description;

@@ -26,24 +26,43 @@
                 <div class="col-sm-7" style="margin-top: 5px ;">
                 <input type="number" [(ngModel)]="priceMotel" name="priceMotel" ngDefaultControl class="form-control" placeholder="nhập số tiền bạn muốn">
                 </div>
-                <div class="col-sm-5" style="margin-top:13px">
+                <!-- <div class="col-sm-5" style="margin-top:13px">
                   <select (change)="onChangeTypePriceMote($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
                     <option *ngFor='let typePriceMotel of typePriceMotels' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
                   </select>
-                </div>
-                <!-- <div class="form-check" style="margin-left: 120px;margin-top: 50px;">
                 </div> -->
+               
+                <div class="btn-group col-sm-5 link-secondary select-control select-cate" >
+                  <div  style="width:auto;border-radius: 5px;height: 50px;border: 1px solid black;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                    {{typePriceMotel}}</div> </div>
+                  <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                    <div  *ngFor='let typePriceMotel of typePriceMotels' >
+                      <a class="dropdown-item" (click)="onChangeTypePriceMote($event)"  [value]="typePriceMotel.id" >{{typePriceMotel.text}}</a>
+                    </div>
+                  </div>
+                </div>
               </div>
               
           </div>
           <div class="col-md-3">
             <div class="form-group row">
               <label class="col-sm-12" style="margin-top: 5px;" for="exampleFormControlSelect1"><b>Hướng nhà</b></label>
-              <div class="col-sm-12" style="margin-top: 13px ;">
+              <!-- <div class="col-sm-12" style="margin-top: 13px ;">
               <select (change)="onChangeDirect($event)" class="form-control form-control-lg" style="margin-top: -10px;color: black;">
                 <option *ngFor='let direct of directs' [value]="direct.id">{{direct.directName}}</option>
               </select>
+              </div> -->
+
+              <div class="btn-group col-sm-12 link-secondary select-control select-cate" >
+                <div  style="width:auto;border-radius: 5px;height: 50px;border: 1px solid black;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                  {{direct.directName}}</div> </div>
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                  <div *ngFor='let direct of directs' >
+                    <a class="dropdown-item" (click)="onChangeDirect($event)"  [value]="direct.id" > {{direct.directName}}</a>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
           <div class="col-md-4">
@@ -56,7 +75,7 @@
           </div>
           <div class="col-md-12" >
             <div class=" form-group row">
-              <label class="col-sm-12" for="exampleFormControlSelect1" style="margin-top: 5px;" ><b>Tiêu đề</b></label>
+              <label class="col-sm-12" for="exampleFormControlSelect1" ><b>Tiêu đề</b></label>
               <div class="col-sm-12" style="margin-top: 10px;">
                 <input name="Title"  [(ngModel)]="title"  ngDefaultControl class="form-control" placeholder="Nhập tiêu đề tin của bạn" >
               </div>

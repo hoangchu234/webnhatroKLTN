@@ -57,6 +57,7 @@ export class HeaderComponent implements OnInit {
     private signalRService:SignalRService,
     private replyService:ReplyService,
     private router: Router,
+    private route: ActivatedRoute,
     private typeservice:TypeofnewService,
     private motelService: MotelService,
     private userService: UserService,
@@ -326,9 +327,31 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/user/lich-su-giao-dich']);
       }
       if(url == "4"){
-        this.router.navigate(['/user/thong-tin-vi-tri']);
+
+        this.router.navigate(['/user/thong-tin-vi-tri'], { relativeTo: this.route });
+        // this.router.navigate(['/user/thong-tin-vi-tri']);
       }
     }
     
+  }
+
+  returnLogin(){
+    if(this.checkLogin == false){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  returnNotLogin(){
+    if(this.checkLogin == false){
+      return false;
+    }
+    else
+    {
+      return true;
+    }
   }
 }

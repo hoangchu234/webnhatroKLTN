@@ -91,7 +91,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
   setValueName: string = "Số ngày";
   setArrayChoices: Array<ChangeTime> = [];
 
-  new: New = {id:null, newName:""};
+  newa: New = {id:null, newName:""};
   timePublish:string = "";
 
   motel: Motel;
@@ -128,7 +128,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
 
   async getDataNew(){
     this.news = await this.motelService.getNew() as New[];
-    this.new = this.news[0];
+    this.newa = this.news[0];
   }
   async getDataNewPrevous(newNamePre){
     var data = await this.motelService.getNew() as New[];
@@ -139,7 +139,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
     for(let i=0;i<data.length;i++){
       this.news.push(data[i]);
     }
-    this.new = this.news[0];
+    this.newa = this.news[0];
   }
 
   async getDataTime(){
@@ -204,7 +204,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
   {
     let value = event.target.value;
     var name = this.news.find(a => a.id == value);
-    this.new = name;
+    this.newa = name;
     this.tinhTien();
   }
 
@@ -251,7 +251,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
   public step6(){
 
     this.motel = JSON.parse(localStorage.getItem(StorageService.motelStorage));
-    this.motel.typeservice = this.new.id.toString();
+    this.motel.typeservice = this.newa.id.toString();
     this.motel.time = this.timePublish;
 
    
@@ -275,7 +275,7 @@ export class ChonGoiTinThanhToanComponent implements OnInit {
 
   public tinhTien(){
 
-    var data = this.servicePrice.find(a => a.typeofnew == this.new.newName);
+    var data = this.servicePrice.find(a => a.typeofnew == this.newa.newName);
 
 
     if(this.time == "Đăng theo ngày"){
