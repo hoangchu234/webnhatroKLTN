@@ -1,0 +1,467 @@
+
+<div class="theme-layout" >
+    
+    <!-- <div class="topbar stick">
+        <div class="logo">
+            <h1  style="color: rgb(255, 255, 255);"><a [routerLink]="['/home']" style="text-decoration: none;text-decoration-color:black ;">HOURS</a></h1>
+        </div>
+        <div class="top-area" >
+             <div class="user-img1" style="float: right;">
+                <h5 *ngIf="checkLogin()">{{dataUser.hovaTen}}</h5>
+                <img *ngIf="checkLogin()" class="img1" style="height: 40px;width: 50px;" [src]="dataUser.userImage" alt="">
+                <span *ngIf="checkLogin()" class="status f-online"></span>
+                <div class="nav-item nav-profile dropdown" style="visibility: visible;" *ngIf="checkLogin()">
+                    <a class="nav-link " id="profileDropdown"  data-toggle="dropdown" aria-expanded="false" style="margin-top: -40px;">
+                      <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown" style="font-size: 20px;">
+                        <a [routerLink]="['/user/thong-tin-ca-nhan']" class="dropdown-item font" style="height: 50px;">
+                          <i class="mdi mdi-account mr-2 text-success "></i>Thông tin cá nhân</a>
+                          <div class="dropdown-divider"></div>
+                        <a [routerLink]="['/user/quan-ly-dang-tin']" class="dropdown-item font" style="height: 50px;">
+                          <i class="mdi mdi-message-processing mr-2 text-warning font"></i>Tin đã đăng </a>
+                        <a [routerLink]="['/user/quan-ly-messeger']" class="dropdown-item font" style="height: 50px;">
+                          <i class="mdi mdi-file-find mr-2 text-warning font"></i>Quản lý tin nhắn</a>
+                        <div class="dropdown-divider"></div>
+                        <a [routerLink]="['/user/lich-su-giao-dich']" class="dropdown-item font" style="height: 50px;">
+                          <i class="mdi  mdi-history mr-2 text-success font"></i>Lịch sử giao dịch</a>
+                        <a [routerLink]="['/bang-gia-dich-vu']" class="dropdown-item font" style="height: 50px;">
+                          <i class="mdi mdi-newspaper mr-2 text-success font"></i>Bảng giá dịch vụ</a>
+                        <div class="dropdown-divider"></div>
+                        <a [routerLink]="['/tro-giup']" class="dropdown-item font" style="height: 50px;">
+                          <i class="mdi mdi-help-circle mr-2 text-primary font"></i> Trợ giúp</a>
+                        <a (click)='onLogout()' class="dropdown-item font"style="height: 50px;">
+                          <i class="mdi mdi-logout mr-2 text-primary font" ></i>Đăng xuất</a>
+                        <div class="dropdown-divider"></div>
+                      </div>
+                    </a>
+                  </div>
+            </div>
+             <ul class="setting-area" style="float: right;">
+              <li *ngIf="checkLogin()">
+                <a title="Notification" data-ripple="">
+                    <i class="fa fa-bell" style="color:aliceblue"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
+                </a>
+                <div class="dropdowns">
+                    <ul class="drops-menu" >
+                        <li *ngFor="let data of notifys">
+                            <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="!data.justSee" style="background-color: whitesmoke;">
+                                <figure>
+                                    <img class="img1" style="height: 40px;width: 50px;" [src]="data.imageUser" alt="">
+                                    <span class="status f-online"></span>
+                                </figure>
+                                <div class="mesg-meta">
+                                    <h6>{{data.username}}</h6>
+                                    <span>{{data.userComment}}</span>
+                                    <i>{{data.day}} ngày trước</i>
+                                </div>
+                            </a>
+
+                            <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="data.justSee">
+                                <figure>
+                                    <img class="img1" style="height: 40px;width: 50px;" [src]="data.imageUser" alt="">
+                                    <span class="status f-online"></span>
+                                </figure>
+                                <div class="mesg-meta">
+                                    <h6>{{data.username}}</h6>
+                                    <span>{{data.userComment}}</span>
+                                    <i>{{data.day}} ngày trước</i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+             
+          </ul>
+
+        </div>
+
+    </div> -->
+
+    <app-header></app-header>
+    
+    <section style="margin-top: 80px;">
+        <div class="gap2 gray-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row merged20" id="page-contents">
+                            <div class="col-lg-3">
+                                <aside class="sidebar static left">
+                                    <div class="widget">
+                                        <div class="weather-widget low-opacity bluesh">
+                                            <div class="bg-image" style="background-image: url(../../assets/forum/images1/weather.jpg)"></div>
+                                            <span class="refresh-content"><i class="fa fa-refresh"></i></span>
+                                            <div class="weather-week">
+                                                <div class="icon sun-shower">
+                                                  <div class="cloud"></div>
+                                                  <div class="sun">
+                                                    <div class="rays"></div>
+                                                  </div>
+                                                  <div class="rain"></div>
+                                                </div>
+                                            </div>
+                                            <div class="weather-infos">
+                                                <span class="weather-tem">25</span>
+                                                <h3>Cloudy Skyes<i>Sicklervilte, New Jersey</i></h3>
+                                                <div class="weather-date skyblue-bg">
+                                                    <span>MAY<strong>21</strong></span>
+                                                </div>
+                                            </div>
+                                            <div class="monthly-weather">
+                                                <ul>
+                                                    <li>
+                                                        <span>Sun</span>
+                                                        <a href="#" title=""><i class=" fa fa-sun-o"></i></a>
+                                                        <em>40°</em>
+                                                    </li>
+                                                    <li>
+                                                        <span>Mon</span>
+                                                        <a href="#" title=""><i class=" fa fa-sun-o"></i></a>
+                                                        <em>10°</em>
+                                                    </li>
+                                                    <li>
+                                                        <span>Tue</span>
+                                                        <a href="#" title=""><i class=" fa fa-sun-o"></i></a>
+                                                        <em>20°</em>
+                                                    </li>
+                                                    <li>
+                                                        <span>Wed</span>
+                                                        <a href="#" title=""><i class=" fa fa-sun-o"></i></a>
+                                                        <em>34°</em>
+                                                    </li>
+                                                    <li>
+                                                        <span>Thu</span>
+                                                        <a href="#" title=""><i class=" fa fa-sun-o"></i></a>
+                                                        <em>22°</em>
+                                                    </li>
+                                                    <li>
+                                                        <span>Fri</span>
+                                                        <a href="#" title=""><i class=" fa fa-sun-o"></i></a>
+                                                        <em>26°</em>
+                                                    </li>
+                                                    <li>
+                                                        <span>Sat</span>
+                                                        <a href="#" title=""><i class=" fa fa-sun-o"></i></a>
+                                                        <em>30°</em>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="advertisment-box">
+                                        <h4 class="widget-title">Quảng cáo</h4>
+                                        <figure>
+                                            <a href="#" title="Advertisment"><img class="img1" src="../../../assets/forum/images1/resources/ad-widget.gif" alt=""></a>
+                                        </figure>
+                                    </div>
+                                    <div class="widget">
+                                        <h4 class="widget-title">Bài viết gần nhất</h4>
+                                        <ul class="activitiez">
+                                            <li *ngFor="let data of dataRecently">
+                                                <div class="activity-meta" (click)="onClickDetailPost(data.postUser,data.id)">
+                                                    <i *ngIf="data.day == 0" style="color: rgb(240, 107, 147);" class="font">{{data.hour}} tiếng trước</i>
+                                                    <i *ngIf="data.day != 0" style="color: rgb(240, 107, 147);" class="font">{{data.day}} ngày trước</i>
+                                                    <span><a title="">{{data.postUser}}</a></span>
+                                                    <h6>bởi <a style="color: blue;">{{data.username}}</a></h6>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </aside>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="central-meta item">
+                                    <div class="user-post">
+                                        <div class="friend-info">
+                                            <figure>
+                                                <img  class="img1" style="width: 40px;height: 40px;"  [src]="dataPost.user.userImage"  alt="2">
+                                            </figure>
+                                            <div class="friend-name">
+                                                <div class="more">
+                                                    <div class="more-post-optns"><i class="fa fa-ellipsis-v"></i>
+                                                        <ul>
+                                                            <li *ngIf="id == dataPost.user.id" (click)="createPost()"><i class="fa fa-pencil-square-o"></i>Sửa bài đăng</li>
+                                                            <!-- <li><i class="fa fa-trash-o"></i>Delete Post</li> -->
+                                                            <li class="bad-report" (click)="checkReport(dataPost.id)"><i class="fa fa-flag"></i>Báo cáo vi phạm</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <ins><a title=""  style="color: blue;">{{dataPost.user.hovaTen}}</a></ins>
+                                                <span><i class="fa fa-globe"></i> Ngày đăng: {{dataPost.createDate | date}} </span>
+                                            </div>
+                                            <div class="post-meta">
+                                                <p>
+                                                    {{dataPost.postUser}}
+                                                </p>
+                                               
+                                                <div class="we-video-info">
+                                                    <ul>
+                                                        <li>
+                                                            <span >
+                                                                {{countCommentPost}} câu trả lời
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="comment" title="Comments">
+                                                                <i class="fa fa-heart" (click)="livePost(dataPost.id)"></i> 
+                                                                <ins>{{displayLikePost()}}</ins>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span>
+                                                                <a class="share-pst" (click)="copyContent()" title="Share">
+                                                                    <i class="fa fa-share-alt"></i>
+                                                                </a>
+                                                                <!-- <ins>20</ins> -->
+                                                            </span>	
+                                                        </li>
+                                                    </ul>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="coment-area" style="display: block;">
+                                                <ul class="we-comet" >
+                                                    <li>
+                                                        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: comments }"></ng-container>
+                                                    </li>
+                                                    <ng-template #recursiveListTmpl let-list="list">
+                                                        <li *ngFor="let item of list;let j=index">
+                                                            <div class="comet-avatar">
+                                                                    <img class="img1" style="width: 40px;height: 40px;"  [src]="item.user.userImage" alt="">
+                                                            </div>
+                                                            <div class="we-comment" >
+                                                                    <h5><a href="time-line.html" title="">{{item.user.hovaTen}}</a></h5>
+                                                                    <p>{{item.commentUser}}</p>
+                                                                    <div class="inline-itms">
+                                                                        <span>{{item.createDate  | date}}</span>
+                                                                        <a class="we-reply" (click)="openComment(dataPost.id,item.id,item.parentCommentId)" title="Reply"><i class="fa fa-reply"></i><span>{{displayCountCommentChild(dataPost.id,item.id)}}</span></a>
+                                                                        <a title=""><i (click)="liveComment(item.id)" class="fa fa-heart"></i><span>{{displayLikeComment(item.id)}}</span></a>
+                                                                    </div>
+                                                            </div>
+                                                        
+                                                            <ul [hidden] = "showChildComments(dataPost.id,item.id,item.parentCommentId)" *ngIf="item.childComments.length > 0">
+                                                                <ng-container
+                                                                  *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.childComments }"
+                                                                ></ng-container>
+                                                                
+                                                            </ul>
+                                                            <!-- *ngIf="j == postData.comments.length" -->
+                                                            <ul [hidden] = "showChildComments(dataPost.id,item.id,item.parentCommentId)" >
+                                                                <a *ngIf="countCommentComment(item.id)" (click)="moreCommentComment(dataPost.id,item.id)" class="showmore underline">{{displayCountCommentChild(dataPost.id,item.id)}} phản hồi</a>
+                                                            </ul>
+                                                            <!-- *ngIf="j == postData.comments.length" -->
+                                                            <ul *ngIf="checkLogin()" class="post-comment" [hidden] = "showChildComments(dataPost.id,item.id,item.parentCommentId)" >
+                                                                <div class="comet-avatar">
+                                                                    <img class="img1" style="width: 40px;height: 40px;"  [src]="dataUser.userImage" alt="">
+                                                                </div>
+                                                                <div class="post-comt-box-reply">
+                                                                    <form method="post">
+                                                                        <div id="postData.id">
+                                                                            <textarea placeholder="Trả lời bài đăng" name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
+                                                                        </div>
+                                                                        <div class=" add-smiles">
+                                                                            <span type="submit" (click)="saveChildComment(dataPost.id,item.id, item.user.id)" class="fa fa-arrow-circle-right"></span>
+                                                                          </div>
+                                                                    </form>	
+                                                                </div>
+                                                            </ul>
+
+                                                        </li>
+                                                    </ng-template>
+                                                    
+                                                    <!--Post-->
+                                                    <li>
+                                                        <a *ngIf="checkShowMoreCommentParent(comments.length)" (click) = "moreComment(dataPost.id)" title="" class="showmore underline">Xem thêm bình luận</a>
+                                                    </li>
+                                                    <!-- Add Comment-->
+                                                    <li *ngIf="checkLogin()" class="post-comment" >
+                                                        <div class="comet-avatar">
+                                                            <img class="img1" style="width: 40px;height: 40px;"  [src]="dataUser.userImage" alt="">
+                                                        </div>
+                                                        <div class="post-comt-box">
+                                                            <form method="post">
+                                                                <div id="postData.id">
+                                                                    <textarea placeholder="Trả lời bài đăng"  name="dataPost.postUser"  [(ngModel)]="commentUser" ngDefaultControl></textarea>
+                                                                </div>
+                                                                <div class=" add-smiles">
+                                                                    <span type="submit" type="submit" (click)="saveComment(dataPost.id, dataPost.user.id)" class="fa fa-arrow-circle-right"></span>
+                                                                  </div>
+                                                            </form>	
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="widget">
+                                    <h4 class="widget-title" style="text-align: center">Thống kê</h4>
+                                    <div class="rec-events bg-purple">
+                                        <i class="fa fa-bar-chart"></i>
+                                        <h3>{{totalPost}}</h3>
+                                        <h6>Câu hỏi</h6>
+                                        <img class="img1" src="../../assets/forum/images1/clock.png" alt="">
+                                    </div>
+                                    <div class="rec-events bg-blue">
+                                        <i class="fa fa-share"></i>
+                                        <h3>{{totalComment}}</h3>
+                                        <h6>Trả lời</h6>
+                                        <img class="img1" src="../../assets/forum/images1/clock.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>	
+                    </div>
+                </div>
+            </div>
+        </div>	
+    </section>
+</div>
+    
+<div class="popup-wraper2">
+        <div class="popup post-sharing">
+            <span class="popup-closed"><i class="ti-close"></i></span>
+            <div class="popup-meta">
+                <div class="popup-head">
+                    <select data-placeholder="Share to friends..." multiple class="chosen-select multi">
+                        <option>Share in your feed</option>
+                        <option>Share in friend feed</option>
+                        <option>Share in a page</option>
+                        <option>Share in a group</option>
+                        <option>Share in message</option>
+                    </select>
+                    <div class="post-status">
+                        <span><i class="fa fa-globe"></i></span>
+                        <ul>
+                            <li><a href="#" title=""><i class="fa fa-globe"></i> Post Globaly</a></li>
+                            <li><a href="#" title=""><i class="fa fa-user"></i> Post Private</a></li>
+                            <li><a href="#" title=""><i class="fa fa-user-plus"></i> Post Friends</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="postbox">
+                    <div class="post-comt-box-reply">
+                        <form method="post">
+                            <input type="text" placeholder="Search Friends, Pages, Groups, etc....">
+                            <textarea placeholder="Say something about this..."></textarea>
+                            <div class="add-smiles">
+                                <span title="add icon" class="em em-expressionless"></span>
+                                <div class="smiles-bunch">
+                                    <i class="em em---1"></i>
+                                    <i class="em em-smiley"></i>
+                                    <i class="em em-anguished"></i>
+                                    <i class="em em-laughing"></i>
+                                    <i class="em em-angry"></i>
+                                    <i class="em em-astonished"></i>
+                                    <i class="em em-blush"></i>
+                                    <i class="em em-disappointed"></i>
+                                    <i class="em em-worried"></i>
+                                    <i class="em em-kissing_heart"></i>
+                                    <i class="em em-rage"></i>
+                                    <i class="em em-stuck_out_tongue"></i>
+                                </div>
+                            </div>
+    
+                            <button type="submit"></button>
+                        </form>	
+                    </div>
+                    <figure><img class="img1" src="assets/forum/images1/resources/share-post.jpg" alt=""></figure>
+                    <div class="friend-info">
+                        <figure>
+                            <img class="img1" alt="" src="assets/forum/images1/resources/admin.jpg">
+                        </figure>
+                        <div class="friend-name">
+                            <ins><a title="" href="time-line.html">Jack Carter</a> share <a title="" href="#">link</a></ins>
+                            <span>Yesterday with @Jack Piller and @Emily Stone at the concert of # Rock'n'Rolla in Ontario.</span>
+                        </div>
+                    </div>
+                    <div class="share-to-other">
+                        <span>Share to other socials</span>
+                        <ul>
+                            <li><a class="facebook-color" href="#" title=""><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a class="twitter-color" href="#" title=""><i class="fa fa-twitter-square"></i></a></li>
+                            <li><a class="dribble-color" href="#" title=""><i class="fa fa-dribbble"></i></a></li>
+                            <li><a class="instagram-color" href="#" title=""><i class="fa fa-instagram"></i></a></li>
+                            <li><a class="pinterest-color" href="#" title=""><i class="fa fa-pinterest-square"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="copy-email">
+                        <span>Copy & Email</span>
+                        <ul>
+                            <li><a href="#" title="Copy Post Link"><i class="fa fa-link"></i></a></li>
+                            <li><a href="#" title="Email this Post"><i class="fa fa-envelope"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="we-video-info">
+                        <ul>
+                            <li>
+                                <span title="" data-toggle="tooltip" class="views" data-original-title="views">
+                                    <i class="fa fa-eye"></i>
+                                    <ins>1.2k</ins>
+                                </span>
+                            </li>
+                            <li>
+                                <span title="" data-toggle="tooltip" class="views" data-original-title="views">
+                                    <i class="fa fa-share-alt"></i>
+                                    <ins>20k</ins>
+                                </span>
+                            </li>
+                        </ul>
+                        <button class="main-btn color" data-ripple="">Submit</button>
+                        <button class="main-btn cancel" data-ripple="">Cancel</button>
+                    </div>
+                </div>
+            </div>	
+        </div>
+</div><!-- share popup -->
+    
+<div class="popup-wraper1">
+        <div class="popup direct-mesg">
+            <span class="popup-closed"><i class="ti-close"></i></span>
+            <div class="popup-meta">
+                <div class="popup-head">
+                    <h5>Send Message</h5>
+                </div>
+                <div class="send-message">
+                    <form method="post" class="c-form">
+                        <input type="text" placeholder="Sophia">
+                        <textarea placeholder="Write Message"></textarea>
+                        <button type="submit" class="main-btn">Send</button>
+                    </form>
+                    <div class="add-smiles">
+                        <div class="uploadimage">
+                            <i class="fa fa-image"></i>
+                            <label class="fileContainer">
+                                <input type="file">
+                            </label>
+                        </div>
+                        <span title="add icon" class="em em-expressionless"></span>
+                        <div class="smiles-bunch">
+                            <i class="em em---1"></i>
+                            <i class="em em-smiley"></i>
+                            <i class="em em-anguished"></i>
+                            <i class="em em-laughing"></i>
+                            <i class="em em-angry"></i>
+                            <i class="em em-astonished"></i>
+                            <i class="em em-blush"></i>
+                            <i class="em em-disappointed"></i>
+                            <i class="em em-worried"></i>
+                            <i class="em em-kissing_heart"></i>
+                            <i class="em em-rage"></i>
+                            <i class="em em-stuck_out_tongue"></i>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+</div>	
+<script src="assets/forum/js1/main.min.js"></script>
+    
+    
+    

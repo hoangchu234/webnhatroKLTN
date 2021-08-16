@@ -1,0 +1,124 @@
+<div class="content-wrapper" style="margin-top:-40px">
+
+  <div>
+    <h3 class="page-title font" style=" float:right;margin-top: 10px;margin-bottom: 20px;" > Quản lý dịch vụ</h3>
+    <nav aria-label="breadcrumb" style=" float:left" >
+      <ol class="breadcrumb" style="border: none;">
+        <li class="breadcrumb-item"><a>Quản lý</a></li>
+        <li class="breadcrumb-item active font" aria-current="page">Quản lý dịch vụ</li>
+      </ol>
+    </nav>
+  </div>
+<div style="text-align: center;margin-top: 60px;font-size: 25x;"> Bảng giá dịch vụ</div>
+  <table  style="width:100%;border: 1px solid black;border-collapse: collapse;margin-top: 30px;">
+    <thead>
+      <th></th>
+      <td style="font-weight: bold;color: red;">Giá ngày</td>
+      <td style="font-weight: bold;color: red;">Giá tuần </td>
+      <td style="font-weight: bold;color: red;">Giá tháng </td>
+      <td style="font-weight: bold;color: red;">Tối thiểu </td>
+      <td style="font-weight: bold;color: red;">Thay đổi</td>
+  
+    </thead>
+    <tr  *ngFor= 'let serviceprice of servicePrice; let i=index'>
+      <th style="font-weight: bold;">{{serviceprice.typeofnew}}</th>
+      <td>{{serviceprice.priceDate}}</td>
+      <td>{{serviceprice.priceWeek}}</td>
+      <td>{{serviceprice.priceMonth}}</td>
+      <td>{{serviceprice.date}}</td>
+      <td style="text-align: center;">
+        <button type="button" class="btn btn-info btn-sm" (click)="ChangeButton(serviceprice.id)">
+            <i class="fa fa-edit"></i>
+          </button>
+      </td>
+    </tr>
+  </table>
+
+
+  
+</div >
+<div class="container" style="border: 1px solid black;" [hidden]="change">
+  <div style="text-align: center;font-size: 25px;margin-top: 10px;">Sửa giá dịch vụ</div>
+  <div class="row" style="padding: 15px;">
+    <div class="col-md-6">
+      <div class="col-md-6" style="margin-bottom: 10px;" >Giá ngày: </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input style="margin-right: 20px;" type="text" class="form-control"  aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceDate" name="PriceDate">
+          <!-- <div class="input-group-append" style="margin-top: -1px;">
+            <select style="color: black;" (change)="onChangeTypePriceMote1($event)" class="form-control form-control-lg">
+              <option style="color: black;" *ngFor='let typePriceMotel of typePriceMotels1' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+            </select>
+          </div> -->
+
+          <div>
+            <div  style="width:auto;border-radius: 10px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black;margin-top: -1px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+              {{typePriceMotel1}}</div> </div>
+            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div *ngFor='let typePriceMotel of typePriceMotels1' >
+                <a class="dropdown-item" (click)="onChangeTypePriceMote1($event)" [value]="typePriceMotel.id">{{typePriceMotel.text}}</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-6" style="margin-bottom: 10px;">Giá tuần: </div> 
+      <div class="form-group">
+        <div class="input-group">
+          <input style="margin-right: 20px;" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceWeek" name="PriceWeek">
+          <!-- <div style="margin-top: -1px;color: black;" class="input-group-append">
+            <select style="color: black;" (change)="onChangeTypePriceMote2($event)" class="form-control form-control-lg">
+              <option style="color: black;" *ngFor='let typePriceMotel of typePriceMotels2' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+            </select>
+          </div> -->
+
+          <div>
+            <div  style="width:auto;border-radius: 10px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black;margin-top: -1px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+              {{typePriceMotel2}}</div> </div>
+            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div *ngFor='let typePriceMotel of typePriceMotels2' >
+                <a class="dropdown-item" (click)="onChangeTypePriceMote2($event)" [value]="typePriceMotel.id">{{typePriceMotel.text}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-6" style="margin-bottom: 10px;">Giá tháng: </div> 
+      <div class="form-group">
+        <div class="input-group">
+          <input style="margin-right: 20px;" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="priceMonth" name="PriceMonth">
+      
+          <!-- <div vstyle="margin-top: -1px;" class="input-group-append">
+            <select style="color: black;" (change)="onChangeTypePriceMote3($event)" class="form-control form-control-lg">
+              <option style="color: black;"  *ngFor='let typePriceMotel of typePriceMotels3' [value]="typePriceMotel.id">{{typePriceMotel.text}}</option>
+            </select>
+          </div> -->
+
+          <div>
+            <div  style="width:auto;border-radius: 10px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black;margin-top: -1px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+              {{typePriceMotel3}}</div> </div>
+            <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+              <div *ngFor='let typePriceMotel of typePriceMotels3' >
+                <a class="dropdown-item" (click)="onChangeTypePriceMote3($event)" [value]="typePriceMotel.id">{{typePriceMotel.text}}</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-6" style="margin-bottom: 10px;">Số ngày(tối thiêu): </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input style="margin-right: 5px;" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [(ngModel)]="date" name="Date">
+          <div style="color: black;" class="input-group-append">
+            <span style="padding-left: 40px;text-align: center;color: black;" class="input-group-text">Ngày</span>
+          </div>
+        </div>
+      </div>
+    </div> 
+      <div class="col-md-12" style="margin-left: 20px;margin-top: 20px;"><button class="btn" style="margin-bottom: 10px;float: right;margin-right: 20px; background-color: antiquewhite;border: 1px solid black;height: 60px;width: 120px;" (click)="saveData()">Thay đổi</button></div>
+    </div>
+</div>

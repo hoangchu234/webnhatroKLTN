@@ -28,7 +28,7 @@
                 
 
                 <div class="btn-group col-sm-10 link-secondary select-control select-cate" style="border: 1px;margin-top:3px">
-                  <div  style="width:auto;border-radius: 5px;height: 50px;margin-left: -15px;border: 1px solid black;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >{{newType.name}}</div> </div>
+                  <div  style="width:auto;border-radius: 5px;height: 50px;margin-left: -15px;border: 1px solid black;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >{{newType.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                   <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                     <div *ngFor='let type of newTypes' >
                       <a class="dropdown-item" (click)="onChangeType($event)"  [value]="type.id">{{type.name}}</a>
@@ -46,7 +46,7 @@
                 <label class="col-sm-12" for="exampleFormControlSelect1"><b>Thành phố</b></label>
                 <div class="btn-group col-sm-12 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;">
                   <div  style="width:auto;border-radius: 5px;height: 50px;margin-left: -15px;border: 1px solid black;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                    {{city.name}}</div> </div>
+                    {{city.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                   <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                     <div *ngFor='let citie of cities' >
                       <a class="dropdown-item" (click)="onChangeCity($event)"  [value]="citie.id" >  {{citie.name}}</a>
@@ -58,7 +58,7 @@
                 <label class="col-sm-12" for="exampleFormControlSelect1"><b>Quận Huyện</b></label>
                   <div class="btn-group col-sm-12 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;">
                     <div  style="width:auto;border-radius: 5px;height: 50px;margin-left: -15px;border: 1px solid black;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                      {{province.name}}</div> </div>
+                      {{province.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                     <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                       <div *ngFor='let province of provinces' >
                         <a class="dropdown-item" (click)="onChangeProvince($event)"  [value]="province.id" >  {{province.name}}</a>
@@ -71,7 +71,7 @@
                   <label class="col-sm-12" for="exampleFormControlSelect1"><b>Phường xã</b></label>
                   <div class="btn-group col-sm-12 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;">
                     <div  style="width:auto;border-radius: 5px;height: 50px;margin-left: -15px;border: 1px solid black;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                      {{district.name}}</div> </div>
+                      {{district.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                     <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                       <div *ngFor='let district of districts' >
                         <a class="dropdown-item" (click)="onChangeDistrict($event)"  [value]="district.id" >  {{district.name}}</a>
@@ -83,7 +83,7 @@
                   <label class="col-sm-12" for="exampleFormControlSelect1"><b>Đường</b></label>
                   <div class="btn-group col-sm-12 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;">
                     <div  style="width:auto;border-radius: 5px;height: 50px;margin-left: -15px;border: 1px solid black;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                      {{street.name}}</div> </div>
+                      {{street.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                     <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                       <div *ngFor='let street of streets' >
                         <a class="dropdown-item" (click)="onChangeStreet($event)"  [value]="street.id" >  {{street.name}}</a>

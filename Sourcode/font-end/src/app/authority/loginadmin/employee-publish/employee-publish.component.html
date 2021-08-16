@@ -1,0 +1,200 @@
+<div class="content-wrapper"style="margin-top:-50px">
+
+  <div>
+    <h3 class="page-title font" style=" float:right;margin-top: 10px;margin-bottom: 20px;" > Quản lý duyệt tin</h3>
+    <nav aria-label="breadcrumb" style=" float:left" >
+      <ol class="breadcrumb" style="border: none;">
+        <li class="breadcrumb-item"><a>Quản lý</a></li>
+        <li class="breadcrumb-item active font" aria-current="page">Quản lý duyệt tin</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="container"  style="color: black;margin-left:60px;margin-top: 20px;">
+    <br>
+    <div>
+      <!-- <div class="col-md-6" style="margin-left: -40px;"><div style="text-align: left;padding: 10px;"><h3><b>QUẢN LÝ DUYỆT TIN</b></h3></div></div> -->
+      <div class="col-md-12">
+        <div class="row" >
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="font">Trạng thái tin</div>
+              <!-- <div >
+                <select (change)="onChangeStatus($event)" class="form-control form-control-lg" style="color: black;width:150px;height:40px;margin-left: 5pxpx; margin-top: 5px;">
+                  <option *ngFor='let status of statuss' [value]="status.id">{{status.text}}</option>
+                </select>
+
+              </div> -->
+              <div>
+                <div  style="width:auto;border-radius: 10px;width:150px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black; margin-top: 5px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                  {{status}}</div> </div>
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                  <div *ngFor='let status of statuss' >
+                    <a class="dropdown-item" (click)="onChangeStatus($event)" [value]="status.id" >{{status.text}}</a>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+          <div class="col-md-4" >
+            <div class="form-group " >
+              <div class="font">Loại nhà trọ</div>
+              <!-- <div  >
+                <select (change)="onChangeNewType($event)" class="form-control form-control-lg" style="color: black;;width:200px;height:40px;margin-left: 5px; margin-top: 5px;">
+                  <option *ngFor='let newtypes of newTypes'  [value]="newtypes.id">{{newtypes.name}}</option>
+                </select>
+
+              </div> -->
+
+              <div >
+                <div  style="width:auto;border-radius: 10px;width:150px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black;margin-top: 5px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                  {{newType.name}}</div> </div>
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                  <div *ngFor='let newtypes of newTypes'>
+                    <a class="dropdown-item" (click)="onChangeNewType($event)" [value]="newtypes.id" >{{newtypes.name}}</a>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+          
+          <div class="col-md-4" >
+            <div class="form-group " >
+              <div class="font">Loại tin</div>
+              <!-- <div  >
+                <select (change)="onChangeNew($event)" class="form-control form-control-lg" style="color: black;;width:200px;height:40px;margin-left: 5px; margin-top: 5px;">
+                  <option *ngFor='let n of news'  [value]="n.id">{{n.newName}}</option>
+                </select>
+
+              </div> -->
+
+              <div>
+                <div  style="width:auto;border-radius: 10px;width:200px;height: 50px;background-color: rgb(255, 255, 255);border:1px solid black;margin-top: 5px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+                  {{new.newName}}</div> </div>
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                  <div *ngFor='let n of news' >
+                    <a class="dropdown-item" (click)="onChangeNew($event)" [value]="n.id">{{n.newName}}</a>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12" style="padding-top: 0px;margin-left: -40px; ">
+      <table class="table table-bordered" >
+        <thead style="background-color:darkblue;color: white;">
+          <tr>
+            <th scope="col-md-1" class="font" style="color: white;text-align: center;">Ảnh đại diện</th>
+            <th scope="col" class="font" style="color: white;text-align: center;">Ngày bắt đầu</th>
+            <th scope="col" class="font" style="color: white;text-align: center;">Ngày hết hạn</th>
+            <th scope="col" class="font" style="color: white;text-align: center;">Trạng thái</th>
+            <th scope="col" class="font" style="color: white; width: 200px;text-align: center;">Tiêu đề</th>
+            <th scope="col" class="font" style="color: white; width: 200px;text-align: center;">Duyệt tin</th>
+          </tr>
+        </thead>
+        <tbody style="color: black;">
+          <tr *ngFor="let motel of motels | paginate: { itemsPerPage: 10, currentPage: page }">
+            <td style="text-align: center;"><img *ngIf="motel.images[0].imageMotel!= null" [src]="motel.images[0].imageMotel" class="title-image" style="width:50px;height:50px;"></td>
+            <td>{{motel.dateUpdate|date}}</td>
+            <td>{{motel.dateDue|date}}</td>
+            <td style="text-align: center;">
+              <i *ngIf="motel.verify" class="fa fa-check-circle-o" style="color: green;"></i>
+              <i *ngIf="!motel.verify" class="fa fa-check-circle-o" style="color: red;"></i>
+            </td>
+            <td><textarea style="height: 50px;width:530px;border:none">{{motel.title}}</textarea></td>
+            <td style="text-align: center;">
+              <button type="button" class="btn btn-info btn-sm" (click)="linkRouterChiTiet(motel.title, motel.id)">
+                  <i class="fa fa-edit"></i>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <div style="margin-left:360px;margin-top: 20px;">
+      <pagination-controls (pageChange)="page = $event" ></pagination-controls>
+    </div>
+    </div>
+
+  </div>
+</div> 
+<!-- <div class="super_container">
+    
+    <div class="container"  style=" margin-top: 40px;color: black;">
+  
+      <br>
+  
+      <div class="row">
+        <div class="col-md-6" style="margin-left: -40px;"><div style="text-align: left;padding: 10px;"><h3><b>QUẢN LÝ DUYỆT TIN</b></h3></div></div>
+        <div class="col-md-6">
+          <div class="row" style="padding-right: 30px;">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <h3>Trạng thái tin</h3>
+                <div >
+                  <select (change)="onChangeStatus($event)" class="form-control form-control-lg" style="color: black;width:150px;height:40px">
+                    <option *ngFor='let status of statuss' [value]="status.id">{{status.text}}</option>
+                  </select>
+  
+                </div>
+            </div>
+            </div>
+            <div class="col-md-4" >
+              <div class="form-group" >
+                <h3>Loại tin</h3>
+                <div  >
+                  <select (change)="onChangeNewType($event)" class="form-control form-control-lg" style="color: black;;width:200px;height:40px">
+                    <option *ngFor='let newtypes of newTypes'  [value]="newtypes.id">{{newtypes.name}}</option>
+                  </select>
+  
+                </div>
+            </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:20px">
+  
+      </div>
+  
+      <div class="col-md-12" style="padding-top: 0px;margin-left: -60px; ">
+        <table class="table table-bordered" >
+          <thead style="background-color:darkblue;color: white;">
+            <tr>
+              <th scope="col-md-1" class="font" style="color: white;text-align: center;">Ảnh đại diện</th>
+              <th scope="col" class="font" style="color: white;text-align: center;">Ngày bắt đầu</th>
+              <th scope="col" class="font" style="color: white;text-align: center;">Ngày hết hạn</th>
+              <th scope="col" class="font" style="color: white;text-align: center;">Trạng thái</th>
+              <th scope="col" class="font" style="color: white; width: 200px;text-align: center;">Tiêu đề</th>
+              <th scope="col" class="font" style="color: white; width: 200px;text-align: center;">Duyệt tin</th>
+            </tr>
+          </thead>
+          <tbody style="color: black;">
+            <tr *ngFor="let motel of motels | paginate: { itemsPerPage: 10, currentPage: page }">
+              <td style="text-align: center;"><img *ngIf="motel.images[0].imageMotel!= null" [src]="motel.images[0].imageMotel" class="title-image" style="width:50px;height:50px;"></td>
+              <td>{{motel.dateUpdate|date}}</td>
+              <td>{{motel.dateDue|date}}</td>
+              <td style="text-align: center;">
+                <i *ngIf="motel.verify" class="fa fa-check-circle-o" style="color: green;"></i>
+                <i *ngIf="!motel.verify" class="fa fa-check-circle-o" style="color: red;"></i>
+              </td>
+              <td><textarea style="height: 50px;width:530px;border:none">{{motel.title}}</textarea></td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-sm" (click)="linkRouterChiTiet(motel.title, motel.id)">
+                    <i class="fa fa-edit"></i>
+                  </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <div style="margin-left:360px;margin-top: 20px;">
+        <pagination-controls (pageChange)="page = $event" ></pagination-controls>
+      </div>
+      </div>
+  
+    </div>
+  </div> -->

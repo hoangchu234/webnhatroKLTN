@@ -26,7 +26,7 @@
 
                 <div >
                   <div style="width:auto;border-radius: 10px;height: 50px;width:150px;background-color: rgb(255, 255, 255); margin-top: 5px;border:1px solid black" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                    {{status}}</div> </div>
+                    {{status}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                   <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                     <div *ngFor='let status of statuss' >
                       <a class="dropdown-item" (click)="onChangeStatus($event)" [value]="status.id" >{{status.text}}</a>
@@ -49,7 +49,7 @@
 
               <div >
                 <div style="width:auto;border-radius: 10px;height: 50px;width:200px;background-color: rgb(255, 255, 255); margin-top: 5px;border:1px solid black" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                  {{newType.name}}</div> </div>
+                  {{newType.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                 <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                   <div *ngFor='let newtypes of newTypes'>
                     <a class="dropdown-item" (click)="onChangeNewType($event)" [value]="newtypes.id" >{{newtypes.name}}</a>
@@ -71,7 +71,7 @@
 
               <div>
                 <div  style="width:auto;border-radius: 10px;width:150px;height: 50px;background-color: rgb(255, 255, 255); margin-top: 5px;border:1px solid black" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                  {{new.newName}}</div> </div>
+                  {{new.newName}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                 <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                   <div *ngFor='let n of news' >
                     <a class="dropdown-item" (click)="onChangeNew($event)" [value]="n.id">{{n.newName}}</a>

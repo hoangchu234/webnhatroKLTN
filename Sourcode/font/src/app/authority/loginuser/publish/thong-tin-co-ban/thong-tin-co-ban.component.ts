@@ -171,7 +171,6 @@ export class ThongTinCoBanComponent implements OnInit {
     var typeFind = this.newTypes.find(m => m.id == value);
     this.newType = typeFind;
 
-    console.log(event)
   }
 
   public async onChangeCity(event)
@@ -350,8 +349,8 @@ export class ThongTinCoBanComponent implements OnInit {
 
   async getViTri(address: string){
     var get = await this.motelService.getLocationSearch(address);
-    this.lat = get["data"]["features"][0]["geometry"]["coordinates"][0];
-    this.long = get["data"]["features"][0]["geometry"]["coordinates"][1];
+    this.long = get["data"]["features"][0]["geometry"]["coordinates"][0];
+    this.lat = get["data"]["features"][0]["geometry"]["coordinates"][1];
   }
 
   public openDialog(): void {

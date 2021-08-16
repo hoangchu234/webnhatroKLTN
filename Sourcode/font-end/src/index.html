@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en" >
+<head>
+  <meta charset="utf-8">
+  <title>Website tìm kiếm nhà trọ</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" type="text/css" href="assets/styles/bootstrap4/bootstrap.min.css">
+
+  <!--CKeditor-->
+  <script src="//cdn.ckeditor.com/4.7.1/full/ckeditor.js"></script>
+
+  <!--Firebase-->
+  <script src="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.js"></script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+  <!---->
+
+
+  <link href="assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+  <link rel="stylesheet" type="text/css" href="assets/plugins/OwlCarousel2-2.2.1/animate.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles/main_styles.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles/responsive.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles/offers_styles.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles/offers_responsive.css">
+
+  <!-- link forum -->
+  <link rel="stylesheet" href="assets/forum/css1/main.min.css">
+  <link rel="stylesheet" href="assets/forum/css1/weather-icons.min.css">
+  <link rel="stylesheet" href="assets/forum/css1/style.css">
+  <link rel="stylesheet" href="assets/forum/css1/color.css">
+  <link rel="stylesheet" href="assets/forum/css1/responsive.css">
+  <!-- <link rel="stylesheet" href="assets/forum/fonts1"> -->
+
+
+  <!-- <script src="../bower_components/angular/angular.min.js"></script>
+  <script src="../bower_components/leaflet/dist/leaflet.js"></script>
+  <script src="../dist/angular-leaflet-directive.min.js"></script>
+  <link rel="stylesheet" href="../bower_components/leaflet/dist/leaflet.css" /> -->
+  <!-- <script>
+      var app = angular.module("demoapp", ["leaflet-directive"]);
+      app.controller("LayersRefreshOverlayEveryMinuteController", [ "$scope", "$interval", function($scope, $interval) {
+          angular.extend($scope, {
+              amberes: {
+                  lat: 51.2,
+                  lng: 4.4,
+                  zoom: 8
+              },
+              layers: {
+                  baselayers: {
+                      mapbox_light: {
+                          name: 'Mapbox Light',
+                          url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                          type: 'xyz',
+                          layerOptions: {
+                              apikey: 'pk.eyJ1IjoiYnVmYW51dm9scyIsImEiOiJLSURpX0pnIn0.2_9NrLz1U9bpwMQBhVk97Q',
+                              mapid: 'bufanuvols.lia3no0m'
+                          }
+                      }
+                  },
+                  overlays: {
+                      traffic: {
+                          name: "Traffic Jams",
+                          type: "xyz",
+                          url: "http://map.be-mobile.be/customer/mobileninja/nl/los/{z}/{x}/{y}.png",
+                          visible: 1,
+                          doRefresh: false
+                      }
+                  }
+              }
+          });
+
+          var refreshIntervalInSeconds = 60;
+          var actualSeconds = 0;
+          $interval(function() {
+              if (actualSeconds === refreshIntervalInSeconds) {
+                  $scope.layers.overlays.traffic.doRefresh = true;
+                  console.log("Overlay refreshed.")
+                  actualSeconds = 0;
+              } else {
+                  console.log("Next update of overlay in " + (refreshIntervalInSeconds - actualSeconds) + " seconds.");
+                  actualSeconds += 1;
+              }
+          }, 1000);
+      }]);
+  </script> -->
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <!-- Add Google API Key -->
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkft_VrXpKQ3SLh2jDlIlDYlxW6UpaYnM"></script> -->
+  
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+
+  <script>
+      $(document).ready(function () {
+          $("#submitResize").click(function () {
+              $("#googleMap").css('width', $("#width").val());
+              $("#googleMap").css('height', $("#height").val());
+          });
+          $("#search").click(function () {
+              googleGeocoder();
+          });
+      });
+  </script>
+
+
+  <script>
+      $(document).ready(function () {
+          $("#submitResize").click(function () {
+              $("#googleMap").css('width', $("#width").val());
+              $("#googleMap").css('height', $("#height").val());
+          });
+          $("#search").click(function () {
+              googleGeocoder();
+          });
+      });
+  </script>
+
+
+  <!--login-->
+  <!-- <script>
+    // Add active class to the current button (highlight it)
+    var header = document.getElementById("myDIV");
+    var btns = header.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+      });
+    }
+  </script> -->
+  
+  <script>
+    function myMap() {
+    var mapProp= {
+      center:new google.maps.LatLng(51.508742,-0.120850),
+      zoom:5,
+    };
+    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    }
+  </script>
+
+
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=myMap"></script> -->
+  <link rel="stylesheet" href="./assets/admin/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="./assets/admin/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="./assets/admin/css/style.css">
+  <link rel="shortcut icon" href="./assets/admin/images/favicon.ico" />
+
+  <link rel="stylesheet" href="./assets/user/libs/css/style.css">
+</head>
+  </head>
+  <body id="page-top">
+    <app-root></app-root>
+    <script src="./assets/admin/vendors/js/vendor.bundle.base.js"></script>
+    <script src="./assets/admin/vendors/chart.js/Chart.min.js"></script>
+    <script src="./assets/admin/js/off-canvas.js"></script>
+    <script src="./assets/admin/js/hoverable-collapse.js"></script>
+    <script src="./assets/admin/js/misc.js"></script>
+    <!-- js dashboard -->
+    <script src="./assets/admin/js/dashboard.js"></script>
+    <script src="./assets/admin/js/todolist.js"></script>
+    <!-- js chart -->
+    <script src="./assets/admin/js/chart.js"></script>
+    <script src="./assets/admin/js/login.js"></script>
+
+
+    <script type="text/javascript" >
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/5fd87214a8a254155ab376e0/1epinr8hi';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+      })();
+    </script>  
+
+
+
+    <!-- </script> forum-->
+    <link rel="icon" href="assets/forum/images1/fav.png" type="image/png" sizes="16x16"> 
+    <script src="assets/forum/js1/main.min.js"></script>
+    <script src="assets/forum/js1/jquery-stories.js"></script>
+    <!-- <script src="../../../cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
+    <!-- <script src="assets/forum/js/locationpicker.jquery.js"></script> -->
+    <script src="assets/forum/js1/map-init.js"></script>
+    <script src="assets/forum/js1/script.js"></script>
+    <script>
+      jQuery(document).ready(function(){
+      $(".content").slice(0, 4).show();
+      $("#loadMore").on("click", function(e)
+      {
+        e.preventDefault();
+        $(".content:hidden").slice(0, 4).slideDown();
+        if($(".content:hidden").length == 0) 
+        {
+          $("#loadMore").hide();
+        }
+      });
+
+      })
+    </script>
+  </body>
+</html>

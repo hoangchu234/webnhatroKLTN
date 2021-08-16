@@ -24,7 +24,7 @@
 
                 <div >
                   <div  style="width:auto;border-radius: 10px;height: 40px;background-color: rgb(255, 255, 255);border:1px solid black;color: black;width:100%;margin-top:10px;margin-left: -10px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 10px;text-align: left;" >
-                    {{status.name}}</div> </div>
+                    {{status.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                   <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                     <div *ngFor='let status of statuss' >
                       <a class="dropdown-item" (click)="onChangeStatus($event)" [value]="status.id" >{{status.name}}</a>
@@ -45,7 +45,7 @@
 
                 <div>
                   <div  style="width:auto;border-radius: 10px;height: 40px;background-color: rgb(255, 255, 255);border:1px solid black;color: black;width:100%;margin-top:10px;margin-left: -10px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 10px;text-align: left;" >
-                    {{newType.name}}</div> </div>
+                    {{newType.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                   <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                     <div *ngFor='let newTypes of newTypes' >
                       <a class="dropdown-item" (click)="onClickSearchNewType($event)" [value]="newTypes.id" >{{newTypes.name}}</a>

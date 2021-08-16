@@ -1,0 +1,239 @@
+<app-header></app-header>
+<div class="container-fluid" style="margin-top: 80px;background-color: rgb(247, 246, 244);">
+    <div class="row">
+        <div class="container-fluid " >
+            <div class="row" style="box-shadow: 0 2px 8px rgb(3 44 71 / 12%);margin-top: 5px;;height: auto;">
+              <div class="nav-scroller" style="margin-left:120px;" >
+                <nav class="nav"  >
+                  <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px;border: 1px;">
+                    <div  style="width:150px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;margin-top:10px">Tỉnh thành phố <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div> <div class="custom-value hasvalue" style="margin-top: 5px;" >{{city.name}}</div> </div>
+                    
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor="let citie of cities" >
+                            <a class="dropdown-item" (click)="onChoiceCity(citie)" [value]="citie.name">{{citie.name}}</a>
+                          </div>
+                    </div>
+                  </div>
+                  <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px"  >
+                    <div style="width:150px" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Quận, huyện <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" style="margin-top: 5px;" >{{province.name}} </div></div>
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor='let province of provinces'>
+                            <a class="dropdown-item" (click)="onChoiceProvince(province)" [value]="province.name">{{province.name}}</a>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
+                    <div type="button" style="width:150px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Phường xã <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" style="margin-top: 5px;">{{district.name}}</div> </div>
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor='let district of districts'>
+                            <a class="dropdown-item" (click)="onChoiceDistrict(district)" [value]="district.name">{{district.name}}</a>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
+                    <div type="button" style="width:150px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Đường <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><p class="custom-value hasvalue test3" >{{street.name}}</p> </div>
+          
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor='let street of streets'>
+                            <p class="dropdown-item " (click)="onChoiceStreet(street)" [value]="street.name">{{street.name}}</p>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 0px" >
+                    <div type="button" style="width:170px" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Loại phòng trọ<span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" style="margin-top: 5px;" >{{newType}}</div></div>
+          
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor='let newType of newTypes'>
+                            <a class="dropdown-item" (click)="onChoiceNewtype(newType.name)" [value]="newType.id">{{newType.name}}</a>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="btn-group p-2 link-secondary select-control select-cate"  style=" margin: 0px 0px 10px 0px" >
+                    <div type="button" style="width:170px"  class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><div class="dropbox-label1" style="text-align: center;margin-top:10px">Giá <span class="fa fa-angle-down" style="color:#00deb6; font-size: 16px;"></span></div><div class="custom-value hasvalue" style="margin-top: 5px;">{{priceSearch}}</div> </div>
+          
+                    <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                        <div *ngFor='let priceSearchs of priceSearchs'>
+                            <a class="dropdown-item" (click)="onChoicePriceSearch(priceSearchs)" [value]="priceSearchs.id">{{priceSearchs.numberOne}} {{priceSearchs.typePriceOne}} {{priceSearchs.numberTwo}} {{priceSearchs.typePriceTwo}}</a>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="search-field d-none d-md-block p-2 link-secondary" style="margin-top:-10px;" >
+                    <form class="d-flex align-items-center h-100" action="#">
+                      <input type="text" style="height: 60%;" placeholder="Nhập địa chỉ" name="search"  [(ngModel)]="search">
+                    </form>
+                  </div>
+                  <div class="btn-group p-2 link-secondary select-control select-cate " >
+                    <button style="height: 45px;border-radius:5px;margin-top:10px" type="submit" class="btn btn-warning" id="dropdownMenu2" ><div style="padding: 5px;" (click)="onSearch()">Tìm kiếm</div></button>
+                  </div>
+                  
+                </nav>
+              </div>
+          
+            </div>
+          </div>
+        <div class="col-md-9">
+          <div id="map" style="z-index: 1;" >
+          </div>
+            <!-- <app-map-show [long]="long" [lat]="lat" [name]="name" (youLong)='onLong($event)' (youLat)='onLat($event)'></app-map-show> -->
+        </div>
+        <div class="col-md-3" style="margin-left: -25px;margin-top: 5px;">
+            <div class="btn-group p-2 link-secondary select-control select-cate" style=" margin: 0px 0px 10px 80px;border: 1px;margin-bottom: 5px;background-color: antiquewhite;text-align: center;">
+                <div  style="width:200px;height: 40px;padding-top: 10px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><div class="dropbox-label1" style="text-align: center;">Khoảng cách <span class="custom-value hasvalue" style="margin-top: 5px;" >{{distance}}</span> <span class="fa fa-angle-down" style="color:#00deb6; font-size: 10px;margin-left: 3px;"></span></div>  </div>              
+                <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+                    <div *ngFor='let data of distances'>
+                        <a class="dropdown-item" (click)="onChoiceDistance(data)" [value]="data.id">{{data.number}} {{data.name}}</a>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor= "let motel of motels | paginate: { itemsPerPage: 4, currentPage: page } ">
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == 1">
+                <div class="row" >
+                    <div class="col-lg-5" style="padding:3px" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: red;" (click)="linkRouter(motel.title, motel.id)">{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-8">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
+                            </div>
+                            <div class="col-md-4">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;box-shadow: #000000;" *ngIf="motel.typeservice == 4">
+                <div class="row" >
+                    <div class="col-lg-5" style="padding:3px" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: red;" (click)="linkRouter(motel.title, motel.id)">{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-8">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
+                            </div>
+                            <div class="col-md-4">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;box-shadow: #00deb6;" *ngIf="motel.typeservice == 3">
+                <div class="row" >
+                    <div class="col-lg-5" style="padding:3px" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: orange;"(click)="linkRouter(motel.title, motel.id)" >{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-8">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
+                            </div>
+                            <div class="col-md-4">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == 2">
+                <div class="row" >
+                    <div class="col-lg-5" style="padding:3px" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: rgb(0, 217, 255);" (click)="linkRouter(motel.title, motel.id)">{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-8">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
+                            </div>
+                            <div class="col-md-4">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-md-12" style="height: 110px;margin-bottom: 5px;" *ngIf="motel.typeservice == 5">
+                <div class="row" >
+                    <div class="col-lg-5" style="padding:3px" >
+                      <div style="height: 110px;width: 100%;">
+                        <!-- Image by https://unsplash.com/@kensuarez -->
+                        <div class="offers_image_background"  [style.background-image]="'url(\'' + motel.images[0].imageMotel + '\')'"></div>
+                        <!-- <div class="offer_name"><a href="single_listing.html">{{motel.typeservice}}</a></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-7" style="padding: 5px;margin-top:5px" >
+                        <div style="font-size: 10px;color: green;" (click)="linkRouter(motel.title, motel.id)">{{motel.title}}</div>
+                        <div>
+                          <div class="row" style="margin-top:5px" >
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;margin-left: 4px;">Giá : <span >{{motel.price}} <span style="font-size:8px">{{motel.priceType}}</span></span>  </p>
+                            </div>
+                            <div class="col-md-6">
+                              <p style="color: black;font-size: 10px;"><b></b><span >{{motel.areaZone}} {{motel.areaZoneType}}</span>  </p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div style="font-size: 9px;margin-top: -10px;" >
+                          {{motel.address}}
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+            </div>
+            <pagination-controls  (pageChange)="page = $event" style="margin-left:150px;"><i class="ti-arrow-up"></i></pagination-controls>
+        </div>
+    </div>
+</div>
+
+

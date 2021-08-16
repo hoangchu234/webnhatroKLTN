@@ -215,6 +215,9 @@ export class PaypalComponent implements OnInit {
         //this.motelnew.typeservice = this.new;
         //this.motelnew.time = this.datatime;
 
+
+
+
         let Finall:Image[] = [];
         for(let i=0;i<this.imagesURLFirebare.length;i++)
         {
@@ -223,6 +226,8 @@ export class PaypalComponent implements OnInit {
           Finall.push(image);
         }
         this.saveNewMotel.images = Finall;
+
+
         this.motelService.postMotel(this.saveNewMotel).subscribe(async newMotel => {
           this.resultSaveMotel = newMotel;
           var bill = new Bill();
@@ -234,6 +239,7 @@ export class PaypalComponent implements OnInit {
         });
         this.data = true;
 
+        
         // localStorage.removeItem(StorageService.totalMoneyStorage); 
         // localStorage.removeItem(StorageService.ImageStorage); 
         // localStorage.removeItem(StorageService.loadImageStorage)

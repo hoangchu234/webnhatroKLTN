@@ -1,0 +1,50 @@
+<div class="container-fluid font" style="height: 50px;background-color:lightgrey;color: black;font-size: 13px;">
+  <div style="padding-top:15px;"><span style="margin-left: 40px;">Motel <div class="fa  fa-chevron-right" ></div><b style="margin-left:15px">Lịch sử giao dịch</b> <div class="fa  fa-chevron-right" style="margin-left: 10px;margin-right: 15px;"></div></span></div>
+</div>
+
+<div class="container font" >
+  <h2 class="font" style="margin-bottom: 40px;">Lịch sử giao dịch</h2>
+  <div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 font">
+    <div class="form-group row" style="padding:5px ;">
+      <label class="col-md-3 font" for="exampleFormControlSelect1" style="font-size: 18px;margin-top: 10px;">Chọn tin đăng theo</label>
+      <div class="col-md-1"></div>
+      <!-- <div class="col-md-8" style="width: 400px;color:black;">
+        <select (change)="onChangetime($event)" class="form-control form-control-lg font" style="color: black;">
+          <option *ngFor='let time of times' [value]="time.id" >{{time.text}}</option>
+        </select>
+      </div> -->
+
+      <div class="btn-group col-sm-8 link-secondary select-control select-cate" style="width: 400px;color:black;">
+        <div  style="width:auto;border-radius: 10px;height: 50px;border:1px solid black;margin-top: -2px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
+          {{time}}</div> </div>
+        <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
+          <div *ngFor='let time of times' >
+            <a class="dropdown-item" (click)="onChangetime($event)" [value]="time.id">{{time.text}}</a>
+          </div>
+        </div>
+      </div>
+        <!-- Code here -->
+    <table style="margin-top: 20px;">
+      <thead class="thead-light font">
+        <tr>
+          <th class="font">Tin đăng theo</th>
+          <th class="font">Số ngày/tuần/tháng</th>
+          <th class="font">Số tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor='let data of bills  | paginate: { itemsPerPage: 7, currentPage: page }'>
+            <td class="font">{{data.timeChoice}}</td>
+            <td class="font">{{data.numberDatePublish}}</td>
+            <td class="font">{{data.payMoney}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="page = $event" style="margin-left:150px;margin-top: 20px;"></pagination-controls>
+    </div>
+  </div>
+  </div>
+
+  </div>

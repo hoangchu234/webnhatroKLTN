@@ -19,7 +19,7 @@
 
                     <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
                       <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                        {{newType.name}}</div> </div>
+                        {{newType.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                       <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                         <div *ngFor="let newtype of newTypes" >
                           <a class="dropdown-item" (click)="onChangeNewType($event)" [value]="newtype.id">{{newtype.name}}</a>
@@ -47,7 +47,7 @@
 
                   <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
                     <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                      {{city.name}}</div> </div>
+                      {{city.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                     <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                       <div *ngFor="let city of cities" >
                         <a class="dropdown-item" (click)="onChangeCity($event)" [value]="city.id">{{city.name}}</a>
@@ -66,7 +66,7 @@
 
                     <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
                       <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                        {{procince.name}}</div> </div>
+                        {{procince.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                       <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                         <div *ngFor="let province of provinces" >
                           <a class="dropdown-item" (click)="onChangeProvince($event)"  [value]="province.id">{{province.name}}</a>
@@ -84,7 +84,7 @@
 
                     <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
                       <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                        {{district.name}}</div> </div>
+                        {{district.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                       <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                         <div *ngFor="let district of districts" >
                           <a class="dropdown-item" (click)="onChangeDistrict($event)"  [value]="district.id">{{district.name}}</a>
@@ -102,7 +102,7 @@
 
                     <div class="btn-group col-sm-9 link-secondary select-control select-cate" style="margin-top: -10px ;margin-left: -15px;">
                       <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                        {{street.name}}</div> </div>
+                        {{street.name}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                       <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                         <div *ngFor="let street of streets" >
                           <a class="dropdown-item" (click)="onChangeStreet($event)" [value]="street.id" >{{street.name}}</a>
@@ -130,8 +130,9 @@
                 </div>
                 </form>
             </div>
-            <div class="col-md-6" style="margin-top:-13px">
-              <iframe width="100%" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=%20Ho%20Chi%20Minh%20City+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe> <a href='https://embedmaps.net'></a> <script type='text/javascript' src='https://maps-generator.com/google-maps-authorization/script.js?id=dbed74534fca59a6c3ee7c80b657ad108b84a339'></script>
+            <div class="col-md-6">
+              <div id="map" style="z-index: 1;height: 500px;width: 650px;" >
+              </div>
             </div>
           </div>
         </div>
@@ -157,7 +158,7 @@
               </div> -->
               <div class="btn-group col-sm-3 link-secondary select-control select-cate" style="margin-top: -10px;color: black;">
                 <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                  {{typePriceMotel}}</div> </div>
+                  {{typePriceMotel}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
                 <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                   <div *ngFor='let typePriceMotel of typePriceShowMotels' >
                     <a class="dropdown-item" (click)="onChangePriceType($event)" [value]="typePriceMotel.text" >{{typePriceMotel.text}}</a>
@@ -187,7 +188,7 @@
 
             <div class="btn-group col-sm-8 link-secondary select-control select-cate" style="margin-top: -10px;color: black;">
               <div  style="width:auto;height: 50px;" type="button" class="btn btn-light" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="custom-value hasvalue" style="margin-top: 15px;text-align: left;" >
-                {{direct.directName}}</div> </div>
+                {{direct.directName}}<p class=" fa fa-chevron-down" style="float: right;color:aquamarine;"></p></div> </div>
               <div class="dropdown-menu scrollable-menu example" role="menu" x-placement="bottom-start" style="margin-top:5px;position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;width: 85%;">
                 <div *ngFor='let direct of directsShow' >
                   <a class="dropdown-item" (click)="onChangeDirect($event)"  [value]="direct.id" > {{direct.directName}}</a>

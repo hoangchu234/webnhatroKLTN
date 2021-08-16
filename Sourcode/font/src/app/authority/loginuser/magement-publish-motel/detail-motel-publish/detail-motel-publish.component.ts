@@ -23,6 +23,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Direct } from 'src/app/model/Direct';
 import { ToastService } from 'src/app/services/toast.service';
 
+declare const L: any;
+declare const L2: any;
+
 export interface Data{
   id:number;
   text:string;
@@ -107,12 +110,30 @@ export class DetailMotelPublishComponent implements OnInit {
 
   checkSaveImage = false;
   motelById: Motel;
+
+  long = "";
+  lat = "";
+
+  mymap: any;
+  marker: any;
+  name ="";
+
   constructor(private route: Router,private toast: ToastService,private router: ActivatedRoute,public dialog: MatDialog,public streetService:StreetService,public dictrictService:DictrictService,private storage: AngularFireStorage,private imageService: ImageService,private cityService: CitiesService, private provinceService: ProvincesService,private authenticationService: AuthenticationService,private typeservice:TypeofnewService,public motelService:MotelService) {
+   
+   
+
   }
 
   async ngOnInit(): Promise<void> {
     const id = this.router.snapshot.paramMap.get("id");
     this.motelById = await this.getDataMotelById(id);
+
+    this.long = this.motelById.longitude;
+    this.lat = this.motelById.latitude;
+    this.name = this.motelById.title;
+
+    this.runMap();
+    this.buildMap( this.lat , this.long, this.name);
 
     this.addressNumber = this.motelById.addressNumber;
     await this.getNewTypes();
@@ -148,6 +169,108 @@ export class DetailMotelPublishComponent implements OnInit {
 
     //this.authenticationService.currentAccount.subscribe(x => this.currentAccount = x);    
     this.phoneMotel = this.motelById.phone;
+  }
+
+  async getViTri(address: string){
+    var get = await this.motelService.getLocationSearch(address);
+    this.long = get["data"]["features"][0]["geometry"]["coordinates"][0];
+    this.lat = get["data"]["features"][0]["geometry"]["coordinates"][1];
+  }
+
+  buildMap(lat,lon,name)  {
+    if (this.mymap != undefined) { this.mymap.remove(); } 
+    this.mymap = L.map('map').setView([lat,lon], 13);
+
+    L.tileLayer(
+      'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VicmF0MDA3IiwiYSI6ImNrYjNyMjJxYjBibnIyem55d2NhcTdzM2IifQ.-NnMzrAAlykYciP4RP9zYQ',
+      {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'your.mapbox.access.token',
+      }
+    ).addTo(this.mymap );
+    
+    L.marker([lat,lon]).addTo(this.mymap)
+        .bindPopup(name)
+        .openPopup();
+    
+    
+  }
+
+  runMap(){
+    if (!navigator.geolocation) {
+      // console.log('location is not supported');
+    }
+    navigator.geolocation.getCurrentPosition((position) => {
+      const coords = position.coords;
+      // console.log(position.coords.latitude+","+position.coords.longitude);
+      // console.log(this.lat+","+ this.long);
+
+      // this.youLat = position.coords.latitude;
+      // this.lat = position.coords.latitude.toString()
+      // this.long = position.coords.longitude.toString()
+
+
+      const latlong1 =[this.lat, this.long];//vị trí hiện tại
+      const latLong = [this.lat, this.long];
+      // console.log(
+      //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+      // );
+      
+      
+      this.mymap = L.map('map').setView(latLong, 13);
+      L.tileLayer(
+        'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VicmF0MDA3IiwiYSI6ImNrYjNyMjJxYjBibnIyem55d2NhcTdzM2IifQ.-NnMzrAAlykYciP4RP9zYQ',
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'your.mapbox.access.token',
+        }
+      ).addTo(this.mymap );
+
+      this.marker = L.marker(latLong).addTo(this.mymap );
+
+      this.marker.bindPopup('<b>Hi</b>').openPopup();
+      this.marker.bindPopup('<b>Hi</b>').openPopup();
+
+      let popup = L.popup()
+        .setLatLng(latLong)
+        .setContent(this.name)
+        .openOn(this.mymap );
+    });
+    this.watchPosition();
+  
+  }
+
+  watchPosition() {
+    let desLat = 0;
+    let desLon = 0;
+    let id = navigator.geolocation.watchPosition(
+      (position) => {
+        // console.log(
+        //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+        // );
+        if (position.coords.latitude === desLat) {
+          navigator.geolocation.clearWatch(id);
+        }
+      },
+      (err) => {
+        // console.log(err);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 9000,
+        maximumAge: 0,
+      }
+    );
   }
 
   changeAddress(x){
@@ -440,6 +563,9 @@ export class DetailMotelPublishComponent implements OnInit {
   }
 
   public loadImage = async () => {
+
+    await this.getViTri(this.address);
+
     if(this.image.length != 0 && this.motelImageDelete.length != 0){
       for(let i=0; i< this.image.length;i++){
         var temp = this.image.length;
@@ -523,6 +649,10 @@ export class DetailMotelPublishComponent implements OnInit {
       }
       this.motelUpdate.verify = false;
       this.motelUpdate.status = "2"
+
+      this.motelUpdate.latitude = this.lat;
+      this.motelUpdate.longitude = this.long;
+
       this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
         
       });
@@ -558,7 +688,7 @@ export class DetailMotelPublishComponent implements OnInit {
    
   }
 
-  public updateMotel(){
+  public async updateMotel(){
     // Update motel data
     if(this.address != "")
     {
@@ -588,9 +718,14 @@ export class DetailMotelPublishComponent implements OnInit {
     }
     this.motelUpdate.verify = false;
     this.motelUpdate.status = "2"
+
+    this.motelUpdate.latitude = this.lat;
+    this.motelUpdate.longitude = this.long;
+
     this.motelService.updateNVMotel(this.motelUpdate).subscribe(data => {
-      // console.log(data);
+        // console.log(data);
     });
+  
   }
 
 }

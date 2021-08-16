@@ -1,0 +1,165 @@
+<div class="super_container">
+  <header class="header">
+    <!-- Main Navigation -->
+    <nav class="main_nav" style="width:auto;height: 80px;">
+      <div class="container-fluid " >
+        <div class="row" style="background-color:white;">
+            <div class="logo_container col-md-1 col-sm-12 col-xs-2 " style="padding:15px;padding-top: 25px;">
+              <div class="logo"><a [routerLink]="['/home']" style="font-size: 25px;text-decoration: none;color: black;">Hours</a></div>
+            </div>
+            <div class=" col-md-11 col-sm-12 col-xs-10" style="letter-spacing:.0.5rem;text-align: center;padding:5px" >
+              <nav class="navbar navbar-expand-lg navbar-light" style="float: right;">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNarbarURL(2)" >Phòng trọ, nhà trọ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNarbarURL(3)" >Nhà cho thuê <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNarbarURL(4)">Cho thuê căn hộ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNarbarURL(6)">Cho thuê mặt bằng <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickNarbarURL(5)" >Tìm người ở ghép cặp <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickURL('/forum')" >Hỏi đáp <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link font" (click)="onClickURL('/bang-gia-dich-vu')" >Bảng giá dịch vụ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active" style="padding-top: 8px;margin-left: 20px;">
+                      <div [hidden]="username">
+                        <a (click)="onClickURL('/login')" style=" text-decoration: none;color: black;"><b>Đăng nhập</b></a>
+                        </div>
+                        <div class="nav-item nav-profile dropdown" style="visibility: visible;" *ngIf="isUser">
+                          <a class="nav-link " id="profileDropdown"  data-toggle="dropdown" aria-expanded="false" style="margin-top: -12px;">
+                            <div style="margin-top:5px;"><img class="img-profile rounded-circle"  src="{{userImage}}" style="height: 30px;width: 30px;"><span class="font" style="color:black;margin-left: 5px;">{{username}} </span></div>
+                            <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown" style="font-size: 20px;">
+                              <a (click)="checkPhoneNumber(1)" class="dropdown-item font">
+                                <i class="mdi mdi-account mr-2 text-success "></i>Thông tin cá nhân</a>
+                                <div class="dropdown-divider"></div>
+                              <a (click)="checkPhoneNumber(2)" class="dropdown-item font" >
+                                <i class="mdi mdi-message-processing mr-2 text-warning font"></i>Tin đã đăng </a>
+                              <!-- <a [routerLink]="['/user/quan-ly-messeger']" class="dropdown-item font" >
+                                <i class="mdi mdi-file-find mr-2 text-warning font"></i>Quản lý tin nhắn</a> -->
+                              <div class="dropdown-divider"></div>
+                              <a (click)="checkPhoneNumber(3)" class="dropdown-item font" >
+                                <i class="mdi  mdi-history mr-2 text-success font"></i>Lịch sử giao dịch</a>
+                              <a [routerLink]="['/bang-gia-dich-vu']" class="dropdown-item font" >
+                                <i class="mdi mdi-newspaper mr-2 text-success font"></i>Bảng giá dịch vụ</a>
+                              <div class="dropdown-divider"></div>
+                              <a [routerLink]="['/tro-giup']" class="dropdown-item font" >
+                                <i class="mdi mdi-help-circle mr-2 text-primary font"></i> Trợ giúp</a>
+                              <a (click)='onLogout()' class="dropdown-item font">
+                                <i class="mdi mdi-logout mr-2 text-primary font"></i>Đăng xuất</a>
+                              <div class="dropdown-divider"></div>
+                            </div>
+                          </a>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item active" style="margin-left: 20px;">
+                      <a class="nav-link"><i style="font-size: 20px;margin-top: 5px;" class="fa  fa-heart-o"></i></a>
+                    </li> -->
+                    <li *ngIf="isUser" class="nav-item active" style="margin-top:0px ;">
+                      <div class="top-area">
+                          <ul class="setting-area " style="line-height: 0px;margin-top: -10px;font-size: 20px;">
+                              <li >
+                                  <a  title="Notification" data-ripple="">
+                                      <i class="fa fa-bell"></i><em class="bg-purple">{{countNotifyNotSee}}</em>
+                                  </a>
+                                  <div class="dropdowns">
+                                      <span>{{countNotifyNotSee}} comment mới <a  title=""></a></span>
+                                      <ul class="drops-menu">
+                                          <li *ngFor="let data of notifys">
+                                            <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="!data.justSee" style="background-color: whitesmoke;">
+                                              <figure>
+                                                  <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="">
+                                                  <span class="status f-online"></span>
+                                              </figure>
+                                              <div class="mesg-meta">
+                                                  <h6>{{data.username}}</h6>
+                                                  <span>{{data.userComment}}</span>
+                                                  <i>{{data.day}} ngày trước</i>
+                                              </div>
+                                            </a>
+              
+                                            <a title="" (click)="onClickDetailPostINotify(data)" *ngIf="data.justSee">
+                                              <figure>
+                                                  <img class="img1" style="height: 40px; width: 50px;" [src]="data.imageUser" alt="">
+                                                  <span class="status f-online"></span>
+                                              </figure>
+                                              <div class="mesg-meta">
+                                                  <h6>{{data.username}}</h6>
+                                                  <span>{{data.userComment}}</span>
+                                                  <i>{{data.day}} ngày trước</i>
+                                              </div>
+                                            </a>
+                                          </li>
+                                      </ul>
+                                      <!-- <a href="notifications.html" title="" class="more-mesg">View All</a> -->
+                                  </div>
+                              </li>
+                          </ul>
+                          </div>
+                    </li>
+                    <li *ngIf="isUser" class="nav-item active" style="margin-top:0px ;">
+                      <div class="top-area">
+                          <ul class="setting-area " style="line-height: 0px;margin-top: -10px;font-size: 20px;">
+                              <li>
+                                  <a title="Messages" data-ripple=""><i class="fa fa-commenting"></i><em class="bg-blue">{{countNote}}</em></a>
+                                  <div class="dropdowns">
+                                      <span>{{countNote}} Tin nhắn mới <a title=""></a></span>
+                                      <ul class="drops-menu" >
+                                          <li *ngFor="let data of listNote" (click)="onClickURLChat(data)">
+                                              <a class="show-mesg" title="" *ngIf="!data.justSee" style="background-color: whitesmoke;">
+                                                  <figure>
+                                                      <img class="img1" style="height: 40px; width: 50px;" [src]="data.image" alt="">
+                                                      <span class="status f-online"></span>
+                                                  </figure>
+                                                  <div class="mesg-meta">
+                                                      <h6>{{data.sender}}</h6>
+                                                      <span><i class="ti-check"></i> {{data.messeger}}</span>
+                                                      <i>{{data.date}} ngày trước</i>
+                                                  </div>
+                                              </a>
+
+                                              <a class="show-mesg" title="" *ngIf="data.justSee" >
+                                                <figure>
+                                                    <img class="img1" style="height: 40px; width: 50px;" [src]="data.image" alt="">
+                                                    <span class="status f-online"></span>
+                                                </figure>
+                                                <div class="mesg-meta">
+                                                    <h6>{{data.sender}}</h6>
+                                                    <span><i class="ti-check"></i> {{data.messeger}}</span>
+                                                    <i>{{data.date}} ngày trước</i>
+                                                </div>
+                                            </a>
+                                          </li>
+                                      </ul>
+                                      <!-- <a href="chat-messenger.html" title="" class="more-mesg">View All</a> -->
+                                  </div>
+                              </li>
+                          </ul>
+                          </div>
+                    </li>
+                   
+                    <li class="nav-item active" style="margin-top:0px ;">
+                      <button [hidden]="returnNotLogin()" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" [routerLink]="['/login']"><b>Đăng tin</b></button>
+                      <button [hidden]="returnLogin()" style="width:100px;height:50px;background-color:whitesmoke;border: 1px solid #00deb6;border-radius: 10px; background-color: #f0f8f8;margin-left: 30px;" (click)="checkPhoneNumber(4)"><b>Đăng tin</b></button>
+                    </li>
+
+                  </ul>
+                </div>
+              </nav>
+            </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>
+
